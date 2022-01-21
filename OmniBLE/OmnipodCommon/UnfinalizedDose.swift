@@ -55,6 +55,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
     
     let doseType: DoseType
     public var units: Double
+    public var automatic: Bool      // Tracks if this dose was issued automatically or manually
     var scheduledUnits: Double?     // Tracks the scheduled units, as boluses may be canceled before finishing, at which point units would reflect actual delivered volume.
     var scheduledTempRate: Double?  // Tracks the original temp rate, as during finalization the units are discretized to pump pulses, changing the actual rate
     let startTime: Date
@@ -276,3 +277,20 @@ extension DoseEntry {
         }
     }
 }
+
+extension StartProgram {
+    func unfinalizedDose(at programDate: Date, withCertainty certainty: UnfinalizedDose.ScheduledCertainty) -> UnfinalizedDose? {
+        switch self {
+        case .bolus(let bolusProgram, let automatic):
+            return UnfinalizedDose(bolusAmount: bolusProgram.volume, startTime: programDate, scheduledCertainty: certainty, automatic: automatic)
+        case .tempBasal(let tempBasalProgram):
+            guard case .flatRate(let rate) = tempBasalProgram.value else {
+                return nil
+            }
+            return UnfinalizedDose(tempBasalRate: Double(rate) / Pod.podSDKInsulinMultiplier, startTime: programDate, duration: tempBasalProgram.duration, scheduledCertainty: certainty)
+        case .basalProgram:
+            return UnfinalizedDose(resumeStartTime: programDate, scheduledCertainty: certainty)
+        }
+    }
+}
+

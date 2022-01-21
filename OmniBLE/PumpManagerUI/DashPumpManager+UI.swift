@@ -13,61 +13,39 @@ import LoopKit
 import LoopKitUI
 import SwiftUI
 
-extension OmnipodPumpManager: PumpManagerUI {
-    
+extension DashPumpManager: PumpManagerUI {
     public static var onboardingImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: OmnipodSettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: "Onboarding", in: Bundle(for: DashSettingsViewModel.self), compatibleWith: nil)
     }
-
-    static public func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
-        let navVC = OmnipodPumpManagerSetupViewController.instantiateFromStoryboard()
-        let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes) { [weak navVC] (confirmedType) in
-            if let navVC = navVC {
-                navVC.insulinType = confirmedType
-                let nextViewController = navVC.storyboard?.instantiateViewController(identifier: "PairPodSetup") as! PairPodSetupViewController
-                navVC.pushViewController(nextViewController, animated: true)
-            }
-        }
-        let rootVC = UIHostingController(rootView: insulinSelectionView)
-        rootVC.title = "Insulin Type"
-        navVC.pushViewController(rootVC, animated: false)
-        navVC.navigationBar.backgroundColor = .secondarySystemBackground
-        navVC.maxBasalRateUnitsPerHour = settings.maxBasalRateUnitsPerHour
-        navVC.maxBolusUnits = settings.maxBolusUnits
-        navVC.basalSchedule = settings.basalSchedule
-        return .userInteractionRequired(navVC)
-    }
-    
-    public func settingsViewController(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> PumpManagerViewController {
-        let settings = OmnipodSettingsViewController(pumpManager: self)
-        let nav = PumpManagerSettingsNavigationViewController(rootViewController: settings)
-        return nav
-    }
-
-    public func deliveryUncertaintyRecoveryViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> (UIViewController & CompletionNotifying) {
         
-        // Return settings for now; uncertainty recovery not implemented yet
-        let settings = OmnipodSettingsViewController(pumpManager: self)
-        let nav = SettingsNavigationViewController(rootViewController: settings)
-        return nav
+    public static func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
+        let vc = DashUICoordinator(colorPalette: colorPalette, pumpManagerType: self, basalSchedule: settings.basalSchedule, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+        return .userInteractionRequired(vc)
+    }
+        
+    public func settingsViewController(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> PumpManagerViewController {
+        return DashUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
     }
     
-
+    public func deliveryUncertaintyRecoveryViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> (UIViewController & CompletionNotifying) {
+        return DashUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures)
+    }
+    
     public var smallImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: OmnipodSettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: "Pod", in: Bundle(for: DashSettingsViewModel.self), compatibleWith: nil)!
     }
-    
+
     public func hudProvider(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) -> HUDProvider? {
-        return OmnipodHUDProvider(pumpManager: self, bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowedInsulinTypes: allowedInsulinTypes)
+        return DashHUDProvider(pumpManager: self, bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowedInsulinTypes: allowedInsulinTypes)
     }
-    
+
     public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> LevelHUDView? {
-        return OmnipodHUDProvider.createHUDView(rawValue: rawValue)
+        return DashHUDProvider.createHUDView(rawValue: rawValue)
     }
 }
 
 // MARK: - DeliveryLimitSettingsTableViewControllerSyncSource
-extension OmnipodPumpManager {
+extension DashPumpManager {
     public func syncDeliveryLimitSettings(for viewController: DeliveryLimitSettingsTableViewController, completion: @escaping (DeliveryLimitSettingsResult) -> Void) {
         guard let maxBasalRate = viewController.maximumBasalRatePerHour,
             let maxBolus = viewController.maximumBolus else
@@ -92,7 +70,7 @@ extension OmnipodPumpManager {
 }
 
 // MARK: - BasalScheduleTableViewControllerSyncSource
-extension OmnipodPumpManager {
+extension DashPumpManager {
 
     public func syncScheduleValues(for viewController: BasalScheduleTableViewController, completion: @escaping (SyncBasalScheduleResult<Double>) -> Void) {
         let newSchedule = BasalSchedule(repeatingScheduleValues: viewController.scheduleItems)
@@ -123,7 +101,7 @@ extension OmnipodPumpManager {
 }
 
 // MARK: - PumpStatusIndicator
-extension OmnipodPumpManager {
+extension DashPumpManager {
     public var pumpStatusHighlight: DeviceStatusHighlight? {
         guard state.podState?.fault != nil else {
             return nil

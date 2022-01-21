@@ -9,12 +9,12 @@
 import LoopKit
 
 
-public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
+public struct DashPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
     
     public static let version = 2
     
-    public var isOnboarded: Bool
+    public var isOnboarded: Bool = false
     
     public var podState: PodState?
 
@@ -29,6 +29,26 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     public var expirationReminderDate: Date?
 
     public var confirmationBeeps: Bool
+    
+    public var scheduledExpirationReminderOffset: TimeInterval?
+    
+    public var defaultExpirationReminderOffset = Pod.defaultExpirationReminderOffset
+
+    public var lowReservoirReminderValue: Double
+    
+    public var podAttachmentConfirmed: Bool
+    
+    public var pendingCommand: PendingCommand?
+
+    public var activeAlerts: Set<PumpManagerAlert>
+    
+    public var alertsWithPendingAcknowledgment: Set<PumpManagerAlert>
+
+    public var acknowledgedTimeOffsetAlert: Bool
+    
+    // Indicates that the user has completed initial configuration
+    // which means they have configured any parameters, but may not have paired a pod yet.
+    public var initialConfigurationCompleted: Bool = false
 
     // Temporal state not persisted
 
@@ -46,12 +66,12 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
 
     internal var lastPumpDataReportDate: Date?
     
-    internal var insulinType: InsulinType
+    internal var insulinType: InsulinType?
+    
     
     // MARK: -
 
-    public init(isOnboarded: Bool, podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType) {
-        self.isOnboarded = isOnboarded
+    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType?) {
         self.podState = podState
         self.timeZone = timeZone
         self.basalSchedule = basalSchedule
@@ -87,8 +107,6 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
             basalSchedule = schedule
         }
         
-        let isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
-        
         let podState: PodState?
         if let podStateRaw = rawValue["podState"] as? PodState.RawValue {
             podState = PodState(rawValue: podStateRaw)
@@ -110,12 +128,13 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         }
 
         self.init(
-            isOnboarded: isOnboarded,
             podState: podState,
             timeZone: timeZone,
             basalSchedule: basalSchedule,
             insulinType: insulinType ?? .novolog
         )
+        
+        self.isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
 
         if let expirationReminderDate = rawValue["expirationReminderDate"] as? Date {
             self.expirationReminderDate = expirationReminderDate
@@ -139,15 +158,15 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     
     public var rawValue: RawValue {
         var value: [String : Any] = [
-            "version": OmnipodPumpManagerState.version,
+            "version": DashPumpManagerState.version,
             "isOnboarded": isOnboarded,
             "timeZone": timeZone.secondsFromGMT(),
             "basalSchedule": basalSchedule.rawValue,
             "unstoredDoses": unstoredDoses.map { $0.rawValue },
-            "confirmationBeeps": confirmationBeeps,
-            "insulinType": insulinType.rawValue,
+            "confirmationBeeps": confirmationBeeps
         ]
         
+        value["insulinType"] = insulinType?.rawValue
         value["podState"] = podState?.rawValue
         value["expirationReminderDate"] = expirationReminderDate
         value["pairingAttemptAddress"] = pairingAttemptAddress
@@ -156,7 +175,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     }
 }
 
-extension OmnipodPumpManagerState {
+extension DashPumpManagerState {
     var hasActivePod: Bool {
         return podState?.isActive == true
     }
@@ -173,7 +192,7 @@ extension OmnipodPumpManagerState {
 }
 
 
-extension OmnipodPumpManagerState: CustomDebugStringConvertible {
+extension DashPumpManagerState: CustomDebugStringConvertible {
     public var debugDescription: String {
         return [
             "## OmnipodPumpManagerState",
