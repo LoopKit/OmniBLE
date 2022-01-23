@@ -46,6 +46,9 @@ public struct Pod {
     // Maximum reservoir level reading
     public static let maximumReservoirReading: Double = 50
 
+    // Reservoir level magic number indicating 50+ U remaining
+    public static let reservoirLevelAboveThresholdMagicNumber: Double = 51.15
+
     // Reservoir Capacity
     public static let reservoirCapacity: Double = 200
 
