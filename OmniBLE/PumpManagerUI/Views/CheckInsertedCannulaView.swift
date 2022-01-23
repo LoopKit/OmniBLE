@@ -32,7 +32,7 @@ struct CheckInsertedCannulaView: View {
                     Spacer()
                 }
                 HStack {
-                    FrameworkLocalText("The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.", comment: "Description of proper cannula insertion")
+                    FrameworkLocalText("The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }.padding(.vertical)
             }

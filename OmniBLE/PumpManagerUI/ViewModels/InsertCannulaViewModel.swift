@@ -10,7 +10,8 @@ import LoopKit
 import LoopKitUI
 
 public protocol CannulaInserter {
-    func insertCannula(completion: @escaping (PumpManagerResult<TimeInterval>) -> ())
+    func insertCannula(completion: @escaping (Result<TimeInterval,DashPumpManagerError>) -> ())
+    func checkCannulaInsertionFinished(completion: @escaping (DashPumpManagerError?) -> Void)
 }
 
 extension DashPumpManager: CannulaInserter { }
@@ -21,6 +22,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         case ready
         case startingInsertion
         case inserting(finishTime: CFTimeInterval)
+        case checkingInsertion
         case error(DashPumpManagerError)
         case finished
         
@@ -30,6 +32,8 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                 return LocalizedString("Insert Cannula", comment: "Insert cannula action button accessibility label while ready to pair")
             case .inserting:
                 return LocalizedString("Inserting. Please wait.", comment: "Insert cannula action button accessibility label while pairing")
+            case .checkingInsertion:
+                return LocalizedString("Checking Insertion", comment: "Insert cannula action button accessibility label checking insertion")
             case .error(let error):
                 return String(format: "%@ %@", error.errorDescription ?? "", error.recoverySuggestion ?? "")
             case .finished:
@@ -54,6 +58,8 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                 return LocalizedString("Retry", comment: "Cannula insertion button text while showing error")
             case .inserting, .startingInsertion:
                 return LocalizedString("Inserting...", comment: "Cannula insertion button text while inserting")
+            case .checkingInsertion:
+                return LocalizedString("Checking...", comment: "Cannula insertion button text while checking insertion")
             case .finished:
                 return LocalizedString("Continue", comment: "Cannula insertion button text when inserted")
             }
@@ -75,7 +81,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
             switch self {
             case .ready, .error:
                 return .hidden
-            case .startingInsertion:
+            case .startingInsertion, .checkingInsertion:
                 return .indeterminantProgress
             case .inserting(let finishTime):
                 return .timedProgress(finishTime: finishTime)
@@ -141,10 +147,41 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
 //        }
 //    }
     
+    private func checkCannulaInsertionFinished() {
+        state = .startingInsertion
+        cannulaInserter.checkCannulaInsertionFinished() { (error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.state = .error(error)
+                } else {
+                    self.state = .finished
+                }
+            }
+        }
+    }
+    
     private func insertCannula() {
         state = .startingInsertion
         
-        cannulaInserter.insertCannula { (status) in
+        cannulaInserter.insertCannula { (result) in
+            DispatchQueue.main.async {
+                switch(result) {
+                case .success(let finishTime):
+                    self.state = .inserting(finishTime: CACurrentMediaTime() + finishTime)
+                    let delay = finishTime
+                    if delay > 0 {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                            self.checkCannulaInsertionFinished() // now check if actually ready
+                        }
+                    } else {
+                        self.state = .finished
+                    }
+                case .failure(let error):
+                    self.state = .error(error)
+                }
+            }
+
+            
 //            switch status {
 //            case .error(let error):
 //                self.state = .error(error)

@@ -576,6 +576,23 @@ extension DashPumpManager {
 
     // Called on the main thread
     public func pairAndPrime(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
+        
+        
+        // TODO: set expiration and low reservoir alerts
+        //        guard let podExpirationAlert = try? PodExpirationAlert(intervalBeforeExpiration: state.defaultExpirationReminderOffset) else {
+        //            eventListener(.error(.invalidAlertSetting))
+        //            return
+        //        }
+        //
+        //        guard let lowReservoirAlert = try? LowReservoirAlert(reservoirVolumeBelow: Int(Double(state.lowReservoirReminderValue) * Pod.podSDKInsulinMultiplier)) else {
+        //            eventListener(.error(.invalidAlertSetting))
+        //            return
+        //        }
+        //
+        //        startPodActivation(
+        //            lowReservoirAlert: lowReservoirAlert,
+        //            podExpirationAlert: podExpirationAlert,
+        //            eventListener: eventListener)
 
         let primeSession = { (result: PodComms.SessionRunResult) in
             switch result {
@@ -655,7 +672,7 @@ extension DashPumpManager {
     }
 
     // Called on the main thread
-    public func insertCannula(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
+    public func insertCannula(completion: @escaping (Result<TimeInterval,DashPumpManagerError>) -> Void) {
         #if targetEnvironment(simulator)
         let mockDelay = TimeInterval(seconds: 3)
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + mockDelay) {
@@ -689,7 +706,7 @@ extension DashPumpManager {
         })
 
         if let error = preError {
-            completion(.failure(.deviceState(error)))
+            completion(.failure(.state(error)))
             return
         }
 
@@ -711,7 +728,7 @@ extension DashPumpManager {
                     let finishWait = try session.insertCannula()
                     completion(.success(finishWait))
                 } catch let error {
-                    completion(.failure(.communication(error as? LocalizedError)))
+                    completion(.failure(.communication(error)))
                 }
             case .failure(let error):
                 completion(.failure(.communication(error)))
@@ -720,7 +737,7 @@ extension DashPumpManager {
         #endif
     }
 
-    public func checkCannulaInsertionFinished(completion: @escaping (Error?) -> Void) {
+    public func checkCannulaInsertionFinished(completion: @escaping (DashPumpManagerError?) -> Void) {
         self.podComms.runSession(withName: "Check cannula insertion finished") { (result) in
             switch result {
             case .success(let session):
@@ -729,11 +746,11 @@ extension DashPumpManager {
                     completion(nil)
                 } catch let error {
                     self.log.error("Failed to fetch pod status: %{public}@", String(describing: error))
-                    completion(error)
+                    completion(.communication(error))
                 }
             case .failure(let error):
                 self.log.error("Failed to fetch pod status: %{public}@", String(describing: error))
-                completion(error)
+                completion(.communication(error))
             }
         }
     }

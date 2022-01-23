@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LoopKit
 import LoopKitUI
 
 class PairPodViewModel: ObservableObject, Identifiable {
@@ -177,85 +178,77 @@ class PairPodViewModel: ObservableObject, Identifiable {
         self.podPairer = podPairer
         self.navigator = navigator
     }
-    
-//    private func handleEvent(_ event: ActivationStep1Event) {
-//        switch event {
-//        case .connecting, .retrievingPodVersion, .settingPodUid, .programmingLowReservoirAlert, .programmingLumpOfCoal, .checkingPodStatus, .programmingPodExpireAlert, .podStatus:
-//            // Ignoring these details for now at the UI level
-//            break
-//        case .primingPod:
-//            let finishTime = TimeInterval(Pod.estimatedPrimingDuration)
-//            state = .priming(finishTime: CACurrentMediaTime() + finishTime)
-//        case .step1Completed:
-//            state = .finished
-//        }
-//    }
-    
+        
     private func pair() {
         state = .pairing
         
         podPairer.pair { (status) in
-//            switch status {
-//            case .error(let error):
-//                let pairingError = DashPairingError.OmnipodPumpManagerError(error)
-//                self.state = .error(pairingError, self.podPairer.podCommState)
-//            case .event(let event):
-//                self.handleEvent(event)
-//            }
+            DispatchQueue.main.async {
+                switch status {
+                case .failure(let error):
+                    let pairingError = DashPairingError.pumpManagerError(error)
+                    self.state = .error(pairingError)
+                case .success(let duration):
+                    
+                    if duration > 0 {
+                        self.state = .priming(finishTime: CACurrentMediaTime() + duration)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                            self.state = .finished
+                        }
+                    } else {
+                        self.state = .finished
+                    }
+                }
+            }
         }
     }
     
     public func continueButtonTapped() {
-//        switch state {
-//        case .error(let error, _):
-//            if !error.recoverable {
-//                self.navigator?.navigateTo(.deactivate)
-//            } else {
-//                // Retry
-//                pair()
-//            }
-//        case .finished:
-//            didFinish?()
-//        default:
-//            pair()
-//        }
+        switch state {
+        case .error(let error):
+            if !error.recoverable {
+                self.navigator?.navigateTo(.deactivate)
+            } else {
+                // Retry
+                pair()
+            }
+        case .finished:
+            didFinish?()
+        default:
+            pair()
+        }
     }    
 }
 
 // Pairing recovery suggestions
 enum DashPairingError : LocalizedError {
-    case OmnipodPumpManagerError(DashPumpManagerError)
+    case pumpManagerError(PumpManagerError)
     
     var recoverySuggestion: String? {
         switch self {
-        case .OmnipodPumpManagerError(let error):
-//            switch error {
-//            case .podNotAvailable:
-//                return LocalizedString("Please make sure the pod is filled with insulin and is close to your device and try again.", comment: "recovery suggestion for podNotAvailable during pairing.")
-//            default:
-//                return error.recoverySuggestion
-//            }
-            return nil
+        case .pumpManagerError(let error):
+            return error.recoverySuggestion
         }
     }
     
     var errorDescription: String? {
         switch self {
-        case .OmnipodPumpManagerError(let error):
+        case .pumpManagerError(let error):
             return error.errorDescription
         }
     }
     
     var recoverable: Bool {
         switch self {
-        case .OmnipodPumpManagerError(let error):
-            return error.recoverable
+        case .pumpManagerError(let error):
+            // TODO: check which errors are recoverable
+            return true
         }
     }
 }
 
 public protocol PodPairer {
-    func pair(eventListener: @escaping (Bool) -> ())
+    func pair(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void)
     func discardPod(completion: @escaping (Bool) -> ())
 }
 
@@ -263,21 +256,8 @@ extension DashPumpManager: PodPairer {
     public func discardPod(completion: @escaping (Bool) -> ()) {
     }
     
-    public func pair(eventListener: @escaping (Bool) -> ()) {
-//        guard let podExpirationAlert = try? PodExpirationAlert(intervalBeforeExpiration: state.defaultExpirationReminderOffset) else {
-//            eventListener(.error(.invalidAlertSetting))
-//            return
-//        }
-//
-//        guard let lowReservoirAlert = try? LowReservoirAlert(reservoirVolumeBelow: Int(Double(state.lowReservoirReminderValue) * Pod.podSDKInsulinMultiplier)) else {
-//            eventListener(.error(.invalidAlertSetting))
-//            return
-//        }
-//
-//        startPodActivation(
-//            lowReservoirAlert: lowReservoirAlert,
-//            podExpirationAlert: podExpirationAlert,
-//            eventListener: eventListener)
+    public func pair(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
+        pairAndPrime(completion: completion)
     }
 }
 
