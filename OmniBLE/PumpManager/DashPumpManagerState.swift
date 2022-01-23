@@ -78,6 +78,11 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
         self.unstoredDoses = []
         self.confirmationBeeps = false
         self.insulinType = insulinType
+        self.lowReservoirReminderValue = Pod.defaultLowReservoirReminder
+        self.podAttachmentConfirmed = false
+        self.acknowledgedTimeOffsetAlert = false
+        self.activeAlerts = []
+        self.alertsWithPendingAcknowledgment = []
     }
     
     public init?(rawValue: RawValue) {
@@ -154,6 +159,41 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
             self.pairingAttemptAddress = pairingAttemptAddress
         }
         
+        self.scheduledExpirationReminderOffset = rawValue["scheduledExpirationReminderOffset"] as? TimeInterval
+        
+        self.defaultExpirationReminderOffset = rawValue["defaultExpirationReminderOffset"] as? TimeInterval ?? Pod.defaultExpirationReminderOffset
+        
+        self.lowReservoirReminderValue = rawValue["lowReservoirReminderValue"] as? Double ?? Pod.defaultLowReservoirReminder
+
+        self.podAttachmentConfirmed = rawValue["podAttachmentConfirmed"] as? Bool ?? false
+
+        self.initialConfigurationCompleted = rawValue["initialConfigurationCompleted"] as? Bool ?? true
+        
+        self.acknowledgedTimeOffsetAlert = rawValue["acknowledgedTimeOffsetAlert"] as? Bool ?? false
+        
+        if let rawPendingCommand = rawValue["pendingCommand"] as? PendingCommand.RawValue {
+            self.pendingCommand = PendingCommand(rawValue: rawPendingCommand)
+        } else {
+            self.pendingCommand = nil
+        }
+
+        self.activeAlerts = []
+        if let rawActiveAlerts = rawValue["activeAlerts"] as? [PumpManagerAlert.RawValue] {
+            for rawAlert in rawActiveAlerts {
+                if let alert = PumpManagerAlert(rawValue: rawAlert) {
+                    self.activeAlerts.insert(alert)
+                }
+            }
+        }
+
+        self.alertsWithPendingAcknowledgment = []
+        if let rawAlerts = rawValue["alertsWithPendingAcknowledgment"] as? [PumpManagerAlert.RawValue] {
+            for rawAlert in rawAlerts {
+                if let alert = PumpManagerAlert(rawValue: rawAlert) {
+                    self.alertsWithPendingAcknowledgment.insert(alert)
+                }
+            }
+        }
     }
     
     public var rawValue: RawValue {
@@ -163,14 +203,22 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
             "timeZone": timeZone.secondsFromGMT(),
             "basalSchedule": basalSchedule.rawValue,
             "unstoredDoses": unstoredDoses.map { $0.rawValue },
-            "confirmationBeeps": confirmationBeeps
+            "confirmationBeeps": confirmationBeeps,
+            "activeAlerts": activeAlerts.map { $0.rawValue },
+            "podAttachmentConfirmed": podAttachmentConfirmed,
+            "acknowledgedTimeOffsetAlert": acknowledgedTimeOffsetAlert,
+            "alertsWithPendingAcknowledgment": alertsWithPendingAcknowledgment.map { $0.rawValue },
+            "initialConfigurationCompleted": initialConfigurationCompleted,
         ]
         
         value["insulinType"] = insulinType?.rawValue
         value["podState"] = podState?.rawValue
         value["expirationReminderDate"] = expirationReminderDate
         value["pairingAttemptAddress"] = pairingAttemptAddress
-
+        value["scheduledExpirationReminderOffset"] = scheduledExpirationReminderOffset
+        value["defaultExpirationReminderOffset"] = defaultExpirationReminderOffset
+        value["lowReservoirReminderValue"] = lowReservoirReminderValue
+        value["pendingCommand"] = pendingCommand?.rawValue
         return value
     }
 }

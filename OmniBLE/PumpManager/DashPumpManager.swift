@@ -21,13 +21,14 @@ public enum DashPumpManagerError: Error {
     case podAlreadyPaired
     case notReadyForCannulaInsertion
     case communication(Error)
+    case state(Error)
 }
 
-public enum PodCommState {
+public enum PodCommState: Equatable {
     case noPod
     case activating
     case active
-    case alarm
+    case fault(DetailedStatus)
     case deactivating
 }
 
@@ -41,6 +42,12 @@ extension DashPumpManagerError: LocalizedError {
         case .notReadyForCannulaInsertion:
             return LocalizedString("Pod is not in a state ready for cannula insertion.", comment: "Error message when cannula insertion fails because the pod is in an unexpected state")
         case .communication(let error):
+            if let error = error as? LocalizedError {
+                return error.errorDescription
+            } else {
+                return String(describing: error)
+            }
+        case .state(let error):
             if let error = error as? LocalizedError {
                 return error.errorDescription
             } else {
@@ -326,7 +333,7 @@ extension DashPumpManager {
             return .noPod
         }
         guard podState.fault == nil else {
-            return .alarm
+            return .fault(podState.fault!)
         }
         
         if podState.isActive {
@@ -336,6 +343,14 @@ extension DashPumpManager {
         }
         return .deactivating
     }
+    
+    public var podActivatedAt: Date? {
+        return state.podState?.activatedAt
+    }
+
+    public var podExpiresAt: Date? {
+        return state.podState?.expiresAt
+    }
 
     public var hasActivePod: Bool {
         return state.hasActivePod
@@ -343,6 +358,13 @@ extension DashPumpManager {
 
     public var hasSetupPod: Bool {
         return state.hasSetupPod
+    }
+    
+    // If time remaining is negative, the pod has been expired for that amount of time.
+    public var podTimeRemaining: TimeInterval? {
+        guard let activationTime = podActivatedAt else { return nil }
+        let timeActive = dateGenerator().timeIntervalSince(activationTime)
+        return Pod.nominalPodLife - timeActive
     }
     
     public var expirationReminderDate: Date? {
@@ -783,7 +805,7 @@ extension DashPumpManager {
         }
     }
 
-    public func setTime(completion: @escaping (Error?) -> Void) {
+    public func setTime(completion: @escaping (DashPumpManagerError?) -> Void) {
 
         guard state.hasActivePod else {
             completion(DashPumpManagerError.noPodPaired)
@@ -791,7 +813,7 @@ extension DashPumpManager {
         }
 
         guard state.podState?.unfinalizedBolus?.isFinished != false else {
-            completion(PodCommsError.unfinalizedBolus)
+            completion(.state(PodCommsError.unfinalizedBolus))
             return
         }
 
@@ -807,10 +829,10 @@ extension DashPumpManager {
                     }
                     completion(nil)
                 } catch let error {
-                    completion(error)
+                    completion(.communication(error))
                 }
             case .failure(let error):
-                completion(error)
+                completion(.communication(error))
             }
         }
     }
@@ -1062,151 +1084,151 @@ extension DashPumpManager {
     
     // Reconnected to the pod, and we know program was successful
     private func pendingCommandSucceeded(pendingCommand: PendingCommand, podStatus: StatusResponse) {
-        self.mutateState { (state) in
-            switch pendingCommand {
-            case .program(let program, let commandDate):
-                if let dose = program.unfinalizedDose(at: commandDate, withCertainty: .certain) {
-                    if dose.isFinished(at: dateGenerator()) {
-                        state.finishedDoses.append(dose)
-                        if case .resume = dose.doseType {
-                            state.suspendState = .resumed(commandDate)
-                        }
-                    } else {
-                        switch dose.doseType {
-                        case .bolus:
-                            state.unfinalizedBolus = dose
-                        case .tempBasal:
-                            state.unfinalizedTempBasal = dose
-                        default:
-                            break
-                        }
-                    }
-                    state.updateFromPodStatus(status: podStatus)
-                }
-            case .stopProgram(let stopProgram, let commandDate):
-                var bolusCancel = false
-                var tempBasalCancel = false
-                var didSuspend = false
-                switch stopProgram {
-                case .bolus:
-                    bolusCancel = true
-                case .tempBasal:
-                    tempBasalCancel = true
-                case .stopAll:
-                    bolusCancel = true
-                    tempBasalCancel = true
-                    didSuspend = true
-                }
-                
-                if bolusCancel, let bolus = state.unfinalizedBolus, !bolus.isFinished(at: commandDate) {
-                    state.unfinalizedBolus?.cancel(at: commandDate, withRemaining: podStatus.bolusUnitsRemaining)
-                }
-                if tempBasalCancel, let tempBasal = state.unfinalizedTempBasal, !tempBasal.isFinished(at: commandDate) {
-                    state.unfinalizedTempBasal?.cancel(at: commandDate)
-                }
-                if didSuspend {
-                    state.finishedDoses.append(UnfinalizedDose(suspendStartTime: commandDate, scheduledCertainty: .certain))
-                    state.suspendState = .suspended(commandDate)
-                }
-                state.updateFromPodStatus(status: podStatus)
-            }
-        }
-        self.finalizeAndStoreDoses()
+//        self.mutateState { (state) in
+//            switch pendingCommand {
+//            case .program(let program, let commandDate):
+//                if let dose = program.unfinalizedDose(at: commandDate, withCertainty: .certain) {
+//                    if dose.isFinished {
+//                        state.podState?.finalizedDoses.append(dose)
+//                        if case .resume = dose.doseType {
+//                            state.suspendState = .resumed(commandDate)
+//                        }
+//                    } else {
+//                        switch dose.doseType {
+//                        case .bolus:
+//                            state.unfinalizedBolus = dose
+//                        case .tempBasal:
+//                            state.unfinalizedTempBasal = dose
+//                        default:
+//                            break
+//                        }
+//                    }
+//                    state.updateFromPodStatus(status: podStatus)
+//                }
+//            case .stopProgram(let stopProgram, let commandDate):
+//                var bolusCancel = false
+//                var tempBasalCancel = false
+//                var didSuspend = false
+//                switch stopProgram {
+//                case .bolus:
+//                    bolusCancel = true
+//                case .tempBasal:
+//                    tempBasalCancel = true
+//                case .stopAll:
+//                    bolusCancel = true
+//                    tempBasalCancel = true
+//                    didSuspend = true
+//                }
+//
+//                if bolusCancel, let bolus = state.unfinalizedBolus, !bolus.isFinished(at: commandDate) {
+//                    state.unfinalizedBolus?.cancel(at: commandDate, withRemaining: podStatus.bolusUnitsRemaining)
+//                }
+//                if tempBasalCancel, let tempBasal = state.unfinalizedTempBasal, !tempBasal.isFinished(at: commandDate) {
+//                    state.unfinalizedTempBasal?.cancel(at: commandDate)
+//                }
+//                if didSuspend {
+//                    state.finishedDoses.append(UnfinalizedDose(suspendStartTime: commandDate, scheduledCertainty: .certain))
+//                    state.suspendState = .suspended(commandDate)
+//                }
+//                state.updateFromPodStatus(status: podStatus)
+//            }
+//        }
+//        self.finalizeAndStoreDoses()
     }
 
     // Reconnected to the pod, and we know program was not received
-    private func pendingCommandFailed(pendingCommand: PendingCommand, podStatus: PodStatus) {
-        // Nothing to do besides update using the pod status, because we already responded to Loop as if the commands failed.
-        self.mutateState({ (state) in
-            state.updateFromPodStatus(status: podStatus)
-        })
-        self.finalizeAndStoreDoses()
+    private func pendingCommandFailed(pendingCommand: PendingCommand, podStatus: StatusResponse) {
+//        // Nothing to do besides update using the pod status, because we already responded to Loop as if the commands failed.
+//        self.mutateState({ (state) in
+//            state.updateFromPodStatus(status: podStatus)
+//        })
+//        self.finalizeAndStoreDoses()
     }
     
     // Giving up on pod; we will assume commands failed/succeeded in the direction of positive net delivery
     private func resolveAnyPendingCommandWithUncertainty() {
-        guard let pendingCommand = state.pendingCommand else {
-            return
-        }
-        
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = state.timeZone
-        
-        self.mutateState { (state) in
-            switch pendingCommand {
-            case .program(let program, let commandDate):
-                let scheduledSegmentAtCommandTime = state.basalProgram.currentRate(using: calendar, at: commandDate)
-
-                if let dose = program.unfinalizedDose(at: commandDate, withCertainty: .uncertain) {
-                    switch dose.doseType {
-                    case .bolus:
-                        if dose.isFinished(at: dateGenerator()) {
-                            state.finishedDoses.append(dose)
-                        } else {
-                            state.unfinalizedBolus = dose
-                        }
-                    case .tempBasal:
-                        // Assume a high temp succeeded, but low temp failed
-                        let rate = dose.programmedRate ?? dose.rate
-                        if rate > scheduledSegmentAtCommandTime.basalRateUnitsPerHour {
-                            if dose.isFinished(at: dateGenerator()) {
-                                state.finishedDoses.append(dose)
-                            } else {
-                                state.unfinalizedTempBasal = dose
-                            }
-                        }
-                    case .resume:
-                        state.finishedDoses.append(dose)
-                    case .suspend:
-                        break // start program is never a suspend
-                    }
-                }
-            case .stopProgram(let stopProgram, let commandDate):
-                let scheduledSegmentAtCommandTime = state.basalProgram.currentRate(using: calendar, at: commandDate)
-                
-                // All stop programs result in reduced delivery, except for stopping a low temp, so we assume all stop
-                // commands failed, except for low temp
-                var tempBasalCancel = false
-
-                switch stopProgram {
-                case .tempBasal:
-                    tempBasalCancel = true
-                case .stopAll:
-                    tempBasalCancel = true
-                default:
-                    break
-                }
-                
-                if tempBasalCancel,
-                    let tempBasal = state.unfinalizedTempBasal,
-                    !tempBasal.isFinished(at: commandDate),
-                    (tempBasal.programmedRate ?? tempBasal.rate) < scheduledSegmentAtCommandTime.basalRateUnitsPerHour
-                {
-                    state.unfinalizedTempBasal?.cancel(at: commandDate)
-                }
-            }
-            state.pendingCommand = nil
-        }
+//        guard let pendingCommand = state.pendingCommand else {
+//            return
+//        }
+//
+//        var calendar = Calendar(identifier: .gregorian)
+//        calendar.timeZone = state.timeZone
+//
+//        self.mutateState { (state) in
+//            switch pendingCommand {
+//            case .program(let program, let commandDate):
+//                let scheduledSegmentAtCommandTime = state.basalProgram.currentRate(using: calendar, at: commandDate)
+//
+//                if let dose = program.unfinalizedDose(at: commandDate, withCertainty: .uncertain) {
+//                    switch dose.doseType {
+//                    case .bolus:
+//                        if dose.isFinished(at: dateGenerator()) {
+//                            state.finishedDoses.append(dose)
+//                        } else {
+//                            state.unfinalizedBolus = dose
+//                        }
+//                    case .tempBasal:
+//                        // Assume a high temp succeeded, but low temp failed
+//                        let rate = dose.programmedRate ?? dose.rate
+//                        if rate > scheduledSegmentAtCommandTime.basalRateUnitsPerHour {
+//                            if dose.isFinished(at: dateGenerator()) {
+//                                state.finishedDoses.append(dose)
+//                            } else {
+//                                state.unfinalizedTempBasal = dose
+//                            }
+//                        }
+//                    case .resume:
+//                        state.finishedDoses.append(dose)
+//                    case .suspend:
+//                        break // start program is never a suspend
+//                    }
+//                }
+//            case .stopProgram(let stopProgram, let commandDate):
+//                let scheduledSegmentAtCommandTime = state.basalProgram.currentRate(using: calendar, at: commandDate)
+//
+//                // All stop programs result in reduced delivery, except for stopping a low temp, so we assume all stop
+//                // commands failed, except for low temp
+//                var tempBasalCancel = false
+//
+//                switch stopProgram {
+//                case .tempBasal:
+//                    tempBasalCancel = true
+//                case .stopAll:
+//                    tempBasalCancel = true
+//                default:
+//                    break
+//                }
+//
+//                if tempBasalCancel,
+//                    let tempBasal = state.unfinalizedTempBasal,
+//                    !tempBasal.isFinished(at: commandDate),
+//                    (tempBasal.programmedRate ?? tempBasal.rate) < scheduledSegmentAtCommandTime.basalRateUnitsPerHour
+//                {
+//                    state.unfinalizedTempBasal?.cancel(at: commandDate)
+//                }
+//            }
+//            state.pendingCommand = nil
+//        }
     }
 
     public func attemptUnacknowledgedCommandRecovery() {
-        if let pendingCommand = self.state.pendingCommand {
-            podCommManager.queryAndClearUnacknowledgedCommand { (result) in
-                switch result {
-                case .success(let retryResult):
-                    if retryResult.hasPendingCommandProgrammed {
-                        self.pendingCommandSucceeded(pendingCommand: pendingCommand, podStatus: retryResult.status)
-                    } else {
-                        self.pendingCommandFailed(pendingCommand: pendingCommand, podStatus: retryResult.status)
-                    }
-                    self.mutateState { (state) in
-                        state.pendingCommand = nil
-                    }
-                case .failure:
-                    break
-                }
-            }
-        }
+//        if let pendingCommand = self.state.pendingCommand {
+//            podCommManager.queryAndClearUnacknowledgedCommand { (result) in
+//                switch result {
+//                case .success(let retryResult):
+//                    if retryResult.hasPendingCommandProgrammed {
+//                        self.pendingCommandSucceeded(pendingCommand: pendingCommand, podStatus: retryResult.status)
+//                    } else {
+//                        self.pendingCommandFailed(pendingCommand: pendingCommand, podStatus: retryResult.status)
+//                    }
+//                    self.mutateState { (state) in
+//                        state.pendingCommand = nil
+//                    }
+//                case .failure:
+//                    break
+//                }
+//            }
+//        }
     }
 
 }

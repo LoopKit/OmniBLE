@@ -151,7 +151,6 @@
 		C1F67EB727975E710017487F /* LeadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EB427975E710017487F /* LeadingImage.swift */; };
 		C1F67EB827975E710017487F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EB527975E710017487F /* ErrorView.swift */; };
 		C1F67EBA27975EB70017487F /* FrameworkLocalText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EB927975EB70017487F /* FrameworkLocalText.swift */; };
-		C1F67EC427975F360017487F /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EBC27975F360017487F /* RegistrationViewModel.swift */; };
 		C1F67EC527975F360017487F /* InsertCannulaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EBD27975F360017487F /* InsertCannulaViewModel.swift */; };
 		C1F67EC627975F360017487F /* PairPodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EBE27975F360017487F /* PairPodViewModel.swift */; };
 		C1F67EC827975F360017487F /* DeactivatePodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC027975F360017487F /* DeactivatePodViewModel.swift */; };
@@ -344,7 +343,6 @@
 		C1F67EB427975E710017487F /* LeadingImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeadingImage.swift; sourceTree = "<group>"; };
 		C1F67EB527975E710017487F /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		C1F67EB927975EB70017487F /* FrameworkLocalText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkLocalText.swift; sourceTree = "<group>"; };
-		C1F67EBC27975F360017487F /* RegistrationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		C1F67EBD27975F360017487F /* InsertCannulaViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertCannulaViewModel.swift; sourceTree = "<group>"; };
 		C1F67EBE27975F360017487F /* PairPodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairPodViewModel.swift; sourceTree = "<group>"; };
 		C1F67EC027975F360017487F /* DeactivatePodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivatePodViewModel.swift; sourceTree = "<group>"; };
@@ -760,7 +758,6 @@
 				C1F67EBD27975F360017487F /* InsertCannulaViewModel.swift */,
 				C1F67EBE27975F360017487F /* PairPodViewModel.swift */,
 				C1F67EC327975F360017487F /* PodLifeState.swift */,
-				C1F67EBC27975F360017487F /* RegistrationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1102,7 +1099,6 @@
 				102111482709462300784F13 /* PodInsulinMeasurements.swift in Sources */,
 				10389A4126FF7841002115E9 /* MessageTransport.swift in Sources */,
 				C1F67E8F27975B830017487F /* DashSettingsView.swift in Sources */,
-				C1F67EC427975F360017487F /* RegistrationViewModel.swift in Sources */,
 				10389A2E26FF7841002115E9 /* FaultConfigCommand.swift in Sources */,
 				C1F67E9F27975B830017487F /* SetupCompleteView.swift in Sources */,
 				C1F67EE227985F580017487F /* ReservoirLevel.swift in Sources */,

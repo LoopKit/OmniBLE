@@ -12,8 +12,8 @@ import HealthKit
 
 
 enum DashSettingsViewAlert {
-    case suspendError(DashPumpManagerError)
-    case resumeError(DashPumpManagerError)
+    case suspendError(Error)
+    case resumeError(Error)
     case syncTimeError(DashPumpManagerError)
 }
 
@@ -179,7 +179,7 @@ class DashSettingsViewModel: ObservableObject {
         expirationReminderDate = self.pumpManager.scheduledExpirationReminder
         expirationReminderDefault = Int(self.pumpManager.defaultExpirationReminderOffset.hours)
         lowReservoirAlertValue = Int(self.pumpManager.state.lowReservoirReminderValue)
-        pumpManager.addPodStatusObserver(self, queue: DispatchQueue.main)
+        pumpManager.addPodStateObserver(self, queue: DispatchQueue.main)
     }
     
     func changeTimeZoneTapped() {
@@ -206,12 +206,8 @@ class DashSettingsViewModel: ObservableObject {
     }
     
     func suspendDelivery(duration: TimeInterval) {
-        guard let reminder = try? StopProgramReminder(value: duration) else {
-            assertionFailure("Invalid StopProgramReminder duration of \(duration)")
-            return
-        }
-
-        pumpManager.suspendDelivery(withReminder: reminder) { (error) in
+        // TODO: add reminder setting
+        pumpManager.suspendDelivery() { (error) in
             if let error = error {
                 self.activeAlert = .suspendError(error)
             }
@@ -219,7 +215,7 @@ class DashSettingsViewModel: ObservableObject {
     }
     
     func resumeDelivery() {
-        pumpManager.resumeInsulinDelivery { (error) in
+        pumpManager.resumeDelivery { (error) in
             if let error = error {
                 self.activeAlert = .resumeError(error)
             }
@@ -251,21 +247,11 @@ class DashSettingsViewModel: ObservableObject {
         guard basalDeliveryState != nil else { return false }
         
         switch lifeState {
-        case .noPod, .podAlarm, .systemError, .podActivating, .podDeactivating:
+        case .noPod, .podAlarm, .podActivating, .podDeactivating:
             return false
         default:
             return true
         }
-    }
-    
-    var systemErrorDescription: String? {
-        switch lifeState {
-        case .systemError(let systemError, _):
-            return systemError.localizedDescription
-        default:
-            break
-        }
-        return nil
     }
     
     func reservoirText(for level: ReservoirLevel) -> String {
@@ -298,8 +284,8 @@ extension DashSettingsViewModel: PodStateObserver {
 extension DashPumpManager {
     var lifeState: PodLifeState {
         switch podCommState {
-        case .alarm(let alarm):
-            return .podAlarm(alarm, durationBetweenLastPodCommAndActivation)
+        case .fault(let status):
+            return .podAlarm(status)
         case .noPod:
             return .noPod
         case .activating:
@@ -316,21 +302,18 @@ extension DashPumpManager {
             } else {
                 return .podDeactivating
             }
-        case .systemError(let error):
-            return .systemError(error, durationBetweenLastPodCommAndActivation)
         }
     }
     
     var basalDeliveryRate: Double? {
-        if let tempBasal = state.unfinalizedTempBasal, !tempBasal.isFinished(at: dateGenerator()) {
+        if let tempBasal = state.podState?.unfinalizedTempBasal, !tempBasal.isFinished {
             return tempBasal.rate
         } else {
-            switch state.suspendState {
+            switch state.podState?.suspendState {
             case .resumed:
                 var calendar = Calendar(identifier: .gregorian)
                 calendar.timeZone = state.timeZone
-                let scheduledRate = state.basalProgram.currentRate(using: calendar, at: dateGenerator()).basalRateUnitsPerHour
-                return scheduledRate
+                return state.basalSchedule.currentRate(using: calendar, at: dateGenerator())
             case .suspended, .none:
                 return nil
             }

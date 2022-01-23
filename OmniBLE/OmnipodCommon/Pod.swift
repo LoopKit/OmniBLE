@@ -86,6 +86,9 @@ public struct Pod {
     
     // Default low reservoir alert limit in Units
     public static let defaultLowReservoirReminder: Double = 10
+    
+    // Allowed Low Reservoir reminder values
+    public static let allowedLowReservoirReminderValues = Array(stride(from: 10, through: 50, by: 1))
 }
 
 // DeliveryStatus used in StatusResponse and DetailedStatus

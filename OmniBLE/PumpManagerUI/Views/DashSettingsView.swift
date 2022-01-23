@@ -345,21 +345,6 @@ struct DashSettingsView: View  {
 
          confidenceRemindersSection
 
-         Section() {
-            HStack {
-               Text(LocalizedString("SDK Version", comment: "description label for sdk version in pod settings"))
-               Spacer()
-               Text(self.viewModel.sdkVersion)
-            }
-            self.viewModel.pdmIdentifier.map { (pdmIdentifier) in
-               HStack {
-                  Text(LocalizedString("PDM Identifier", comment: "description label for pdm identifier in pod settings"))
-                  Spacer()
-                  Text(pdmIdentifier)
-               }
-            }
-         }
-
          if self.viewModel.lifeState.allowsPumpManagerRemoval {
             Section() {
                Button(action: {
@@ -470,51 +455,5 @@ struct DashSettingsView: View  {
       case .critical:
          return guidanceColors.critical
       }
-   }
-}
-
-struct DashSettingsView_Previews: PreviewProvider {
-   static var previews: some View {
-      DashSettingsSheetView()
-   }
-}
-
-
-struct DashSettingsSheetView: View {
-
-   @State var showingDetail = true
-
-   var body: some View {
-      VStack {
-         Button(action: {
-            self.showingDetail.toggle()
-         }) {
-            Text("Show Detail")
-         }.sheet(isPresented: $showingDetail) {
-            NavigationView {
-               ZStack {
-                  DashSettingsView(viewModel: previewModel(), navigator: nil)
-               }
-            }
-         }
-         HStack {
-            Spacer()
-         }
-         Spacer()
-      }
-      .background(Color.green)
-   }
-
-   func previewModel() -> DashSettingsViewModel {
-      let basalScheduleItems = [RepeatingScheduleValue(startTime: 0, value: 1.0)]
-      let schedule = BasalRateSchedule(dailyItems: basalScheduleItems, timeZone: .current)!
-      let state = DashPumpManagerState(basalRateSchedule: schedule, lastPodCommState: .active)!
-
-      let mockPodCommManager = MockPodCommManager()
-      let pumpManager = DashPumpManager(state: state, podCommManager: mockPodCommManager)
-      let model = DashSettingsViewModel(pumpManager: pumpManager)
-      model.basalDeliveryState = .active(Date())
-      model.lifeState = .timeRemaining(.days(2.5))
-      return model
    }
 }

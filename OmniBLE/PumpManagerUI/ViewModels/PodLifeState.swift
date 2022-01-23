@@ -18,8 +18,7 @@ enum PodLifeState {
     // Time since expiry
     case expired
     case podDeactivating
-    case podAlarm /*(PodAlarm?, TimeInterval?) */
-    case systemError /*(SystemError, TimeInterval?)*/
+    case podAlarm(DetailedStatus)
     case noPod
     
     var progress: Double {
@@ -28,17 +27,13 @@ enum PodLifeState {
             return max(0, min(1, (1 - (timeRemaining / Pod.nominalPodLife))))
         case .expired:
             return 1
-        case .podAlarm /*(let alarm, let timestampOfAlarm)*/:
-            return 1
-//            switch alarm?.alarmCode {
-//            case .podExpired:
-//                return 1
-//            default:
-//                return max(0, min(1, (timestampOfAlarm ?? Pod.nominalPodLife) / Pod.nominalPodLife))
-//            }
-        case .systemError /*(_, let timestampOfError) */:
-            return 1
-            //return max(0, min(1, (timestampOfError ?? Pod.nominalPodLife) / Pod.nominalPodLife))
+        case .podAlarm(let status):
+            switch status.faultEventCode.faultType {
+            case .exceededMaximumPodLife80Hrs:
+                return 1
+            default:
+                return max(0, min(1, (status.faultEventTimeSinceActivation ?? Pod.nominalPodLife) / Pod.nominalPodLife))
+            }
         case .podDeactivating:
             return 1
         case .noPod, .podActivating:
@@ -85,14 +80,8 @@ enum PodLifeState {
             return LocalizedString("Pod expired", comment: "Label for pod life state when within pod expiration window")
         case .podDeactivating:
             return LocalizedString("Unfinished deactivation", comment: "Label for pod life state when pod not fully deactivated")
-        case .podAlarm /*(let alarm, _)*/:
-//            if let alarm = alarm {
-//                return alarm.alarmDescription
-//            } else {
-                return LocalizedString("Pod alarm", comment: "Label for pod life state when pod is in alarm state")
-//            }
-        case .systemError:
-            return LocalizedString("Pod system error", comment: "Label for pod life state when pod is in system error state")
+        case .podAlarm(let status):
+            return String(format: LocalizedString("Pod alarm: %1$@", comment: "Format string for label for pod life state when pod is in alarm state (1: The fault description)"), status.faultEventCode.description)
         case .noPod:
             return LocalizedString("No Pod", comment: "Label for pod life state when no pod paired")
         }

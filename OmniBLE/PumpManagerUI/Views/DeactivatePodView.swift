@@ -95,9 +95,3 @@ struct DeactivatePodView: View {
         )
     }
 }
-
-struct DeactivatePodView_Previews: PreviewProvider {
-    static var previews: some View {
-        DeactivatePodView(viewModel: DeactivatePodViewModel(podDeactivator: MockPodDeactivater(), podAttachedToBody: false))
-    }
-}
