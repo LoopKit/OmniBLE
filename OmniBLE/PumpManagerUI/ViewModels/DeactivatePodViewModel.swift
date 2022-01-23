@@ -135,10 +135,12 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
         } else {
             self.state = .deactivating
             podDeactivator.deactivatePod { (error) in
-                if let error = error {
-                    self.state = .resultError(DeactivationError.OmnipodPumpManagerError(error))
-                } else {
-                    self.state = .finished
+                DispatchQueue.main.async {
+                    if let error = error {
+                        self.state = .resultError(DeactivationError.OmnipodPumpManagerError(error))
+                    } else {
+                        self.state = .finished
+                    }
                 }
             }
         }
@@ -146,7 +148,9 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
     
     public func discardPod() {
         podDeactivator.forgetPod {
-            self.didFinish?()
+            DispatchQueue.main.async {
+                self.didFinish?()
+            }
         }
     }
 }
