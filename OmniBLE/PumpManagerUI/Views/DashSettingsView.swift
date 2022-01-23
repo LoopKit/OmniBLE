@@ -98,7 +98,17 @@ struct DashSettingsView: View  {
       VStack(alignment: .leading, spacing: 5) {
          Text(deliverySectionTitle)
             .foregroundColor(Color(UIColor.secondaryLabel))
-         if let basalRate = self.viewModel.basalDeliveryRate {
+         if let basalState = self.viewModel.basalDeliveryState, case .suspended = basalState {
+             HStack(alignment: .center) {
+                Image(systemName: "pause.circle.fill")
+                   .font(.system(size: 34))
+                   .fixedSize()
+                   .foregroundColor(suspendResumeButtonColor(for: basalState))
+                FrameworkLocalText("Insulin\nSuspended", comment: "Text shown in insulin delivery space when insulin suspended")
+                   .fontWeight(.bold)
+                   .fixedSize()
+             }
+         } else if let basalRate = self.viewModel.basalDeliveryRate {
             HStack(alignment: .center) {
                HStack(alignment: .lastTextBaseline, spacing: 3) {
                   Text(self.viewModel.basalRateFormatter.string(from: basalRate) ?? "")
