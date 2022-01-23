@@ -1,7 +1,8 @@
 //
 //  Setup PodCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/SetupPodCommand.swift
 //  Created by Pete Schwamb on 2/17/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

@@ -1,21 +1,20 @@
 //
-//  Omnipod.swift
-//  OmnipodKit
+//  OmniBLE.swift
+//  OmniBLE
 //
 //  Created by Randall Knutson on 10/11/21.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
-import CoreBluetooth
-import LoopKit
 import OSLog
 
 
-public class Omnipod {
+public class OmniBLE {
     var manager: PeripheralManager
     var advertisement: PodAdvertisement?
 
-    private let log = OSLog(category: "Omnipod")
+    private let log = OSLog(category: "OmniBLE")
 
     init(peripheralManager: PeripheralManager, advertisement: PodAdvertisement?) {
         self.manager = peripheralManager        
@@ -24,10 +23,10 @@ public class Omnipod {
 }
 
 
-extension Omnipod: CustomDebugStringConvertible {
+extension OmniBLE: CustomDebugStringConvertible {
     public var debugDescription: String {
         return [
-            "## Omnipod",
+            "## OmniBLE",
 //            "* sequenceNo: \(String(describing: sequenceNo))",
 //            "* lotNo: \(String(describing: lotNo))",
 //            "* podId: \(String(describing: podId))",

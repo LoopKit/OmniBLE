@@ -1,8 +1,10 @@
 //
 //  OmniBLEPlugin.swift
-//  OmniBLEPlugin
+//  OmniBLE
 //
+//  Based on OmniKitPlugin/OmniKitPlugin.swift
 //  Created by Randall Knutson on 09/11/21.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
@@ -10,19 +12,19 @@ import LoopKitUI
 import OmniBLE
 import os.log
 
-class OmnipodPlugin: NSObject, PumpManagerUIPlugin {
-    private let log = OSLog(category: "OmnipodPlugin")
-    
+class OmniBLEPlugin: NSObject, PumpManagerUIPlugin {
+    private let log = OSLog(category: "OmniBLEPlugin")
+
     public var pumpManagerType: PumpManagerUI.Type? {
-        return OmnipodPumpManager.self
+        return OmniBLEPumpManager.self
     }
-    
+
     public var cgmManagerType: CGMManagerUI.Type? {
         return nil
     }
-    
+
     override init() {
         super.init()
-        log.default("OmnipodPlugin Instantiated")
+        log.default("OmniBLEPlugin Instantiated")
     }
 }

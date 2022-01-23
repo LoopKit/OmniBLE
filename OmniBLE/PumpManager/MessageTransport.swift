@@ -1,9 +1,11 @@
 //
 //  MessageTransport.swift
-//  OmniKit
+//  OmniBLE
 //
+//  Based on OmniKit/MessageTransport/MessageTransport.swift
 //  Created by Pete Schwamb on 8/5/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
@@ -154,7 +156,6 @@ class PodMessageTransport: MessageTransport {
     }
 
     private let address: UInt32
-    private let fakeSendMessage = false // whether to fake sending pod messages
     
     weak var messageLogger: MessageLogger?
     weak var delegate: MessageTransportDelegate?
@@ -190,37 +191,6 @@ class PodMessageTransport: MessageTransport {
         let dataToSend = message.encoded()
         log.default("Send(Hex): %@", dataToSend.hexadecimalString)
         messageLogger?.didSend(dataToSend)
-
-        if fakeSendMessage {
-            // temporary code to fake basic pi simulator message exchange
-            let messageBlockType: MessageBlockType = message.messageBlocks[0].blockType
-            let responseData: Data
-
-            switch messageBlockType {
-            case .assignAddress:
-                responseData = Data(hexadecimalString: "FFFFFFFF00000115040A00010300040208146CC1000954D400FFFFFFFF800F")!
-                break
-            case .setupPod:
-                responseData = Data(hexadecimalString: "FFFFFFFF0000011B13881008340A50040A00010300040308146CC1000954D40242000100A2")!
-                break
-            case .versionResponse, .podInfoResponse, .errorResponse, .statusResponse:
-                log.error("Trying to send a response type message!: %@", String(describing: message))
-                throw PodCommsError.invalidData
-            case .basalScheduleExtra, .tempBasalExtra, .bolusExtra:
-                log.error("Trying to send an insulin extra sub-message type!: %@", String(describing: message))
-                throw PodCommsError.invalidData
-            default:
-                // A random general status response (assumes type 0 for a getStatus command)
-                responseData = Data(hexadecimalString: "FFFFFFFF00001D1800A02800000463FF0244")!
-                break
-            }
-
-            let response = try Message(encodedData: responseData)
-            log.default("Recv(Hex): %@", responseData.hexadecimalString)
-            messageLogger?.didReceive(responseData)
-            incrementMessageNumber()
-            return response
-        }
 
         let sendMessage = try getCmdMessage(cmd: message)
 

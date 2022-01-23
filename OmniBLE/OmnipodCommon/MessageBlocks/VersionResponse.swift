@@ -1,7 +1,8 @@
 //
 //  VersionResponse.swift
-//  OmniKit
+//  OmniBLE
 //
+//  Based on OmniKit/MessageTransport/MessageBlocks/VersionResponse.swift
 //  Created by Pete Schwamb on 2/12/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

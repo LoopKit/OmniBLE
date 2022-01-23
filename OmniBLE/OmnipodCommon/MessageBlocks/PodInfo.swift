@@ -1,7 +1,8 @@
 //
 //  PodInfoResponseSubType.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/PodInfoResponseSubType.swift
 //  Created by Eelke Jager on 15/09/2018.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

@@ -1,23 +1,24 @@
 //
-//  OmnipodReservoirView.swift
-//  OmniKit
+//  OmniBLEReservoirView.swift
+//  OmniBLE
 //
+//  Based on OmniKitUI/Views/OmnipodReservoirView.swift
 //  Created by Pete Schwamb on 10/22/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2022 OmniBLE Authors. All rights reserved.
 //
 
 import UIKit
 import LoopKitUI
-import OmniKit
 
-public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
-    
+public final class OmniBLEReservoirView: LevelHUDView, NibLoadable {
+
     override public var orderPriority: HUDViewOrderPriority {
         return 11
     }
 
     @IBOutlet private weak var volumeLabel: UILabel!
-    
+
     @IBOutlet private weak var alertLabel: UILabel! {
         didSet {
             alertLabel.alpha = 0
@@ -26,9 +27,9 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
             alertLabel.clipsToBounds = true
         }
     }
-    
-    public class func instantiate() -> OmnipodReservoirView {
-        return nib().instantiate(withOwner: nil, options: nil)[0] as! OmnipodReservoirView
+
+    public class func instantiate() -> OmniBLEReservoirView {
+        return nib().instantiate(withOwner: nil, options: nil)[0] as! OmniBLEReservoirView
     }
 
     override public func awakeFromNib() {
@@ -55,14 +56,14 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
             }
         }
     }
-    
+
     override public func tintColorDidChange() {
         super.tintColorDidChange()
-        
+
         volumeLabel.textColor = tintColor
     }
 
-    
+
     private func updateAlertLabelColor() {
         switch reservoirAlertState {
         case .lowReservoir, .empty:
@@ -77,18 +78,18 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
         updateAlertLabelColor()
     }
 
-    
+
     private var reservoirAlertState = ReservoirAlertState.ok {
         didSet {
             var alertLabelAlpha: CGFloat = 1
-            
+
             switch reservoirAlertState {
             case .ok:
                 alertLabelAlpha = 0
             case .lowReservoir, .empty:
                 alertLabel?.text = "!"
             }
-            
+
             updateColor()
 
             if self.superview == nil {
@@ -143,5 +144,3 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
         self.reservoirAlertState = reservoirAlertState
     }
 }
-
-

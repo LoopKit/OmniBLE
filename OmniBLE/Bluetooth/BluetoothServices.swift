@@ -1,8 +1,9 @@
 //
 //  BluetoothServices.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Created by Randall Knutson on 11/01/21.
+//  Copyright © 2021 Randall Knutson. All rights reserved.
 //
 
 import CoreBluetooth

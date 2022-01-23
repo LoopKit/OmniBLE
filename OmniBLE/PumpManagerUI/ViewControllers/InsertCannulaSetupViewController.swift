@@ -1,19 +1,20 @@
 //
 //  InsertCannulaSetupViewController.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/CommandResponseViewController.swift
 //  Created by Pete Schwamb on 9/18/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import UIKit
 import LoopKit
 import LoopKitUI
-import OmniKit
 
 class InsertCannulaSetupViewController: SetupTableViewController {
     
-    var pumpManager: OmnipodPumpManager!
+    var pumpManager: OmniBLEPumpManager!
     
     // MARK: -
     

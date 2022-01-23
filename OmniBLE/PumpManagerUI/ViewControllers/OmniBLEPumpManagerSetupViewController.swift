@@ -1,9 +1,11 @@
 //
-//  OmnipodPumpManagerSetupViewController.swift
-//  OmnipodKit
+//  OmniBLEPumpManagerSetupViewController.swift
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/OmnipodPumpManagerSetupViewController.swift
 //  Created by Pete Schwamb on 8/4/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
@@ -11,27 +13,26 @@ import Foundation
 import UIKit
 import LoopKit
 import LoopKitUI
-import OmniKit
 
 // PumpManagerSetupViewController
-public class OmnipodPumpManagerSetupViewController: UINavigationController, PumpManagerOnboarding, UINavigationControllerDelegate, CompletionNotifying {
+public class OmniBLEPumpManagerSetupViewController: UINavigationController, PumpManagerOnboarding, UINavigationControllerDelegate, CompletionNotifying {
     public var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
-    
+
     public var maxBasalRateUnitsPerHour: Double?
-    
+
     public var maxBolusUnits: Double?
-    
+
     public var basalSchedule: BasalRateSchedule?
-    
+
     public var completionDelegate: CompletionDelegate?
-    
-    class func instantiateFromStoryboard() -> OmnipodPumpManagerSetupViewController {
-        return UIStoryboard(name: "OmnipodPumpManager", bundle: Bundle(for: OmnipodPumpManagerSetupViewController.self)).instantiateInitialViewController() as! OmnipodPumpManagerSetupViewController
+
+    class func instantiateFromStoryboard() -> OmniBLEPumpManagerSetupViewController {
+        return UIStoryboard(name: "OmniBLEPumpManager", bundle: Bundle(for: OmniBLEPumpManagerSetupViewController.self)).instantiateInitialViewController() as! OmniBLEPumpManagerSetupViewController
     }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if #available(iOSApplicationExtension 13.0, *) {
             // Prevent interactive dismissal
             isModalInPresentation = true
@@ -43,26 +44,26 @@ public class OmnipodPumpManagerSetupViewController: UINavigationController, Pump
 
         delegate = self
     }
-        
-    private(set) var pumpManager: OmnipodPumpManager?
-    
+
+    private(set) var pumpManager: OmniBLEPumpManager?
+
     internal var insulinType: InsulinType?
 
     /*
      1. Basal Rates & Delivery Limits
-     
+
      2. Pod Pairing/Priming
-     
+
      3. Cannula Insertion
-     
+
      4. Pod Setup Complete
      */
-    
+
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         // Read state values
         let viewControllers = navigationController.viewControllers
         let count = navigationController.viewControllers.count
-        
+
         if count >= 2 {
             switch viewControllers[count - 2] {
             case let vc as PairPodSetupViewController:
@@ -82,8 +83,8 @@ public class OmnipodPumpManagerSetupViewController: UINavigationController, Pump
         case let vc as PairPodSetupViewController:
             if let basalSchedule = basalSchedule, let insulinType = insulinType {
                 let schedule = BasalSchedule(repeatingScheduleValues: basalSchedule.items)
-                let pumpManagerState = OmnipodPumpManagerState(isOnboarded: false, podState: nil, timeZone: .currentFixed, basalSchedule: schedule, insulinType: insulinType)
-                let pumpManager = OmnipodPumpManager(state: pumpManagerState)
+                let pumpManagerState = OmniBLEPumpManagerState(isOnboarded: false, podState: nil, timeZone: .currentFixed, basalSchedule: schedule, insulinType: insulinType)
+                let pumpManager = OmniBLEPumpManager(state: pumpManagerState)
                 pumpManager.completeOnboard()
                 vc.pumpManager = pumpManager
                 pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
@@ -99,7 +100,7 @@ public class OmnipodPumpManagerSetupViewController: UINavigationController, Pump
 
     open func finishedSetup() {
         if let pumpManager = pumpManager {
-            let settings = OmnipodSettingsViewController(pumpManager: pumpManager)
+            let settings = OmniBLESettingsViewController(pumpManager: pumpManager)
             setViewControllers([settings], animated: true)
         }
     }
@@ -109,7 +110,7 @@ public class OmnipodPumpManagerSetupViewController: UINavigationController, Pump
     }
 }
 
-extension OmnipodPumpManagerSetupViewController: SetupTableViewControllerDelegate {
+extension OmniBLEPumpManagerSetupViewController: SetupTableViewControllerDelegate {
     public func setupTableViewControllerCancelButtonPressed(_ viewController: SetupTableViewController) {
         completionDelegate?.completionNotifyingDidComplete(self)
     }

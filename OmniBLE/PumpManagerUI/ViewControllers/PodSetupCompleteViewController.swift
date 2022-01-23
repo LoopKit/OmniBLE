@@ -1,20 +1,21 @@
 //
 //  PodSetupCompleteViewController.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/PodSetupCompleteViewController.swift
 //  Created by Pete Schwamb on 9/18/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import UIKit
 import LoopKitUI
-import OmniKit
 
 class PodSetupCompleteViewController: SetupTableViewController {
 
     @IBOutlet weak var expirationReminderDateCell: ExpirationReminderDateTableViewCell!
 
-    var pumpManager: OmnipodPumpManager! {
+    var pumpManager: OmniBLEPumpManager! {
         didSet {
             if let expirationReminderDate = pumpManager.expirationReminderDate, let podState = pumpManager.state.podState {
                 expirationReminderDateCell.date = expirationReminderDate
@@ -44,7 +45,7 @@ class PodSetupCompleteViewController: SetupTableViewController {
     }
 
     override func continueButtonPressed(_ sender: Any) {
-        if let setupVC = navigationController as? OmnipodPumpManagerSetupViewController {
+        if let setupVC = navigationController as? OmniBLEPumpManagerSetupViewController {
             setupVC.finishedSetup()
         }
         if let replaceVC = navigationController as? PodReplacementNavigationController {

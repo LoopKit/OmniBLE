@@ -1,7 +1,8 @@
 //
 //  MessageBlock.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/MessageBlock.swift
 //  Created by Pete Schwamb on 10/14/17.
 //  Copyright © 2017 Pete Schwamb. All rights reserved.
 //

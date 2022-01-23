@@ -1,9 +1,11 @@
 //
 //  PodSettingsSetupViewController.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/PodSettingsSetupViewController.swift
 //  Created by Pete Schwamb on 9/25/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
@@ -12,12 +14,11 @@ import UIKit
 import HealthKit
 import LoopKit
 import LoopKitUI
-import OmniKit
 
 class PodSettingsSetupViewController: SetupTableViewController {
     
-    private var pumpManagerSetupViewController: OmnipodPumpManagerSetupViewController? {
-        return navigationController as? OmnipodPumpManagerSetupViewController
+    private var pumpManagerSetupViewController: OmniBLEPumpManagerSetupViewController? {
+        return navigationController as? OmniBLEPumpManagerSetupViewController
     }
     
     override func viewDidLoad() {

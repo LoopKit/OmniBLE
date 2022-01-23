@@ -1,8 +1,9 @@
 //
 //  PeripheralManagerErrors.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Created by Randall Knutson on 8/18/21.
+//  Copyright © 2021 Randall Knutson. All rights reserved.
 //
 
 import Foundation

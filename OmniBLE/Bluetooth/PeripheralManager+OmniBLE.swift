@@ -1,5 +1,5 @@
 //
-//  PeripheralManager+Omnipod.swift
+//  PeripheralManager+OmniBLE.swift
 //  OmniBLE
 //
 //  Created by Randall Knutson on 11/2/21.

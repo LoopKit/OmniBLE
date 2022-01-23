@@ -1,7 +1,8 @@
 //
 //  SetInsulinScheduleCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/SetInsulinScheduleCommand.swift
 //  Created by Pete Schwamb on 2/24/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

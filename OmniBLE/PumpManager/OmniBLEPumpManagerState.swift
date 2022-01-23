@@ -1,29 +1,31 @@
 //
-//  OmnipodPumpManagerState.swift
-//  OmnipodKit
+//  OmniBLEPumpManagerState.swift
+//  OmniBLE
 //
+//  Based on OmniKit/PumpManager/OmnipodPumpManagerState.swift
 //  Created by Pete Schwamb on 8/4/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2022 OmniBLE Authors. All rights reserved.
 //
 
 import LoopKit
 
 
-public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
+public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
-    
+
     public static let version = 2
-    
+
     public var isOnboarded: Bool
-    
+
     public var podState: PodState?
 
     public var pairingAttemptAddress: UInt32?
 
     public var timeZone: TimeZone
-    
+
     public var basalSchedule: BasalSchedule
-    
+
     public var unstoredDoses: [UnfinalizedDose]
 
     public var expirationReminderDate: Date?
@@ -45,9 +47,9 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     internal var tempBasalEngageState: EngageablePumpState = .stable
 
     internal var lastPumpDataReportDate: Date?
-    
+
     internal var insulinType: InsulinType
-    
+
     // MARK: -
 
     public init(isOnboarded: Bool, podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType) {
@@ -59,15 +61,15 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         self.confirmationBeeps = false
         self.insulinType = insulinType
     }
-    
+
     public init?(rawValue: RawValue) {
-        
+
         guard let version = rawValue["version"] as? Int else {
             return nil
         }
-        
+
         let basalSchedule: BasalSchedule
-        
+
         if version == 1 {
             // migrate: basalSchedule moved from podState to oppm state
             if let podStateRaw = rawValue["podState"] as? PodState.RawValue,
@@ -86,9 +88,9 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
             }
             basalSchedule = schedule
         }
-        
+
         let isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
-        
+
         let podState: PodState?
         if let podStateRaw = rawValue["podState"] as? PodState.RawValue {
             podState = PodState(rawValue: podStateRaw)
@@ -103,7 +105,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         } else {
             timeZone = TimeZone.currentFixed
         }
-        
+
         var insulinType: InsulinType?
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -130,16 +132,16 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
         }
 
         self.confirmationBeeps = rawValue["confirmationBeeps"] as? Bool ?? rawValue["bolusBeeps"] as? Bool ?? false
-        
+
         if let pairingAttemptAddress = rawValue["pairingAttemptAddress"] as? UInt32 {
             self.pairingAttemptAddress = pairingAttemptAddress
         }
-        
+
     }
-    
+
     public var rawValue: RawValue {
         var value: [String : Any] = [
-            "version": OmnipodPumpManagerState.version,
+            "version": OmniBLEPumpManagerState.version,
             "isOnboarded": isOnboarded,
             "timeZone": timeZone.secondsFromGMT(),
             "basalSchedule": basalSchedule.rawValue,
@@ -147,7 +149,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
             "confirmationBeeps": confirmationBeeps,
             "insulinType": insulinType.rawValue,
         ]
-        
+
         value["podState"] = podState?.rawValue
         value["expirationReminderDate"] = expirationReminderDate
         value["pairingAttemptAddress"] = pairingAttemptAddress
@@ -156,7 +158,7 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
     }
 }
 
-extension OmnipodPumpManagerState {
+extension OmniBLEPumpManagerState {
     var hasActivePod: Bool {
         return podState?.isActive == true
     }
@@ -173,10 +175,10 @@ extension OmnipodPumpManagerState {
 }
 
 
-extension OmnipodPumpManagerState: CustomDebugStringConvertible {
+extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
     public var debugDescription: String {
         return [
-            "## OmnipodPumpManagerState",
+            "## OmniBLEPumpManagerState",
             "* isOnboarded: \(isOnboarded)",
             "* timeZone: \(timeZone)",
             "* basalSchedule: \(String(describing: basalSchedule))",

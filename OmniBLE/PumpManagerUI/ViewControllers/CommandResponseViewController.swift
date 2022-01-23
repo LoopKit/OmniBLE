@@ -1,14 +1,15 @@
 //
 //  CommandResponseViewController.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/CommandResponseViewController.swift
 //  Created by Pete Schwamb on 8/28/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2022 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
 import LoopKitUI
-import OmniKit
 
 extension CommandResponseViewController {
     typealias T = CommandResponseViewController
@@ -33,7 +34,7 @@ extension CommandResponseViewController {
         return errorText + "."
     }
 
-    static func changeTime(pumpManager: OmnipodPumpManager) -> T {
+    static func changeTime(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHandler) -> String in
             pumpManager.setTime() { (error) in
                 DispatchQueue.main.async {
@@ -107,7 +108,7 @@ extension CommandResponseViewController {
         return result
     }
 
-    static func readPodStatus(pumpManager: OmnipodPumpManager) -> T {
+    static func readPodStatus(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHandler) -> String in
             pumpManager.readPodStatus() { (result) in
                 DispatchQueue.main.async {
@@ -124,7 +125,7 @@ extension CommandResponseViewController {
         }
     }
 
-    static func testingCommands(pumpManager: OmnipodPumpManager) -> T {
+    static func testingCommands(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHandler) -> String in
             pumpManager.testingCommands() { (error) in
                 DispatchQueue.main.async {
@@ -135,7 +136,7 @@ extension CommandResponseViewController {
         }
     }
 
-    static func playTestBeeps(pumpManager: OmnipodPumpManager) -> T {
+    static func playTestBeeps(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHandler) -> String in
             pumpManager.playTestBeeps() { (error) in
                 let response: String
@@ -152,7 +153,7 @@ extension CommandResponseViewController {
         }
     }
 
-    static func readPulseLog(pumpManager: OmnipodPumpManager) -> T {
+    static func readPulseLog(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHandler) -> String in
             pumpManager.readPulseLog() { (result) in
                 DispatchQueue.main.async {
@@ -168,7 +169,7 @@ extension CommandResponseViewController {
         }
     }
 
-    static func displayState(pumpManager: OmnipodPumpManager) -> T {
+    static func displayState(pumpManager: OmniBLEPumpManager) -> T {
         return T { (completionHander) -> String in
             return String(reflecting: pumpManager)
         }

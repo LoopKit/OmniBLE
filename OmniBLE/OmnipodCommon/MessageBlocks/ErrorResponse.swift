@@ -1,17 +1,19 @@
 //
 //  ErrorResponse.swift
-//  OmniKit
+//  OmniBLE
 //
+//  Based on OmniKit/MessageTransport/MessageBlocks/ErrorResponse.swift
 //  Created by Pete Schwamb on 2/25/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
 
-fileprivate let errorResponseCode_badNonce: UInt8 = 0x14
+fileprivate let errorResponseCode_badNonce: UInt8 = 0x14 // only returned on Eros
 
 public enum ErrorResponseType {
-    case badNonce(nonceResyncKey: UInt16)
+    case badNonce(nonceResyncKey: UInt16) // only returned on Eros
     case nonretryableError(code: UInt8, faultEventCode: FaultEventCode, podProgress: PodProgressStatus)
 }
 
@@ -27,7 +29,7 @@ public struct ErrorResponse : MessageBlock {
         let errorCode = encodedData[2]
         switch (errorCode) {
         case errorResponseCode_badNonce:
-            // For this error code only the 2 next bytes are the encoded nonce resync key.
+            // For this error code only the 2 next bytes are the encoded nonce resync key (only returned on Eros)
             let nonceResyncKey: UInt16 = encodedData[3...].toBigEndian(UInt16.self)
             errorResponseType = .badNonce(nonceResyncKey: nonceResyncKey)
             break

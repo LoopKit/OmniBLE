@@ -1,7 +1,8 @@
 //
 //  BasalSchedule.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/Model/BasalSchedule.swift
 //  Created by Pete Schwamb on 4/4/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

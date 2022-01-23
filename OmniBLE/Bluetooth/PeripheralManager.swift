@@ -1,8 +1,11 @@
 //
 //  PeripheralManager.swift
 //  xDripG5
+//  OmniBLE
 //
+//  Based on CGMBLEKit/CGMBLEKit/PeripheralManager.swift
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
+//  Copyright © 2022 OmniBLE Authors. All rights reserved.
 //
 
 import CoreBluetooth
@@ -44,7 +47,7 @@ class PeripheralManager: NSObject {
 
     private let sessionQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.name = "com.randallknutson.OmniBLE.OmnipodDevice.sessionQueue"
+        queue.name = "com.OmniBLE.OmnipodDevice.sessionQueue"
         queue.maxConcurrentOperationCount = 1
 
         return queue

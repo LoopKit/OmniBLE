@@ -1,7 +1,8 @@
 //
 //  PodInsulinMeasurements.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/PumpManager/PodInsulinMeasurements.swift
 //  Created by Pete Schwamb on 9/5/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

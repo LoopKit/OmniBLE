@@ -1,7 +1,8 @@
 //
 //  PodDoseProgressEstimator.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/PumpManager/PodDoseProgressEstimator.swift
 //  Created by Pete Schwamb on 3/12/19.
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //

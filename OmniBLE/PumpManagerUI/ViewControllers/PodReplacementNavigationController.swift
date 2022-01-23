@@ -1,38 +1,39 @@
 //
 //  PodReplacementNavigationController.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKitUI/ViewControllers/PodReplacementNavigationController.swift
 //  Created by Pete Schwamb on 11/28/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 OmniBLE Authors. All rights reserved.
 //
 
 import Foundation
-import OmniKit
 import LoopKitUI
 
 class PodReplacementNavigationController: UINavigationController, UINavigationControllerDelegate, CompletionNotifying {
 
     weak var completionDelegate: CompletionDelegate?
 
-    class func instantiatePodReplacementFlow(_ pumpManager: OmnipodPumpManager) -> PodReplacementNavigationController {
-        let vc = UIStoryboard(name: "OmnipodPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "PodReplacementFlow") as! PodReplacementNavigationController
+    class func instantiatePodReplacementFlow(_ pumpManager: OmniBLEPumpManager) -> PodReplacementNavigationController {
+        let vc = UIStoryboard(name: "OmniBLEPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "PodReplacementFlow") as! PodReplacementNavigationController
         vc.pumpManager = pumpManager
         return vc
     }
 
-    class func instantiateNewPodFlow(_ pumpManager: OmnipodPumpManager) -> PodReplacementNavigationController {
-        let vc = UIStoryboard(name: "OmnipodPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "NewPodFlow") as! PodReplacementNavigationController
+    class func instantiateNewPodFlow(_ pumpManager: OmniBLEPumpManager) -> PodReplacementNavigationController {
+        let vc = UIStoryboard(name: "OmniBLEPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "NewPodFlow") as! PodReplacementNavigationController
         vc.pumpManager = pumpManager
         return vc
     }
     
-    class func instantiateInsertCannulaFlow(_ pumpManager: OmnipodPumpManager) -> PodReplacementNavigationController {
-        let vc = UIStoryboard(name: "OmnipodPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "InsertCannulaFlow") as! PodReplacementNavigationController
+    class func instantiateInsertCannulaFlow(_ pumpManager: OmniBLEPumpManager) -> PodReplacementNavigationController {
+        let vc = UIStoryboard(name: "OmniBLEPumpManager", bundle: Bundle(for: PodReplacementNavigationController.self)).instantiateViewController(withIdentifier: "InsertCannulaFlow") as! PodReplacementNavigationController
         vc.pumpManager = pumpManager
         return vc
     }
 
-    private(set) var pumpManager: OmnipodPumpManager!
+    private(set) var pumpManager: OmniBLEPumpManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()

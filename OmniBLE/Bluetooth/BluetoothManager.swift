@@ -1,8 +1,9 @@
 //
 //  BluetoothManager.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Created by Randall Knutson on 10/10/21.
+//  Copyright © 2021 Randall Knutson. All rights reserved.
 //
 
 import CoreBluetooth
@@ -54,7 +55,7 @@ extension BluetoothManagerError: LocalizedError {
     }
 }
 
-protocol OmnipodConnectionDelegate: AnyObject {
+protocol OmniBLEConnectionDelegate: AnyObject {
 
     /**
      Tells the delegate that a peripheral has been connected to
@@ -82,7 +83,7 @@ protocol OmnipodConnectionDelegate: AnyObject {
 
 class BluetoothManager: NSObject {
 
-    weak var connectionDelegate: OmnipodConnectionDelegate?
+    weak var connectionDelegate: OmniBLEConnectionDelegate?
 
     private let log = OSLog(category: "BluetoothManager")
 
@@ -90,7 +91,7 @@ class BluetoothManager: NSObject {
     private var manager: CBCentralManager! = nil
     
     /// Isolated to `managerQueue`
-    private var devices: [Omnipod] = []
+    private var devices: [OmniBLE] = []
     
     /// Isolated to `managerQueue`
     private var discoveryModeEnabled: Bool = false
@@ -110,21 +111,21 @@ class BluetoothManager: NSObject {
     }
 
     // MARK: - Synchronization
-    private let managerQueue = DispatchQueue(label: "com.randallknutson.OmniBLE.bluetoothManagerQueue", qos: .unspecified)
+    private let managerQueue = DispatchQueue(label: "com.OmniBLE.bluetoothManagerQueue", qos: .unspecified)
 
     override init() {
         super.init()
 
         managerQueue.sync {
-            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.randallknutson.OmniBLE"])
+            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.OmniBLE"])
         }
     }
     
     @discardableResult
-    private func addPeripheral(_ peripheral: CBPeripheral, podAdvertisement: PodAdvertisement?) -> Omnipod {
+    private func addPeripheral(_ peripheral: CBPeripheral, podAdvertisement: PodAdvertisement?) -> OmniBLE {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
-        var device: Omnipod! = devices.first(where: { $0.manager.peripheral.identifier == peripheral.identifier })
+        var device: OmniBLE! = devices.first(where: { $0.manager.peripheral.identifier == peripheral.identifier })
 
         if let device = device {
             log.info("Matched peripheral %{public}@ to existing device: %{public}@", peripheral, String(describing: device))
@@ -133,7 +134,7 @@ class BluetoothManager: NSObject {
                 device.advertisement = podAdvertisement
             }
         } else {
-            device = Omnipod(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .omnipod, centralManager: manager), advertisement: podAdvertisement)
+            device = OmniBLE(peripheralManager: PeripheralManager(peripheral: peripheral, configuration: .omnipod, centralManager: manager), advertisement: podAdvertisement)
             devices.append(device)
             log.info("Created device")
         }
@@ -239,8 +240,8 @@ class BluetoothManager: NSObject {
 
     // MARK: - Accessors
     
-    public func getConnectedDevices() -> [Omnipod] {
-        var connected: [Omnipod] = []
+    public func getConnectedDevices() -> [OmniBLE] {
+        var connected: [OmniBLE] = []
         managerQueue.sync {
             connected = self.devices.filter { $0.manager.peripheral.state == .connected }
         }

@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Omnipod Pump Manager Setup View Controller-->
+        <!--OmniBLE Pump Manager Setup View Controller-->
         <scene sceneID="Bm8-mb-E1r">
             <objects>
-                <navigationController id="XLM-uO-pGZ" customClass="OmnipodPumpManagerSetupViewController" customModule="OmniBLE" sceneMemberID="viewController">
+                <navigationController id="XLM-uO-pGZ" customClass="OmniBLEPumpManagerSetupViewController" customModule="OmniBLE" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="hv4-rC-Neh">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -27,7 +27,7 @@
         <!--Development Nav-->
         <scene sceneID="SnN-kJ-ZRu">
             <objects>
-                <navigationController storyboardIdentifier="DevelopmentPumpSetup" id="EeD-Yo-EZn" userLabel="Development Nav" customClass="OmnipodPumpManagerSetupViewController" customModule="OmniBLE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DevelopmentPumpSetup" id="EeD-Yo-EZn" userLabel="Development Nav" customClass="OmniBLEPumpManagerSetupViewController" customModule="OmniBLE" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QCx-Ao-paS">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

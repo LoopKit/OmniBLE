@@ -1,7 +1,8 @@
 //
 //  ExpirationReminderDateTableViewCell.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKitUI/Views/ExpirationReminderDateTableViewCell.swift
 //  Created by Pete Schwamb on 4/11/19.
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //

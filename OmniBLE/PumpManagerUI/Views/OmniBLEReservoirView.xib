@@ -8,8 +8,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="Fgu-h0-N6n" customClass="OmnipodReservoirView" customModule="OmniKitUI" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="42" height="44"/>
+        <view contentMode="scaleToFill" id="Fgu-h0-N6n" customClass="OmniBLEReservoirView" customModule="OmniBLE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="96" height="73"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sSE-Jz-j8k">
