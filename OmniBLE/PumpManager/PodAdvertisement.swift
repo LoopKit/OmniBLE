@@ -3,8 +3,7 @@
 //  OmniBLE
 //
 //  Created by Pete Schwamb on 1/13/22.
-//  Copyright © 2022 Randall Knutson. All rights reserved.
-//  Copyright © 2022 OmniBLE Authors. All rights reserved.
+//  Copyright © 2022 LoopKit Authors. All rights reserved.
 //
 
 import Foundation

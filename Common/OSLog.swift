@@ -1,6 +1,6 @@
 //
 //  OSLog.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
 //

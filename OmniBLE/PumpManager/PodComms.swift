@@ -4,8 +4,7 @@
 //
 //  Based on OmniKit/PumpManager/PodComms.swift
 //  Created by Pete Schwamb on 10/7/17.
-//  Copyright © 2017 Pete Schwamb. All rights reserved.
-//  Copyright © 2021 OmniBLE Authors. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation
@@ -400,7 +399,6 @@ public class PodComms: CustomDebugStringConvertible {
     }
 
     // Use to serialize a set of Pod Commands for a given session
-    // XXX need to figure out how much of this is actually really needed
     func runSession(withName name: String, _ block: @escaping (_ result: SessionRunResult) -> Void) {
 
         guard let manager = manager else {

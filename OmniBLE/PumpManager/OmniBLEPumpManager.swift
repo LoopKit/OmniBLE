@@ -4,8 +4,7 @@
 //
 //  Based on OmniKit/PumpManager/OmnipodPumpManager.swift
 //  Created by Pete Schwamb on 8/4/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
-//  Copyright © 2022 OmniBLE Authors. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import HealthKit

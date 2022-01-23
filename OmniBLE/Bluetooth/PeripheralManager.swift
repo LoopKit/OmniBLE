@@ -4,8 +4,7 @@
 //  OmniBLE
 //
 //  Based on CGMBLEKit/CGMBLEKit/PeripheralManager.swift
-//  Copyright © 2017 LoopKit Authors. All rights reserved.
-//  Copyright © 2022 OmniBLE Authors. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import CoreBluetooth

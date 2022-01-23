@@ -4,7 +4,7 @@
 //
 //  Based on OmniKit/MessageTransport/MessageBlocks/VersionResponse.swift
 //  Created by Pete Schwamb on 2/12/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation
