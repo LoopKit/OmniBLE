@@ -358,14 +358,6 @@ struct DashSettingsView: View  {
                }
             }
          }
-
-         Section(header: SectionHeader(label: LocalizedString("Support", comment: "Label for support disclosure row"))) {
-            NavigationLink(destination: Text("Not Implemented Yet")) {
-               // Placeholder
-               Text("Get Help with Omnipod 5").foregroundColor(Color.primary)
-            }
-         }
-
       }
       .alert(isPresented: $viewModel.alertIsPresented, content: { alert(for: viewModel.activeAlert!) })
       .insetGroupedListStyle()

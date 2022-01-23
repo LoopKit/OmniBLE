@@ -91,7 +91,6 @@
 		847530F626ED65DD009FD801 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847530F426ED65DD009FD801 /* LoopKit.framework */; };
 		847530F826ED65DD009FD801 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847530F526ED65DD009FD801 /* LoopKitUI.framework */; };
 		8475313226ED838B009FD801 /* PodLifeHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475311F26ED838A009FD801 /* PodLifeHUDView.swift */; };
-		8475313326ED838B009FD801 /* HUDAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8475312026ED838A009FD801 /* HUDAssets.xcassets */; };
 		8475313426ED838B009FD801 /* ExpirationReminderDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475312126ED838A009FD801 /* ExpirationReminderDateTableViewCell.swift */; };
 		8475313526ED838B009FD801 /* ExpirationReminderDateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8475312226ED838A009FD801 /* ExpirationReminderDateTableViewCell.xib */; };
 		8475313626ED838B009FD801 /* OmnipodReservoirView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8475312326ED838A009FD801 /* OmnipodReservoirView.xib */; };
@@ -284,7 +283,6 @@
 		847530F526ED65DD009FD801 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8475311226ED7422009FD801 /* OmnipodPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnipodPlugin.swift; sourceTree = "<group>"; };
 		8475311F26ED838A009FD801 /* PodLifeHUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodLifeHUDView.swift; sourceTree = "<group>"; };
-		8475312026ED838A009FD801 /* HUDAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HUDAssets.xcassets; sourceTree = "<group>"; };
 		8475312126ED838A009FD801 /* ExpirationReminderDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpirationReminderDateTableViewCell.swift; sourceTree = "<group>"; };
 		8475312226ED838A009FD801 /* ExpirationReminderDateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpirationReminderDateTableViewCell.xib; sourceTree = "<group>"; };
 		8475312326ED838A009FD801 /* OmnipodReservoirView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmnipodReservoirView.xib; sourceTree = "<group>"; };
@@ -656,7 +654,6 @@
 				C1F67E8427975B830017487F /* UncertaintyRecoveredView.swift */,
 				8475312126ED838A009FD801 /* ExpirationReminderDateTableViewCell.swift */,
 				8475312226ED838A009FD801 /* ExpirationReminderDateTableViewCell.xib */,
-				8475312026ED838A009FD801 /* HUDAssets.xcassets */,
 				8475312526ED838A009FD801 /* OmnipodReservoirView.swift */,
 				8475312326ED838A009FD801 /* OmnipodReservoirView.xib */,
 				8475311F26ED838A009FD801 /* PodLifeHUDView.swift */,
@@ -915,7 +912,6 @@
 				1029AE4F27094E1900B7F5B6 /* OmnipodUI.xcassets in Resources */,
 				A9793B3C276E0264005354B3 /* README.md in Resources */,
 				8475313726ED838B009FD801 /* PodLifeHUDView.xib in Resources */,
-				8475313326ED838B009FD801 /* HUDAssets.xcassets in Resources */,
 				A91B2DEC276E1E5E001B0E95 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

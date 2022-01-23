@@ -26,8 +26,6 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
     
     public var unstoredDoses: [UnfinalizedDose]
 
-    public var expirationReminderDate: Date?
-
     public var confirmationBeeps: Bool
     
     public var scheduledExpirationReminderOffset: TimeInterval?
@@ -49,6 +47,15 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
     // Indicates that the user has completed initial configuration
     // which means they have configured any parameters, but may not have paired a pod yet.
     public var initialConfigurationCompleted: Bool = false
+    
+    
+    // From last status response
+    public var reservoirLevel: ReservoirLevel? {
+        guard let level = podState?.lastInsulinMeasurements?.reservoirLevel else {
+            return nil
+        }
+        return ReservoirLevel(rawValue: level)
+    }
 
     // Temporal state not persisted
 
@@ -141,12 +148,6 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
         
         self.isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
 
-        if let expirationReminderDate = rawValue["expirationReminderDate"] as? Date {
-            self.expirationReminderDate = expirationReminderDate
-        } else if let expiresAt = podState?.expiresAt {
-            self.expirationReminderDate = expiresAt.addingTimeInterval(-Pod.expirationReminderAlertDefaultTimeBeforeExpiration)
-        }
-
         if let rawUnstoredDoses = rawValue["unstoredDoses"] as? [UnfinalizedDose.RawValue] {
             self.unstoredDoses = rawUnstoredDoses.compactMap( { UnfinalizedDose(rawValue: $0) } )
         } else {
@@ -213,7 +214,6 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
         
         value["insulinType"] = insulinType?.rawValue
         value["podState"] = podState?.rawValue
-        value["expirationReminderDate"] = expirationReminderDate
         value["pairingAttemptAddress"] = pairingAttemptAddress
         value["scheduledExpirationReminderOffset"] = scheduledExpirationReminderOffset
         value["defaultExpirationReminderOffset"] = defaultExpirationReminderOffset
@@ -247,7 +247,6 @@ extension DashPumpManagerState: CustomDebugStringConvertible {
             "* isOnboarded: \(isOnboarded)",
             "* timeZone: \(timeZone)",
             "* basalSchedule: \(String(describing: basalSchedule))",
-            "* expirationReminderDate: \(String(describing: expirationReminderDate))",
             "* unstoredDoses: \(String(describing: unstoredDoses))",
             "* suspendEngageState: \(String(describing: suspendEngageState))",
             "* bolusEngageState: \(String(describing: bolusEngageState))",
@@ -257,6 +256,15 @@ extension DashPumpManagerState: CustomDebugStringConvertible {
             "* confirmationBeeps: \(String(describing: confirmationBeeps))",
             "* pairingAttemptAddress: \(String(describing: pairingAttemptAddress))",
             "* insulinType: \(String(describing: insulinType))",
+            "* scheduledExpirationReminderOffset: \(String(describing: scheduledExpirationReminderOffset))",
+            "* defaultExpirationReminderOffset: \(defaultExpirationReminderOffset)",
+            "* lowReservoirReminderValue: \(lowReservoirReminderValue)",
+            "* podAttachmentConfirmed: \(podAttachmentConfirmed)",
+            "* pendingCommand: \(String(describing: pendingCommand))",
+            "* activeAlerts: \(activeAlerts)",
+            "* alertsWithPendingAcknowledgment: \(alertsWithPendingAcknowledgment)",
+            "* acknowledgedTimeOffsetAlert: \(acknowledgedTimeOffsetAlert)",
+            "* initialConfigurationCompleted: \(initialConfigurationCompleted)",
             String(reflecting: podState),
         ].joined(separator: "\n")
     }

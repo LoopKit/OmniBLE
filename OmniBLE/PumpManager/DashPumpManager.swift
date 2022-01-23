@@ -176,7 +176,7 @@ public class DashPumpManager: DeviceManager {
         }
 
         // Reschedule expiration notification if relevant values change
-        if oldValue.expirationReminderDate != newValue.expirationReminderDate ||
+        if oldValue.scheduledExpirationReminderOffset != newValue.scheduledExpirationReminderOffset ||
             oldValue.podState?.expiresAt != newValue.podState?.expiresAt
         {
             schedulePodExpirationNotification(for: newValue)
@@ -367,18 +367,26 @@ extension DashPumpManager {
         return Pod.nominalPodLife - timeActive
     }
     
-    public var expirationReminderDate: Date? {
-        get {
-            return state.expirationReminderDate
+    private var shouldWarnPodEOL: Bool {
+        guard let podTimeRemaining = podTimeRemaining,
+              podTimeRemaining > 0 && podTimeRemaining <= Pod.timeRemainingWarningThreshold else
+        {
+            return false
         }
-        set {
-            // Setting a new value reschedules notifications
-            setState { (state) in
-                state.expirationReminderDate = newValue
-            }
-        }
-    }
 
+        return true
+    }
+    
+    public var durationBetweenLastPodCommAndActivation: TimeInterval? {
+        guard let lastPodCommDate = state.podState?.lastInsulinMeasurements?.validTime,
+              let activationTime = podActivatedAt else
+        {
+            return nil
+        }
+
+        return lastPodCommDate.timeIntervalSince(activationTime)
+    }
+    
     public var confirmationBeeps: Bool {
         get {
             return state.confirmationBeeps
@@ -392,10 +400,7 @@ extension DashPumpManager {
     
     // From last status response
     public var reservoirLevel: ReservoirLevel? {
-        guard let level = state.podState?.lastInsulinMeasurements?.reservoirLevel else {
-            return nil
-        }
-        return ReservoirLevel(rawValue: level)
+        return state.reservoirLevel
     }
     
     public var podTotalDelivery: HKQuantity? {
@@ -410,25 +415,6 @@ extension DashPumpManager {
             return nil
         }
         return date
-    }
-
-    public var reservoirLevelHighlightState: ReservoirLevelHighlightState? {
-        guard let reservoirLevel = reservoirLevel else {
-            return nil
-        }
-        
-        switch reservoirLevel {
-        case .aboveThreshold:
-            return .normal
-        case .valid(let value):
-            if value > state.lowReservoirReminderValue {
-                return .normal
-            } else if value > 0 {
-                return .warning
-            } else {
-                return .critical
-            }
-        }
     }
 
     public var defaultExpirationReminderOffset: TimeInterval {
@@ -490,14 +476,130 @@ extension DashPumpManager {
             bleFirmwareVersion: podState.bleFirmwareVersion
         )
     }
+    
+    public func buildPumpStatusHighlight(for state: DashPumpManagerState) -> PumpManagerStatus.PumpStatusHighlight? {
+        if state.pendingCommand != nil {
+            return PumpManagerStatus.PumpStatusHighlight(localizedMessage: NSLocalizedString("Comms Issue", comment: "Status highlight that delivery is uncertain."),
+                                                         imageName: "exclamationmark.circle.fill",
+                                                         state: .critical)
+        }
+
+        switch podCommState {
+        case .activating:
+            return PumpManagerStatus.PumpStatusHighlight(
+                localizedMessage: NSLocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                imageName: "exclamationmark.circle.fill",
+                state: .warning)
+        case .deactivating:
+            return PumpManagerStatus.PumpStatusHighlight(
+                localizedMessage: NSLocalizedString("Finish Deactivation", comment: "Status highlight that when pod is deactivating."),
+                imageName: "exclamationmark.circle.fill",
+                state: .warning)
+        case .noPod:
+            return PumpManagerStatus.PumpStatusHighlight(
+                localizedMessage: NSLocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
+                imageName: "exclamationmark.circle.fill",
+                state: .warning)
+        case .fault(let detail):
+            var message: String
+            switch detail.faultEventCode.faultType {
+            case .reservoirEmpty:
+                message = LocalizedString("No Insulin", comment: "Status highlight message for emptyReservoir alarm.")
+            case .exceededMaximumPodLife80Hrs:
+                message = LocalizedString("Pod Expired", comment: "Status highlight message for podExpired alarm.")
+            case .occluded:
+                message = LocalizedString("Pod Occlusion", comment: "Status highlight message for occlusion alarm.")
+            default:
+                message = LocalizedString("Pod Error", comment: "Status highlight message for other alarm.")
+            }
+            return PumpManagerStatus.PumpStatusHighlight(
+                localizedMessage: message,
+                imageName: "exclamationmark.circle.fill",
+                state: .critical)
+//            } else {
+//                return PumpManagerStatus.PumpStatusHighlight(
+//                    localizedMessage: NSLocalizedString("Pod Alarm", comment: "Status highlight for alarm without details."),
+//                    imageName: "exclamationmark.circle.fill",
+//                    state: .critical)
+//            }
+//        case .systemError:
+//            return PumpManagerStatus.PumpStatusHighlight(
+//                localizedMessage: NSLocalizedString("System Error", comment: "Status highlight that when pod has a system error."),
+//                imageName: "exclamationmark.circle.fill",
+//                state: .critical)
+        case .active:
+            if let reservoirPercent = state.reservoirLevel?.percentage, reservoirPercent == 0 {
+                return PumpManagerStatus.PumpStatusHighlight(
+                    localizedMessage: NSLocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
+                    imageName: "exclamationmark.circle.fill",
+                    state: .critical)
+            } else if state.podState?.isSuspended == true {
+                return PumpManagerStatus.PumpStatusHighlight(
+                    localizedMessage: NSLocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
+                    imageName: "pause.circle.fill",
+                    state: .warning)
+            }
+            return nil
+        }
+    }
+    
+    public var reservoirLevelHighlightState: ReservoirLevelHighlightState? {
+        guard let reservoirLevel = reservoirLevel else {
+            return nil
+        }
+        
+        switch reservoirLevel {
+        case .aboveThreshold:
+            return .normal
+        case .valid(let value):
+            if value > state.lowReservoirReminderValue {
+                return .normal
+            } else if value > 0 {
+                return .warning
+            } else {
+                return .critical
+            }
+        }
+    }
+    
+    public func buildPumpLifecycleProgress(for state: DashPumpManagerState) -> PumpManagerStatus.PumpLifecycleProgress? {
+        switch podCommState {
+        case .active:
+            if shouldWarnPodEOL,
+               let podTimeRemaining = podTimeRemaining
+            {
+                let percentCompleted = max(0, min(1, (1 - (podTimeRemaining / Pod.nominalPodLife))))
+                return PumpManagerStatus.PumpLifecycleProgress(percentComplete: percentCompleted, progressState: .warning)
+            } else if let podTimeRemaining = podTimeRemaining, podTimeRemaining <= 0 {
+                // Pod is expired
+                return PumpManagerStatus.PumpLifecycleProgress(percentComplete: 1, progressState: .critical)
+            }
+            return nil
+        case .fault(let detail):
+            if detail.faultEventCode.faultType == .exceededMaximumPodLife80Hrs {
+                return PumpManagerStatus.PumpLifecycleProgress(percentComplete: 100, progressState: .critical)
+            } else {
+                if shouldWarnPodEOL,
+                   let durationBetweenLastPodCommAndActivation = durationBetweenLastPodCommAndActivation
+                {
+                    let percentCompleted = max(0, min(1, durationBetweenLastPodCommAndActivation / Pod.nominalPodLife))
+                    return PumpManagerStatus.PumpLifecycleProgress(percentComplete: percentCompleted, progressState: .dimmed)
+                }
+            }
+            return nil
+        case .noPod, .activating, .deactivating:
+            return nil
+        }
+    }
+
 
     
     // MARK: - Notifications
 
     func schedulePodExpirationNotification(for state: DashPumpManagerState) {
-        guard let expirationReminderDate = state.expirationReminderDate,
-            expirationReminderDate.timeIntervalSinceNow > 0,
-            let expiresAt = state.podState?.expiresAt
+        guard let scheduledExpirationReminderOffset = state.scheduledExpirationReminderOffset,
+            let expiresAt = state.podState?.expiresAt,
+            expiresAt.addingTimeInterval(-scheduledExpirationReminderOffset) < dateGenerator()
         else {
             pumpDelegate.notify { (delegate) in
                 delegate?.retractAlert(identifier: self.podExpirationNotificationIdentifier)
@@ -505,20 +607,18 @@ extension DashPumpManager {
             return
         }
 
-        let timeBetweenNoticeAndExpiration = expiresAt.timeIntervalSince(expirationReminderDate)
-
         let formatter = DateComponentsFormatter()
         formatter.maximumUnitCount = 1
         formatter.allowedUnits = [.hour, .minute]
         formatter.unitsStyle = .full
 
-        let timeUntilExpiration = formatter.string(from: timeBetweenNoticeAndExpiration) ?? ""
+        let timeUntilExpiration = formatter.string(from: scheduledExpirationReminderOffset) ?? ""
         
-        let content = Alert.Content(title: NSLocalizedString("Pod Expiration Notice", comment: "The title for pod expiration notification"),
-                                    body: String(format: NSLocalizedString("Time to replace your pod! Your pod will expire in %1$@", comment: "The format string for pod expiration notification body (1: time until expiration)"), timeUntilExpiration),
-                                    acknowledgeActionButtonLabel: NSLocalizedString("Ok", comment: "The title for pod expiration notification acknowledge button"))
+        let content = Alert.Content(title: NSLocalizedString("Pod Expiration Reminder", comment: "The title for pod expiration reminder"),
+                                    body: String(format: NSLocalizedString("Time to replace your pod! Your pod will expire in %1$@", comment: "The format string for pod expiration remainder body (1: time until expiration)"), timeUntilExpiration),
+                                    acknowledgeActionButtonLabel: NSLocalizedString("Ok", comment: "The title for pod expiration reminder acknowledge button"))
 
-        let trigger: Alert.Trigger = .delayed(interval: expirationReminderDate.timeIntervalSinceNow)
+        let trigger: Alert.Trigger = .delayed(interval: (expiresAt.addingTimeInterval(-scheduledExpirationReminderOffset)).timeIntervalSinceNow)
 
         pumpDelegate.notify { (delegate) in
             let alert = Alert(identifier: self.podExpirationNotificationIdentifier, foregroundContent: content, backgroundContent: content, trigger: trigger)
@@ -537,7 +637,6 @@ extension DashPumpManager {
             self.podComms.messageLogger = self
 
             state.podState = nil
-            state.expirationReminderDate = nil
         }
 
         // TODO: PodState shouldn't be mutated outside of the session queue
@@ -691,12 +790,12 @@ extension DashPumpManager {
         }
         #else
         let preError = setStateWithResult({ (state) -> DashPumpManagerError? in
-            guard let podState = state.podState, let expiresAt = podState.expiresAt, podState.readyForCannulaInsertion else
+            guard let podState = state.podState, podState.readyForCannulaInsertion else
             {
                 return .notReadyForCannulaInsertion
             }
 
-            state.expirationReminderDate = expiresAt.addingTimeInterval(-Pod.expirationReminderAlertDefaultTimeBeforeExpiration)
+            state.scheduledExpirationReminderOffset = state.defaultExpirationReminderOffset
 
             guard podState.setupProgress.needsCannulaInsertion else {
                 return .podAlreadyPaired
@@ -1546,7 +1645,11 @@ extension DashPumpManager: PumpManager {
             return nil
         }
 
-        let allDates = Array(stride(from: -24, through: -1, by: 1)).map { (i: Int) -> Date in
+        let allDates = Array(stride(
+            from: -Pod.expirationReminderAlertMaxHoursBeforeExpiration,
+            through: -Pod.expirationReminderAlertMinHoursBeforeExpiration,
+            by: 1)).map
+        { (i: Int) -> Date in
             expiration.addingTimeInterval(.hours(Double(i)))
         }
         let now = dateGenerator()

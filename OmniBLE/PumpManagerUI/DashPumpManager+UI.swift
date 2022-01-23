@@ -100,25 +100,41 @@ extension DashPumpManager {
     }
 }
 
+
+public enum DashStatusBadge: DeviceStatusBadge {
+    case timeSyncNeeded
+    
+    public var image: UIImage? {
+        switch self {
+        case .timeSyncNeeded:
+            return UIImage(systemName: "clock.fill")
+        }
+    }
+    
+    public var state: DeviceStatusBadgeState {
+        switch self {
+        case .timeSyncNeeded:
+            return .warning
+        }
+    }
+}
+
 // MARK: - PumpStatusIndicator
 extension DashPumpManager {
+    
     public var pumpStatusHighlight: DeviceStatusHighlight? {
-        guard state.podState?.fault != nil else {
-            return nil
-        }
-
-        return PumpManagerStatus.PumpStatusHighlight(localizedMessage: LocalizedString("Pod Fault", comment: "Inform the user that there is a pod fault."),
-                                                     imageName: "exclamationmark.circle.fill",
-                                                     state: .critical)
+        return buildPumpStatusHighlight(for: state)
     }
     
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {
-        return nil
+        return buildPumpLifecycleProgress(for: state)
     }
     
     public var pumpStatusBadge: DeviceStatusBadge? {
-        return nil
+        if isClockOffset {
+            return DashStatusBadge.timeSyncNeeded
+        } else {
+            return nil
+        }
     }
-
 }
-
