@@ -675,8 +675,6 @@ extension DashPumpManager {
 
     // Called on the main thread
     public func pairAndPrime(completion: @escaping (PumpManagerResult<TimeInterval>) -> Void) {
-        
-        
         // TODO: set expiration and low reservoir alerts
         //        guard let podExpirationAlert = try? PodExpirationAlert(intervalBeforeExpiration: state.defaultExpirationReminderOffset) else {
         //            eventListener(.error(.invalidAlertSetting))
@@ -1473,9 +1471,13 @@ extension DashPumpManager: PumpManager {
             state.isOnboarded = true
         })
     }
-
+    
+    // Wrapper for public PumpManager interface implementation. Used when cancelling bolus.
     public func suspendDelivery(completion: @escaping (Error?) -> Void) {
-        let suspendTime: TimeInterval = 0 // Place holder for untimed suspends until interface is updated
+        suspendDelivery(duration: .minutes(30), completion: completion)
+    }
+
+    public func suspendDelivery(duration: TimeInterval, completion: @escaping (Error?) -> Void) {
         guard self.hasActivePod else {
             completion(DashPumpManagerError.noPodPaired)
             return
@@ -1503,7 +1505,7 @@ extension DashPumpManager: PumpManager {
 
             // use confirmationBeepType here for confirmation beeps to avoid getting 3 beeps!
             let beepType: BeepConfigType? = self.confirmationBeeps ? .beeeeeep : nil
-            let result = session.suspendDelivery(suspendTime: suspendTime, confirmationBeepType: beepType)
+            let result = session.suspendDelivery(suspendTime: duration, confirmationBeepType: beepType)
             switch result {
             case .certainFailure(let error):
                 completion(error)
@@ -1535,11 +1537,13 @@ extension DashPumpManager: PumpManager {
                 return
             }
 
-            defer {
-                self.setState({ (state) in
-                    state.suspendEngageState = .stable
-                })
-            }
+            // Commenting this out, as we will update it in podComms(_ podComms: PodComms, didChange podState: PodState)
+//            defer {
+//                self.setState({ (state) in
+//                    state.suspendEngageState = .stable
+//                })
+//            }
+            
             self.setState({ (state) in
                 state.suspendEngageState = .disengaging
             })
@@ -2049,6 +2053,11 @@ extension DashPumpManager: PodCommsDelegate {
                 } else if podState.unfinalizedBolus == nil {
                     self.log.default("Resolved bolus uncertainty: did not bolus")
                 }
+            }
+            if (state.suspendEngageState == .engaging && podState.isSuspended) ||
+               (state.suspendEngageState == .disengaging && !podState.isSuspended)
+            {
+                state.suspendEngageState = .stable
             }
             state.podState = podState
         }
