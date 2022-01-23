@@ -391,11 +391,6 @@ extension DashPumpManager {
         get {
             return state.confirmationBeeps
         }
-        set {
-            setState { (state) in
-                state.confirmationBeeps = newValue
-            }
-        }
     }
     
     // From last status response
@@ -1163,10 +1158,12 @@ extension DashPumpManager {
         }
     }
 
-    public func setConfirmationBeeps(enabled: Bool, completion: @escaping (Error?) -> Void) {
+    public func setConfirmationBeeps(enabled: Bool, completion: @escaping (DashPumpManagerError?) -> Void) {
         self.log.default("Set Confirmation Beeps to %s", String(describing: enabled))
         guard self.hasActivePod else {
-            self.confirmationBeeps = enabled // set here to allow changes on a faulted Pod
+            self.setState { state in
+                state.confirmationBeeps = enabled // set here to allow changes on a faulted Pod
+            }
             completion(nil)
             return
         }
@@ -1185,13 +1182,15 @@ extension DashPumpManager {
 
                 switch result {
                 case .success:
-                    self.confirmationBeeps = enabled
+                    self.setState { state in
+                        state.confirmationBeeps = enabled // set here to allow changes on a faulted Pod
+                    }
                     completion(nil)
                 case .failure(let error):
-                    completion(error)
+                    completion(.communication(error))
                 }
             case .failure(let error):
-                completion(error)
+                completion(.communication(error))
             }
         }
     }

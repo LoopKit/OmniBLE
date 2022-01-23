@@ -15,6 +15,7 @@ enum DashSettingsViewAlert {
     case suspendError(Error)
     case resumeError(Error)
     case syncTimeError(DashPumpManagerError)
+    case changeConfirmationBeepsError(DashPumpManagerError)
 }
 
 public enum ReservoirLevelHighlightState: String, Equatable {
@@ -33,13 +34,12 @@ class DashSettingsViewModel: ObservableObject {
     @Published var lifeState: PodLifeState
     
     @Published var activatedAt: Date?
+    
+    @Published var changingConfirmationBeeps: Bool = false
 
     var confirmationBeeps: Bool {
         get {
             pumpManager.confirmationBeeps
-        }
-        set {
-            pumpManager.confirmationBeeps = newValue
         }
     }
     
@@ -216,8 +216,10 @@ class DashSettingsViewModel: ObservableObject {
     
     func resumeDelivery() {
         pumpManager.resumeDelivery { (error) in
-            if let error = error {
-                self.activeAlert = .resumeError(error)
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.activeAlert = .resumeError(error)
+                }
             }
         }
     }
@@ -240,6 +242,18 @@ class DashSettingsViewModel: ObservableObject {
                 self.lowReservoirAlertValue = selectedValue
             }
             completion(error)
+        }
+    }
+ 
+    func setConfirmationBeeps(enabled: Bool) {
+        self.changingConfirmationBeeps = true
+        pumpManager.setConfirmationBeeps(enabled: enabled) { error in
+            DispatchQueue.main.async {
+                self.changingConfirmationBeeps = false
+                if let error = error {
+                    self.activeAlert = .changeConfirmationBeepsError(error)
+                }
+            }
         }
     }
     
