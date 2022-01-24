@@ -18,7 +18,7 @@ struct PairPodView: View {
     var body: some View {
         GuidePage(content: {
             VStack {
-                LeadingImage("Pod")
+                LeadingImage("PodBottom")
 
                 HStack {
                     InstructionList(instructions: [
