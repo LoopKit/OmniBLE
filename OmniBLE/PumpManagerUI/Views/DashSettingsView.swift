@@ -24,8 +24,6 @@ struct DashSettingsView: View  {
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
     
-    weak var navigator: DashUINavigator?
-    
     private var daysRemaining: Int? {
         if case .timeRemaining(let remaining) = viewModel.lifeState, remaining > .days(1) {
             return Int(remaining.days)
@@ -315,7 +313,7 @@ struct DashSettingsView: View  {
             
             Section() {
                 Button(action: {
-                    self.navigator?.navigateTo(self.viewModel.lifeState.nextPodLifecycleAction)
+                    self.viewModel.navigateTo?(self.viewModel.lifeState.nextPodLifecycleAction)
                 }) {
                     Text(self.viewModel.lifeState.nextPodLifecycleActionDescription)
                         .foregroundColor(self.viewModel.lifeState.nextPodLifecycleActionColor)

@@ -165,6 +165,8 @@ class DashSettingsViewModel: ObservableObject {
     
     var didFinish: (() -> Void)?
     
+    var navigateTo: ((DashUIScreen) -> Void)?
+    
     private let pumpManager: DashPumpManager
     
     init(pumpManager: DashPumpManager) {

@@ -149,8 +149,6 @@ public class DashPumpManager: DeviceManager {
         }
 
         if oldValue.podState != newValue.podState {
-            print("**** podStateDidUpdate")
-
             podStateObservers.forEach { (observer) in
                 observer.podStateDidUpdate(newValue.podState)
             }
@@ -171,7 +169,6 @@ public class DashPumpManager: DeviceManager {
         // Ideally we ensure that oldValue.rawValue != newValue.rawValue, but the types aren't
         // defined as equatable
         pumpDelegate.notify { (delegate) in
-            print("**** pumpManagerDidUpdateState: highlight = \(oldHighlight?.localizedMessage) -> \(newHiglight?.localizedMessage)")
             delegate?.pumpManagerDidUpdateState(self)
         }
 
@@ -179,7 +176,6 @@ public class DashPumpManager: DeviceManager {
         let newStatus = status(for: newValue)
         
         if oldStatus != newStatus || oldHighlight != newHiglight {
-            print("**** notifyStatusObservers")
             notifyStatusObservers(oldStatus: oldStatus)
         }
 

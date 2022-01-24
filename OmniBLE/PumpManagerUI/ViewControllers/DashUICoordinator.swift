@@ -96,7 +96,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     private func viewControllerForScreen(_ screen: DashUIScreen) -> UIViewController {
         switch screen {
         case .firstRunScreen:
-            let view = PodSetupView(nextAction: stepFinished,
+            let view = PodSetupView(nextAction: { [weak self] in self?.stepFinished() },
                                     allowDebugFeatures: allowDebugFeatures,
                                     skipOnboarding: { [weak self] in    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                                         guard let self = self else { return }
@@ -160,7 +160,10 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             viewModel.didFinish = { [weak self] in
                 self?.stepFinished()
             }
-            let view = DashSettingsView(viewModel: viewModel, navigator: self)
+            viewModel.navigateTo = { [weak self] (screen) in
+                self?.navigateTo(screen)
+            }
+            let view = DashSettingsView(viewModel: viewModel)
             return hostingController(rootView: view)
         case .pairPod:
             pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
