@@ -356,14 +356,5 @@ extension PumpManagerStatus.BasalDeliveryState {
         default:
             return false
         }
-    }
-    
-    var suspendResumeActionColor: Color {
-        switch self {
-        case .suspending, .resuming:
-            return Color.secondary
-        default:
-            return Color.accentColor
-        }
-    }
+    }    
 }

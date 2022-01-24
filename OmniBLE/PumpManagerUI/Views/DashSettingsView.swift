@@ -98,7 +98,7 @@ struct DashSettingsView: View  {
         VStack(alignment: .leading, spacing: 5) {
             Text(deliverySectionTitle)
                 .foregroundColor(Color(UIColor.secondaryLabel))
-            if let basalState = self.viewModel.basalDeliveryState, case .suspended = basalState {
+            if self.viewModel.podOk, let basalState = self.viewModel.basalDeliveryState, case .suspended = basalState {
                 HStack(alignment: .center) {
                     Image(systemName: "pause.circle.fill")
                         .font(.system(size: 34))
@@ -182,6 +182,9 @@ struct DashSettingsView: View  {
     }
     
     func suspendResumeButtonColor(for basalDeliveryState: PumpManagerStatus.BasalDeliveryState) -> Color {
+        guard viewModel.podOk else {
+            return Color.secondary
+        }
         switch basalDeliveryState {
         case .active, .tempBasal, .cancelingTempBasal, .initiatingTempBasal:
             return .accentColor
@@ -191,6 +194,19 @@ struct DashSettingsView: View  {
             return guidanceColors.warning
         }
     }
+    
+    func suspendResumeActionColor(for basalDeliveryState: PumpManagerStatus.BasalDeliveryState) -> Color {
+        guard viewModel.podOk else {
+            return Color.secondary
+        }
+        switch basalDeliveryState {
+        case .suspending, .resuming:
+            return Color.secondary
+        default:
+            return Color.accentColor
+        }
+    }
+
     
     func suspendResumeRow(for basalState: PumpManagerStatus.BasalDeliveryState) -> some View {
         HStack {
@@ -202,7 +218,7 @@ struct DashSettingsView: View  {
                         .font(.system(size: 22))
                         .foregroundColor(suspendResumeButtonColor(for: basalState))
                     Text(basalState.suspendResumeActionText)
-                        .foregroundColor(basalState.suspendResumeActionColor)
+                        .foregroundColor(suspendResumeActionColor(for: basalState))
                 }
             }
             .actionSheet(isPresented: $showSuspendOptions) {
@@ -258,7 +274,7 @@ struct DashSettingsView: View  {
             Section(header: SectionHeader(label: LocalizedString("Activity", comment: "Section header for activity section"))) {
                 suspendResumeRow(for: self.viewModel.basalDeliveryState ?? .active(Date()))
                     .disabled(!self.viewModel.podOk)
-                if case .suspended(let suspendDate) = self.viewModel.basalDeliveryState {
+                if self.viewModel.podOk, case .suspended(let suspendDate) = self.viewModel.basalDeliveryState {
                     HStack {
                         FrameworkLocalText("Suspended At", comment: "Label for suspended at time")
                         Spacer()
