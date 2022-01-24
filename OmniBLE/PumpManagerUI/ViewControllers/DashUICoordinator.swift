@@ -98,17 +98,23 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         case .firstRunScreen:
             let view = PodSetupView(nextAction: stepFinished,
                                     allowDebugFeatures: allowDebugFeatures,
-                                    skipOnboarding: {    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                                    skipOnboarding: { [weak self] in    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                                        guard let self = self else { return }
                                         self.pumpManager.completeOnboard()
                                         self.completionDelegate?.completionNotifyingDidComplete(self)
                                     })
             return hostingController(rootView: view)
         case .expirationReminderSetup:
             var view = ExpirationReminderSetupView(expirationReminderDefault: Int(pumpManager.defaultExpirationReminderOffset.hours))
-            view.valueChanged = { value in
-                self.pumpManager.defaultExpirationReminderOffset = .hours(Double(value))
+            view.valueChanged = { [weak self] value in
+                self?.pumpManager.defaultExpirationReminderOffset = .hours(Double(value))
             }
-            view.continueButtonTapped = {
+            view.continueButtonTapped = { [weak self] in
+                guard let self = self else { return }
+                if !self.pumpManager.isOnboarded {
+                    self.pumpManager.completeOnboard()
+                    self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: self.pumpManager)
+                }
                 self.stepFinished()
             }
             let hostedView = hostingController(rootView: view)
@@ -116,12 +122,12 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             return hostedView
         case .lowReservoirReminderSetup:
             var view = LowReservoirReminderSetupView(lowReservoirReminderValue: Int(pumpManager.lowReservoirReminderValue))
-            view.valueChanged = { value in
-                self.pumpManager.lowReservoirReminderValue = Double(value)
+            view.valueChanged = { [weak self] value in
+                self?.pumpManager.lowReservoirReminderValue = Double(value)
             }
-            view.continueButtonTapped = {
-                self.pumpManager.initialConfigurationCompleted = true
-                self.stepFinished()
+            view.continueButtonTapped = { [weak self] in
+                self?.pumpManager.initialConfigurationCompleted = true
+                self?.stepFinished()
             }
             
             let hostedView = hostingController(rootView: view)
@@ -159,11 +165,17 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         case .pairPod:
             pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
 
-            let viewModel = PairPodViewModel(podPairer: pumpManager, navigator: self)
+            let viewModel = PairPodViewModel(podPairer: pumpManager)
 
-            viewModel.didFinish = stepFinished
-            viewModel.didCancelSetup = setupCanceled
-            viewModel.didRequestDeactivation = { self.navigateTo(.deactivate) }
+            viewModel.didFinish = { [weak self] in
+                self?.stepFinished()
+            }
+            viewModel.didCancelSetup = { [weak self] in
+                self?.setupCanceled()
+            }
+            viewModel.didRequestDeactivation = { [weak self] in
+                self?.navigateTo(.deactivate)
+            }
             
             let view = hostingController(rootView: PairPodView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Pair Pod", comment: "Title for pod pairing screen")
@@ -171,12 +183,12 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             return view
         case .confirmAttachment:
             let view = AttachPodView(
-                didConfirmAttachment: {
-                    self.pumpManager.podAttachmentConfirmed = true
-                    self.stepFinished()
+                didConfirmAttachment: { [weak self] in
+                    self?.pumpManager.podAttachmentConfirmed = true
+                    self?.stepFinished()
                 },
-                didRequestDeactivation: {
-                    self.navigateTo(.deactivate)
+                didRequestDeactivation: { [weak self] in
+                    self?.navigateTo(.deactivate)
                 })
             
             let vc = hostingController(rootView: view)
@@ -187,8 +199,12 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         case .insertCannula:
             let viewModel = InsertCannulaViewModel(cannulaInserter: pumpManager)
             
-            viewModel.didFinish = stepFinished
-            viewModel.didRequestDeactivation = { self.navigateTo(.deactivate) }
+            viewModel.didFinish = { [weak self] in
+                self?.stepFinished()
+            }
+            viewModel.didRequestDeactivation = { [weak self] in
+                self?.navigateTo(.deactivate)
+            }
 
             let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Insert Cannula", comment: "Title for insert cannula screen")
@@ -196,11 +212,11 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             return view
         case .checkInsertedCannula:
             let view = CheckInsertedCannulaView(
-                didRequestDeactivation: {
-                    self.navigateTo(.deactivate)
+                didRequestDeactivation: { [weak self] in
+                    self?.navigateTo(.deactivate)
                 },
-                wasInsertedProperly: {
-                    self.stepFinished()
+                wasInsertedProperly: { [weak self] in
+                    self?.stepFinished()
                 }
             )
             let hostedView = hostingController(rootView: view)
@@ -222,18 +238,16 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 scheduledReminderDate: expirationReminderDate,
                 dateFormatter: formatter,
                 allowedDates: allowedExpirationReminderDates,
-                onSaveScheduledExpirationReminder: { (newExpirationReminderDate, completion) in
+                onSaveScheduledExpirationReminder: { [weak self] (newExpirationReminderDate, completion) in
                     let intervalBeforeExpiration = podExpiresAt.timeIntervalSince(newExpirationReminderDate)
-                    self.pumpManager.updateExpirationReminder(intervalBeforeExpiration, completion: completion)
+                    self?.pumpManager.updateExpirationReminder(intervalBeforeExpiration, completion: completion)
                 },
-                didFinish: {
-                    if !self.pumpManager.isOnboarded {
-                        self.pumpManager.completeOnboard()
-                        self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: self.pumpManager)
-                    }
-                    self.stepFinished()
+                didFinish: { [weak self] in
+                    self?.stepFinished()
                 },
-                didRequestDeactivation: { self.navigateTo(.deactivate) }
+                didRequestDeactivation: { [weak self] in
+                    self?.navigateTo(.deactivate)
+                }
             )
             
             let hostedView = hostingController(rootView: view)

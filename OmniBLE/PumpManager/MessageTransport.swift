@@ -226,7 +226,7 @@ class PodMessageTransport: MessageTransport {
 
         let writeResult = try manager.sendMessage(sendMessage)
         guard ((writeResult as? MessageSendSuccess) != nil) else {
-            throw BluetoothErrors.MessageIOException("Could not write $msgType: \(writeResult)")
+            throw PodProtocolError.messageIOException("Could not write $msgType: \(writeResult)")
         }
 
         let response = try readAndAckResponse()
@@ -264,7 +264,7 @@ class PodMessageTransport: MessageTransport {
 
         let readResponse = try manager.readMessage()
         guard let readMessage = readResponse else {
-            throw BluetoothErrors.MessageIOException("Could not read response")
+            throw PodProtocolError.messageIOException("Could not read response")
         }
 
         incrementNonceSeq()
@@ -291,7 +291,7 @@ class PodMessageTransport: MessageTransport {
         log.debug("Sending ACK: %@ in packet $ack", ack.payload.hexadecimalString)
         let ackResult = try manager.sendMessage(ack)
         guard ((ackResult as? MessageSendSuccess) != nil) else {
-            throw BluetoothErrors.MessageIOException("Could not write $msgType: \(ackResult)")
+            throw PodProtocolError.messageIOException("Could not write $msgType: \(ackResult)")
         }
 
         // verify that the Omnipod message # matches the expected value

@@ -119,7 +119,9 @@ public class DashPumpManager: DeviceManager {
     public let dateGenerator: () -> Date
 
     public var state: DashPumpManagerState {
-        return lockedState.value
+        get {
+            return lockedState.value
+        }
     }
 
     private func setState(_ changes: (_ state: inout DashPumpManagerState) -> Void) -> Void {
@@ -147,6 +149,8 @@ public class DashPumpManager: DeviceManager {
         }
 
         if oldValue.podState != newValue.podState {
+            print("**** podStateDidUpdate")
+
             podStateObservers.forEach { (observer) in
                 observer.podStateDidUpdate(newValue.podState)
             }
@@ -161,17 +165,21 @@ public class DashPumpManager: DeviceManager {
             }
         }
 
+        let oldHighlight = buildPumpStatusHighlight(for: oldValue)
+        let newHiglight = buildPumpStatusHighlight(for: newValue)
 
         // Ideally we ensure that oldValue.rawValue != newValue.rawValue, but the types aren't
         // defined as equatable
         pumpDelegate.notify { (delegate) in
+            print("**** pumpManagerDidUpdateState: highlight = \(oldHighlight?.localizedMessage) -> \(newHiglight?.localizedMessage)")
             delegate?.pumpManagerDidUpdateState(self)
         }
 
         let oldStatus = status(for: oldValue)
         let newStatus = status(for: newValue)
-
-        if oldStatus != newStatus {
+        
+        if oldStatus != newStatus || oldHighlight != newHiglight {
+            print("**** notifyStatusObservers")
             notifyStatusObservers(oldStatus: oldStatus)
         }
 
@@ -328,7 +336,7 @@ extension DashPumpManager {
         return .noBolus
     }
     
-    public var podCommState: PodCommState {
+    private func podCommState(for state: DashPumpManagerState) -> PodCommState {
         guard let podState = state.podState else {
             return .noPod
         }
@@ -342,6 +350,10 @@ extension DashPumpManager {
             return .activating
         }
         return .deactivating
+    }
+    
+    public var podCommState: PodCommState {
+        return podCommState(for: state)
     }
     
     public var podActivatedAt: Date? {
@@ -479,7 +491,7 @@ extension DashPumpManager {
                                                          state: .critical)
         }
 
-        switch podCommState {
+        switch podCommState(for: state) {
         case .activating:
             return PumpManagerStatus.PumpStatusHighlight(
                 localizedMessage: NSLocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
@@ -1536,12 +1548,11 @@ extension DashPumpManager: PumpManager {
                 return
             }
 
-            // Commenting this out, as we will update it in podComms(_ podComms: PodComms, didChange podState: PodState)
-//            defer {
-//                self.setState({ (state) in
-//                    state.suspendEngageState = .stable
-//                })
-//            }
+            defer {
+                self.setState({ (state) in
+                    state.suspendEngageState = .stable
+                })
+            }
             
             self.setState({ (state) in
                 state.suspendEngageState = .disengaging
@@ -1591,16 +1602,7 @@ extension DashPumpManager: PumpManager {
         case true?:
             log.default("Fetching status because pumpData is too old")
             getPodStatus(storeDosesOnSuccess: true, emitConfirmationBeep: false) { (response) in
-                self.pumpDelegate.notify({ (delegate) in
-                    switch response {
-                    case .failure(let error):
-                        self.log.default("Not recommending Loop because pump data is stale: %@", String(describing: error))
-                        delegate?.pumpManager(self, didError: error)
-                    default:
-                        break
-                    }
-                    completion?(self.lastSync)
-                })
+                completion?(self.lastSync)
             }
         case false?:
             log.default("Skipping status update because pumpData is fresh")

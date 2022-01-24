@@ -57,7 +57,7 @@ class LTKExchanger {
         log.debug("Reading sps1")
         let podSps1 = try manager.readMessage(true)
         guard let _ = podSps1 else {
-            throw BluetoothErrors.PairingException("Could not read SPS1")
+            throw PodProtocolError.pairingException("Could not read SPS1")
         }
         try processSps1FromPod(podSps1!)
         // now we have all the data to generate: confPod, confPdm, ltk and noncePrefix
@@ -75,7 +75,7 @@ class LTKExchanger {
 
         let podSps2 = try manager.readMessage()
         guard let _ = podSps2 else {
-            throw BluetoothErrors.PairingException("Could not read SPS2")
+            throw PodProtocolError.pairingException("Could not read SPS2")
         }
         try validatePodSps2(podSps2!)
         // No exception throwing after this point. It is possible that the pod saved the LTK
@@ -91,17 +91,17 @@ class LTKExchanger {
         )
         let result = try manager.sendMessage(sp0gp0.message)
         guard ((result as? MessageSendSuccess) != nil) else {
-            throw BluetoothErrors.PairingException("Error sending SP0GP0: \(result)")
+            throw PodProtocolError.pairingException("Error sending SP0GP0: \(result)")
         }
 
         let p0 = try manager.readMessage()
         guard let _ = p0 else {
-            throw BluetoothErrors.PairingException("Could not read P0")
+            throw PodProtocolError.pairingException("Could not read P0")
         }
         try validateP0(p0!)
         
         guard keyExchange.ltk.count == 16 else {
-            throw BluetoothErrors.InvalidLTKKey("Invalid Key, got \(String(data: keyExchange.ltk, encoding: .utf8) ?? "")")
+            throw PodProtocolError.invalidLTKKey("Invalid Key, got \(String(data: keyExchange.ltk, encoding: .utf8) ?? "")")
         }
 
         return PairResult(
@@ -114,7 +114,7 @@ class LTKExchanger {
     private func throwOnSendError(_ msg: MessagePacket, _ msgType: String) throws {
         let result = try manager.sendMessage(msg)
         guard ((result as? MessageSendSuccess) != nil) else {
-            throw BluetoothErrors.PairingException("Could not send or confirm $msgType: \(result)")
+            throw PodProtocolError.pairingException("Could not send or confirm $msgType: \(result)")
         }
     }
 
@@ -133,7 +133,7 @@ class LTKExchanger {
         log.debug("SPS2 payload from pod: %@", payload.hexadecimalString)
 
         if (payload.count != KeyExchange.CMAC_SIZE) {
-            throw BluetoothErrors.MessageIOException("Invalid payload size")
+            throw PodProtocolError.messageIOException("Invalid payload size")
         }
         try keyExchange.validatePodConf(payload)
     }
@@ -150,7 +150,7 @@ class LTKExchanger {
         let payload = try StringLengthPrefixEncoding.parseKeys([LTKExchanger.P0], msg.payload)[0]
         log.debug("P0 payload from pod: %@", payload.hexadecimalString)
         if (payload != LTKExchanger.UNKNOWN_P0_PAYLOAD) {
-            throw BluetoothErrors.PairingException("Reveived invalid P0 payload: \(payload)")
+            throw PodProtocolError.pairingException("Reveived invalid P0 payload: \(payload)")
         }
     }
 }

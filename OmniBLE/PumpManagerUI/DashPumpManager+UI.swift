@@ -123,7 +123,10 @@ public enum DashStatusBadge: DeviceStatusBadge {
 extension DashPumpManager {
     
     public var pumpStatusHighlight: DeviceStatusHighlight? {
-        return buildPumpStatusHighlight(for: state)
+        let highlight = buildPumpStatusHighlight(for: state)
+        highlight?.localizedMessage
+        print("**** highlight = \(highlight?.localizedMessage)")
+        return highlight
     }
     
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {
