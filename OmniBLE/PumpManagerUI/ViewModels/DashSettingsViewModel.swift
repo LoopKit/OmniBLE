@@ -187,10 +187,12 @@ class DashSettingsViewModel: ObservableObject {
     func changeTimeZoneTapped() {
         synchronizingTime = true
         pumpManager.setTime { (error) in
-            self.synchronizingTime = false
-            self.lifeState = self.pumpManager.lifeState
-            if let error = error {
-                self.activeAlert = .syncTimeError(error)
+            DispatchQueue.main.async {
+                self.synchronizingTime = false
+                self.lifeState = self.pumpManager.lifeState
+                if let error = error {
+                    self.activeAlert = .syncTimeError(error)
+                }
             }
         }
     }
@@ -210,8 +212,10 @@ class DashSettingsViewModel: ObservableObject {
     func suspendDelivery(duration: TimeInterval) {
         // TODO: add reminder setting
         pumpManager.suspendDelivery() { (error) in
-            if let error = error {
-                self.activeAlert = .suspendError(error)
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.activeAlert = .suspendError(error)
+                }
             }
         }
     }
@@ -230,20 +234,24 @@ class DashSettingsViewModel: ObservableObject {
         if let podExpiresAt = pumpManager.podExpiresAt {
             let intervalBeforeExpiration = podExpiresAt.timeIntervalSince(selectedDate)
             pumpManager.updateExpirationReminder(.hours(round(intervalBeforeExpiration.hours))) { (error) in
-                if error == nil {
-                    self.expirationReminderDate = selectedDate
+                DispatchQueue.main.async {
+                    if error == nil {
+                        self.expirationReminderDate = selectedDate
+                    }
+                    completion(error)
                 }
-                completion(error)
             }
         }
     }
 
     func saveLowReservoirReminder(_ selectedValue: Int, _ completion: @escaping (Error?) -> Void) {
         pumpManager.updateLowReservoirReminder(selectedValue) { (error) in
-            if error == nil {
-                self.lowReservoirAlertValue = selectedValue
+            DispatchQueue.main.async {
+                if error == nil {
+                    self.lowReservoirAlertValue = selectedValue
+                }
+                completion(error)
             }
-            completion(error)
         }
     }
  

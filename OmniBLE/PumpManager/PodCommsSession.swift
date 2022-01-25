@@ -33,6 +33,7 @@ public enum PodCommsError: Error {
     case rssiTooHigh
     case diagnosticMessage(str: String)
     case podIncompatible(str: String)
+    case noPodsFound
     case tooManyPodsFound
 }
 
@@ -84,6 +85,8 @@ extension PodCommsError: LocalizedError {
             return str
         case .podIncompatible(let str):
             return str
+        case .noPodsFound:
+            return LocalizedString("No pods found", comment: "Error message for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
             return LocalizedString("Too many pods found", comment: "Error message for PodCommsError.tooManyPodsFound")
 
@@ -113,7 +116,7 @@ extension PodCommsError: LocalizedError {
         case .invalidAddress:
             return LocalizedString("Crosstalk possible. Please move to a new location", comment: "Recovery suggestion when unexpected address received")
         case .noPodAvailable:
-            return LocalizedString("Make sure your pod in bluetooth range and try again.", comment: "Recovery suggestion when no pod is available")
+            return LocalizedString("Make sure your pod is nearby and try again.", comment: "Recovery suggestion when no pod is available")
         case .unfinalizedBolus:
             return LocalizedString("Wait for existing bolus to finish, or cancel bolus", comment: "Recovery suggestion when operation could not be completed due to existing bolus in progress")
         case .unfinalizedTempBasal:
@@ -140,8 +143,10 @@ extension PodCommsError: LocalizedError {
             return nil
         case .podIncompatible:
             return nil
+        case .noPodsFound:
+            return LocalizedString("Make sure your pod is filled and nearby.", comment: "Recovery suggestion for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
-            return LocalizedString("Move to a new area away from any other pods and try again.", comment: "Error message for PodCommsError.tooManyPodsFound")
+            return LocalizedString("Move to a new area away from any other pods and try again.", comment: "Recovery suggestion for PodCommsError.tooManyPodsFound")
         }
     }
 
