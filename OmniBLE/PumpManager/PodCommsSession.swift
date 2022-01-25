@@ -19,7 +19,7 @@ public enum PodCommsError: Error {
     case unexpectedResponse(response: MessageBlockType)
     case unknownResponseType(rawType: UInt8)
     case invalidAddress(address: UInt32, expectedAddress: UInt32)
-    case noPodAvailable
+    case podNotConnected
     case unfinalizedBolus
     case unfinalizedTempBasal
     case nonceResyncFailed
@@ -56,7 +56,7 @@ extension PodCommsError: LocalizedError {
             return nil
         case .invalidAddress(address: let address, expectedAddress: let expectedAddress):
             return String(format: LocalizedString("Invalid address 0x%x. Expected 0x%x", comment: "Error message for when unexpected address is received (1: received address) (2: expected address)"), address, expectedAddress)
-        case .noPodAvailable:
+        case .podNotConnected:
             return LocalizedString("Pod not connected", comment: "Error message shown when the pod is not connected.")
         case .unfinalizedBolus:
             return LocalizedString("Bolus in progress", comment: "Error message shown when operation could not be completed due to existing bolus in progress")
@@ -115,7 +115,7 @@ extension PodCommsError: LocalizedError {
             return nil
         case .invalidAddress:
             return LocalizedString("Crosstalk possible. Please move to a new location", comment: "Recovery suggestion when unexpected address received")
-        case .noPodAvailable:
+        case .podNotConnected:
             return LocalizedString("Make sure your pod is nearby and try again.", comment: "Recovery suggestion when no pod is available")
         case .unfinalizedBolus:
             return LocalizedString("Wait for existing bolus to finish, or cancel bolus", comment: "Recovery suggestion when operation could not be completed due to existing bolus in progress")

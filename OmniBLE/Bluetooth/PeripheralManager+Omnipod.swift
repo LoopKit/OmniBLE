@@ -48,7 +48,7 @@ extension PeripheralManager {
     /// - Throws: PeripheralManagerError
     func sendMessage(_ message: MessagePacket, _ forEncryption: Bool = false) throws -> MessageResult {
         dispatchPrecondition(condition: .onQueue(queue))
-
+        
         var result: MessageResult = MessageSendSuccess()
         
         do {

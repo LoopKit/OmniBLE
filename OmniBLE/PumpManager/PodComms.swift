@@ -143,7 +143,7 @@ public class PodComms: CustomDebugStringConvertible {
     }
 
     public func pairPod(ids: Ids) throws {
-        guard let manager = manager else { throw PodCommsError.noPodAvailable }
+        guard let manager = manager else { throw PodCommsError.podNotConnected }
         let address = ids.podId.toUInt32()
 
         let ltkExchanger = LTKExchanger(manager: manager, ids: ids)
@@ -283,7 +283,7 @@ public class PodComms: CustomDebugStringConvertible {
     }
     
     private func setupPod(podState: PodState, timeZone: TimeZone) throws {
-        guard let manager = manager else { throw PodCommsError.noPodAvailable }
+        guard let manager = manager else { throw PodCommsError.podNotConnected }
 
         let transport = PodMessageTransport(manager: manager, address: podState.address, state: podState.messageTransportState)
         transport.messageLogger = messageLogger
@@ -402,7 +402,7 @@ public class PodComms: CustomDebugStringConvertible {
     func runSession(withName name: String, _ block: @escaping (_ result: SessionRunResult) -> Void) {
 
         guard let manager = manager else {
-            block(.failure(PodCommsError.noPodAvailable))
+            block(.failure(PodCommsError.podNotConnected))
             return
         }
 

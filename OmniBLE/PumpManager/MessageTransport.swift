@@ -183,6 +183,10 @@ class PodMessageTransport: MessageTransport {
 
     /// Sends the given pod message over the encrypted Dash transport and returns the pod's response
     func sendMessage(_ message: Message) throws -> Message {
+        
+        guard manager.peripheral.state == .connected else {
+            throw PodCommsError.podNotConnected
+        }
 
         messageNumber = message.sequenceNum // reset our Omnipod message # to given value
         incrementMessageNumber() // bump to match expected Omnipod message # in response
@@ -236,7 +240,7 @@ class PodMessageTransport: MessageTransport {
     }
     
     private func getCmdMessage(cmd: Message) throws -> MessagePacket {
-        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.noPodAvailable }
+        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.podNotConnected }
 
         incrementMsgSeq()
 
@@ -260,7 +264,7 @@ class PodMessageTransport: MessageTransport {
     }
     
     func readAndAckResponse() throws -> Message {
-        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.noPodAvailable }
+        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.podNotConnected }
 
         let readResponse = try manager.readMessage()
         guard let readMessage = readResponse else {
@@ -316,7 +320,7 @@ class PodMessageTransport: MessageTransport {
     }
     
     private func getAck(response: MessagePacket) throws -> MessagePacket {
-        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.noPodAvailable }
+        guard let enDecrypt = self.enDecrypt else { throw PodCommsError.podNotConnected }
 
         let ackNumber = (UInt(response.sequenceNumber) + 1) & 0xff
         let msg = MessagePacket(
