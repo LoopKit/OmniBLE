@@ -162,7 +162,7 @@ extension PeripheralManager {
             let value = cmdQueue.remove(at: 0)
 
             if command.rawValue != value[0] {
-                log.default("Data Wrong command.rawValue (%d != %d).", data[0], sequence)
+                log.default("Data Wrong command.rawValue (%d != %d).", command.rawValue, value[0])
                 throw PeripheralManagerError.incorrectResponse
             }
             return
