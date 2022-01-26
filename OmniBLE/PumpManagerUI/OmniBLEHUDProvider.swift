@@ -1,5 +1,5 @@
 //
-//  DashHUDProvider.swift
+//  OmniBLEHUDProvider.swift
 //  OmniBLE
 //
 //  Created by Pete Schwamb on 4/19/19.
@@ -17,7 +17,7 @@ public enum ReservoirAlertState {
     case empty
 }
 
-internal class DashHUDProvider: NSObject, HUDProvider {
+internal class OmniBLEHUDProvider: NSObject, HUDProvider {
     var managerIdentifier: String {
         return pumpManager.managerIdentifier
     }
@@ -149,7 +149,7 @@ internal class DashHUDProvider: NSObject, HUDProvider {
     }
 }
 
-extension DashHUDProvider: PodStateObserver {
+extension OmniBLEHUDProvider: PodStateObserver {
     func podStateDidUpdate(_ state: PodState?) {
         updateRefreshTimer()
         updateReservoirView()

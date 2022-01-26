@@ -15,7 +15,7 @@ import SwiftUI
 
 extension OmniBLEPumpManager: PumpManagerUI {
     public static var onboardingImage: UIImage? {
-        return UIImage(named: "Onboarding", in: Bundle(for: DashSettingsViewModel.self), compatibleWith: nil)
+        return UIImage(named: "Onboarding", in: Bundle(for: OmniBLESettingsViewModel.self), compatibleWith: nil)
     }
         
     public static func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
@@ -32,15 +32,15 @@ extension OmniBLEPumpManager: PumpManagerUI {
     }
     
     public var smallImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: DashSettingsViewModel.self), compatibleWith: nil)!
+        return UIImage(named: "Pod", in: Bundle(for: OmniBLESettingsViewModel.self), compatibleWith: nil)!
     }
 
     public func hudProvider(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) -> HUDProvider? {
-        return DashHUDProvider(pumpManager: self, bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowedInsulinTypes: allowedInsulinTypes)
+        return OmniBLEHUDProvider(pumpManager: self, bluetoothProvider: bluetoothProvider, colorPalette: colorPalette, allowedInsulinTypes: allowedInsulinTypes)
     }
 
     public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> LevelHUDView? {
-        return DashHUDProvider.createHUDView(rawValue: rawValue)
+        return OmniBLEHUDProvider.createHUDView(rawValue: rawValue)
     }
 }
 

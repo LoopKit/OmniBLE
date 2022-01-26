@@ -127,7 +127,7 @@
 		C1F67E8B27975B830017487F /* AttachPodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7327975B830017487F /* AttachPodView.swift */; };
 		C1F67E8C27975B830017487F /* ScheduledExpirationReminderEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7427975B830017487F /* ScheduledExpirationReminderEditView.swift */; };
 		C1F67E8E27975B830017487F /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7627975B830017487F /* TimeView.swift */; };
-		C1F67E8F27975B830017487F /* DashSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7727975B830017487F /* DashSettingsView.swift */; };
+		C1F67E8F27975B830017487F /* OmniBLESettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7727975B830017487F /* OmniBLESettingsView.swift */; };
 		C1F67E9027975B830017487F /* ExpirationReminderSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7827975B830017487F /* ExpirationReminderSetupView.swift */; };
 		C1F67E9127975B830017487F /* DeactivatePodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7927975B830017487F /* DeactivatePodView.swift */; };
 		C1F67E9227975B830017487F /* BasalStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7A27975B830017487F /* BasalStateView.swift */; };
@@ -153,12 +153,12 @@
 		C1F67EC627975F360017487F /* PairPodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EBE27975F360017487F /* PairPodViewModel.swift */; };
 		C1F67EC827975F360017487F /* DeactivatePodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC027975F360017487F /* DeactivatePodViewModel.swift */; };
 		C1F67EC927975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC127975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift */; };
-		C1F67ECA27975F360017487F /* DashSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC227975F360017487F /* DashSettingsViewModel.swift */; };
+		C1F67ECA27975F360017487F /* OmniBLESettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC227975F360017487F /* OmniBLESettingsViewModel.swift */; };
 		C1F67ECB27975F360017487F /* PodLifeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EC327975F360017487F /* PodLifeState.swift */; };
 		C1F67EDA27979E400017487F /* PumpManagerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67ED927979E400017487F /* PumpManagerAlert.swift */; };
 		C1F67EDC2797A03A0017487F /* PendingCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDB2797A03A0017487F /* PendingCommand.swift */; };
 		C1F67EDE2797AFF10017487F /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDD2797AFF10017487F /* Image.swift */; };
-		C1F67EE02797B1EF0017487F /* DashHUDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDF2797B1EF0017487F /* DashHUDProvider.swift */; };
+		C1F67EE02797B1EF0017487F /* OmniBLEHUDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */; };
 		C1F67EE227985F580017487F /* ReservoirLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EE127985F580017487F /* ReservoirLevel.swift */; };
 		D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */; };
 		D895BF5B275DE64000D51FC7 /* StringLengthPrefixEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */; };
@@ -318,7 +318,7 @@
 		C1F67E7327975B830017487F /* AttachPodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachPodView.swift; sourceTree = "<group>"; };
 		C1F67E7427975B830017487F /* ScheduledExpirationReminderEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledExpirationReminderEditView.swift; sourceTree = "<group>"; };
 		C1F67E7627975B830017487F /* TimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
-		C1F67E7727975B830017487F /* DashSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashSettingsView.swift; sourceTree = "<group>"; };
+		C1F67E7727975B830017487F /* OmniBLESettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLESettingsView.swift; sourceTree = "<group>"; };
 		C1F67E7827975B830017487F /* ExpirationReminderSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpirationReminderSetupView.swift; sourceTree = "<group>"; };
 		C1F67E7927975B830017487F /* DeactivatePodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivatePodView.swift; sourceTree = "<group>"; };
 		C1F67E7A27975B830017487F /* BasalStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasalStateView.swift; sourceTree = "<group>"; };
@@ -344,12 +344,12 @@
 		C1F67EBE27975F360017487F /* PairPodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairPodViewModel.swift; sourceTree = "<group>"; };
 		C1F67EC027975F360017487F /* DeactivatePodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivatePodViewModel.swift; sourceTree = "<group>"; };
 		C1F67EC127975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryUncertaintyRecoveryViewModel.swift; sourceTree = "<group>"; };
-		C1F67EC227975F360017487F /* DashSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashSettingsViewModel.swift; sourceTree = "<group>"; };
+		C1F67EC227975F360017487F /* OmniBLESettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLESettingsViewModel.swift; sourceTree = "<group>"; };
 		C1F67EC327975F360017487F /* PodLifeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodLifeState.swift; sourceTree = "<group>"; };
 		C1F67ED927979E400017487F /* PumpManagerAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerAlert.swift; sourceTree = "<group>"; };
 		C1F67EDB2797A03A0017487F /* PendingCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingCommand.swift; sourceTree = "<group>"; };
 		C1F67EDD2797AFF10017487F /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		C1F67EDF2797B1EF0017487F /* DashHUDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashHUDProvider.swift; sourceTree = "<group>"; };
+		C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBLEHUDProvider.swift; sourceTree = "<group>"; };
 		C1F67EE127985F580017487F /* ReservoirLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservoirLevel.swift; sourceTree = "<group>"; };
 		D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedStatus+OmniBLE.swift"; sourceTree = "<group>"; };
 		D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringLengthPrefixEncoding.swift; sourceTree = "<group>"; };
@@ -623,7 +623,7 @@
 				1029AE4E27094E1900B7F5B6 /* OmniBLEUI.xcassets */,
 				8475312626ED838A009FD801 /* ViewControllers */,
 				8475311E26ED838A009FD801 /* Views */,
-				C1F67EDF2797B1EF0017487F /* DashHUDProvider.swift */,
+				C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */,
 			);
 			path = PumpManagerUI;
 			sourceTree = "<group>";
@@ -635,7 +635,7 @@
 				C1F67E7327975B830017487F /* AttachPodView.swift */,
 				C1F67E7A27975B830017487F /* BasalStateView.swift */,
 				C1F67E8027975B830017487F /* CheckInsertedCannulaView.swift */,
-				C1F67E7727975B830017487F /* DashSettingsView.swift */,
+				C1F67E7727975B830017487F /* OmniBLESettingsView.swift */,
 				C1F67E7927975B830017487F /* DeactivatePodView.swift */,
 				C1F67E8227975B830017487F /* DeliveryUncertaintyRecoveryView.swift */,
 				C1F67E7B27975B830017487F /* ExpirationReminderPickerView.swift */,
@@ -749,7 +749,7 @@
 		C1F67EBB27975F060017487F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				C1F67EC227975F360017487F /* DashSettingsViewModel.swift */,
+				C1F67EC227975F360017487F /* OmniBLESettingsViewModel.swift */,
 				C1F67EC027975F360017487F /* DeactivatePodViewModel.swift */,
 				C1F67EC127975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift */,
 				C1F67EBD27975F360017487F /* InsertCannulaViewModel.swift */,
@@ -983,7 +983,7 @@
 				1016324D27137B1E007A3BC2 /* BluetoothManager.swift in Sources */,
 				84752EE026ED13F5009FD801 /* PodProtocolError.swift in Sources */,
 				C1D27A1B27911E9900C41EBA /* PodAdvertisement.swift in Sources */,
-				C1F67EE02797B1EF0017487F /* DashHUDProvider.swift in Sources */,
+				C1F67EE02797B1EF0017487F /* OmniBLEHUDProvider.swift in Sources */,
 				10289E7F2739F8A1000339E6 /* EapAkaAttribute.swift in Sources */,
 				C1F67E9327975B830017487F /* ExpirationReminderPickerView.swift in Sources */,
 				1016325B27185EE5007A3BC2 /* Pod.swift in Sources */,
@@ -1061,7 +1061,7 @@
 				1021114B2709462300784F13 /* BasalSchedule+LoopKit.swift in Sources */,
 				84752EE626ED13F5009FD801 /* LTKExchanger.swift in Sources */,
 				10389A2A26FF7841002115E9 /* MessageBlock.swift in Sources */,
-				C1F67ECA27975F360017487F /* DashSettingsViewModel.swift in Sources */,
+				C1F67ECA27975F360017487F /* OmniBLESettingsViewModel.swift in Sources */,
 				10289E70273180A2000339E6 /* PeripheralManager+Omnipod.swift in Sources */,
 				C1F67EBA27975EB70017487F /* FrameworkLocalText.swift in Sources */,
 				C1F67E9227975B830017487F /* BasalStateView.swift in Sources */,
@@ -1094,7 +1094,7 @@
 				8475313426ED838B009FD801 /* ExpirationReminderDateTableViewCell.swift in Sources */,
 				102111482709462300784F13 /* PodInsulinMeasurements.swift in Sources */,
 				10389A4126FF7841002115E9 /* MessageTransport.swift in Sources */,
-				C1F67E8F27975B830017487F /* DashSettingsView.swift in Sources */,
+				C1F67E8F27975B830017487F /* OmniBLESettingsView.swift in Sources */,
 				10389A2E26FF7841002115E9 /* FaultConfigCommand.swift in Sources */,
 				C1F67E9F27975B830017487F /* SetupCompleteView.swift in Sources */,
 				C1F67EE227985F580017487F /* ReservoirLevel.swift in Sources */,

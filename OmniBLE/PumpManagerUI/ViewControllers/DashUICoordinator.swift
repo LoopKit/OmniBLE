@@ -156,14 +156,14 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             hostedView.navigationItem.title = LocalizedString("Deactivate Pod", comment: "Title for deactivate pod screen")
             return hostedView
         case .settings:
-            let viewModel = DashSettingsViewModel(pumpManager: pumpManager)
+            let viewModel = OmniBLESettingsViewModel(pumpManager: pumpManager)
             viewModel.didFinish = { [weak self] in
                 self?.stepFinished()
             }
             viewModel.navigateTo = { [weak self] (screen) in
                 self?.navigateTo(screen)
             }
-            let view = DashSettingsView(viewModel: viewModel)
+            let view = OmniBLESettingsView(viewModel: viewModel)
             return hostingController(rootView: view)
         case .pairPod:
             pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)

@@ -1,5 +1,5 @@
 //
-//  DashSettingsView.swift
+//  OmniBLESettingsView.swift
 //  ViewDev
 //
 //  Created by Pete Schwamb on 3/8/20.
@@ -11,9 +11,9 @@ import LoopKit
 import LoopKitUI
 import HealthKit
 
-struct DashSettingsView: View  {
+struct OmniBLESettingsView: View  {
     
-    @ObservedObject var viewModel: DashSettingsViewModel
+    @ObservedObject var viewModel: OmniBLESettingsViewModel
     
     @State private var showingDeleteConfirmation = false
     

@@ -29,7 +29,7 @@ struct DashSettingsNotice {
     let description: String
 }
 
-class DashSettingsViewModel: ObservableObject {
+class OmniBLESettingsViewModel: ObservableObject {
     
     @Published var lifeState: PodLifeState
     
@@ -293,7 +293,7 @@ class DashSettingsViewModel: ObservableObject {
     }
 }
 
-extension DashSettingsViewModel: PodStateObserver {
+extension OmniBLESettingsViewModel: PodStateObserver {
     func podStateDidUpdate(_ state: PodState?) {
         lifeState = self.pumpManager.lifeState
         basalDeliveryState = self.pumpManager.status.basalDeliveryState
