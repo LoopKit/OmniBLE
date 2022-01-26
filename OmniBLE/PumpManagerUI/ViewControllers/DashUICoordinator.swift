@@ -71,7 +71,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
 
     public weak var completionDelegate: CompletionDelegate?
     
-    var pumpManager: DashPumpManager
+    var pumpManager: OmniBLEPumpManager
     
     private var disposables = Set<AnyCancellable>()
     
@@ -83,7 +83,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     
     private let colorPalette: LoopUIColorPalette
 
-    private var pumpManagerType: DashPumpManager.Type?
+    private var pumpManagerType: OmniBLEPumpManager.Type?
     
     private var basalSchedule: BasalRateSchedule?
     
@@ -309,13 +309,13 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         completionDelegate?.completionNotifyingDidComplete(self)
     }
     
-    init(pumpManager: DashPumpManager? = nil, colorPalette: LoopUIColorPalette, basalSchedule: BasalRateSchedule? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
+    init(pumpManager: OmniBLEPumpManager? = nil, colorPalette: LoopUIColorPalette, basalSchedule: BasalRateSchedule? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
     {
         if pumpManager == nil,
            let basalSchedule = basalSchedule
         {
-            let pumpManagerState = DashPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil)
-            self.pumpManager = DashPumpManager(state: pumpManagerState)
+            let pumpManagerState = OmniBLEPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil)
+            self.pumpManager = OmniBLEPumpManager(state: pumpManagerState)
         } else {
             guard let pumpManager = pumpManager else {
                 fatalError("Unable to create Omnipod PumpManager")

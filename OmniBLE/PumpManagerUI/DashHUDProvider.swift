@@ -22,7 +22,7 @@ internal class DashHUDProvider: NSObject, HUDProvider {
         return pumpManager.managerIdentifier
     }
 
-    private let pumpManager: DashPumpManager
+    private let pumpManager: OmniBLEPumpManager
 
     private var reservoirView: OmnipodReservoirView?
     
@@ -42,7 +42,7 @@ internal class DashHUDProvider: NSObject, HUDProvider {
         }
     }
 
-    public init(pumpManager: DashPumpManager, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) {
+    public init(pumpManager: OmniBLEPumpManager, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) {
         self.pumpManager = pumpManager
         self.bluetoothProvider = bluetoothProvider
         self.colorPalette = colorPalette

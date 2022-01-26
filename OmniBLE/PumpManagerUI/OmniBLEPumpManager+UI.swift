@@ -13,7 +13,7 @@ import LoopKit
 import LoopKitUI
 import SwiftUI
 
-extension DashPumpManager: PumpManagerUI {
+extension OmniBLEPumpManager: PumpManagerUI {
     public static var onboardingImage: UIImage? {
         return UIImage(named: "Onboarding", in: Bundle(for: DashSettingsViewModel.self), compatibleWith: nil)
     }
@@ -45,7 +45,7 @@ extension DashPumpManager: PumpManagerUI {
 }
 
 // MARK: - DeliveryLimitSettingsTableViewControllerSyncSource
-extension DashPumpManager {
+extension OmniBLEPumpManager {
     public func syncDeliveryLimitSettings(for viewController: DeliveryLimitSettingsTableViewController, completion: @escaping (DeliveryLimitSettingsResult) -> Void) {
         guard let maxBasalRate = viewController.maximumBasalRatePerHour,
             let maxBolus = viewController.maximumBolus else
@@ -70,7 +70,7 @@ extension DashPumpManager {
 }
 
 // MARK: - BasalScheduleTableViewControllerSyncSource
-extension DashPumpManager {
+extension OmniBLEPumpManager {
 
     public func syncScheduleValues(for viewController: BasalScheduleTableViewController, completion: @escaping (SyncBasalScheduleResult<Double>) -> Void) {
         let newSchedule = BasalSchedule(repeatingScheduleValues: viewController.scheduleItems)
@@ -101,7 +101,7 @@ extension DashPumpManager {
 }
 
 
-public enum DashStatusBadge: DeviceStatusBadge {
+public enum OmniBLEStatusBadge: DeviceStatusBadge {
     case timeSyncNeeded
     
     public var image: UIImage? {
@@ -120,7 +120,7 @@ public enum DashStatusBadge: DeviceStatusBadge {
 }
 
 // MARK: - PumpStatusIndicator
-extension DashPumpManager {
+extension OmniBLEPumpManager {
     
     public var pumpStatusHighlight: DeviceStatusHighlight? {
         return buildPumpStatusHighlight(for: state)
@@ -132,7 +132,7 @@ extension DashPumpManager {
     
     public var pumpStatusBadge: DeviceStatusBadge? {
         if isClockOffset {
-            return DashStatusBadge.timeSyncNeeded
+            return OmniBLEStatusBadge.timeSyncNeeded
         } else {
             return nil
         }

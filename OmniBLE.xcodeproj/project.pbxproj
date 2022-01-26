@@ -38,10 +38,10 @@
 		10289E812739F8E4000339E6 /* SessionKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10289E802739F8E4000339E6 /* SessionKeys.swift */; };
 		10289E832739F917000339E6 /* SessionEstablisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10289E822739F917000339E6 /* SessionEstablisher.swift */; };
 		10289E852739F939000339E6 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10289E842739F939000339E6 /* Session.swift */; };
-		1029AE4827094D0E00B7F5B6 /* DashPumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4627094D0E00B7F5B6 /* DashPumpManager.swift */; };
-		1029AE4927094D0E00B7F5B6 /* DashPumpManagerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4727094D0E00B7F5B6 /* DashPumpManagerState.swift */; };
-		1029AE4B27094DDC00B7F5B6 /* DashPumpManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4A27094DDC00B7F5B6 /* DashPumpManager+UI.swift */; };
-		1029AE4F27094E1900B7F5B6 /* OmnipodUI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1029AE4E27094E1900B7F5B6 /* OmnipodUI.xcassets */; };
+		1029AE4827094D0E00B7F5B6 /* OmniBLEPumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4627094D0E00B7F5B6 /* OmniBLEPumpManager.swift */; };
+		1029AE4927094D0E00B7F5B6 /* OmniBLEPumpManagerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4727094D0E00B7F5B6 /* OmniBLEPumpManagerState.swift */; };
+		1029AE4B27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1029AE4A27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift */; };
+		1029AE4F27094E1900B7F5B6 /* OmniBLEUI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1029AE4E27094E1900B7F5B6 /* OmniBLEUI.xcassets */; };
 		10389A2326FF7841002115E9 /* PodInfoPulseLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A0426FF7841002115E9 /* PodInfoPulseLog.swift */; };
 		10389A2426FF7841002115E9 /* VersionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A0526FF7841002115E9 /* VersionResponse.swift */; };
 		10389A2526FF7841002115E9 /* PodInfoActivationTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A0626FF7841002115E9 /* PodInfoActivationTime.swift */; };
@@ -226,10 +226,10 @@
 		10289E802739F8E4000339E6 /* SessionKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionKeys.swift; sourceTree = "<group>"; };
 		10289E822739F917000339E6 /* SessionEstablisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEstablisher.swift; sourceTree = "<group>"; };
 		10289E842739F939000339E6 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		1029AE4627094D0E00B7F5B6 /* DashPumpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashPumpManager.swift; sourceTree = "<group>"; };
-		1029AE4727094D0E00B7F5B6 /* DashPumpManagerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashPumpManagerState.swift; sourceTree = "<group>"; };
-		1029AE4A27094DDC00B7F5B6 /* DashPumpManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashPumpManager+UI.swift"; sourceTree = "<group>"; };
-		1029AE4E27094E1900B7F5B6 /* OmnipodUI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OmnipodUI.xcassets; sourceTree = "<group>"; };
+		1029AE4627094D0E00B7F5B6 /* OmniBLEPumpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPumpManager.swift; sourceTree = "<group>"; };
+		1029AE4727094D0E00B7F5B6 /* OmniBLEPumpManagerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPumpManagerState.swift; sourceTree = "<group>"; };
+		1029AE4A27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OmniBLEPumpManager+UI.swift"; sourceTree = "<group>"; };
+		1029AE4E27094E1900B7F5B6 /* OmniBLEUI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OmniBLEUI.xcassets; sourceTree = "<group>"; };
 		10389A0426FF7841002115E9 /* PodInfoPulseLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodInfoPulseLog.swift; sourceTree = "<group>"; };
 		10389A0526FF7841002115E9 /* VersionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionResponse.swift; sourceTree = "<group>"; };
 		10389A0626FF7841002115E9 /* PodInfoActivationTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodInfoActivationTime.swift; sourceTree = "<group>"; };
@@ -530,8 +530,8 @@
 				D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */,
 				10389A2226FF7841002115E9 /* MessageTransport.swift */,
 				1016324E2715354C007A3BC2 /* Omnipod.swift */,
-				1029AE4627094D0E00B7F5B6 /* DashPumpManager.swift */,
-				1029AE4727094D0E00B7F5B6 /* DashPumpManagerState.swift */,
+				1029AE4627094D0E00B7F5B6 /* OmniBLEPumpManager.swift */,
+				1029AE4727094D0E00B7F5B6 /* OmniBLEPumpManagerState.swift */,
 				102111422709462300784F13 /* PodCommsSession.swift */,
 				1021114C2709467400784F13 /* PodComms.swift */,
 				102111402709462300784F13 /* PodState.swift */,
@@ -619,8 +619,8 @@
 			isa = PBXGroup;
 			children = (
 				C1F67EBB27975F060017487F /* ViewModels */,
-				1029AE4A27094DDC00B7F5B6 /* DashPumpManager+UI.swift */,
-				1029AE4E27094E1900B7F5B6 /* OmnipodUI.xcassets */,
+				1029AE4A27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift */,
+				1029AE4E27094E1900B7F5B6 /* OmniBLEUI.xcassets */,
 				8475312626ED838A009FD801 /* ViewControllers */,
 				8475311E26ED838A009FD801 /* Views */,
 				C1F67EDF2797B1EF0017487F /* DashHUDProvider.swift */,
@@ -909,7 +909,7 @@
 				8475313526ED838B009FD801 /* ExpirationReminderDateTableViewCell.xib in Resources */,
 				C1F67E9527975B830017487F /* HUDAssets.xcassets in Resources */,
 				8475313626ED838B009FD801 /* OmnipodReservoirView.xib in Resources */,
-				1029AE4F27094E1900B7F5B6 /* OmnipodUI.xcassets in Resources */,
+				1029AE4F27094E1900B7F5B6 /* OmniBLEUI.xcassets in Resources */,
 				A9793B3C276E0264005354B3 /* README.md in Resources */,
 				8475313726ED838B009FD801 /* PodLifeHUDView.xib in Resources */,
 				A91B2DEC276E1E5E001B0E95 /* README.md in Resources */,
@@ -996,7 +996,7 @@
 				84752EE526ED13F5009FD801 /* KeyExchange.swift in Sources */,
 				10289E7627347C69000339E6 /* Nonce.swift in Sources */,
 				C1F67EB827975E710017487F /* ErrorView.swift in Sources */,
-				1029AE4927094D0E00B7F5B6 /* DashPumpManagerState.swift in Sources */,
+				1029AE4927094D0E00B7F5B6 /* OmniBLEPumpManagerState.swift in Sources */,
 				10289E7D2739F893000339E6 /* Milenage.swift in Sources */,
 				10389A3A26FF7841002115E9 /* SetInsulinScheduleCommand.swift in Sources */,
 				10389A3826FF7841002115E9 /* DetailedStatus.swift in Sources */,
@@ -1051,7 +1051,7 @@
 				10389A2826FF7841002115E9 /* AcknowledgeAlertCommand.swift in Sources */,
 				84752EDF26ED13F5009FD801 /* PeripheralManager.swift in Sources */,
 				C1F67EA227975B830017487F /* PodDetailsView.swift in Sources */,
-				1029AE4B27094DDC00B7F5B6 /* DashPumpManager+UI.swift in Sources */,
+				1029AE4B27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift in Sources */,
 				1016326027185EE5007A3BC2 /* UnfinalizedDose.swift in Sources */,
 				C1F67E9D27975B830017487F /* InsertCannulaView.swift in Sources */,
 				C1F67EC927975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift in Sources */,
@@ -1074,7 +1074,7 @@
 				D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */,
 				10389A3926FF7841002115E9 /* PodInfoResponse.swift in Sources */,
 				84752EE226ED13F5009FD801 /* PayloadJoiner.swift in Sources */,
-				1029AE4827094D0E00B7F5B6 /* DashPumpManager.swift in Sources */,
+				1029AE4827094D0E00B7F5B6 /* OmniBLEPumpManager.swift in Sources */,
 				10389A3526FF7841002115E9 /* BeepConfigCommand.swift in Sources */,
 				1016325D27185EE5007A3BC2 /* AlertSlot.swift in Sources */,
 				C1F67EC827975F360017487F /* DeactivatePodViewModel.swift in Sources */,

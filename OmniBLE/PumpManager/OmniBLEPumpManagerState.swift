@@ -9,7 +9,7 @@
 import LoopKit
 
 
-public struct DashPumpManagerState: RawRepresentable, Equatable {
+public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
     
     public static let version = 2
@@ -199,7 +199,7 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
     
     public var rawValue: RawValue {
         var value: [String : Any] = [
-            "version": DashPumpManagerState.version,
+            "version": OmniBLEPumpManagerState.version,
             "isOnboarded": isOnboarded,
             "timeZone": timeZone.secondsFromGMT(),
             "basalSchedule": basalSchedule.rawValue,
@@ -223,7 +223,7 @@ public struct DashPumpManagerState: RawRepresentable, Equatable {
     }
 }
 
-extension DashPumpManagerState {
+extension OmniBLEPumpManagerState {
     var hasActivePod: Bool {
         return podState?.isActive == true
     }
@@ -240,7 +240,7 @@ extension DashPumpManagerState {
 }
 
 
-extension DashPumpManagerState: CustomDebugStringConvertible {
+extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
     public var debugDescription: String {
         return [
             "## OmnipodPumpManagerState",

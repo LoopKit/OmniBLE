@@ -249,7 +249,7 @@ public protocol PodPairer {
     func discardPod(completion: @escaping (Bool) -> ())
 }
 
-extension DashPumpManager: PodPairer {
+extension OmniBLEPumpManager: PodPairer {
     public func discardPod(completion: @escaping (Bool) -> ()) {
     }
     

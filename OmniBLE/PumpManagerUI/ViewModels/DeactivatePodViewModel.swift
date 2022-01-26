@@ -10,11 +10,11 @@ import Foundation
 import LoopKitUI
 
 public protocol PodDeactivater {
-    func deactivatePod(completion: @escaping (DashPumpManagerError?) -> ())
+    func deactivatePod(completion: @escaping (OmniBLEPumpManagerError?) -> ())
     func forgetPod(completion: @escaping () -> ())
 }
 
-extension DashPumpManager: PodDeactivater {}
+extension OmniBLEPumpManager: PodDeactivater {}
 
 
 class DeactivatePodViewModel: ObservableObject, Identifiable {
@@ -156,7 +156,7 @@ class DeactivatePodViewModel: ObservableObject, Identifiable {
 }
 
 enum DeactivationError : LocalizedError {
-    case OmnipodPumpManagerError(DashPumpManagerError)
+    case OmnipodPumpManagerError(OmniBLEPumpManagerError)
     
     var recoverySuggestion: String? {
         switch self {

@@ -14,8 +14,8 @@ import HealthKit
 enum DashSettingsViewAlert {
     case suspendError(Error)
     case resumeError(Error)
-    case syncTimeError(DashPumpManagerError)
-    case changeConfirmationBeepsError(DashPumpManagerError)
+    case syncTimeError(OmniBLEPumpManagerError)
+    case changeConfirmationBeepsError(OmniBLEPumpManagerError)
 }
 
 public enum ReservoirLevelHighlightState: String, Equatable {
@@ -167,9 +167,9 @@ class DashSettingsViewModel: ObservableObject {
     
     var navigateTo: ((DashUIScreen) -> Void)?
     
-    private let pumpManager: DashPumpManager
+    private let pumpManager: OmniBLEPumpManager
     
-    init(pumpManager: DashPumpManager) {
+    init(pumpManager: OmniBLEPumpManager) {
         self.pumpManager = pumpManager
         
         lifeState = pumpManager.lifeState
@@ -305,7 +305,7 @@ extension DashSettingsViewModel: PodStateObserver {
     }
 }
 
-extension DashPumpManager {
+extension OmniBLEPumpManager {
     var lifeState: PodLifeState {
         switch podCommState {
         case .fault(let status):

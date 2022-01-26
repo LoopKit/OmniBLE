@@ -10,11 +10,11 @@ import LoopKit
 import LoopKitUI
 
 public protocol CannulaInserter {
-    func insertCannula(completion: @escaping (Result<TimeInterval,DashPumpManagerError>) -> ())
-    func checkCannulaInsertionFinished(completion: @escaping (DashPumpManagerError?) -> Void)
+    func insertCannula(completion: @escaping (Result<TimeInterval,OmniBLEPumpManagerError>) -> ())
+    func checkCannulaInsertionFinished(completion: @escaping (OmniBLEPumpManagerError?) -> Void)
 }
 
-extension DashPumpManager: CannulaInserter { }
+extension OmniBLEPumpManager: CannulaInserter { }
 
 class InsertCannulaViewModel: ObservableObject, Identifiable {
 
@@ -23,7 +23,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         case startingInsertion
         case inserting(finishTime: CFTimeInterval)
         case checkingInsertion
-        case error(DashPumpManagerError)
+        case error(OmniBLEPumpManagerError)
         case finished
         
         var actionButtonAccessibilityLabel: String {
@@ -116,7 +116,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         }
     }
     
-    var error: DashPumpManagerError? {
+    var error: OmniBLEPumpManagerError? {
         if case .error(let error) = self.state {
             return error
         }
@@ -208,7 +208,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
     
 }
 
-public extension DashPumpManagerError {
+public extension OmniBLEPumpManagerError {
     var recoverable: Bool {
         //TODO
         return true

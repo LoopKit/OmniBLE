@@ -14,7 +14,7 @@ class OmnipodPlugin: NSObject, PumpManagerUIPlugin {
     private let log = OSLog(category: "OmnipodPlugin")
     
     public var pumpManagerType: PumpManagerUI.Type? {
-        return DashPumpManager.self
+        return OmniBLEPumpManager.self
     }
     
     public var cgmManagerType: CGMManagerUI.Type? {
