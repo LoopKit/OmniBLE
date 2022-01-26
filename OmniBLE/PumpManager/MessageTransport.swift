@@ -192,7 +192,7 @@ class PodMessageTransport: MessageTransport {
         incrementMessageNumber() // bump to match expected Omnipod message # in response
 
         let dataToSend = message.encoded()
-        log.default("Send(Hex): %@", dataToSend.hexadecimalString)
+        log.default("Send(Hex): %{public}@", dataToSend.hexadecimalString)
         messageLogger?.didSend(dataToSend)
 
         if fakeSendMessage {

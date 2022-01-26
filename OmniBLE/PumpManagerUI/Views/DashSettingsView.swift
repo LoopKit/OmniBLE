@@ -458,29 +458,37 @@ struct DashSettingsView: View  {
         }
     }
     
+    private func errorText(_ error: Error) -> String {
+        if let error = error as? LocalizedError {
+            return [error.localizedDescription, error.recoverySuggestion].compactMap{$0}.joined(separator: ". ")
+        } else {
+            return error.localizedDescription
+        }
+    }
+    
     private func alert(for alert: DashSettingsViewAlert) -> SwiftUI.Alert {
         switch alert {
         case .suspendError(let error):
             return SwiftUI.Alert(
                 title: Text("Failed to Suspend Insulin Delivery", comment: "Alert title for suspend error"),
-                message: Text(error.localizedDescription)
+                message: Text(errorText(error))
             )
             
         case .resumeError(let error):
             return SwiftUI.Alert(
                 title: Text("Failed to Resume Insulin Delivery", comment: "Alert title for resume error"),
-                message: Text(error.localizedDescription)
+                message: Text(errorText(error))
             )
             
         case .syncTimeError(let error):
             return SwiftUI.Alert(
                 title: Text("Failed to Set Pump Time", comment: "Alert title for time sync error"),
-                message: Text(error.localizedDescription)
+                message: Text(errorText(error))
             )
         case .changeConfirmationBeepsError(let error):
             return SwiftUI.Alert(
                 title: Text("Failed to change confirmation beeps", comment: "Alert title for set confirmation beeps error"),
-                message: Text(error.localizedDescription)
+                message: Text(errorText(error))
             )
         }
     }
