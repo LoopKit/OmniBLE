@@ -279,12 +279,12 @@ extension BluetoothManager: CBCentralManagerDelegate {
                 stopScanning()
             }
             
-//            for device in devices {
-//                if autoConnectIDs.contains(device.manager.peripheral.identifier.uuidString) && device.manager.peripheral.state != .connected {
-//                    log.default("Connecting to discovered, but not connected device: %{public}@", device.manager.peripheral)
-//                    manager.connect(device.manager.peripheral, options: nil)
-//                }
-//            }
+            for device in devices {
+                if autoConnectIDs.contains(device.manager.peripheral.identifier.uuidString) && device.manager.peripheral.state != .connected {
+                    log.default("Connecting to discovered, but not connected device: %{public}@", device.manager.peripheral)
+                    manager.connect(device.manager.peripheral, options: nil)
+                }
+            }
         }
 
         for device in devices {
