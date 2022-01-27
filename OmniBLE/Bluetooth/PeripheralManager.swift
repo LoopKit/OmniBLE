@@ -116,7 +116,7 @@ extension PeripheralManager {
 
             if self.needsConfiguration || self.peripheral.services == nil {
                 do {
-                    self.log.debug("Applying configuration")
+                    self.log.default("Applying configuration")
                     try self.applyConfiguration()
                     self.needsConfiguration = false
 
@@ -153,7 +153,7 @@ extension PeripheralManager {
         try discoverServices(configuration.serviceCharacteristics.keys.map { $0 }, timeout: discoveryTimeout)
 
         for service in peripheral.services ?? [] {
-            log.debug("Discovered service: %{publid}@", service)
+            log.default("Discovered service: %{public}@", service)
             guard let characteristics = configuration.serviceCharacteristics[service.uuid] else {
                 // Not all services may have characteristics
                 continue
@@ -327,7 +327,7 @@ extension PeripheralManager {
 extension PeripheralManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        log.debug("didDiscoverServices")
+        log.default("didDiscoverServices")
         commandLock.lock()
 
         if let index = commandConditions.firstIndex(where: { (condition) -> Bool in
@@ -391,12 +391,7 @@ extension PeripheralManager: CBPeripheralDelegate {
     }
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        log.debug("didWriteValueFor b4 lock")
-        
         commandLock.lock()
-        
-        log.debug("didWriteValueFor after lock")
-
         
         if let index = commandConditions.firstIndex(where: { (condition) -> Bool in
             if case .write(characteristic: characteristic) = condition {
@@ -418,7 +413,7 @@ extension PeripheralManager: CBPeripheralDelegate {
 
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         commandLock.lock()
-
+        
         if let macro = configuration.valueUpdateMacros[characteristic.uuid] {
             macro(self)
         }

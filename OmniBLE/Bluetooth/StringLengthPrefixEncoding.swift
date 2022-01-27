@@ -17,17 +17,17 @@ final class StringLengthPrefixEncoding {
         var remaining = payload
         for (index, key) in keys.enumerated() {
             guard remaining.count >= key.count else {
-                throw BluetoothErrors.MessageIOException("Payload too short: \(payload)")
+                throw PodProtocolError.messageIOException("Payload too short: \(payload)")
             }
             if (String(decoding: remaining.subdata(in: 0..<key.count), as: UTF8.self) != key) {
-                throw BluetoothErrors.MessageIOException("Key not found: \(key) in \(payload.hexadecimalString)")
+                throw PodProtocolError.messageIOException("Key not found: \(key) in \(payload.hexadecimalString)")
             }
             // last key can be empty, no length
             else if index == keys.count - 1 && remaining.count == key.count {
                 return ret
             }
             guard remaining.count >= (key.count + LENGTH_BYTES) else {
-                throw BluetoothErrors.MessageIOException("Payload too short: \(payload)")
+                throw PodProtocolError.messageIOException("Payload too short: \(payload)")
             }
             remaining = remaining.subdata(in: key.count..<remaining.count)
 
@@ -37,7 +37,7 @@ final class StringLengthPrefixEncoding {
             let ulength = UInt16(remaining[0] << 8) | UInt16(remaining[1])
             let length = (ulength <= UInt(Int.max)) ? Int(ulength) : Int(ulength - UInt16(Int.max) - 1) + Int.min
             guard remaining.count >= length else {
-                throw BluetoothErrors.MessageIOException("Payload too short: \(payload)")
+                throw PodProtocolError.messageIOException("Payload too short: \(payload)")
             }
             ret[index] = remaining.subdata(in: LENGTH_BYTES..<LENGTH_BYTES + length)
             remaining = remaining.subdata(in: LENGTH_BYTES + length..<remaining.count)

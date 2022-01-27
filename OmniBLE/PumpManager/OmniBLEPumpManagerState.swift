@@ -14,9 +14,9 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
 
     public static let version = 2
-
-    public var isOnboarded: Bool
-
+    
+    public var isOnboarded: Bool = false
+    
     public var podState: PodState?
 
     public var pairingAttemptAddress: UInt32?
@@ -27,9 +27,36 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
 
     public var unstoredDoses: [UnfinalizedDose]
 
-    public var expirationReminderDate: Date?
-
     public var confirmationBeeps: Bool
+    
+    public var scheduledExpirationReminderOffset: TimeInterval?
+    
+    public var defaultExpirationReminderOffset = Pod.defaultExpirationReminderOffset
+
+    public var lowReservoirReminderValue: Double
+    
+    public var podAttachmentConfirmed: Bool
+    
+    public var pendingCommand: PendingCommand?
+
+    public var activeAlerts: Set<PumpManagerAlert>
+    
+    public var alertsWithPendingAcknowledgment: Set<PumpManagerAlert>
+
+    public var acknowledgedTimeOffsetAlert: Bool
+    
+    // Indicates that the user has completed initial configuration
+    // which means they have configured any parameters, but may not have paired a pod yet.
+    public var initialConfigurationCompleted: Bool = false
+    
+    
+    // From last status response
+    public var reservoirLevel: ReservoirLevel? {
+        guard let level = podState?.lastInsulinMeasurements?.reservoirLevel else {
+            return nil
+        }
+        return ReservoirLevel(rawValue: level)
+    }
 
     // Temporal state not persisted
 
@@ -46,19 +73,23 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     internal var tempBasalEngageState: EngageablePumpState = .stable
 
     internal var lastPumpDataReportDate: Date?
-
-    internal var insulinType: InsulinType
-
+    
+    internal var insulinType: InsulinType?
+    
     // MARK: -
 
-    public init(isOnboarded: Bool, podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType) {
-        self.isOnboarded = isOnboarded
+    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType?) {
         self.podState = podState
         self.timeZone = timeZone
         self.basalSchedule = basalSchedule
         self.unstoredDoses = []
         self.confirmationBeeps = false
         self.insulinType = insulinType
+        self.lowReservoirReminderValue = Pod.defaultLowReservoirReminder
+        self.podAttachmentConfirmed = false
+        self.acknowledgedTimeOffsetAlert = false
+        self.activeAlerts = []
+        self.alertsWithPendingAcknowledgment = []
     }
 
     public init?(rawValue: RawValue) {
@@ -87,9 +118,6 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             }
             basalSchedule = schedule
         }
-
-        let isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
-
         let podState: PodState?
         if let podStateRaw = rawValue["podState"] as? PodState.RawValue {
             podState = PodState(rawValue: podStateRaw)
@@ -111,18 +139,13 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
         }
 
         self.init(
-            isOnboarded: isOnboarded,
             podState: podState,
             timeZone: timeZone,
             basalSchedule: basalSchedule,
             insulinType: insulinType ?? .novolog
         )
-
-        if let expirationReminderDate = rawValue["expirationReminderDate"] as? Date {
-            self.expirationReminderDate = expirationReminderDate
-        } else if let expiresAt = podState?.expiresAt {
-            self.expirationReminderDate = expiresAt.addingTimeInterval(-Pod.expirationReminderAlertDefaultTimeBeforeExpiration)
-        }
+        
+        self.isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
 
         if let rawUnstoredDoses = rawValue["unstoredDoses"] as? [UnfinalizedDose.RawValue] {
             self.unstoredDoses = rawUnstoredDoses.compactMap( { UnfinalizedDose(rawValue: $0) } )
@@ -135,7 +158,42 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
         if let pairingAttemptAddress = rawValue["pairingAttemptAddress"] as? UInt32 {
             self.pairingAttemptAddress = pairingAttemptAddress
         }
+        
+        self.scheduledExpirationReminderOffset = rawValue["scheduledExpirationReminderOffset"] as? TimeInterval
+        
+        self.defaultExpirationReminderOffset = rawValue["defaultExpirationReminderOffset"] as? TimeInterval ?? Pod.defaultExpirationReminderOffset
+        
+        self.lowReservoirReminderValue = rawValue["lowReservoirReminderValue"] as? Double ?? Pod.defaultLowReservoirReminder
 
+        self.podAttachmentConfirmed = rawValue["podAttachmentConfirmed"] as? Bool ?? false
+
+        self.initialConfigurationCompleted = rawValue["initialConfigurationCompleted"] as? Bool ?? true
+        
+        self.acknowledgedTimeOffsetAlert = rawValue["acknowledgedTimeOffsetAlert"] as? Bool ?? false
+        
+        if let rawPendingCommand = rawValue["pendingCommand"] as? PendingCommand.RawValue {
+            self.pendingCommand = PendingCommand(rawValue: rawPendingCommand)
+        } else {
+            self.pendingCommand = nil
+        }
+
+        self.activeAlerts = []
+        if let rawActiveAlerts = rawValue["activeAlerts"] as? [PumpManagerAlert.RawValue] {
+            for rawAlert in rawActiveAlerts {
+                if let alert = PumpManagerAlert(rawValue: rawAlert) {
+                    self.activeAlerts.insert(alert)
+                }
+            }
+        }
+
+        self.alertsWithPendingAcknowledgment = []
+        if let rawAlerts = rawValue["alertsWithPendingAcknowledgment"] as? [PumpManagerAlert.RawValue] {
+            for rawAlert in rawAlerts {
+                if let alert = PumpManagerAlert(rawValue: rawAlert) {
+                    self.alertsWithPendingAcknowledgment.insert(alert)
+                }
+            }
+        }
     }
 
     public var rawValue: RawValue {
@@ -146,13 +204,20 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             "basalSchedule": basalSchedule.rawValue,
             "unstoredDoses": unstoredDoses.map { $0.rawValue },
             "confirmationBeeps": confirmationBeeps,
-            "insulinType": insulinType.rawValue,
+            "activeAlerts": activeAlerts.map { $0.rawValue },
+            "podAttachmentConfirmed": podAttachmentConfirmed,
+            "acknowledgedTimeOffsetAlert": acknowledgedTimeOffsetAlert,
+            "alertsWithPendingAcknowledgment": alertsWithPendingAcknowledgment.map { $0.rawValue },
+            "initialConfigurationCompleted": initialConfigurationCompleted,
         ]
-
+        
+        value["insulinType"] = insulinType?.rawValue
         value["podState"] = podState?.rawValue
-        value["expirationReminderDate"] = expirationReminderDate
         value["pairingAttemptAddress"] = pairingAttemptAddress
-
+        value["scheduledExpirationReminderOffset"] = scheduledExpirationReminderOffset
+        value["defaultExpirationReminderOffset"] = defaultExpirationReminderOffset
+        value["lowReservoirReminderValue"] = lowReservoirReminderValue
+        value["pendingCommand"] = pendingCommand?.rawValue
         return value
     }
 }
@@ -181,7 +246,6 @@ extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
             "* isOnboarded: \(isOnboarded)",
             "* timeZone: \(timeZone)",
             "* basalSchedule: \(String(describing: basalSchedule))",
-            "* expirationReminderDate: \(String(describing: expirationReminderDate))",
             "* unstoredDoses: \(String(describing: unstoredDoses))",
             "* suspendEngageState: \(String(describing: suspendEngageState))",
             "* bolusEngageState: \(String(describing: bolusEngageState))",
@@ -191,6 +255,15 @@ extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
             "* confirmationBeeps: \(String(describing: confirmationBeeps))",
             "* pairingAttemptAddress: \(String(describing: pairingAttemptAddress))",
             "* insulinType: \(String(describing: insulinType))",
+            "* scheduledExpirationReminderOffset: \(String(describing: scheduledExpirationReminderOffset))",
+            "* defaultExpirationReminderOffset: \(defaultExpirationReminderOffset)",
+            "* lowReservoirReminderValue: \(lowReservoirReminderValue)",
+            "* podAttachmentConfirmed: \(podAttachmentConfirmed)",
+            "* pendingCommand: \(String(describing: pendingCommand))",
+            "* activeAlerts: \(activeAlerts)",
+            "* alertsWithPendingAcknowledgment: \(alertsWithPendingAcknowledgment)",
+            "* acknowledgedTimeOffsetAlert: \(acknowledgedTimeOffsetAlert)",
+            "* initialConfigurationCompleted: \(initialConfigurationCompleted)",
             String(reflecting: podState),
         ].joined(separator: "\n")
     }

@@ -25,11 +25,11 @@ class PayloadJoiner {
 
     func accumulate(packet: Data) throws {
         if (packet.count < 3) { // idx, size, at least 1 byte of payload
-            throw BluetoothErrors.IncorrectPacketException(packet, (expectedIndex + 1))
+            throw PodProtocolError.incorrectPacketException(packet, (expectedIndex + 1))
         }
         let idx = Int(packet[0])
         if (idx != expectedIndex + 1) {
-            throw BluetoothErrors.IncorrectPacketException(packet, (expectedIndex + 1))
+            throw PodProtocolError.incorrectPacketException(packet, (expectedIndex + 1))
         }
         expectedIndex += 1
         switch idx{
@@ -43,9 +43,9 @@ class PayloadJoiner {
         case let index where index == fullFragments + 1 && oneExtraPacket:
             fragments.append(try LastOptionalPlusOneBlePacket.parse(payload: packet))
         case let index where index > fullFragments:
-            throw BluetoothErrors.IncorrectPacketException(packet, idx)
+            throw PodProtocolError.incorrectPacketException(packet, idx)
         default:
-            throw BluetoothErrors.IncorrectPacketException(packet, idx)
+            throw PodProtocolError.incorrectPacketException(packet, idx)
         }
     }
 

@@ -165,12 +165,11 @@ extension TimeInterval {
     }
 }
 
-//extension Double {
-//    var twoDecimals: String {
-//        let reservoirLevel = self
-//        return String(format: "%.2f", reservoirLevel)
-//    }
-//}
+extension Double {
+    var twoDecimals: String {
+        return String(format: "%.2f", self)
+    }
+}
 
 // Type for the ErrorEventInfo VV byte if valid
 //    a: insulin state table corruption found during error logging

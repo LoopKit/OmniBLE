@@ -56,6 +56,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
     
     let doseType: DoseType
     public var units: Double
+    public var automatic: Bool      // Tracks if this dose was issued automatically or manually
     var scheduledUnits: Double?     // Tracks the scheduled units, as boluses may be canceled before finishing, at which point units would reflect actual delivered volume.
     var scheduledTempRate: Double?  // Tracks the original temp rate, as during finalization the units are discretized to pump pulses, changing the actual rate
     let startTime: Date
@@ -98,13 +99,14 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         return units
     }
 
-    init(bolusAmount: Double, startTime: Date, scheduledCertainty: ScheduledCertainty) {
+    init(bolusAmount: Double, startTime: Date, scheduledCertainty: ScheduledCertainty, automatic: Bool = false) {
         self.doseType = .bolus
         self.units = bolusAmount
         self.startTime = startTime
         self.duration = TimeInterval(bolusAmount / Pod.bolusDeliveryRate)
         self.scheduledCertainty = scheduledCertainty
         self.scheduledUnits = nil
+        self.automatic = automatic
     }
     
     init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, scheduledCertainty: ScheduledCertainty) {
@@ -114,6 +116,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.duration = duration
         self.scheduledCertainty = scheduledCertainty
         self.scheduledUnits = nil
+        self.automatic = true
     }
 
     init(suspendStartTime: Date, scheduledCertainty: ScheduledCertainty) {
@@ -121,6 +124,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.units = 0
         self.startTime = suspendStartTime
         self.scheduledCertainty = scheduledCertainty
+        self.automatic = false
     }
 
     init(resumeStartTime: Date, scheduledCertainty: ScheduledCertainty) {
@@ -128,6 +132,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.units = 0
         self.startTime = resumeStartTime
         self.scheduledCertainty = scheduledCertainty
+        self.automatic = false
     }
 
     public mutating func cancel(at date: Date, withRemaining remaining: Double? = nil) {
@@ -217,6 +222,12 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         if let duration = rawValue["duration"] as? Double {
             self.duration = duration
         }
+        
+        if let automatic = rawValue["automatic"] as? Bool {
+            self.automatic = automatic
+        } else {
+            self.automatic = false
+        }
     }
     
     public var rawValue: RawValue {
@@ -224,7 +235,8 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             "doseType": doseType.rawValue,
             "units": units,
             "startTime": startTime,
-            "scheduledCertainty": scheduledCertainty.rawValue
+            "scheduledCertainty": scheduledCertainty.rawValue,
+            "automatic": automatic
         ]
         
         if let scheduledUnits = scheduledUnits {
@@ -277,3 +289,17 @@ extension DoseEntry {
         }
     }
 }
+
+extension StartProgram {
+    func unfinalizedDose(at programDate: Date, withCertainty certainty: UnfinalizedDose.ScheduledCertainty) -> UnfinalizedDose? {
+        switch self {
+        case .bolus(volume: let volume, automatic: let automatic):
+            return UnfinalizedDose(bolusAmount: volume, startTime: programDate, scheduledCertainty: certainty, automatic: automatic)
+        case .tempBasal(unitsPerHour: let rate, duration: let duration):
+            return UnfinalizedDose(tempBasalRate: rate, startTime: programDate, duration: duration, scheduledCertainty: certainty)
+        case .basalProgram:
+            return UnfinalizedDose(resumeStartTime: programDate, scheduledCertainty: certainty)
+        }
+    }
+}
+

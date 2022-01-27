@@ -31,9 +31,6 @@ public struct Pod {
     // Units per second for priming/cannula insertion
     public static let primeDeliveryRate: Double = Pod.pulseSize / Pod.secondsPerPrimePulse
 
-    // User configured time before expiration advisory (PDM allows 1-24 hours)
-    public static let expirationAlertWindow = TimeInterval(hours: 2)
-
     // Expiration advisory window: time after expiration alert, and end of service imminent alarm
     public static let expirationAdvisoryWindow = TimeInterval(hours: 7)
 
@@ -49,6 +46,9 @@ public struct Pod {
 
     // Maximum reservoir level reading
     public static let maximumReservoirReading: Double = 50
+
+    // Reservoir level magic number indicating 50+ U remaining
+    public static let reservoirLevelAboveThresholdMagicNumber: Double = 51.15
 
     // Reservoir Capacity
     public static let reservoirCapacity: Double = 200
@@ -75,9 +75,18 @@ public struct Pod {
     public static let cannulaInsertionUnitsExtra = 0.0 // edit to add a fixed additional amount of insulin during cannula insertion
 
     // Default and limits for expiration reminder alerts
-    public static let expirationReminderAlertDefaultTimeBeforeExpiration = TimeInterval.hours(2)
-    public static let expirationReminderAlertMinTimeBeforeExpiration = TimeInterval.hours(1)
-    public static let expirationReminderAlertMaxTimeBeforeExpiration = TimeInterval.hours(24)
+    public static let defaultExpirationReminderOffset = TimeInterval(hours: 2)
+    public static let expirationReminderAlertMinHoursBeforeExpiration = 1
+    public static let expirationReminderAlertMaxHoursBeforeExpiration = 24
+    
+    // Threshold used to display pod end of life warnings
+    public static let timeRemainingWarningThreshold = TimeInterval(days: 1)
+    
+    // Default low reservoir alert limit in Units
+    public static let defaultLowReservoirReminder: Double = 10
+    
+    // Allowed Low Reservoir reminder values
+    public static let allowedLowReservoirReminderValues = Array(stride(from: 10, through: 50, by: 1))
 }
 
 // DeliveryStatus used in StatusResponse and DetailedStatus

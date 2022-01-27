@@ -17,11 +17,11 @@ struct MessagePacket {
 
     static func parse(payload: Data) throws -> MessagePacket {
         guard payload.count >= HEADER_SIZE else {
-            throw BluetoothErrors.CouldNotParseMessageException("Incorrect header size")
+            throw PodProtocolError.couldNotParseMessageException("Incorrect header size")
         }
 
         guard (String(data: payload.subdata(in: 0..<2), encoding: .utf8) == MAGIC_PATTERN) else {
-            throw BluetoothErrors.CouldNotParseMessageException("Magic pattern mismatch")
+            throw PodProtocolError.couldNotParseMessageException("Magic pattern mismatch")
         }
         let payloadData = payload
         
@@ -38,13 +38,13 @@ struct MessagePacket {
         let gateway = f2.get(3) != 0
         let type: MessageType = MessageType(rawValue: UInt8(f2.get(7) | (f2.get(6) << 1) | (f2.get(5) << 2) | (f2.get(4) << 3))) ?? .CLEAR
         if (version != 0) {
-            throw BluetoothErrors.CouldNotParseMessageException("Wrong version")
+            throw PodProtocolError.couldNotParseMessageException("Wrong version")
         }
         let sequenceNumber = payloadData[4]
         let ackNumber = payloadData[5]
         let size = (UInt16(payloadData[6]) << 3) | (UInt16(payloadData[7]) >> 5)
         guard payload.count >= (Int(size) + MessagePacket.HEADER_SIZE) else {
-            throw BluetoothErrors.CouldNotParseMessageException("Wrong payload size")
+            throw PodProtocolError.couldNotParseMessageException("Wrong payload size")
         }
 
         let payloadEnd = Int(16 + size + (type == MessageType.ENCRYPTED ? 8 : 0))

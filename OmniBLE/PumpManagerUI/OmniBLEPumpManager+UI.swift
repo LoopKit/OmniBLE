@@ -15,47 +15,25 @@ import LoopKitUI
 import SwiftUI
 
 extension OmniBLEPumpManager: PumpManagerUI {
-
     public static var onboardingImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: OmniBLESettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: "Onboarding", in: Bundle(for: OmniBLESettingsViewModel.self), compatibleWith: nil)
     }
-
-    static public func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
-        let navVC = OmniBLEPumpManagerSetupViewController.instantiateFromStoryboard()
-        let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes) { [weak navVC] (confirmedType) in
-            if let navVC = navVC {
-                navVC.insulinType = confirmedType
-                let nextViewController = navVC.storyboard?.instantiateViewController(identifier: "PairPodSetup") as! PairPodSetupViewController
-                navVC.pushViewController(nextViewController, animated: true)
-            }
-        }
-        let rootVC = UIHostingController(rootView: insulinSelectionView)
-        rootVC.title = "Insulin Type"
-        navVC.pushViewController(rootVC, animated: false)
-        navVC.navigationBar.backgroundColor = .secondarySystemBackground
-        navVC.maxBasalRateUnitsPerHour = settings.maxBasalRateUnitsPerHour
-        navVC.maxBolusUnits = settings.maxBolusUnits
-        navVC.basalSchedule = settings.basalSchedule
-        return .userInteractionRequired(navVC)
+        
+    public static func setupViewController(initialSettings settings: PumpManagerSetupSettings, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
+        let vc = DashUICoordinator(colorPalette: colorPalette, basalSchedule: settings.basalSchedule, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
+        return .userInteractionRequired(vc)
     }
-
+        
     public func settingsViewController(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType]) -> PumpManagerViewController {
-        let settings = OmniBLESettingsViewController(pumpManager: self)
-        let nav = PumpManagerSettingsNavigationViewController(rootViewController: settings)
-        return nav
+        return DashUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures, allowedInsulinTypes: allowedInsulinTypes)
     }
-
+    
     public func deliveryUncertaintyRecoveryViewController(colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> (UIViewController & CompletionNotifying) {
-
-        // Return settings for now; uncertainty recovery not implemented yet
-        let settings = OmniBLESettingsViewController(pumpManager: self)
-        let nav = SettingsNavigationViewController(rootViewController: settings)
-        return nav
+        return DashUICoordinator(pumpManager: self, colorPalette: colorPalette, allowDebugFeatures: allowDebugFeatures)
     }
-
-
+    
     public var smallImage: UIImage? {
-        return UIImage(named: "Pod", in: Bundle(for: OmniBLESettingsViewController.self), compatibleWith: nil)!
+        return UIImage(named: "Pod", in: Bundle(for: OmniBLESettingsViewModel.self), compatibleWith: nil)!
     }
 
     public func hudProvider(bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) -> HUDProvider? {
@@ -123,24 +101,41 @@ extension OmniBLEPumpManager {
     }
 }
 
+
+public enum OmniBLEStatusBadge: DeviceStatusBadge {
+    case timeSyncNeeded
+    
+    public var image: UIImage? {
+        switch self {
+        case .timeSyncNeeded:
+            return UIImage(systemName: "clock.fill")
+        }
+    }
+    
+    public var state: DeviceStatusBadgeState {
+        switch self {
+        case .timeSyncNeeded:
+            return .warning
+        }
+    }
+}
+
 // MARK: - PumpStatusIndicator
 extension OmniBLEPumpManager {
+    
     public var pumpStatusHighlight: DeviceStatusHighlight? {
-        guard state.podState?.fault != nil else {
-            return nil
-        }
-
-        return PumpManagerStatus.PumpStatusHighlight(localizedMessage: LocalizedString("Pod Fault", comment: "Inform the user that there is a pod fault."),
-                                                     imageName: "exclamationmark.circle.fill",
-                                                     state: .critical)
+        return buildPumpStatusHighlight(for: state)
     }
 
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {
-        return nil
+        return buildPumpLifecycleProgress(for: state)
     }
 
     public var pumpStatusBadge: DeviceStatusBadge? {
-        return nil
+        if isClockOffset {
+            return OmniBLEStatusBadge.timeSyncNeeded
+        } else {
+            return nil
+        }
     }
-
 }

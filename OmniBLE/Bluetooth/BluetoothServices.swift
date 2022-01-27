@@ -56,7 +56,7 @@ extension PeripheralManager.Configuration {
                     guard let characteristic = manager.peripheral.getCommandCharacteristic() else { return }
                     guard let value = characteristic.value else { return }
 
-                    manager.log.debug("Reading Command Value %@", value.hexadecimalString)
+                    manager.log.default("Reading Command Value %{public}@", value.hexadecimalString)
                     manager.queueLock.lock()
                     manager.cmdQueue.append(value)
                     manager.queueLock.signal()
@@ -66,7 +66,7 @@ extension PeripheralManager.Configuration {
                     guard let characteristic = manager.peripheral.getDataCharacteristic() else { return }
                     guard let value = characteristic.value else { return }
 
-                    manager.log.debug("Reading Data Value %@", value.hexadecimalString)
+                    manager.log.default("Reading Data Value %{public}@", value.hexadecimalString)
                     manager.queueLock.lock()
                     manager.dataQueue.append(value)
                     manager.queueLock.signal()

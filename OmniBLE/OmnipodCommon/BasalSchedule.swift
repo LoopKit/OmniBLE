@@ -57,6 +57,12 @@ public struct BasalSchedule: RawRepresentable, Equatable {
         return entry.rate
     }
     
+    // Only valid for fixed offset timezones
+    public func currentRate(using calendar: Calendar, at date: Date = Date()) -> Double {
+        let midnight = calendar.startOfDay(for: date)
+        return rateAt(offset: date.timeIntervalSince(midnight))
+    }
+    
     // Returns index, entry, and time remaining
     func lookup(offset: TimeInterval) -> (Int, BasalScheduleEntry, TimeInterval) {
         guard offset >= 0 && offset < .hours(24) else {

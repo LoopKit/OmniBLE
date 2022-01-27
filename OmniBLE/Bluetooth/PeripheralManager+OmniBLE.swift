@@ -25,7 +25,7 @@ extension PeripheralManager {
     func sendHello(_ controllerId: Data) throws {
         dispatchPrecondition(condition: .onQueue(queue))
                 
-        log.debug("Sending Hello %s", controllerId.hexadecimalString)
+        log.default("Sending Hello %{public}@", controllerId.hexadecimalString)
         guard let characteristic = peripheral.getCommandCharacteristic() else {
             throw PeripheralManagerError.notReady
         }
@@ -48,7 +48,7 @@ extension PeripheralManager {
     /// - Throws: PeripheralManagerError
     func sendMessage(_ message: MessagePacket, _ forEncryption: Bool = false) throws -> MessageResult {
         dispatchPrecondition(condition: .onQueue(queue))
-
+        
         var result: MessageResult = MessageSendSuccess()
         
         do {
@@ -109,7 +109,7 @@ extension PeripheralManager {
             packet = try MessagePacket.parse(payload: fullPayload)
         }
         catch {
-            print(error)
+            log.default("Error reading message: %{public}@", error.localizedDescription)
             try? sendCommandType(PodCommand.NACK)
             throw PeripheralManagerError.incorrectResponse
         }
@@ -135,7 +135,7 @@ extension PeripheralManager {
         guard let characteristic = peripheral.getCommandCharacteristic() else {
             throw PeripheralManagerError.notReady
         }
-        log.debug("Writing Command Value %@", Data([command.rawValue]).hexadecimalString)
+        log.default("Writing Command Value %{public}@", Data([command.rawValue]).hexadecimalString)
         
         try writeValue(Data([command.rawValue]), for: characteristic, type: .withResponse, timeout: timeout)
     }
@@ -144,7 +144,7 @@ extension PeripheralManager {
     func readCommandType(_ command: PodCommand, timeout: TimeInterval = 5) throws {
         dispatchPrecondition(condition: .onQueue(queue))
 
-        log.debug("Read Command %@", Data([command.rawValue]).hexadecimalString)
+        log.default("Read Command %{public}@", Data([command.rawValue]).hexadecimalString)
         
         // Wait for data to be read.
         queueLock.lock()
@@ -162,6 +162,7 @@ extension PeripheralManager {
             let value = cmdQueue.remove(at: 0)
 
             if command.rawValue != value[0] {
+                log.default("Data Wrong command.rawValue (%d != %d).", command.rawValue, value[0])
                 throw PeripheralManagerError.incorrectResponse
             }
             return
@@ -178,7 +179,7 @@ extension PeripheralManager {
             throw PeripheralManagerError.notReady
         }
         
-        log.debug("Writing Data Value %@", value.hexadecimalString)
+        log.default("Writing Data Value %{public}@", value.hexadecimalString)
         
         try writeValue(value, for: characteristic, type: .withResponse, timeout: timeout)
     }
@@ -203,7 +204,7 @@ extension PeripheralManager {
             let data = dataQueue.remove(at: 0)
             
             if (data[0] != sequence) {
-                log.debug("Data Wrong Value.")
+                log.default("Data Wrong data[0] (%d != %d).", data[0], sequence)
                 throw PeripheralManagerError.incorrectResponse
             }
             return data

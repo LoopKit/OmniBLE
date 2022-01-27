@@ -81,7 +81,7 @@ public class PodComms: CustomDebugStringConvertible {
                     let devices = self.bluetoothManager.getConnectedDevices()
 
                     if devices.count > 1 {
-                        self.log.info("Multiple pods found while scanning")
+                        self.log.default("Multiple pods found while scanning")
                         self.bluetoothManager.endPodDiscovery()
                         completion(.failure(PodCommsError.tooManyPodsFound))
                         timer.invalidate()
@@ -91,7 +91,7 @@ public class PodComms: CustomDebugStringConvertible {
 
                     // If we've found a pod by 2 seconds, let's go.
                     if elapsed > TimeInterval(seconds: 2) && devices.count > 0 {
-                        self.log.debug("Found pod!")
+                        self.log.default("Found pod!")
                         let targetPod = devices.first!
                         self.bluetoothManager.connectToDevice(uuidString: targetPod.manager.peripheral.identifier.uuidString)
                         self.manager = targetPod.manager
@@ -102,9 +102,9 @@ public class PodComms: CustomDebugStringConvertible {
                     }
 
                     if elapsed > TimeInterval(seconds: 10) {
-                        self.log.info("No pods found while scanning")
+                        self.log.default("No pods found while scanning")
                         self.bluetoothManager.endPodDiscovery()
-                        completion(.failure(PodCommsError.noPodAvailable))
+                        completion(.failure(PodCommsError.noPodsFound))
                         timer.invalidate()
                     }
                 }
@@ -144,7 +144,7 @@ public class PodComms: CustomDebugStringConvertible {
     }
 
     public func pairPod(ids: Ids) throws {
-        guard let manager = manager else { throw PodCommsError.noPodAvailable }
+        guard let manager = manager else { throw PodCommsError.podNotConnected }
         let address = ids.podId.toUInt32()
 
         let ltkExchanger = LTKExchanger(manager: manager, ids: ids)
@@ -284,7 +284,7 @@ public class PodComms: CustomDebugStringConvertible {
     }
 
     private func setupPod(podState: PodState, timeZone: TimeZone) throws {
-        guard let manager = manager else { throw PodCommsError.noPodAvailable }
+        guard let manager = manager else { throw PodCommsError.podNotConnected }
 
         let transport = PodMessageTransport(manager: manager, address: podState.address, state: podState.messageTransportState)
         transport.messageLogger = messageLogger
@@ -402,7 +402,7 @@ public class PodComms: CustomDebugStringConvertible {
     func runSession(withName name: String, _ block: @escaping (_ result: SessionRunResult) -> Void) {
 
         guard let manager = manager else {
-            block(.failure(PodCommsError.noPodAvailable))
+            block(.failure(PodCommsError.podNotConnected))
             return
         }
 
@@ -451,7 +451,7 @@ extension PodComms: OmniBLEConnectionDelegate {
 
     func omnipodPeripheralDidDisconnect(peripheral: CBPeripheral) {
         if let podState = podState, peripheral.identifier.uuidString == podState.bleIdentifier {
-            log.debug("omnipodPeripheralDidDisconnect... should auto-reconnect")
+            log.default("omnipodPeripheralDidDisconnect... should auto-reconnect")
         }
     }
 }
@@ -461,7 +461,7 @@ extension PodComms: OmniBLEConnectionDelegate {
 extension PodComms: PeripheralManagerDelegate {
 
     func completeConfiguration(for manager: PeripheralManager) throws {
-        log.debug("completeConfiguration")
+        log.default("PodComms completeConfiguration")
 
         if self.isPaired && needsSessionEstablishment {
             manager.runSession(withName: "establish pod session") { [weak self] in
@@ -473,6 +473,8 @@ extension PodComms: PeripheralManagerDelegate {
                     self?.log.error("Pod session sync error: %{public}@", String(describing: error))
                 }
             }
+        } else {
+            log.default("Session already established.")
         }
     }
 }

@@ -50,7 +50,7 @@ class KeyExchange {
 
     func updatePodPublicData(_ payload: Data) throws {
         if (payload.count != KeyExchange.PUBLIC_KEY_SIZE + KeyExchange.NONCE_SIZE) {
-            throw BluetoothErrors.MessageIOException("Invalid payload size")
+            throw PodProtocolError.messageIOException("Invalid payload size")
         }
         podPublic = payload.subdata(in: 0..<KeyExchange.PUBLIC_KEY_SIZE)
         podNonce = payload.subdata(in: KeyExchange.PUBLIC_KEY_SIZE..<KeyExchange.PUBLIC_KEY_SIZE + KeyExchange.NONCE_SIZE)
@@ -59,7 +59,7 @@ class KeyExchange {
 
     func validatePodConf(_ payload: Data) throws {
         if (podConf != payload) {
-            throw BluetoothErrors.MessageIOException("Invalid podConf value received")
+            throw PodProtocolError.messageIOException("Invalid podConf value received")
         }
     }
 
