@@ -1,9 +1,10 @@
 //
 //  FaultEventCode.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKit/Model/FaultEventCode.swift
 //  Created by Pete Schwamb on 9/28/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation

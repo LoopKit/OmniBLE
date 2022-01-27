@@ -1,8 +1,8 @@
 //
 //  BasalSchedule+LoopKit.swift
-//  (formerly PodCommsSession+LoopKit.swift)
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/PumpManager/PodCommsSession+LoopKit.swift
 //  Created by Pete Schwamb on 9/25/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

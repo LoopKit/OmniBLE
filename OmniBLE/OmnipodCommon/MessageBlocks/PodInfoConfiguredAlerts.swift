@@ -1,7 +1,8 @@
 //
 //  PodInfoConfiguredAlerts.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/PodInfoConfiguredAlerts.swift
 //  Created by Eelke Jager on 16/09/2018.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

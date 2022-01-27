@@ -2,8 +2,9 @@
 //  PodState.swift
 //  OmnipodKit
 //
+//  Based on OmniKit/PumpManager/PodState.swift
 //  Created by Pete Schwamb on 10/13/17.
-//  Copyright © 2017 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation

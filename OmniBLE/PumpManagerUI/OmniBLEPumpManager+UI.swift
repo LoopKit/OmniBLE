@@ -1,9 +1,10 @@
 //
-//  OmnipodPumpManager+UI.swift
-//  OmnipodKit
+//  OmniBLEPumpManager+UI.swift
+//  OmniBLE
 //
+//  Based on OmniKitUI/PumpManager/OmnipodPumpManager+UI.swift
 //  Created by Pete Schwamb on 8/4/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation
@@ -53,17 +54,17 @@ extension OmniBLEPumpManager {
             completion(.failure(PodCommsError.invalidData))
             return
         }
-        
+
         completion(.success(maximumBasalRatePerHour: maxBasalRate, maximumBolus: maxBolus))
     }
-    
+
     public func syncButtonTitle(for viewController: DeliveryLimitSettingsTableViewController) -> String {
         return LocalizedString("Save", comment: "Title of button to save delivery limit settings")    }
-    
+
     public func syncButtonDetailText(for viewController: DeliveryLimitSettingsTableViewController) -> String? {
         return nil
     }
-    
+
     public func deliveryLimitSettingsTableViewControllerIsReadOnly(_ viewController: DeliveryLimitSettingsTableViewController) -> Bool {
         return false
     }
@@ -125,11 +126,11 @@ extension OmniBLEPumpManager {
     public var pumpStatusHighlight: DeviceStatusHighlight? {
         return buildPumpStatusHighlight(for: state)
     }
-    
+
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {
         return buildPumpLifecycleProgress(for: state)
     }
-    
+
     public var pumpStatusBadge: DeviceStatusBadge? {
         if isClockOffset {
             return OmniBLEStatusBadge.timeSyncNeeded

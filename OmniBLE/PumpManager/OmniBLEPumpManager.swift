@@ -1,9 +1,10 @@
 //
-//  OmnipodPumpManager.swift
-//  OmnipodKit
+//  OmniBLEPumpManager.swift
+//  OmniBLE
 //
+//  Based on OmniKit/PumpManager/OmnipodPumpManager.swift
 //  Created by Pete Schwamb on 8/4/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import HealthKit
@@ -71,11 +72,11 @@ extension OmniBLEPumpManagerError: LocalizedError {
 }
 
 public class OmniBLEPumpManager: DeviceManager {
-    
+
     public let managerIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
-    
-    public let localizedTitle = LocalizedString("Omnipod Dash", comment: "Generic title of the omnipod pump manager")
-    
+
+    public let localizedTitle = LocalizedString("Omnipod Dash", comment: "Generic title of the OmniBLE pump manager")
+
     let podExpirationNotificationIdentifier: Alert.Identifier
 
     public init(state: OmniBLEPumpManagerState, dateGenerator: @escaping () -> Date = Date.init) {
@@ -88,10 +89,10 @@ public class OmniBLEPumpManager: DeviceManager {
 
         self.podExpirationNotificationIdentifier = Alert.Identifier(managerIdentifier: managerIdentifier,
                                                                alertIdentifier: LoopNotificationCategory.pumpExpired.rawValue)
-        
+
         self.podComms.delegate = self
         self.podComms.messageLogger = self
-        
+
     }
 
     public required convenience init?(rawState: PumpManager.RawStateValue) {
@@ -119,9 +120,7 @@ public class OmniBLEPumpManager: DeviceManager {
     public let dateGenerator: () -> Date
 
     public var state: OmniBLEPumpManagerState {
-        get {
-            return lockedState.value
-        }
+        return lockedState.value
     }
 
     private func setState(_ changes: (_ state: inout OmniBLEPumpManagerState) -> Void) -> Void {
@@ -671,8 +670,8 @@ extension OmniBLEPumpManager {
 
 
     // MARK: - Pairing
-    
-    func connectToNewPod(completion: @escaping (Result<Omnipod, Error>) -> Void) {
+
+    func connectToNewPod(completion: @escaping (Result<OmniBLE, Error>) -> Void) {
         podComms.connectToNewPod(completion)
     }
 
@@ -731,9 +730,9 @@ extension OmniBLEPumpManager {
         })
 
         if needsPairing {
-            
+
             self.log.default("Pairing pod before priming")
-            
+
             connectToNewPod(completion: { result in
                 switch result {
                 case .failure(let error):
@@ -759,7 +758,7 @@ extension OmniBLEPumpManager {
                     }
 
                 }
-                
+
             })
         } else {
             self.log.default("Pod already paired. Continuing.")
@@ -1418,7 +1417,7 @@ extension OmniBLEPumpManager: PumpManager {
     public var pumpReservoirCapacity: Double {
         return Pod.reservoirCapacity
     }
-    
+
     public var isOnboarded: Bool { state.isOnboarded }
 
     public var insulinType: InsulinType? {
@@ -1472,7 +1471,7 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     // MARK: Methods
-    
+
     public func completeOnboard() {
         setState({ (state) in
             state.isOnboarded = true
@@ -1928,7 +1927,7 @@ extension OmniBLEPumpManager: PumpManager {
         }
         return nil
     }
-    
+
     public func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
         let newSchedule = BasalSchedule(repeatingScheduleValues: scheduleItems)
         setBasalSchedule(newSchedule) { (error) in
@@ -1939,7 +1938,7 @@ extension OmniBLEPumpManager: PumpManager {
             }
         }
     }
-    
+
     // Delivery limits are not enforced/displayed on omnipods
     public func syncDeliveryLimits(limits deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
         completion(.success(deliveryLimits))
@@ -2065,7 +2064,7 @@ extension OmniBLEPumpManager: AlertSoundVendor {
     public func getSoundBaseURL() -> URL? {
         return nil
     }
-    
+
     public func getSounds() -> [Alert.Sound] {
         return []
     }

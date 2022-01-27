@@ -1,7 +1,8 @@
 //
 //  BasalScheduleExtraCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/BasalScheduleExtraCommand.swift
 //  Created by Pete Schwamb on 3/30/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

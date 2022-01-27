@@ -1,9 +1,9 @@
 //
-//  PeripheralManager+Omnipod.swift
+//  PeripheralManager+OmniBLE.swift
 //  OmniBLE
 //
 //  Created by Randall Knutson on 11/2/21.
-//  Copyright © 2021 Randall Knutson. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 

@@ -1,7 +1,8 @@
 //
 //  ConfigureAlertsCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/ConfigureAlertsCommand.swift
 //  Created by Pete Schwamb on 2/22/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

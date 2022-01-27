@@ -1,9 +1,10 @@
  //
 //  CRC16.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/CRC16.swift
 //  Created by Pete Schwamb on 10/14/17.
-//  Copyright © 2017 Pete Schwamb. All rights reserved.
+//  Copyright © 2017 Pete Schwambs. All rights reserved.
 //
 
 import Foundation
