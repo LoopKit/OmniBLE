@@ -3,7 +3,7 @@
 //  OmniBLE
 //
 //  Created by Pete Schwamb on 5/17/21.
-//  Copyright © 2021 Tidepool. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import SwiftUI
