@@ -1,7 +1,8 @@
 //
 //  StatusResponse.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/StatusResponse.swift
 //  Created by Pete Schwamb on 10/23/17.
 //  Copyright © 2017 Pete Schwamb. All rights reserved.
 //

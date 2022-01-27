@@ -1,7 +1,8 @@
 //
 //  BeepType.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/Model/BeepType.swift
 //  Created by Joseph Moran on 5/12/19.
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //

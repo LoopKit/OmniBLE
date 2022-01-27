@@ -1,7 +1,8 @@
 //
 //  Alert.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/Model/Alert.swift
 //  Created by Pete Schwamb on 10/24/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

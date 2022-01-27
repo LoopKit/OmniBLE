@@ -1,7 +1,8 @@
 //
 //  PodInfoPulseLogPlus.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/PodInfoPulseLog.swift
 //  Created by Eelke Jager on 22/09/2018.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

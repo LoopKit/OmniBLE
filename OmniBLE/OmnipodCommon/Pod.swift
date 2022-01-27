@@ -1,9 +1,10 @@
 //
 //  Pod.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  Based on OmniKit/Model/Pod.swift
 //  Created by Pete Schwamb on 4/4/18.
-//  Copyright © 2018 Pete Schwamb. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import Foundation

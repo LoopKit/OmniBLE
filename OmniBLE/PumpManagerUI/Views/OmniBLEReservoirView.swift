@@ -9,7 +9,7 @@
 import UIKit
 import LoopKitUI
 
-public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
+public final class OmniBLEReservoirView: LevelHUDView, NibLoadable {
     
     override public var orderPriority: HUDViewOrderPriority {
         return 11
@@ -26,8 +26,8 @@ public final class OmnipodReservoirView: LevelHUDView, NibLoadable {
         }
     }
 
-    public class func instantiate() -> OmnipodReservoirView {
-        return nib().instantiate(withOwner: nil, options: nil)[0] as! OmnipodReservoirView
+    public class func instantiate() -> OmniBLEReservoirView {
+        return nib().instantiate(withOwner: nil, options: nil)[0] as! OmniBLEReservoirView
     }
 
     override public func awakeFromNib() {

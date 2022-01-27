@@ -1,7 +1,8 @@
 //
 //  PodProgressStatus.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/Model/PodProgressStatus.swift
 //  Created by Pete Schwamb on 9/28/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

@@ -1,7 +1,8 @@
 //
 //  BeepConfigCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/BeepConfigCommand.swift
 //  Created by Joseph Moran on 5/12/19.
 //  Copyright © 2019 Pete Schwamb. All rights reserved.
 //

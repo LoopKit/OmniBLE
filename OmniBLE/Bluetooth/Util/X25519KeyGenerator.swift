@@ -1,8 +1,9 @@
 //
 //  X25519KeyGenerator.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Created by Randall Knutson on 8/8/21.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 import CryptoKit
 import Foundation

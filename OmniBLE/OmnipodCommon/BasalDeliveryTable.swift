@@ -1,7 +1,8 @@
 //
 //  BasalDeliveryTable.swift
-//  OmnipodKit
+//  OmniBLE
 //
+//  From OmniKit/Model/BasalDeliveryTable.swift
 //  Created by Pete Schwamb on 4/4/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //
@@ -231,9 +232,3 @@ extension RateEntry: CustomDebugStringConvertible {
         return "RateEntry(rate:\(rate) duration:\(duration.stringValue))"
     }
 }
-
-
-
-
-
-

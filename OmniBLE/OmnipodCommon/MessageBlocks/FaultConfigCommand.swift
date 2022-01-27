@@ -1,7 +1,8 @@
 //
 //  FaultConfigCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/FaultConfigCommand.swift
 //  Created by Pete Schwamb on 12/18/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

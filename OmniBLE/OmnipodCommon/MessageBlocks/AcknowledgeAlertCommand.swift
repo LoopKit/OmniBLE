@@ -1,7 +1,8 @@
 //
 //  AcknowledgeAlertCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/AcknowledgeAlertCommand.swift
 //  Created by Eelke Jager on 18/09/2018.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

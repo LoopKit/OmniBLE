@@ -2,8 +2,9 @@
 //  OmniBLEHUDProvider.swift
 //  OmniBLE
 //
-//  Created by Pete Schwamb on 4/19/19.
-//  Copyright © 2019 Tidepool. All rights reserved.
+//  Based on OmniKitUI/PumpManager/OmniBLEHUDProvider.swift
+//  Created by Pete Schwamb on 11/26/18.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import UIKit
@@ -24,7 +25,7 @@ internal class OmniBLEHUDProvider: NSObject, HUDProvider {
 
     private let pumpManager: OmniBLEPumpManager
 
-    private var reservoirView: OmnipodReservoirView?
+    private var reservoirView: OmniBLEReservoirView?
     
     private let bluetoothProvider: BluetoothProvider
 
@@ -52,7 +53,7 @@ internal class OmniBLEHUDProvider: NSObject, HUDProvider {
     }
 
     public func createHUDView() -> LevelHUDView? {
-        reservoirView = OmnipodReservoirView.instantiate()
+        reservoirView = OmniBLEReservoirView.instantiate()
         updateReservoirView()
 
         return reservoirView
@@ -92,12 +93,12 @@ internal class OmniBLEHUDProvider: NSObject, HUDProvider {
             return nil
         }
 
-        let reservoirView: OmnipodReservoirView?
+        let reservoirView: OmniBLEReservoirView?
 
         let reservoirLevel = ReservoirLevel(rawValue: rawReservoirLevel)
 
         if let lastStatusDate = rawValue["lastStatusDate"] as? Date {
-            reservoirView = OmnipodReservoirView.instantiate()
+            reservoirView = OmniBLEReservoirView.instantiate()
             reservoirView!.update(level: reservoirLevel, at: lastStatusDate, reservoirLevelHighlightState: reservoirLevelHighlightState)
         } else {
             reservoirView = nil

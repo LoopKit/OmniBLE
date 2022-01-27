@@ -1,7 +1,8 @@
 //
 //  CancelDeliveryCommand.swift
-//  OmniKit
+//  OmniBLE
 //
+//  From OmniKit/MessageTransport/MessageBlocks/CancelDeliveryCommand.swift
 //  Created by Pete Schwamb on 2/23/18.
 //  Copyright © 2018 Pete Schwamb. All rights reserved.
 //

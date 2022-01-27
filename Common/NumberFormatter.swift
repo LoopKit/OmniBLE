@@ -1,6 +1,6 @@
 //
 //  NumberFormatter.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  Copyright © 2017 Pete Schwamb. All rights reserved.
 //

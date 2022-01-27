@@ -3,7 +3,7 @@
 //  OmniBLE
 //
 //  Created by Bill Gestrich on 12/11/21.
-//  Copyright © 2021 Randall Knutson. All rights reserved.
+//  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
 import XCTest
