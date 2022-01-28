@@ -21,13 +21,15 @@ public struct MessageTransportState: Equatable, RawRepresentable {
 
     public var ck: Data?
     public var noncePrefix: Data?
-    public var msgSeq: Int // 8-bit Dash MessagePacket sequence #
-    public var nonceSeq: Int
-    public var messageNumber: Int // 4-bit Omnipod Message #
+    public var eapSeq: Int // per session sequence #
+    public var msgSeq: Int // 8-bit Dash MessagePacket sequence # (with ck)
+    public var nonceSeq: Int // nonce sequence # (with noncePrefix)
+    public var messageNumber: Int // 4-bit Omnipod Message # (for Omnipod command/responses Messages)
     
-    init(ck: Data?, noncePrefix: Data?, msgSeq: Int = 0, nonceSeq: Int = 0, messageNumber: Int = 0) {
+    init(ck: Data?, noncePrefix: Data?, eapSeq: Int = 1, msgSeq: Int = 0, nonceSeq: Int = 0, messageNumber: Int = 0) {
         self.ck = ck
         self.noncePrefix = noncePrefix
+        self.eapSeq = eapSeq
         self.msgSeq = msgSeq
         self.nonceSeq = nonceSeq
         self.messageNumber = messageNumber
@@ -46,6 +48,7 @@ public struct MessageTransportState: Equatable, RawRepresentable {
         }
         self.ck = Data(hex: ckString)
         self.noncePrefix = Data(hex: noncePrefixString)
+        self.eapSeq = rawValue["eapSeq"] as? Int ?? 1
         self.msgSeq = msgSeq
         self.nonceSeq = nonceSeq
         self.messageNumber = messageNumber
@@ -55,6 +58,7 @@ public struct MessageTransportState: Equatable, RawRepresentable {
         return [
             "ck": ck?.hexadecimalString ?? "",
             "noncePrefix": noncePrefix?.hexadecimalString ?? "",
+            "eapSeq": eapSeq,
             "msgSeq": msgSeq,
             "nonceSeq": nonceSeq,
             "messageNumber": messageNumber
@@ -69,6 +73,7 @@ extension MessageTransportState: CustomDebugStringConvertible {
             "## MessageTransportState",
             "ck: " + (ck != nil ? ck!.hexadecimalString : "nil"),
             "noncePrefix: " + (noncePrefix != nil ? noncePrefix!.hexadecimalString : "nil"),
+            "eapSeq: \(eapSeq)",
             "msgSeq: \(msgSeq)",
             "nonceSeq: \(nonceSeq)",
             "messageNumber: \(messageNumber)",
@@ -103,7 +108,7 @@ class PodMessageTransport: MessageTransport {
 
     private let log = OSLog(category: "PodMessageTransport")
     
-    private var state: MessageTransportState {
+    private(set) var state: MessageTransportState {
         didSet {
             self.delegate?.messageTransport(self, didUpdate: state)
         }
@@ -127,6 +132,15 @@ class PodMessageTransport: MessageTransport {
         }
     }
     
+    private(set) var eapSeq: Int {
+        get {
+            return state.eapSeq
+        }
+        set {
+            state.eapSeq = newValue
+        }
+    }
+
     private(set) var msgSeq: Int {
         get {
             return state.msgSeq
@@ -154,14 +168,16 @@ class PodMessageTransport: MessageTransport {
         }
     }
 
-    private let address: UInt32
+    private let myId: UInt32
+    private let podId: UInt32
     
     weak var messageLogger: MessageLogger?
     weak var delegate: MessageTransportDelegate?
 
-    init(manager: PeripheralManager, address: UInt32, state: MessageTransportState) {
+    init(manager: PeripheralManager, myId: UInt32, podId: UInt32, state: MessageTransportState) {
         self.manager = manager
-        self.address = address
+        self.myId = myId
+        self.podId = podId
         self.state = state
         
         guard let noncePrefix = self.noncePrefix, let ck = self.ck else { return }
@@ -222,7 +238,8 @@ class PodMessageTransport: MessageTransport {
 
         let msg = MessagePacket(
             type: MessageType.ENCRYPTED,
-            destination: self.address,
+            source: self.myId,
+            destination: self.podId,
             payload: wrapped,
             sequenceNumber: UInt8(msgSeq),
             eqos: 1
@@ -316,6 +333,7 @@ extension PodMessageTransport: CustomDebugStringConvertible {
             "## PodMessageTransport",
             "ck: " + (ck != nil ? ck!.hexadecimalString : "nil"),
             "noncePrefix: " + (noncePrefix != nil ? noncePrefix!.hexadecimalString : "nil"),
+            "eapSeq: \(eapSeq)",
             "msgSeq: \(msgSeq)",
             "nonceSeq: \(nonceSeq)",
             "messageNumber: \(messageNumber)",

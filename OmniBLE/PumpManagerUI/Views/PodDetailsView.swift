@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 
 public struct PodVersion {
-    var lotNumber: UInt64
+    var lotNumber: UInt32
     var sequenceNumber: UInt32
     var firmwareVersion: String
     var bleFirmwareVersion: String

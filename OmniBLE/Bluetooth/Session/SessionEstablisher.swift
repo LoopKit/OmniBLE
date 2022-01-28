@@ -25,7 +25,8 @@ class SessionEstablisher {
     private let manager: PeripheralManager
     private let ltk: Data
     private let eapSqn: Data
-    private let address: UInt32
+    private let myId: UInt32
+    private let podId: UInt32
     private var msgSeq: Int
     
     private var controllerIV: Data
@@ -34,7 +35,7 @@ class SessionEstablisher {
     private let milenage: Milenage
     private let log = OSLog(category: "SessionEstablisher")
     
-    init(manager: PeripheralManager, ltk: Data, eapSqn: Int, address: UInt32, msgSeq: Int) throws {
+    init(manager: PeripheralManager, ltk: Data, eapSqn: Int, myId: UInt32, podId: UInt32, msgSeq: Int) throws {
 //        guard eapSqn.count == 6 else { throw SessionEstablishmentException.InvalidParameter("EAP-SQN has to be 6 bytes long") }
         guard ltk.count == 16 else { throw SessionEstablishmentException.InvalidParameter("LTK has to be 16 bytes long") }
 
@@ -44,7 +45,8 @@ class SessionEstablisher {
         self.manager = manager
         self.ltk = ltk
         self.eapSqn = Data(bigEndian: eapSqn).subdata(in: 2..<8)
-        self.address = address
+        self.myId = myId
+        self.podId = podId
         self.msgSeq = msgSeq
         self.milenage = try Milenage(k: ltk, sqn: self.eapSqn)
     }
@@ -93,7 +95,8 @@ class SessionEstablisher {
         )
         return MessagePacket(
             type: MessageType.SESSION_ESTABLISHMENT,
-            destination: address,
+            source: myId,
+            destination: podId,
             payload: eapMsg.toData(),
             sequenceNumber: UInt8(msgSeq)
         )
@@ -192,7 +195,8 @@ class SessionEstablisher {
 
         return MessagePacket(
             type: MessageType.SESSION_ESTABLISHMENT,
-            destination: address,
+            source: myId,
+            destination: podId,
             payload: eapMsg.toData(),
             sequenceNumber: UInt8(msgSeq)
         )

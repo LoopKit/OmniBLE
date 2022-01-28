@@ -25,11 +25,6 @@ public class PodComms: CustomDebugStringConvertible {
         }
     }
 
-    private let lotNo: UInt64?
-    private let lotSeq: UInt32?
-
-//    private let configuredDevices: Locked<Set<OmniBLE>> = Locked(Set())
-
     weak var delegate: PodCommsDelegate?
 
     weak var messageLogger: MessageLogger?
@@ -57,13 +52,16 @@ public class PodComms: CustomDebugStringConvertible {
     private var needsSessionEstablishment: Bool = false
 
     private let bluetoothManager = BluetoothManager()
+    
+    private var myId: UInt32
+    private var podId: UInt32
 
-    init(podState: PodState?, lotNo: UInt64?, lotSeq: UInt32?) {
+    init(podState: PodState?, myId: UInt32 = 0, podId: UInt32 = 0) {
         self.podState = podState
         self.delegate = nil
         self.messageLogger = nil
-        self.lotNo = lotNo
-        self.lotSeq = lotSeq
+        self.myId = myId
+        self.podId = podId
         bluetoothManager.connectionDelegate = self
         if let podState = podState {
             bluetoothManager.connectToDevice(uuidString: podState.bleIdentifier)
@@ -143,45 +141,32 @@ public class PodComms: CustomDebugStringConvertible {
         return versionResponse
     }
 
-    public func pairPod(ids: Ids) throws {
+    private func pairPod() throws {
         guard let manager = manager else { throw PodCommsError.podNotConnected }
-        let address = ids.podId.toUInt32()
+        let ids = Ids(myId: self.myId, podId: self.podId)
 
         let ltkExchanger = LTKExchanger(manager: manager, ids: ids)
         let response = try ltkExchanger.negotiateLTK()
         let ltk = response.ltk
 
-        guard address == response.address else {
-            log.debug("podPair: address %{public} doesn't match response value?!: %@", String(format: "%04X", address), String(describing: response))
-            throw PodCommsError.invalidAddress(address: response.address, expectedAddress: address)
-        }
-
-        // XXX need to rework things so that we don't have to create this temp PodState with the LTK to set up the encrypted transport
-        if podState == nil {
-            log.debug("pairPod: creating a temp podState for LTK using response %@", String(describing: response))
-            podState = PodState(
-                address: response.address,
-                ltk: ltk,
-                firmwareVersion: "",
-                bleFirmwareVersion: "",
-                lotNo: 0,
-                lotSeq: 0,
-                productId: dashProductId,
-                bleIdentifier: manager.peripheral.identifier.uuidString
-            )
+        guard podId == response.address else {
+            log.debug("podId 0x%x doesn't match response value!: %{public}@", podId, String(describing: response))
+            throw PodCommsError.invalidAddress(address: response.address, expectedAddress: self.podId)
         }
 
         log.info("Establish an Eap Session")
-        try self.establishSession(msgSeq: Int(response.msgSeq))
-
-        log.info("LTK and encrypted transport now ready")
-        log.debug("pairPod: LTK and encrypted transport now ready, podState messageTransportState: %@", String(reflecting: podState!.messageTransportState))
+        guard let messageTransportState = try establishSession(ltk: ltk, eapSeq: 1, msgSeq: Int(response.msgSeq)) else {
+            log.debug("pairPod: failed to create messageTransportState!")
+            throw PodCommsError.noPodPaired
+        }
+ 
+        log.info("LTK and encrypted transport now ready, messageTransportState: %@", String(reflecting: messageTransportState))
 
         // If we get here, we have the LTK all set up and we should be able use encrypted pod messages
-        let transport = PodMessageTransport(manager: manager, address: response.address, state: podState!.messageTransportState)
+        let transport = PodMessageTransport(manager: manager, myId: self.myId, podId: self.podId, state: messageTransportState)
         transport.messageLogger = messageLogger
 
-        // For Dash this command is vestigal and doesn't actually assign the address (ID)
+        // For Dash this command is vestigal and doesn't actually assign the address (podId)
         // any more as this is done earlier when the LTK is setup. But this Omnipod comamnd is still
         // needed albiet using 0xffffffff for the address while the Eros sets the 0x1f0xxxxx ID.
         let assignAddress = AssignAddressCommand(address: 0xffffffff)
@@ -189,38 +174,17 @@ public class PodComms: CustomDebugStringConvertible {
 
         let versionResponse = try sendPairMessage(transport: transport, message: message)
 
-        // Information checks comparing the version response values to the earlier values
-
-        // N.B., The pod simulator always returns 0xFFFFFFFF regardless of the address used in the AssignAddressCommand command
-        if versionResponse.address != 0xFFFFFFFF && versionResponse.address != response.address {
-            log.debug("pairPod: versionResponse.address 0x%08X (%d) doesn't match response.address of 0x%08x (%d)", versionResponse.address, versionResponse.address, response.address, response.address)
-        }
-        if let lotSeq = self.lotSeq {
-            if versionResponse.tid != lotSeq {
-                log.debug("pairPod: versionResponse.tid %d doesn't match lotSeq of %d", versionResponse.tid, lotSeq)
-            }
-        } else {
-            log.debug("pairPod: got versionResponse.tid of %d with no previous lotSeq", versionResponse.tid)
-        }
-        if let lotNo = self.lotNo {
-            if versionResponse.lot != lotNo {
-                log.debug("pairPod: versionResponse.lot %d doesn't match lotNo of %d", versionResponse.lot, lotNo)
-            }
-        } else {
-            log.debug("pairPod: got versionResponse.lot of %d with no previous lotNo", versionResponse.lot)
-        }
-
-        // Now create the real PodState using the versionResponse info
-        log.debug("pairPod: creating PodState for versionResponse %{public}@", String(describing: versionResponse))
+        // Now create the real PodState using the current transport state and the versionResponse info
+        log.debug("pairPod: creating PodState for versionResponse %{public}@ and transport %{public}@", String(describing: versionResponse), String(describing: transport.state))
         self.podState = PodState(
-            address: response.address,
+            address: self.podId,
             ltk: ltk,
             firmwareVersion: String(describing: versionResponse.firmwareVersion),
             bleFirmwareVersion: String(describing: versionResponse.iFirmwareVersion),
-            lotNo: UInt64(versionResponse.lot), // XXX get 5-byte lotNo from attributes or use this 4-byte lotNo in versionResponse?
-            lotSeq: versionResponse.tid, // XXX get from attributes?
+            lotNo: versionResponse.lot,
+            lotSeq: versionResponse.tid,
             productId: versionResponse.productId,
-            messageTransportState: podState!.messageTransportState,
+            messageTransportState: transport.state,
             bleIdentifier: manager.peripheral.identifier.uuidString
         )
         // podState setupProgress state should be addressAssigned
@@ -235,49 +199,55 @@ public class PodComms: CustomDebugStringConvertible {
         log.debug("pairPod: self.PodState messageTransportState now: %@", String(reflecting: self.podState?.messageTransportState))
     }
 
-    private func syncSession(_ ltk: Data, _ msgSeq: Int, _ address: UInt32, _ eapSqn: Int) throws -> Int? {
+    private func establishSession(ltk: Data, eapSeq: Int, msgSeq: Int = 1)  throws -> MessageTransportState? {
         guard let manager = manager else { throw PodCommsError.noPodPaired }
-        let eapAkaExchanger = try SessionEstablisher(manager: manager, ltk: ltk, eapSqn: eapSqn, address: address, msgSeq: msgSeq)
+        let eapAkaExchanger = try SessionEstablisher(manager: manager, ltk: ltk, eapSqn: eapSeq, myId: self.myId, podId: self.podId, msgSeq: msgSeq)
 
         let result = try eapAkaExchanger.negotiateSessionKeys()
 
         switch result {
         case .SessionNegotiationResynchronization(let keys):
-            log.info("EAP AKA resynchronization: %@", keys.synchronizedEapSqn.data.hexadecimalString)
-            return keys.synchronizedEapSqn.toInt()
+            log.debug("Received EAP SQN resynchronization: %@", keys.synchronizedEapSqn.data.hexadecimalString)
+            if self.podState != nil {
+                let eapSeq = keys.synchronizedEapSqn.toInt()
+                log.debug("Updating EAP SQN to: %d", eapSeq)
+                self.podState!.messageTransportState.eapSeq = eapSeq
+            }
+            return nil
         case .SessionKeys(let keys):
             log.debug("Session Established")
             log.debug("CK: %@", keys.ck.hexadecimalString)
             log.info("msgSequenceNumber: %@", String(keys.msgSequenceNumber))
             log.info("NoncePrefix: %@", keys.nonce.prefix.hexadecimalString)
 
-            self.podState?.messageTransportState = MessageTransportState(ck: keys.ck, noncePrefix: keys.nonce.prefix, msgSeq: keys.msgSequenceNumber, nonceSeq: 0)
+            let omnipodMessageNumber = self.podState?.messageTransportState.messageNumber ?? 0
+            let messageTransportState = MessageTransportState(
+                ck: keys.ck,
+                noncePrefix: keys.nonce.prefix,
+                eapSeq: eapSeq,
+                msgSeq: keys.msgSequenceNumber,
+                messageNumber: omnipodMessageNumber
+            )
 
-            log.debug("syncSession: set up podState messageTransportState: %@", String(reflecting: self.podState?.messageTransportState))
-            return nil
+            if self.podState != nil {
+                log.debug("Setting podState transport state to %{public}@", String(describing: messageTransportState))
+                self.podState!.messageTransportState = messageTransportState
+            } else {
+                log.debug("Used keys %@ to create messageTransportState: %@", String(reflecting: keys), String(reflecting: messageTransportState))
+            }
+            return messageTransportState
         }
     }
 
-    public func establishSession(msgSeq: Int) throws {
-        guard var podState = self.podState else {
+    private func establishNewSession() throws {
+        guard self.podState != nil else {
             throw PodCommsError.noPodPaired
         }
 
-        let eapSqn = podState.increaseEapAkaSequenceNumber()
-
-        guard self.podState!.ltk == podState.ltk else {
-            throw PodCommsError.invalidData
-        }
-        guard self.podState!.address == podState.address else {
-            throw PodCommsError.invalidData
-        }
-        var newSqn = try self.syncSession(podState.ltk, msgSeq, podState.address, eapSqn)
-
-        if (newSqn != nil) {
-            log.debug("Updating EAP SQN to: %d", newSqn!)
-            podState.eapAkaSequenceNumber = newSqn!
-            newSqn = try self.syncSession(podState.ltk, msgSeq, podState.address, podState.increaseEapAkaSequenceNumber())
-            if (newSqn != nil) {
+        let mts = try establishSession(ltk: self.podState!.ltk, eapSeq: self.podState!.incrementEapSeq())
+        if mts == nil {
+            let mts = try establishSession(ltk: self.podState!.ltk, eapSeq: self.podState!.incrementEapSeq())
+            if (mts == nil) {
                 throw PodCommsError.diagnosticMessage(str: "Received resynchronization SQN for the second time")
             }
         }
@@ -286,9 +256,8 @@ public class PodComms: CustomDebugStringConvertible {
     private func setupPod(podState: PodState, timeZone: TimeZone) throws {
         guard let manager = manager else { throw PodCommsError.podNotConnected }
 
-        let transport = PodMessageTransport(manager: manager, address: podState.address, state: podState.messageTransportState)
+        let transport = PodMessageTransport(manager: manager, myId: self.myId, podId: self.podId, state: podState.messageTransportState)
         transport.messageLogger = messageLogger
-        log.debug("setupPod: created transport %@ using podState %@ with messageTransportState %@", String(reflecting: transport), String(reflecting: podState), String(reflecting: podState.messageTransportState))
 
         let dateComponents = SetupPodCommand.dateComponents(date: Date(), timeZone: timeZone)
         let setupPod = SetupPodCommand(address: podState.address, dateComponents: dateComponents, lot: UInt32(podState.lotNo), tid: podState.lotSeq)
@@ -339,7 +308,6 @@ public class PodComms: CustomDebugStringConvertible {
     }
 
     func pairAndSetupPod(
-        address: UInt32,
         timeZone: TimeZone,
         messageLogger: MessageLogger?,
         _ block: @escaping (_ result: SessionRunResult) -> Void
@@ -350,19 +318,21 @@ public class PodComms: CustomDebugStringConvertible {
             return
         }
 
+        let myId = self.myId
+        let podId = self.podId
+        log.info("Attempting to pair using myId %X and podId %X", myId, podId)
+
         manager.runSession(withName: "Pair and setup pod") { [weak self] in
             do {
                 guard let self = self else { fatalError() }
 
-                try manager.sendHello(Ids.controllerId().address)
+                try manager.sendHello(myId: myId)
                 try manager.enableNotifications() // Seemingly this cannot be done before the hello command, or the pod disconnects
 
                 if (!self.isPaired) {
-                    let ids = Ids(podState: self.podState)
-                    try self.pairPod(ids: ids)
-                }
-                else {
-                    try self.establishSession(msgSeq: 1)
+                    try self.pairPod()
+                } else {
+                    try self.establishNewSession()
                 }
 
                 guard self.podState != nil else {
@@ -380,7 +350,7 @@ public class PodComms: CustomDebugStringConvertible {
                 }
 
                 // Run a session now for any post-pairing commands
-                let transport = PodMessageTransport(manager: manager, address: self.podState!.address, state: self.podState!.messageTransportState)
+                let transport = PodMessageTransport(manager: manager, myId: myId, podId: podId, state: self.podState!.messageTransportState)
                 transport.messageLogger = self.messageLogger
                 let podSession = PodCommsSession(podState: self.podState!, transport: transport, delegate: self)
 
@@ -413,7 +383,7 @@ public class PodComms: CustomDebugStringConvertible {
             }
 
             // self.configureDevice(device, with: commandSession) no RL to configure
-            let transport = PodMessageTransport(manager: manager, address: self.podState!.address, state: self.podState!.messageTransportState)
+            let transport = PodMessageTransport(manager: manager, myId: self.myId, podId: self.podId, state: self.podState!.messageTransportState)
             transport.messageLogger = self.messageLogger
             let podSession = PodCommsSession(podState: self.podState!, transport: transport, delegate: self)
             block(.success(session: podSession))
@@ -425,6 +395,8 @@ public class PodComms: CustomDebugStringConvertible {
     public var debugDescription: String {
         return [
             "## PodComms",
+            "* myId: \(String(format: "%08X", myId))",
+            "* podId: \(String(format: "%08X", podId))",
             "podState: \(String(reflecting: podState))",
             "delegate: \(String(describing: delegate != nil))",
             ""
@@ -464,11 +436,12 @@ extension PodComms: PeripheralManagerDelegate {
         log.default("PodComms completeConfiguration")
 
         if self.isPaired && needsSessionEstablishment {
+            let myId = self.myId
             manager.runSession(withName: "establish pod session") { [weak self] in
                 do {
-                    try manager.sendHello(Ids.controllerId().address)
+                    try manager.sendHello(myId: myId)
                     try manager.enableNotifications() // Seemingly this cannot be done before the hello command, or the pod disconnects
-                    try self?.establishSession(msgSeq: 1)
+                    try self?.establishNewSession()
                 } catch {
                     self?.log.error("Pod session sync error: %{public}@", String(describing: error))
                 }

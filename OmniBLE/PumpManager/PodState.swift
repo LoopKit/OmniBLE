@@ -53,8 +53,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     
     public let address: UInt32
     public let ltk: Data
-    public var eapAkaSequenceNumber: Int
-    
+     
     public var bleIdentifier: String
     
     public var activatedAt: Date?
@@ -64,7 +63,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
 
     public let firmwareVersion: String
     public let bleFirmwareVersion: String
-    public let lotNo: UInt64
+    public let lotNo: UInt32
     public let lotSeq: UInt32
     public let productId: UInt8
     var activeAlertSlots: AlertSet
@@ -106,7 +105,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         return active
     }
     
-    public init(address: UInt32, ltk: Data, firmwareVersion: String, bleFirmwareVersion: String, lotNo: UInt64, lotSeq: UInt32, productId: UInt8, messageTransportState: MessageTransportState? = nil, bleIdentifier: String) {
+    public init(address: UInt32, ltk: Data, firmwareVersion: String, bleFirmwareVersion: String, lotNo: UInt32, lotSeq: UInt32, productId: UInt8, messageTransportState: MessageTransportState? = nil, bleIdentifier: String) {
         self.address = address
         self.ltk = ltk
         self.firmwareVersion = firmwareVersion
@@ -123,7 +122,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         self.primeFinishTime = nil
         self.setupProgress = .addressAssigned
         self.configuredAlerts = [.slot7: .waitingForPairingReminder]
-        self.eapAkaSequenceNumber = 1
         self.bleIdentifier = bleIdentifier
     }
     
@@ -151,9 +149,9 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         return fault != nil || setupProgress == .activationTimeout || setupProgress == .podIncompatible
     }
     
-    public mutating func increaseEapAkaSequenceNumber() -> Int {
-        self.eapAkaSequenceNumber += 1
-        return eapAkaSequenceNumber
+    public mutating func incrementEapSeq() -> Int {
+        self.messageTransportState.eapSeq += 1
+        return messageTransportState.eapSeq
     }
 
     public mutating func advanceToNextNonce() {
@@ -276,11 +274,10 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         guard
             let address = rawValue["address"] as? UInt32,
             let ltkString = rawValue["ltk"] as? String,
-            let eapAkaSequenceNumber = rawValue["eapAkaSequenceNumber"] as? Int,
             let firmwareVersion = rawValue["firmwareVersion"] as? String,
             let bleFirmwareVersion = rawValue["bleFirmwareVersion"] as? String,
             let bleIdentifier = rawValue["bleIdentifier"] as? String,
-            let lotNo = rawValue["lotNo"] as? UInt64,
+            let lotNo = rawValue["lotNo"] as? UInt32,
             let lotSeq = rawValue["lotSeq"] as? UInt32
             else {
                 return nil
@@ -288,7 +285,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         
         self.address = address
         self.ltk = Data(hex: ltkString)
-        self.eapAkaSequenceNumber = eapAkaSequenceNumber
         self.firmwareVersion = firmwareVersion
         self.bleFirmwareVersion = bleFirmwareVersion
         self.lotNo = lotNo
@@ -418,7 +414,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         var rawValue: RawValue = [
             "address": address,
             "ltk": ltk.hexadecimalString,
-            "eapAkaSequenceNumber": eapAkaSequenceNumber,
+            "eapAkaSequenceNumber": 1, // keep for back migration, was always 1
             "firmwareVersion": firmwareVersion,
             "bleFirmwareVersion": bleFirmwareVersion,
             "lotNo": lotNo,
@@ -485,9 +481,8 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     public var debugDescription: String {
         return [
             "### PodState",
-            "* address: \(String(format: "%04X", address))",
+            "* address: \(String(format: "%08X", address))",
             "* ltk: \(ltk.hexadecimalString)",
-            "* eapAkaSequenceNumber: \(eapAkaSequenceNumber)",
             "* bleIdentifier: \(bleIdentifier)",
             "* activatedAt: \(String(reflecting: activatedAt))",
             "* expiresAt: \(String(reflecting: expiresAt))",

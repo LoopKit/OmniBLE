@@ -81,10 +81,10 @@ struct MessagePacket {
     let sas: Bool // TODO: understand, seems to always be true
     let tfs: Bool // TODO: understand, seems to be false
     let version: Int16
-    init(type: MessageType, source: UInt32 = Ids.controllerId().toUInt32(), destination: UInt32, payload: Data, sequenceNumber: UInt8, ack: Bool = false, ackNumber: UInt8 = 0, eqos: Int16 = 0, priority: Bool = false, lastMessage: Bool = false, gateway: Bool = false, sas: Bool = true, tfs: Bool = false, version: Int16 = 0) {
+    init(type: MessageType, source: UInt32, destination: UInt32, payload: Data, sequenceNumber: UInt8, ack: Bool = false, ackNumber: UInt8 = 0, eqos: Int16 = 0, priority: Bool = false, lastMessage: Bool = false, gateway: Bool = false, sas: Bool = true, tfs: Bool = false, version: Int16 = 0) {
         self.type = type
-        self.source = Id.fromLong(source)
-        self.destination = Id.fromLong(destination)
+        self.source = Id.fromUInt32(source)
+        self.destination = Id.fromUInt32(destination)
         self.payload = payload
         self.sequenceNumber = sequenceNumber
         self.ack = ack

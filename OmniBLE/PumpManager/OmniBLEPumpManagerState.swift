@@ -19,8 +19,6 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     
     public var podState: PodState?
 
-    public var pairingAttemptAddress: UInt32?
-
     public var timeZone: TimeZone
 
     public var basalSchedule: BasalSchedule
@@ -29,6 +27,10 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
 
     public var confirmationBeeps: Bool
     
+    public var controllerId: UInt32 = 0
+
+    public var podId: UInt32 = 0
+
     public var scheduledExpirationReminderOffset: TimeInterval?
     
     public var defaultExpirationReminderOffset = Pod.defaultExpirationReminderOffset
@@ -78,12 +80,20 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     
     // MARK: -
 
-    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, insulinType: InsulinType?) {
+    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, controllerId: UInt32? = nil, podId: UInt32? = nil, insulinType: InsulinType?) {
         self.podState = podState
         self.timeZone = timeZone
         self.basalSchedule = basalSchedule
         self.unstoredDoses = []
         self.confirmationBeeps = false
+        if controllerId != nil && podId != nil {
+            self.controllerId = controllerId!
+            self.podId = podId!
+        } else {
+            let myId = createControllerId()
+            self.controllerId = myId
+            self.podId = myId + 1
+        }
         self.insulinType = insulinType
         self.lowReservoirReminderValue = Pod.defaultLowReservoirReminder
         self.podAttachmentConfirmed = false
@@ -133,6 +143,15 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             timeZone = TimeZone.currentFixed
         }
 
+        var controllerId = rawValue["controllerId"] as? UInt32
+        var podId = rawValue["podId"] as? UInt32
+        if controllerId == nil || podId == nil {
+            // continue using the constant controllerId
+            // value until this pod is deactivated
+            controllerId = CONTROLLER_ID
+            podId = podState?.address
+        }
+
         var insulinType: InsulinType?
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -142,6 +161,8 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             podState: podState,
             timeZone: timeZone,
             basalSchedule: basalSchedule,
+            controllerId: controllerId,
+            podId: podId,
             insulinType: insulinType ?? .novolog
         )
         
@@ -155,10 +176,6 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
 
         self.confirmationBeeps = rawValue["confirmationBeeps"] as? Bool ?? rawValue["bolusBeeps"] as? Bool ?? false
 
-        if let pairingAttemptAddress = rawValue["pairingAttemptAddress"] as? UInt32 {
-            self.pairingAttemptAddress = pairingAttemptAddress
-        }
-        
         self.scheduledExpirationReminderOffset = rawValue["scheduledExpirationReminderOffset"] as? TimeInterval
         
         self.defaultExpirationReminderOffset = rawValue["defaultExpirationReminderOffset"] as? TimeInterval ?? Pod.defaultExpirationReminderOffset
@@ -213,7 +230,8 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
         
         value["insulinType"] = insulinType?.rawValue
         value["podState"] = podState?.rawValue
-        value["pairingAttemptAddress"] = pairingAttemptAddress
+        value["controllerId"] = controllerId
+        value["podId"] = podId
         value["scheduledExpirationReminderOffset"] = scheduledExpirationReminderOffset
         value["defaultExpirationReminderOffset"] = defaultExpirationReminderOffset
         value["lowReservoirReminderValue"] = lowReservoirReminderValue
@@ -253,7 +271,8 @@ extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
             "* lastPumpDataReportDate: \(String(describing: lastPumpDataReportDate))",
             "* isPumpDataStale: \(String(describing: isPumpDataStale))",
             "* confirmationBeeps: \(String(describing: confirmationBeeps))",
-            "* pairingAttemptAddress: \(String(describing: pairingAttemptAddress))",
+            "* controllerId: \(String(format: "%08X", controllerId))",
+            "* podId: \(String(format: "%08X", podId))",
             "* insulinType: \(String(describing: insulinType))",
             "* scheduledExpirationReminderOffset: \(String(describing: scheduledExpirationReminderOffset))",
             "* defaultExpirationReminderOffset: \(defaultExpirationReminderOffset)",

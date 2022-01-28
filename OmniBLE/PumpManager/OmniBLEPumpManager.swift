@@ -84,7 +84,7 @@ public class OmniBLEPumpManager: DeviceManager {
         
         self.dateGenerator = dateGenerator
         
-        let podComms = PodComms(podState: state.podState, lotNo: state.podState?.lotNo, lotSeq: state.podState?.lotSeq)
+        let podComms = PodComms(podState: state.podState, myId: state.controllerId, podId: state.podId)
         self.lockedPodComms = Locked(podComms)
 
         self.podExpirationNotificationIdentifier = Alert.Identifier(managerIdentifier: managerIdentifier,
@@ -634,7 +634,18 @@ extension OmniBLEPumpManager {
     public func forgetPod(completion: @escaping () -> Void) {
         //omnipod.permanentDisconnect()
         let resetPodState = { (_ state: inout OmniBLEPumpManagerState) in
-            self.podComms = PodComms(podState: nil, lotNo: nil, lotSeq: nil)
+            if state.controllerId == CONTROLLER_ID {
+                // Switch from using the common fixed controllerId to a created semi-unique one
+                state.controllerId = createControllerId()
+                state.podId = state.controllerId + 1
+                self.log.info("Switched controllerId from %x to %x", CONTROLLER_ID, state.controllerId)
+            } else {
+                // Already have a created controllerId, just need to advance podId for the next pod
+                let lastPodId = state.podId
+                state.podId = nextPodId(lastPodId: lastPodId)
+                self.log.info("Advanced podId from %x to %x", lastPodId, state.podId)
+            }
+            self.podComms = PodComms(podState: nil, myId: state.controllerId, podId: state.podId)
             self.podComms.delegate = self
             self.podComms.messageLogger = self
 
@@ -738,20 +749,8 @@ extension OmniBLEPumpManager {
                 case .failure(let error):
                     completion(.failure(.communication(error as? LocalizedError)))
                 case .success:
-                    // Create random address with 20 bits to match PDM, could easily use 24 bits instead
-                    if self.state.pairingAttemptAddress == nil {
-                        self.lockedState.mutate { (state) in
-                            state.pairingAttemptAddress = 0x1f000000 | (arc4random() & 0x000fffff)
-                        }
-                    }
-
-                    self.podComms.pairAndSetupPod(address: self.state.pairingAttemptAddress!, timeZone: .currentFixed, messageLogger: self) { (result) in
-
-                        if case .success = result {
-                            self.lockedState.mutate { (state) in
-                                state.pairingAttemptAddress = nil
-                            }
-                        }
+                    self.podComms.pairAndSetupPod(timeZone: .currentFixed, messageLogger: self)
+                    { (result) in
 
                         // Calls completion
                         primeSession(result)

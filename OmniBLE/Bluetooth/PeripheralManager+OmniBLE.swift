@@ -22,9 +22,10 @@ struct MessageSendSuccess: MessageResult {
 extension PeripheralManager {
     
     /// - Throws: PeripheralManagerError
-    func sendHello(_ controllerId: Data) throws {
+    func sendHello(myId: UInt32) throws {
         dispatchPrecondition(condition: .onQueue(queue))
-                
+
+        let controllerId = Id.fromUInt32(myId).address
         log.default("Sending Hello %{public}@", controllerId.hexadecimalString)
         guard let characteristic = peripheral.getCommandCharacteristic() else {
             throw PeripheralManagerError.notReady
