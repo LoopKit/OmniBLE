@@ -128,7 +128,7 @@ extension PeripheralManager {
 
                     self.log.default("Peripheral configuration completed")
                 } catch let error {
-                    self.log.error("Error applying peripheral configuration: %@", String(describing: error))
+                    self.log.error("Error applying peripheral configuration: %{public}@", String(describing: error))
                     // Will retry
                 }
             }
