@@ -67,6 +67,13 @@ public class PodComms: CustomDebugStringConvertible {
             bluetoothManager.connectToDevice(uuidString: podState.bleIdentifier)
         }
     }
+    
+    public func forgetCurrentPod() {
+        if let manager = manager {
+            self.log.default("Removing %{public}@ from auto-connect ids", manager.peripheral)
+            bluetoothManager.disconnectFromDevice(uuidString: manager.peripheral.identifier.uuidString)
+        }
+    }
 
     public func connectToNewPod(_ completion: @escaping (Result<OmniBLE, Error>) -> Void) {
         let discoveryStartTime = Date()

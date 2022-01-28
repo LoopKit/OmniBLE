@@ -110,7 +110,7 @@ extension PeripheralManager {
             packet = try MessagePacket.parse(payload: fullPayload)
         }
         catch {
-            log.default("Error reading message: %{public}@", error.localizedDescription)
+            log.error("Error reading message: %{public}@", error.localizedDescription)
             try? sendCommandType(PodCommand.NACK)
             throw PeripheralManagerError.incorrectResponse
         }
@@ -163,7 +163,7 @@ extension PeripheralManager {
             let value = cmdQueue.remove(at: 0)
 
             if command.rawValue != value[0] {
-                log.default("Data Wrong command.rawValue (%d != %d).", command.rawValue, value[0])
+                log.error("Data Wrong command.rawValue != value[0] (%d != %d).", command.rawValue, value[0])
                 throw PeripheralManagerError.incorrectResponse
             }
             return
@@ -205,7 +205,7 @@ extension PeripheralManager {
             let data = dataQueue.remove(at: 0)
             
             if (data[0] != sequence) {
-                log.default("Data Wrong data[0] (%d != %d).", data[0], sequence)
+                log.error("Data Wrong data[0] != sequence (%d != %d).", data[0], sequence)
                 throw PeripheralManagerError.incorrectResponse
             }
             return data

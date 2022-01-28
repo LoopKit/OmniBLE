@@ -36,9 +36,7 @@ class PeripheralManager: NSObject {
     }
 
     var dataQueue: [Data] = []
-    var dataEvent: (() -> Void)?
     var cmdQueue: [Data] = []
-    var cmdEvent: (() -> Void)?
     let queueLock = NSCondition()
 
     /// The dispatch queue used to serialize operations on the peripheral
@@ -460,6 +458,13 @@ extension PeripheralManager: CBCentralManagerDelegate {
         self.log.debug("PeripheralManager - didConnect: %@", peripheral)
         switch peripheral.state {
         case .connected:
+            queueLock.lock()
+            if cmdQueue.count > 0 {
+                self.log.default("Removing %{public}d leftover elements from command queue", cmdQueue.count)
+                cmdQueue.removeAll()
+            }
+            queueLock.unlock()
+
             self.log.debug("PeripheralManager - didConnect - running assertConfiguration")
             assertConfiguration()
         default:
