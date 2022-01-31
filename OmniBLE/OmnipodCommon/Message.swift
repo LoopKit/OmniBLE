@@ -87,7 +87,7 @@ struct Message {
             cmdData.append(cmd.data)
         }
         
-        let b9: UInt8 = ((expectFollowOnMessage ? 1 : 0) << 7) + (UInt8(sequenceNum & 0b11111) << 2) + UInt8((cmdData.count >> 8) & 0b11)
+        let b9: UInt8 = ((expectFollowOnMessage ? 1 : 0) << 7) + (UInt8(sequenceNum & 0b1111) << 2) + UInt8((cmdData.count >> 8) & 0b11)
         bytes.append(b9)
         bytes.append(UInt8(cmdData.count & 0xff))
         
