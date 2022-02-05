@@ -657,7 +657,7 @@ extension OmniBLEPumpManager {
 
         setState({ (state) in
             state.podState = podState
-            state.expirationReminderDate = start + .hours(70)
+            state.scheduledExpirationReminderOffset = state.defaultExpirationReminderOffset
         })
     }
     #endif
@@ -681,9 +681,9 @@ extension OmniBLEPumpManager {
                 return state.podState?.fault
             })
             if mockFaultDuringPairing {
-                completion(.failure(PodCommsError.podFault(fault: fault!)))
+                // completion(.failure(PodCommsError.podFault(fault: fault!)))
             } else if mockCommsErrorDuringPairing {
-                completion(.failure(PodCommsError.noResponse))
+                // completion(.failure(PodCommsError.noResponse))
             } else {
                 let mockPrimeDuration = TimeInterval(.seconds(3))
                 completion(.success(mockPrimeDuration))
@@ -766,7 +766,7 @@ extension OmniBLEPumpManager {
                 if mockFaultDuringInsertCannula {
                     let fault = try! DetailedStatus(encodedData: Data(hexadecimalString: "020d0000000e00c36a020703ff020900002899080082")!)
                     state.podState?.fault = fault
-                    return .failure(PodCommsError.podFault(fault: fault))
+                    // return .failure(PodCommsError.podFault(fault: fault))
                 }
 
                 // Mock success
