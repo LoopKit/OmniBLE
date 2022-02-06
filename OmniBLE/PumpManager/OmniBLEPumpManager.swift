@@ -1464,13 +1464,15 @@ extension OmniBLEPumpManager: PumpManager {
             state.isOnboarded = true
         })
     }
-
-    // Wrapper for public PumpManager interface implementation. Used when cancelling bolus.
+    
     public func suspendDelivery(completion: @escaping (Error?) -> Void) {
-        suspendDelivery(duration: .minutes(30), completion: completion)
+        let suspendTime: TimeInterval = .minutes(0) // untimed suspend with reminder beeps
+        suspendDelivery(withSuspendReminders: suspendTime, completion: completion)
     }
 
-    public func suspendDelivery(duration: TimeInterval, completion: @escaping (Error?) -> Void) {
+    // A nil suspendReminder is untimed with no reminders beeps, a suspendReminder of 0 is untimed using reminders beeps, otherwise it
+    // specifies a suspend duration implemented using an appropriate combination of suspended reminder and suspend time expired beeps.
+    public func suspendDelivery(withSuspendReminders suspendReminder: TimeInterval? = nil, completion: @escaping (Error?) -> Void) {
         guard self.hasActivePod else {
             completion(OmniBLEPumpManagerError.noPodPaired)
             return
@@ -1498,7 +1500,7 @@ extension OmniBLEPumpManager: PumpManager {
 
             // use confirmationBeepType here for confirmation beeps to avoid getting 3 beeps!
             let beepType: BeepConfigType? = self.confirmationBeeps ? .beeeeeep : nil
-            let result = session.suspendDelivery(suspendTime: duration, confirmationBeepType: beepType)
+            let result = session.suspendDelivery(suspendReminder: suspendReminder, confirmationBeepType: beepType)
             switch result {
             case .certainFailure(let error):
                 completion(error)
