@@ -224,9 +224,9 @@ public class PodComms: CustomDebugStringConvertible {
             return nil
         case .SessionKeys(let keys):
             log.debug("Session Established")
-            log.debug("CK: %@", keys.ck.hexadecimalString)
+            // log.debug("CK: %@", keys.ck.hexadecimalString)
             log.info("msgSequenceNumber: %@", String(keys.msgSequenceNumber))
-            log.info("NoncePrefix: %@", keys.nonce.prefix.hexadecimalString)
+            // log.info("NoncePrefix: %@", keys.nonce.prefix.hexadecimalString)
 
             let omnipodMessageNumber = self.podState?.messageTransportState.messageNumber ?? 0
             let messageTransportState = MessageTransportState(
