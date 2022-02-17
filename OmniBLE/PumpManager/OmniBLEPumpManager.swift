@@ -1535,7 +1535,16 @@ extension OmniBLEPumpManager: PumpManager {
             }
 
             let beep = self.confirmationBeeps
-            let result = session.bolus(units: enactUnits, automatic: automatic, acknowledgementBeep: beep, completionBeep: beep)
+
+            // Use bits for the program reminder interval (not used by app)
+            //   This trick enables determination, from just the hex messages
+            //     of the log file, whether bolus was manually initiated by the
+            //     user or automatically initiated by app.
+            //   The max possible "reminder" value, 0x3F, would cause the pod to beep
+            //      in 63 minutes if bolus had not completed by then.
+            let bolusWasAutomaticIndicator: TimeInterval = automatic ? TimeInterval(minutes: 0x3F) : 0
+
+            let result = session.bolus(units: enactUnits, automatic: automatic, acknowledgementBeep: beep, completionBeep: beep, programReminderInterval:  bolusWasAutomaticIndicator)
             session.dosesForStorage() { (doses) -> Bool in
                 return self.store(doses: doses, in: session)
             }
