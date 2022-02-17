@@ -1705,11 +1705,15 @@ extension OmniBLEPumpManager: PumpManager {
                 return
             }
 
-            // Use a maximum programReminderInterval value of 0x3F to denote an automatic bolus in the communication log
-            let programReminderInterval: TimeInterval = automatic ? TimeInterval(minutes: 0x3F) : 0
-
             let beep = self.confirmationBeeps
-            let result = session.bolus(units: enactUnits, acknowledgementBeep: beep, completionBeep: beep, programReminderInterval: programReminderInterval)
+
+            // Use the bits for the program reminder interval (not needed for a bolus command)
+            //
+            // This trick enables determination, from the hex message format of the log file,
+            //   whether this bolus was initiated by the user or automatically by Loop
+            let bolusWasAutomaticIndicator: TimeInterval = automatic ? TimeInterval(minutes: 0x3F) : 0
+
+            let result = session.bolus(units: enactUnits, automatic: automatic, acknowledgementBeep: beep, completionBeep: beep, programReminderInterval:  bolusWasAutomaticIndicator)
             session.dosesForStorage() { (doses) -> Bool in
                 return self.store(doses: doses, in: session)
             }
