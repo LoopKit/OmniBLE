@@ -111,8 +111,7 @@ public struct DetailedStatus : PodInfo, Equatable {
 extension DetailedStatus: CustomDebugStringConvertible {
     public typealias RawValue = Data
     public var debugDescription: String {
-        let possibleFaultCallingAddressString = possibleFaultCallingAddress != nil ? String(format: "0x%04X", possibleFaultCallingAddress!) : "NA"
-        return [
+        var result = [
             "## DetailedStatus",
             "* rawHex: \(data.hexadecimalString)",
             "* podProgressStatus: \(podProgressStatus)",
@@ -121,18 +120,29 @@ extension DetailedStatus: CustomDebugStringConvertible {
             "* lastProgrammingMessageSeqNum: \(lastProgrammingMessageSeqNum)",
             "* totalInsulinDelivered: \(totalInsulinDelivered.twoDecimals) U",
             "* faultEventCode: \(faultEventCode.description)",
-            "* faultEventTimeSinceActivation: \(faultEventTimeSinceActivation?.stringValue ?? "none")",
             "* reservoirLevel: \(reservoirLevel == Pod.reservoirLevelAboveThresholdMagicNumber ? "50+" : reservoirLevel.twoDecimals) U",
             "* timeActive: \(timeActive.stringValue)",
             "* unacknowledgedAlerts: \(unacknowledgedAlerts)",
-            "* faultAccessingTables: \(faultAccessingTables)",
-            "* errorEventInfo: \(errorEventInfo?.description ?? "NA")",
-            "* receiverLowGain: \(receiverLowGain)",
-            "* radioRSSI: \(radioRSSI)",
-            "* previousPodProgressStatus: \(previousPodProgressStatus?.description ?? "NA")",
-            "* possibleFaultCallingAddress: \(possibleFaultCallingAddressString)",
             "",
             ].joined(separator: "\n")
+        if radioRSSI != 0 {
+            result += [
+                "* receiverLowGain: \(receiverLowGain)",
+                "* radioRSSI: \(radioRSSI)",
+                "",
+                ].joined(separator: "\n")
+        }
+        if faultEventCode.faultType != .noFaults {
+            result += [
+                "* faultAccessingTables: \(faultAccessingTables)",
+                "* faultEventTimeSinceActivation: \(faultEventTimeSinceActivation?.stringValue ?? "NA")",
+                "* errorEventInfo: \(errorEventInfo?.description ?? "NA")",
+                "* previousPodProgressStatus: \(previousPodProgressStatus?.description ?? "NA")",
+                "* possibleFaultCallingAddress: \(possibleFaultCallingAddress != nil ? String(format: "0x%04x", possibleFaultCallingAddress!) : "NA")",
+                "",
+                ].joined(separator: "\n")
+        }
+        return result
     }
 }
 
