@@ -16,7 +16,7 @@ extension DetailedStatus {
         var VVV: UInt8 = data[17] // default value, can be changed
         let HH: UInt8 = UInt8(timeActive.hours)
         let III: UInt8 = UInt8(totalInsulinDelivered)
-        let RR : UInt8 = UInt8(self.reservoirLevel) // special 51.15 value used for > 50U will become 51 as needed
+        let RR: UInt8 = UInt8(self.reservoirLevel) // special 51.15 value used for > 50U will become 51 as needed
         var FFF: UInt8 = faultEventCode.rawValue // default value, can be changed
 
         switch faultEventCode.faultType {
