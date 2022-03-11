@@ -225,22 +225,21 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             hostedView.navigationItem.hidesBackButton = true
             return hostedView
         case .setupComplete:
-            guard let expirationReminderDate = pumpManager.scheduledExpirationReminder,
-                  let podExpiresAt = pumpManager.expiresAt,
+            guard let podExpiresAt = pumpManager.expiresAt,
                   let allowedExpirationReminderDates = pumpManager.allowedExpirationReminderDates
             else {
-                fatalError("Cannot show setup complete UI without expiration reminder date.")
+                fatalError("Cannot show setup complete UI without expiration and allowed reminder dates.")
             }
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             formatter.timeStyle = .short
 
             let view = SetupCompleteView(
-                scheduledReminderDate: expirationReminderDate,
+                scheduledReminderDate: pumpManager.scheduledExpirationReminder,
                 dateFormatter: formatter,
                 allowedDates: allowedExpirationReminderDates,
                 onSaveScheduledExpirationReminder: { [weak self] (newExpirationReminderDate, completion) in
-                    let intervalBeforeExpiration = podExpiresAt.timeIntervalSince(newExpirationReminderDate)
+                    let intervalBeforeExpiration = podExpiresAt.timeIntervalSince(newExpirationReminderDate ?? podExpiresAt)
                     self?.pumpManager.updateExpirationReminder(intervalBeforeExpiration, completion: completion)
                 },
                 didFinish: { [weak self] in

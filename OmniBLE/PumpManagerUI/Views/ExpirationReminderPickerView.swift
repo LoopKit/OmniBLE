@@ -13,7 +13,7 @@ import HealthKit
 
 struct ExpirationReminderPickerView: View {
     
-    static let expirationReminderHoursAllowed = 1...24
+    static let expirationReminderHoursAllowed = 0...24
     
     var expirationReminderDefault: Binding<Int>
     
@@ -24,11 +24,7 @@ struct ExpirationReminderPickerView: View {
     var expirationDefaultFormatter = QuantityFormatter(for: .hour())
     
     var expirationDefaultString: String {
-        return expirationValueString(expirationReminderDefault.wrappedValue)
-    }
-    
-    func expirationValueString(_ value: Int) -> String {
-        return expirationDefaultFormatter.string(from: HKQuantity(unit: .hour(), doubleValue: Double(value)), for: .hour())!
+        return expirationReminderHourString(expirationReminderDefault.wrappedValue)
     }
     
     var body: some View {
@@ -49,13 +45,20 @@ struct ExpirationReminderPickerView: View {
             if showingHourPicker {
                 Picker("", selection: expirationReminderDefault) {
                     ForEach(Self.expirationReminderHoursAllowed, id: \.self) { value in
-                        Text(expirationValueString(value))
+                        Text(expirationReminderHourString(value))
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: 100)
                 .clipped()
             }
+        }
+    }
+    
+    private func expirationReminderHourString(_ value: Int) -> String {
+        if value > 0 {
+            return expirationDefaultFormatter.string(from: HKQuantity(unit: .hour(), doubleValue: Double(value)), for: .hour())!
+        } else {
+            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
         }
     }
 }

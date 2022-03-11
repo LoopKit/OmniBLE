@@ -15,18 +15,18 @@ struct SetupCompleteView: View {
     @Environment(\.appName) private var appName
 
     
-    private var onSaveScheduledExpirationReminder: ((_ selectedDate: Date, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
+    private var onSaveScheduledExpirationReminder: ((_ selectedDate: Date?, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
     private var didFinish: () -> Void
     private var didRequestDeactivation: () -> Void
     private var dateFormatter: DateFormatter
 
-    @State private var scheduledReminderDate: Date
+    @State private var scheduledReminderDate: Date?
 
     @State private var scheduleReminderDateEditViewIsShown: Bool = false
 
     var allowedDates: [Date]
 
-    init(scheduledReminderDate: Date, dateFormatter: DateFormatter, allowedDates: [Date], onSaveScheduledExpirationReminder: ((_ selectedDate: Date, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?, didFinish: @escaping () -> Void, didRequestDeactivation: @escaping () -> Void)
+    init(scheduledReminderDate: Date?, dateFormatter: DateFormatter, allowedDates: [Date], onSaveScheduledExpirationReminder: ((_ selectedDate: Date?, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?, didFinish: @escaping () -> Void, didRequestDeactivation: @escaping () -> Void)
     {
         self._scheduledReminderDate = State(initialValue: scheduledReminderDate)
         self.dateFormatter = dateFormatter
@@ -64,7 +64,7 @@ struct SetupCompleteView: View {
                     {
                         RoundedCardValueRow(
                             label: LocalizedString("Time", comment: "Label for expiration reminder row"),
-                            value: dateFormatter.string(from: scheduledReminderDate),
+                            value: scheduledReminderDateString(scheduledReminderDate),
                             highlightValue: false
                         )
                     }
@@ -86,7 +86,16 @@ struct SetupCompleteView: View {
         .animation(.default)
         .navigationBarTitle("Setup Complete", displayMode: .automatic)
     }
+    
+    private func scheduledReminderDateString(_ scheduledDate: Date?) -> String {
+        if let scheduledDate = scheduledDate {
+            return dateFormatter.string(from: scheduledDate)
+        } else {
+            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
+        }
+    }
 }
+
 struct SetupCompleteView_Previews: PreviewProvider {
     static var previews: some View {
         SetupCompleteView(

@@ -25,7 +25,7 @@ struct NotificationSettingsView: View {
     
     var lowReservoirReminderValue: Int
     
-    var onSaveScheduledExpirationReminder: ((_ selectedDate: Date, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
+    var onSaveScheduledExpirationReminder: ((_ selectedDate: Date?, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
     
     var onSaveLowReservoirReminder: ((_ selectedValue: Int, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
     
@@ -40,7 +40,7 @@ struct NotificationSettingsView: View {
                 ExpirationReminderPickerView(expirationReminderDefault: $expirationReminderDefault)
             }
 
-            if let scheduledReminderDate = scheduledReminderDate, let allowedDates = allowedScheduledReminderDates {
+            if let allowedDates = allowedScheduledReminderDates {
                 RoundedCard(
                     footer: LocalizedString("This is a reminder that you scheduled when you paired your current Pod.", comment: "Footer text for scheduled reminder area"))
                 {
@@ -64,9 +64,9 @@ struct NotificationSettingsView: View {
     
     @State private var scheduleReminderDateEditViewIsShown: Bool = false
     
-    private func scheduledReminderRow(scheduledDate: Date, allowedDates: [Date]) -> some View {
+    private func scheduledReminderRow(scheduledDate: Date?, allowedDates: [Date]) -> some View {
         Group {
-            if scheduledDate <= Date() {
+            if let scheduledDate = scheduledDate, scheduledDate <= Date() {
                 scheduledReminderRowContents(disclosure: false)
             } else {
                 NavigationLink(
@@ -87,12 +87,19 @@ struct NotificationSettingsView: View {
     private func scheduledReminderRowContents(disclosure: Bool) -> some View {
         RoundedCardValueRow(
             label: LocalizedString("Time", comment: "Label for scheduled reminder value row"),
-            value: dateFormatter.string(from: scheduledReminderDate ?? Date()),
+            value: scheduledReminderDateString(scheduledReminderDate),
             highlightValue: false,
             disclosure: disclosure
         )
     }
-
+    
+    private func scheduledReminderDateString(_ scheduledDate: Date?) -> String {
+        if let scheduledDate = scheduledDate {
+            return dateFormatter.string(from: scheduledDate)
+        } else {
+            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
+        }
+    }
 
     @State private var lowReservoirReminderEditViewIsShown: Bool = false
 

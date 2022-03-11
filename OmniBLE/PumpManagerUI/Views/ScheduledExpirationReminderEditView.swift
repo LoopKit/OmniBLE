@@ -19,16 +19,16 @@ struct ScheduledExpirationReminderEditView: View {
     
     var allowedDates: [Date]
     var dateFormatter: DateFormatter
-    var onSave: ((_ selectedDate: Date, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
+    var onSave: ((_ selectedDate: Date?, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
     var onFinish: (() -> Void)?
 
     private var initialValue: Date?
     @State private var alertIsPresented: Bool = false
     @State private var error: Error?
     @State private var saving: Bool = false
-    @State private var selectedDate: Date
+    @State private var selectedDate: Date?
 
-    init(scheduledExpirationReminderDate: Date, allowedDates: [Date], dateFormatter: DateFormatter, onSave: ((_ selectedDate: Date, _ completion: @escaping (_ error: Error?) -> Void) -> Void)? = nil, onFinish: (() -> Void)? = nil)
+    init(scheduledExpirationReminderDate: Date?, allowedDates: [Date], dateFormatter: DateFormatter, onSave: ((_ selectedDate: Date?, _ completion: @escaping (_ error: Error?) -> Void) -> Void)? = nil, onFinish: (() -> Void)? = nil)
     {
         self.allowedDates = allowedDates
         self.dateFormatter = dateFormatter
@@ -81,7 +81,7 @@ struct ScheduledExpirationReminderEditView: View {
     var valueRow: some View {
         RoundedCardValueRow(
             label: LocalizedString("Time", comment: "Label for scheduled expiration reminder row"),
-            value: dateFormatter.string(from: selectedDate),
+            value: scheduledReminderDateString(selectedDate),
             highlightValue: true
         )
     }
@@ -89,8 +89,9 @@ struct ScheduledExpirationReminderEditView: View {
     var picker: some View {
         Picker(selection: $selectedDate, label: Text("Numbers")) {
             ForEach(self.allowedDates) { date in
-                Text(dateFormatter.string(from: date))
+                Text(scheduledReminderDateString(date)).tag(date as Date?)
             }
+            Text(scheduledReminderDateString(nil)).tag(nil as Date?)
         }
         .pickerStyle(WheelPickerStyle())
     }
@@ -113,6 +114,14 @@ struct ScheduledExpirationReminderEditView: View {
             } else {
                 self.onFinish?()
             }
+        }
+    }
+    
+    private func scheduledReminderDateString(_ scheduledDate: Date?) -> String {
+        if let scheduledDate = scheduledDate {
+            return dateFormatter.string(from: scheduledDate)
+        } else {
+            return LocalizedString("No Reminder", comment: "Value text for no expiration reminder")
         }
     }
     
