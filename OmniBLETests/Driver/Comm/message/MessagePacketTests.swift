@@ -16,8 +16,8 @@ class MessagePacketTests: XCTestCase {
     func testParseMessagePacket() {
         let msg = try! MessagePacket.parse(payload: Data(hexadecimalString: payloadString)!)
         assert(msg.type == MessageType.ENCRYPTED)
-        assert(msg.source == Id.fromLong(136326824))
-        assert(msg.destination == Id.fromLong(136326825))
+        assert(msg.source == Id.fromInt(136326824))
+        assert(msg.destination == Id.fromInt(136326825))
         assert(msg.sequenceNumber == 7)
         assert(msg.ackNumber == 0)
         assert(msg.eqos == 1)
@@ -36,8 +36,8 @@ class MessagePacketTests: XCTestCase {
     func testSerializeMessagePacket() {
         let payload = Data(hexadecimalString: payloadString)!
         let msg = MessagePacket(type: .ENCRYPTED,
-                                source: Id.fromLong(136326824).toUInt32(),
-                                destination: Id.fromLong(136326825).toUInt32(),
+                                source: Id.fromInt(136326824).toUInt32(),
+                                destination: Id.fromInt(136326825).toUInt32(),
                                 payload: payload,
                                 sequenceNumber: 0,
                                 ack: false, ackNumber: 0,
