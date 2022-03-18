@@ -293,7 +293,7 @@ extension NewPumpEvent {
     init(_ dose: UnfinalizedDose) {
         let title = String(describing: dose)
         let entry = DoseEntry(dose)
-        self.init(date: dose.startTime, dose: entry, isMutable: dose.isMutable(), raw: dose.uniqueKey, title: title)
+        self.init(date: dose.startTime, dose: entry, raw: dose.uniqueKey, title: title)
     }
 }
 
