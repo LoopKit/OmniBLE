@@ -239,7 +239,10 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 dateFormatter: formatter,
                 allowedDates: allowedExpirationReminderDates,
                 onSaveScheduledExpirationReminder: { [weak self] (newExpirationReminderDate, completion) in
-                    let intervalBeforeExpiration = podExpiresAt.timeIntervalSince(newExpirationReminderDate ?? podExpiresAt)
+                    var intervalBeforeExpiration : TimeInterval?
+                    if let newExpirationReminderDate = newExpirationReminderDate {
+                        intervalBeforeExpiration = podExpiresAt.timeIntervalSince(newExpirationReminderDate)
+                    }
                     self?.pumpManager.updateExpirationReminder(intervalBeforeExpiration, completion: completion)
                 },
                 didFinish: { [weak self] in
