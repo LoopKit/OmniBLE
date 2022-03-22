@@ -49,6 +49,7 @@ struct ExpirationReminderPickerView: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
+                .frame(width: 200)
                 .clipped()
             }
         }
