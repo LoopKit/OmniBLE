@@ -1210,27 +1210,27 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     public static var onboardingSupportedBolusVolumes: [Double] {
-        // 0.05 units for rates between 0.05-30U/hr
+        // 0.05 units for rates between 0.05-30U
         // 0 is not a supported bolus volume
         return (1...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
     }
 
     public var supportedBolusVolumes: [Double] {
-        // 0.05 units for rates between 0.05-30U/hr
+        // 0.05 units for rates between 0.05-30U
         // 0 is not a supported bolus volume
         return (1...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
     }
 
     public static var onboardingSupportedBasalRates: [Double] {
-        // 0.05 units for rates between 0.05-30U/hr
-        // 0 U/hr is not a supported scheduled basal rate for Eros, but it is for Dash
-        return (1...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
+        // 0.05 units for rates between 0.00-30U/hr
+        // 0 U/hr is a supported scheduled basal rate for Dash, but not for Eros
+        return (0...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
     }
 
     public var supportedBasalRates: [Double] {
-        // 0.05 units for rates between 0.05-30U/hr
-        // 0 is not a supported scheduled basal rate
-        return (1...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
+        // 0.05 units for rates between 0.00-30U/hr
+        // 0 U/hr is a supported scheduled basal rate for Dash, but not for Eros
+        return (0...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
     }
 
     public func roundToSupportedBolusVolume(units: Double) -> Double {

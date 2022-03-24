@@ -120,7 +120,7 @@ extension DetailedStatus: CustomDebugStringConvertible {
             "* lastProgrammingMessageSeqNum: \(lastProgrammingMessageSeqNum)",
             "* totalInsulinDelivered: \(totalInsulinDelivered.twoDecimals) U",
             "* faultEventCode: \(faultEventCode.description)",
-            "* reservoirLevel: \(reservoirLevel == Pod.reservoirLevelAboveThresholdMagicNumber ? "50+" : reservoirLevel.twoDecimals) U",
+            "* reservoirLevel: \(reservoirLevel > Pod.maximumReservoirReading ? "50+" : reservoirLevel.twoDecimals) U",
             "* timeActive: \(timeActive.stringValue)",
             "* unacknowledgedAlerts: \(unacknowledgedAlerts)",
             "",

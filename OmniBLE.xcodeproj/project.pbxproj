@@ -155,6 +155,17 @@
 		C1F67EDE2797AFF10017487F /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDD2797AFF10017487F /* Image.swift */; };
 		C1F67EE02797B1EF0017487F /* OmniBLEHUDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */; };
 		C1F67EE227985F580017487F /* ReservoirLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67EE127985F580017487F /* ReservoirLevel.swift */; };
+		D800CF1927E682E90090EADB /* ZeroBasalScheduleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800CF1827E682E90090EADB /* ZeroBasalScheduleTest.swift */; };
+		D802CCFC27DD97210072E3A1 /* AcknowledgeAlertsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CCFB27DD97210072E3A1 /* AcknowledgeAlertsTests.swift */; };
+		D802CCFE27DD98AF0072E3A1 /* BolusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CCFD27DD98AF0072E3A1 /* BolusTests.swift */; };
+		D802CD0027DD98B80072E3A1 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CCFF27DD98B80072E3A1 /* MessageTests.swift */; };
+		D802CD0627DD98C10072E3A1 /* PodInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0127DD98C10072E3A1 /* PodInfoTests.swift */; };
+		D802CD0727DD98C10072E3A1 /* PodStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0227DD98C10072E3A1 /* PodStateTests.swift */; };
+		D802CD0827DD98C10072E3A1 /* StatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0327DD98C10072E3A1 /* StatusTests.swift */; };
+		D802CD0927DD98C10072E3A1 /* PodCommsSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0427DD98C10072E3A1 /* PodCommsSessionTests.swift */; };
+		D802CD0A27DD98C10072E3A1 /* TempBasalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0527DD98C10072E3A1 /* TempBasalTests.swift */; };
+		D802CD1027DD99AB0072E3A1 /* CRC16Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */; };
+		D802CD1227DD9AE10072E3A1 /* BasalScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */; };
 		D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */; };
 		D895BF5B275DE64000D51FC7 /* StringLengthPrefixEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */; };
 /* End PBXBuildFile section */
@@ -341,6 +352,17 @@
 		C1F67EDD2797AFF10017487F /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C1F67EDF2797B1EF0017487F /* OmniBLEHUDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBLEHUDProvider.swift; sourceTree = "<group>"; };
 		C1F67EE127985F580017487F /* ReservoirLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservoirLevel.swift; sourceTree = "<group>"; };
+		D800CF1827E682E90090EADB /* ZeroBasalScheduleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroBasalScheduleTest.swift; sourceTree = "<group>"; };
+		D802CCFB27DD97210072E3A1 /* AcknowledgeAlertsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgeAlertsTests.swift; sourceTree = "<group>"; };
+		D802CCFD27DD98AF0072E3A1 /* BolusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusTests.swift; sourceTree = "<group>"; };
+		D802CCFF27DD98B80072E3A1 /* MessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
+		D802CD0127DD98C10072E3A1 /* PodInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodInfoTests.swift; sourceTree = "<group>"; };
+		D802CD0227DD98C10072E3A1 /* PodStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodStateTests.swift; sourceTree = "<group>"; };
+		D802CD0327DD98C10072E3A1 /* StatusTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusTests.swift; sourceTree = "<group>"; };
+		D802CD0427DD98C10072E3A1 /* PodCommsSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodCommsSessionTests.swift; sourceTree = "<group>"; };
+		D802CD0527DD98C10072E3A1 /* TempBasalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempBasalTests.swift; sourceTree = "<group>"; };
+		D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRC16Tests.swift; sourceTree = "<group>"; };
+		D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasalScheduleTests.swift; sourceTree = "<group>"; };
 		D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedStatus+OmniBLE.swift"; sourceTree = "<group>"; };
 		D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringLengthPrefixEncoding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -420,31 +442,31 @@
 		10389A0326FF7841002115E9 /* MessageBlocks */ = {
 			isa = PBXGroup;
 			children = (
-				10389A0426FF7841002115E9 /* PodInfoPulseLog.swift */,
-				10389A0526FF7841002115E9 /* VersionResponse.swift */,
-				10389A0626FF7841002115E9 /* PodInfoActivationTime.swift */,
-				10389A0726FF7841002115E9 /* TempBasalExtraCommand.swift */,
+				10389A0926FF7841002115E9 /* AcknowledgeAlertCommand.swift */,
+				10389A1526FF7841002115E9 /* AssignAddressCommand.swift */,
+				10389A1326FF7841002115E9 /* BasalScheduleExtraCommand.swift */,
+				10389A1626FF7841002115E9 /* BeepConfigCommand.swift */,
+				10389A0E26FF7841002115E9 /* BolusExtraCommand.swift */,
+				10389A1426FF7841002115E9 /* CancelDeliveryCommand.swift */,
+				10389A1C26FF7841002115E9 /* ConfigureAlertsCommand.swift */,
 				10389A0826FF7841002115E9 /* DeactivatePodCommand.swift */,
 				10389A1926FF7841002115E9 /* DetailedStatus.swift */,
-				10389A0926FF7841002115E9 /* AcknowledgeAlertCommand.swift */,
-				10389A0A26FF7841002115E9 /* PodInfoConfiguredAlerts.swift */,
+				10389A1726FF7841002115E9 /* ErrorResponse.swift */,
+				10389A0F26FF7841002115E9 /* FaultConfigCommand.swift */,
+				10389A1226FF7841002115E9 /* GetStatusCommand.swift */,
 				10389A0B26FF7841002115E9 /* MessageBlock.swift */,
 				10389A0C26FF7841002115E9 /* PlaceholderMessageBlock.swift */,
 				10389A0D26FF7841002115E9 /* PodInfo.swift */,
-				10389A0E26FF7841002115E9 /* BolusExtraCommand.swift */,
-				10389A0F26FF7841002115E9 /* FaultConfigCommand.swift */,
+				10389A0626FF7841002115E9 /* PodInfoActivationTime.swift */,
+				10389A0A26FF7841002115E9 /* PodInfoConfiguredAlerts.swift */,
+				10389A0426FF7841002115E9 /* PodInfoPulseLog.swift */,
 				10389A1026FF7841002115E9 /* PodInfoPulseLogPlus.swift */,
-				10389A1126FF7841002115E9 /* StatusResponse.swift */,
-				10389A1226FF7841002115E9 /* GetStatusCommand.swift */,
-				10389A1326FF7841002115E9 /* BasalScheduleExtraCommand.swift */,
-				10389A1426FF7841002115E9 /* CancelDeliveryCommand.swift */,
-				10389A1526FF7841002115E9 /* AssignAddressCommand.swift */,
-				10389A1626FF7841002115E9 /* BeepConfigCommand.swift */,
-				10389A1726FF7841002115E9 /* ErrorResponse.swift */,
-				10389A1826FF7841002115E9 /* SetupPodCommand.swift */,
 				10389A1A26FF7841002115E9 /* PodInfoResponse.swift */,
 				10389A1B26FF7841002115E9 /* SetInsulinScheduleCommand.swift */,
-				10389A1C26FF7841002115E9 /* ConfigureAlertsCommand.swift */,
+				10389A1826FF7841002115E9 /* SetupPodCommand.swift */,
+				10389A1126FF7841002115E9 /* StatusResponse.swift */,
+				10389A0726FF7841002115E9 /* TempBasalExtraCommand.swift */,
+				10389A0526FF7841002115E9 /* VersionResponse.swift */,
 			);
 			path = MessageBlocks;
 			sourceTree = "<group>";
@@ -488,11 +510,22 @@
 		84752E8F26ED0FFE009FD801 /* OmniBLETests */ = {
 			isa = PBXGroup;
 			children = (
-				C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */,
+				D802CCFB27DD97210072E3A1 /* AcknowledgeAlertsTests.swift */,
+				D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */,
+				D802CCFD27DD98AF0072E3A1 /* BolusTests.swift */,
+				D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */,
 				A9D054CE2765131300FAFEFB /* Driver */,
 				A9D054CA2764FC8200FAFEFB /* HexConversionTests.swift */,
-				A9D054D427651D2400FAFEFB /* TestUtilities.swift */,
 				84752E9226ED0FFE009FD801 /* Info.plist */,
+				D802CCFF27DD98B80072E3A1 /* MessageTests.swift */,
+				C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */,
+				D802CD0427DD98C10072E3A1 /* PodCommsSessionTests.swift */,
+				D802CD0127DD98C10072E3A1 /* PodInfoTests.swift */,
+				D802CD0227DD98C10072E3A1 /* PodStateTests.swift */,
+				D802CD0327DD98C10072E3A1 /* StatusTests.swift */,
+				D802CD0527DD98C10072E3A1 /* TempBasalTests.swift */,
+				A9D054D427651D2400FAFEFB /* TestUtilities.swift */,
+				D800CF1827E682E90090EADB /* ZeroBasalScheduleTest.swift */,
 			);
 			path = OmniBLETests;
 			sourceTree = "<group>";
@@ -1050,15 +1083,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9A5BCF6276C1E6D00B02C86 /* MessagePacketTests.swift in Sources */,
+				D802CCFC27DD97210072E3A1 /* AcknowledgeAlertsTests.swift in Sources */,
 				A9A5BCF1276C1E5F00B02C86 /* EnDecryptTests.swift in Sources */,
+				D802CD0927DD98C10072E3A1 /* PodCommsSessionTests.swift in Sources */,
+				D802CD0827DD98C10072E3A1 /* StatusTests.swift in Sources */,
 				C10D6D6C27A2393800F53D58 /* OmniBLETests.swift in Sources */,
 				A9A5BCF2276C1E6D00B02C86 /* PayloadSplitterTest.swift in Sources */,
+				D802CD0A27DD98C10072E3A1 /* TempBasalTests.swift in Sources */,
 				A9A5BCEF276C1E2D00B02C86 /* TestUtilities.swift in Sources */,
 				A9A5BCF0276C1E2D00B02C86 /* HexConversionTests.swift in Sources */,
+				D802CD1227DD9AE10072E3A1 /* BasalScheduleTests.swift in Sources */,
+				D802CD0627DD98C10072E3A1 /* PodInfoTests.swift in Sources */,
+				D800CF1927E682E90090EADB /* ZeroBasalScheduleTest.swift in Sources */,
+				D802CD0727DD98C10072E3A1 /* PodStateTests.swift in Sources */,
 				A9A5BCF4276C1E6D00B02C86 /* PayloadJoinerTest.swift in Sources */,
 				A9A5BCF3276C1E6D00B02C86 /* StringLengthPrefixEncodingTests.swift in Sources */,
+				D802CD0027DD98B80072E3A1 /* MessageTests.swift in Sources */,
 				A9A5BCF7276C1E7000B02C86 /* KeyExchangeTests.swift in Sources */,
+				D802CD1027DD99AB0072E3A1 /* CRC16Tests.swift in Sources */,
 				A9A5BCF5276C1E6D00B02C86 /* PayloadSplitJoinTests.swift in Sources */,
+				D802CCFE27DD98AF0072E3A1 /* BolusTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
