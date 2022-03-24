@@ -1901,6 +1901,9 @@ extension OmniBLEPumpManager: PumpManager {
         case .podSuspendedReminder:
             return PumpManagerAlert.suspendInProgress(triggeringSlot: slot)
         case .expirationReminder:
+            guard let offset = state.scheduledExpirationReminderOffset, offset > 0 else {
+                return nil
+            }
             let timeToExpiry = TimeInterval(hours: expiresAt.timeIntervalSince(dateGenerator()).hours.rounded())
             return PumpManagerAlert.userPodExpiration(triggeringSlot: slot, scheduledExpirationReminderOffset: timeToExpiry)
         case .expired:

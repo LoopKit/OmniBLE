@@ -186,7 +186,7 @@ extension PumpManagerAlert: RawRepresentable {
         case "multiCommand":
             self = .multiCommand(triggeringSlot: slot)
         case "userPodExpiration":
-            guard let offset = rawValue["offset"] as? TimeInterval else {
+            guard let offset = rawValue["offset"] as? TimeInterval, offset > 0 else {
                 return nil
             }
             self = .userPodExpiration(triggeringSlot: slot, scheduledExpirationReminderOffset: offset)
