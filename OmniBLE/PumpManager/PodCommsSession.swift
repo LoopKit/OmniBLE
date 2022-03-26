@@ -503,7 +503,7 @@ public class PodCommsSession {
             return DeliveryCommandResult.success(statusResponse: statusResponse)
         } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
             podState.pendingCommand = PendingCommand.program(.bolus(volume: units, automatic: automatic), seq, startTime)
-            log.debug("Unacknowledged bolus: command seq = %d", seq)
+            log.error("Unacknowledged bolus: command seq = %d, error = %{public}@", seq, String(describing: error))
             return DeliveryCommandResult.unacknowledged(error: .commsError(error: error))
         } catch let error {
             return DeliveryCommandResult.certainFailure(error: .commsError(error: error))
@@ -630,7 +630,7 @@ public class PodCommsSession {
 
         } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
             podState.pendingCommand = PendingCommand.stopProgram(.all, seq, Date())
-            log.debug("Unacknowledged suspend: command seq = %d", seq)
+            log.error("Unacknowledged suspend: command seq = %d, error = %{public}@", seq, String(describing: error))
             return .unacknowledged(error: .commsError(error: error))
         } catch let error {
             return .certainFailure(error: .commsError(error: error))
