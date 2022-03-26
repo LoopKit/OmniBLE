@@ -532,7 +532,7 @@ public class PodCommsSession {
             return DeliveryCommandResult.success(statusResponse: status)
         } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
             podState.pendingCommand = PendingCommand.program(.tempBasal(unitsPerHour: rate, duration: duration, isHighTemp: isHighTemp), seq, startTime)
-            log.debug("Unacknowledged temp basal: command seq = %d", seq)
+            log.error("Unacknowledged temp basal: command seq = %d, error = %{public}@", seq, String(describing: error))
             return DeliveryCommandResult.unacknowledged(error: .commsError(error: error))
         } catch let error {
             return DeliveryCommandResult.certainFailure(error: .commsError(error: error))
@@ -630,7 +630,7 @@ public class PodCommsSession {
 
         } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
             podState.pendingCommand = PendingCommand.stopProgram(.all, seq, Date())
-            log.debug("Unacknowledged temp basal: command seq = %d", seq)
+            log.debug("Unacknowledged suspend: command seq = %d", seq)
             return .unacknowledged(error: .commsError(error: error))
         } catch let error {
             return .certainFailure(error: .commsError(error: error))

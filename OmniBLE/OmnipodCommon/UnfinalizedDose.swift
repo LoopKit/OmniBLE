@@ -301,9 +301,28 @@ extension DoseEntry {
     init (_ dose: UnfinalizedDose) {
         switch dose.doseType {
         case .bolus:
-            self = DoseEntry(type: .bolus, startDate: dose.startTime, endDate: dose.finishTime, value: dose.scheduledUnits ?? dose.units, unit: .units, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType, automatic: dose.automatic)
+            self = DoseEntry(
+                type: .bolus,
+                startDate: dose.startTime,
+                endDate: dose.finishTime,
+                value: dose.scheduledUnits ?? dose.units,
+                unit: .units,
+                deliveredUnits: dose.finalizedUnits,
+                insulinType: dose.insulinType,
+                automatic: dose.automatic,
+                isMutable: dose.isMutable()
+            )
         case .tempBasal:
-            self = DoseEntry(type: .tempBasal, startDate: dose.startTime, endDate: dose.finishTime, value: dose.scheduledTempRate ?? dose.rate, unit: .unitsPerHour, deliveredUnits: dose.finalizedUnits, insulinType: dose.insulinType)
+            self = DoseEntry(
+                type: .tempBasal,
+                startDate: dose.startTime,
+                endDate: dose.finishTime,
+                value: dose.scheduledTempRate ?? dose.rate,
+                unit: .unitsPerHour,
+                deliveredUnits: dose.finalizedUnits,
+                insulinType: dose.insulinType,
+                isMutable: dose.isMutable()
+            )
         case .suspend:
             self = DoseEntry(suspendDate: dose.startTime)
         case .resume:
