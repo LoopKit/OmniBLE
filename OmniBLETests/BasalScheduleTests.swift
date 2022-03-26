@@ -415,6 +415,36 @@ class BasalScheduleTests: XCTestCase {
         XCTAssertEqual("1a2af36a23a3000291030ae80000000d280000111809700a180610052806100600072806001128100009e808", cmd1.data.hexadecimalString)
     }
 
+    func test723ScheduleImport() {
+        let entries = [
+            BasalScheduleEntry(rate:  0.0, startTime: 0),
+            BasalScheduleEntry(rate:  0.03, startTime: .hours(0.5)),
+            BasalScheduleEntry(rate:  0.075, startTime: .hours(1.5)),
+            BasalScheduleEntry(rate:  0.0, startTime: .hours(3.5)),
+            BasalScheduleEntry(rate:  0.25, startTime: .hours(4.0)),
+            BasalScheduleEntry(rate:  0.725, startTime: .hours(6.0)),
+            BasalScheduleEntry(rate:  0.78, startTime: .hours(7.5)),
+            ]
+
+        let schedule = BasalSchedule(entries: entries)
+
+        //      1a LL NNNNNNNN 00 CCCC HH SSSS PPPP napp napp napp napp napp napp napp napp
+        // PDM: 1a 1c 494e532e 00 0212 2f 0ac0 0001 3000 0001 2800 3802 3007 0008 f807 e807
+
+        let hh       = 0x2f
+        let ssss     = 0x0ac0
+        let offset = TimeInterval(minutes: Double((hh + 1) * 30)) - TimeInterval(seconds: Double(ssss / 8))
+
+        let cmd1 = SetInsulinScheduleCommand(nonce: 0x494e532e, basalSchedule: schedule, scheduleOffset: offset)
+        XCTAssertEqual("1a1c494e532e0002122f0ac00001300000012800380230070008f807e807", cmd1.data.hexadecimalString)
+
+        //      13 LL RR MM NNNN XXXXXXXX YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ YYYY ZZZZZZZZ
+        // PDM: 13 2c 00 05 000f 007a1200 0003 eb49d200 0014 15752a00 0001 eb49d200 0064 044aa200 00d2 01885e6d 09ab 016e3600
+
+        let cmd2 = BasalScheduleExtraCommand(schedule: schedule, scheduleOffset: offset, acknowledgementBeep: false, completionBeep: false, programReminderInterval: 0)
+        checkBasalScheduleExtraCommandDataWithLessPrecision(Data(hexadecimalString: "132c0005000f007a12000003eb49d200001415752a000001eb49d2000064044aa20000d201885e6d09ab016e3600")!, cmd2.data)
+    }
+
     func testBasalScheduleExtraCommandRoundsToNearestSecond() {
         let schedule = BasalSchedule(entries: [BasalScheduleEntry(rate: 1.0, startTime: 0)])
         
