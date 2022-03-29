@@ -865,16 +865,11 @@ public class PodCommsSession {
             }
         }
 
-        // if faulted read the most recent pulse log entries
+        // Try to read the most recent pulse log entries for possible later analysis
+        _ = try? readPodInfo(podInfoResponseSubType: .pulseLogRecent)
         if podState.fault != nil {
-            // All the dosing cleanup from the fault should have already been
-            // handled in handlePodFault() when podState.fault was initialized.
-            do {
-                // read the most recent pulse log entries for later analysis, but don't throw on error
-                try readPodInfo(podInfoResponseSubType: .pulseLogRecent)
-            } catch let error {
-                log.error("Read pulse log failed: %@", String(describing: error))
-            }
+            // Try to read the previous pulse log entries on the faulted pod
+            _ = try? readPodInfo(podInfoResponseSubType: .pulseLogPrevious)
         }
 
         do {
