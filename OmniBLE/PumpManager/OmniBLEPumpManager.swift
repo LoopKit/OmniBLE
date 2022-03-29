@@ -224,10 +224,7 @@ public class OmniBLEPumpManager: DeviceManager {
     }
 
     private func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
-        var podAddress = "noPod"
-        if let podState = self.state.podState {
-            podAddress = String(format:"%04X", podState.address)
-        }
+        let podAddress = String(format: "%04X", self.state.podId)
         self.pumpDelegate.notify { (delegate) in
             delegate?.deviceManager(self, logEventForDeviceIdentifier: podAddress, type: type, message: message, completion: nil)
         }
