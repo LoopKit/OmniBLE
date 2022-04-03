@@ -668,6 +668,7 @@ extension OmniBLEPumpManager {
                     if error != nil {
                         state.unstoredDoses.append(contentsOf: dosesToStore)
                     }
+                    state.alertsWithPendingAcknowledgment = []
                 })
                 self.prepForNewPod()
                 completion()
@@ -1444,6 +1445,7 @@ extension OmniBLEPumpManager: PumpManager {
         case false?:
             log.default("Skipping status update because pumpData is fresh")
             completion?(self.lastSync)
+            silenceAcknowledgedAlerts()
         }
     }
 
@@ -1922,7 +1924,8 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     private func silenceAcknowledgedAlerts() {
-        for alert in state.alertsWithPendingAcknowledgment {
+        // Only attempt to clear one per cycle (more than one should be rare)
+        if let alert = state.alertsWithPendingAcknowledgment.first {
             if let slot = alert.triggeringSlot {
                 self.podComms.runSession(withName: "Silence already acknowledged alert") { (result) in
                     switch result {
@@ -1934,6 +1937,7 @@ extension OmniBLEPumpManager: PumpManager {
                         }
                         self.mutateState { state in
                             state.activeAlerts.remove(alert)
+                            state.alertsWithPendingAcknowledgment.remove(alert)
                         }
                     case .failure:
                         return
