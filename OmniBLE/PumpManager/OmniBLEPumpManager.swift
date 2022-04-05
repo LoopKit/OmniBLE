@@ -1101,10 +1101,9 @@ extension OmniBLEPumpManager {
         self.podComms.runSession(withName: "Play Test Beeps") { (result) in
             switch result {
             case .success(let session):
-                let basalCompletionBeep = self.beepPreference.shouldBeepForManualCommand
-                let tempBasalCompletionBeep = false
-                let bolusCompletionBeep = self.beepPreference.shouldBeepForManualCommand
-                let result = session.beepConfig(beepConfigType: .bipBeepBipBeepBipBeepBipBeep, basalCompletionBeep: basalCompletionBeep, tempBasalCompletionBeep: tempBasalCompletionBeep, bolusCompletionBeep: bolusCompletionBeep)
+                let beep = self.beepPreference.shouldBeepForManualCommand
+                let result = session.beepConfig(beepConfigType: .bipBeepBipBeepBipBeepBipBeep,
+                  basalCompletionBeep: beep, tempBasalCompletionBeep: beep, bolusCompletionBeep: beep)
 
                 switch result {
                 case .success:
@@ -1169,12 +1168,11 @@ extension OmniBLEPumpManager {
             switch result {
             case .success(let session):
                 let beepConfigType: BeepConfigType = newPreference.shouldBeepForManualCommand ? .bipBip : .noBeep
-                let basalCompletionBeep = newPreference.shouldBeepForManualCommand
-                let tempBasalCompletionBeep = false
-                let bolusCompletionBeep = newPreference.shouldBeepForManualCommand
+                let enabled = newPreference.shouldBeepForManualCommand
 
                 // enable/disable Pod completion beeps for any in-progress insulin delivery
-                let result = session.beepConfig(beepConfigType: beepConfigType, basalCompletionBeep: basalCompletionBeep, tempBasalCompletionBeep: tempBasalCompletionBeep, bolusCompletionBeep: bolusCompletionBeep)
+                let result = session.beepConfig(beepConfigType: beepConfigType,
+                  basalCompletionBeep: enabled, tempBasalCompletionBeep: enabled, bolusCompletionBeep: enabled)
 
                 switch result {
                 case .success:
@@ -1591,7 +1589,7 @@ extension OmniBLEPumpManager: PumpManager {
         }
     }
 
-    public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+    public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, automatic: Bool, completion: @escaping (PumpManagerError?) -> Void) {
         guard self.hasActivePod else {
             completion(.deviceState(OmniBLEPumpManagerError.noPodPaired))
             return
@@ -1625,8 +1623,8 @@ extension OmniBLEPumpManager: PumpManager {
                 let status: StatusResponse
 
                 // if resuming a normal basal as denoted by a 0 duration temp basal, use a confirmation beep if appropriate
-                //let beep: BeepType = duration < .ulpOfOne && self.confirmationBeeps && tempBasalConfirmationBeeps ? .beep : .noBeep
-                let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: .noBeep)
+                let beep: BeepType = duration < .ulpOfOne && self.beepPreference.shouldBeepForManualCommand && !automatic ? .beep : .noBeep
+                let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: beep)
                 switch result {
                 case .certainFailure(let error):
                     throw error
@@ -1670,7 +1668,8 @@ extension OmniBLEPumpManager: PumpManager {
                     let scheduledRate = self.state.basalSchedule.currentRate(using: calendar, at: self.dateGenerator())
                     let isHighTemp = rate > scheduledRate
 
-                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, acknowledgementBeep: false, completionBeep: false)
+                    let beep = self.beepPreference.shouldBeepForManualCommand && !automatic
+                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, acknowledgementBeep: beep, completionBeep: beep, automatic: automatic)
                     session.dosesForStorage() { (doses) -> Bool in
                         return self.store(doses: doses, in: session)
                     }

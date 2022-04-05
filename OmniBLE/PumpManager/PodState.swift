@@ -242,7 +242,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
                     }
                 case .tempBasal:
                     // Assume a high temp succeeded, but low temp failed
-                    if case .tempBasal(_, _, let isHighTemp) = program, isHighTemp {
+                    if case .tempBasal(_, _, let isHighTemp, _) = program, isHighTemp {
                         if dose.isFinished() {
                             finalizedDoses.append(dose)
                         } else {

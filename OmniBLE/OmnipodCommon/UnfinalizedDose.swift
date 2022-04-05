@@ -101,7 +101,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         return units
     }
 
-    init(bolusAmount: Double, startTime: Date, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType, automatic: Bool = false) {
+    init(bolusAmount: Double, startTime: Date, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType, automatic: Bool) {
         self.doseType = .bolus
         self.units = bolusAmount
         self.startTime = startTime
@@ -112,14 +112,14 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.insulinType = insulinType
     }
     
-    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, isHighTemp: Bool, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType) {
+    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, isHighTemp: Bool, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType, automatic: Bool) {
         self.doseType = .tempBasal
         self.units = tempBasalRate * duration.hours
         self.startTime = startTime
         self.duration = duration
         self.scheduledCertainty = scheduledCertainty
         self.scheduledUnits = nil
-        self.automatic = true
+        self.automatic = automatic
         self.isHighTemp = isHighTemp
         self.insulinType = insulinType
     }
@@ -321,6 +321,7 @@ extension DoseEntry {
                 unit: .unitsPerHour,
                 deliveredUnits: dose.finalizedUnits,
                 insulinType: dose.insulinType,
+                automatic: dose.automatic,
                 isMutable: dose.isMutable()
             )
         case .suspend:
@@ -336,8 +337,8 @@ extension StartProgram {
         switch self {
         case .bolus(volume: let volume, automatic: let automatic):
             return UnfinalizedDose(bolusAmount: volume, startTime: programDate, scheduledCertainty: certainty, insulinType: insulinType, automatic: automatic)
-        case .tempBasal(unitsPerHour: let rate, duration: let duration, let isHighTemp):
-            return UnfinalizedDose(tempBasalRate: rate, startTime: programDate, duration: duration, isHighTemp: isHighTemp, scheduledCertainty: certainty, insulinType: insulinType)
+        case .tempBasal(unitsPerHour: let rate, duration: let duration, let isHighTemp, let automatic):
+            return UnfinalizedDose(tempBasalRate: rate, startTime: programDate, duration: duration, isHighTemp: isHighTemp, scheduledCertainty: certainty, insulinType: insulinType, automatic: automatic)
         case .basalProgram:
             return UnfinalizedDose(resumeStartTime: programDate, scheduledCertainty: certainty, insulinType: insulinType)
         }
