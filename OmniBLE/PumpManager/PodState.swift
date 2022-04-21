@@ -166,12 +166,12 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     }
     
     public var currentNonce: UInt32 {
-        let fixedNonceValue: UInt32 = 0x494E532E // Dash uses a fixed value for pod nonce
-        return fixedNonceValue // not clear if the actual value even matters
+        let fixedNonceValue: UInt32 = 0x494E532E // Dash pods requires this particular fixed value
+        return fixedNonceValue
     }
     
     public mutating func resyncNonce(syncWord: UInt16, sentNonce: UInt32, messageSequenceNum: Int) {
-        assert(false) // XXX ?should never be called for Dash?
+        print("resyncNonce() called!") // Should never be called for Dash!
     }
     
     private mutating func updatePodTimes(timeActive: TimeInterval) -> Date {
