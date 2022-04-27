@@ -1971,8 +1971,7 @@ extension OmniBLEPumpManager: PumpManager {
                     switch result {
                     case .success(let session):
                         do {
-                            let beepBlock = self.beepMessageBlock(beepType: .beep)
-                            let _ = try session.acknowledgePodAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
+                            let _ = try session.acknowledgePodAlerts(alerts: AlertSet(slots: [slot]))
                         } catch {
                             return
                         }
