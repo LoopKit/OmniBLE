@@ -450,8 +450,9 @@ extension OmniBLEPumpManager {
     }
 
     private var shouldWarnPodEOL: Bool {
+        let eolDisplayActiveTime = Pod.timeRemainingWarningThreshold + defaultExpirationReminderOffset
         guard let podTimeRemaining = podTimeRemaining,
-              podTimeRemaining > 0 && podTimeRemaining <= Pod.timeRemainingWarningThreshold else
+              podTimeRemaining > 0 && podTimeRemaining <= eolDisplayActiveTime else
         {
             return false
         }
