@@ -18,7 +18,9 @@ struct OmniBLESettingsView: View  {
     @State private var showingDeleteConfirmation = false
     
     @State private var showSuspendOptions = false;
-    
+
+    @State private var showManualTempBasalOptions = false;
+
     @State private var showSyncTimeOptions = false;
 
     @State private var sendingTestBeepsCommand = false;
@@ -188,6 +190,23 @@ struct OmniBLESettingsView: View  {
         }
     }
 
+    var manualTempBasalRow: some View {
+        Button(action: {
+            self.manualTempTapped()
+        }) {
+            Text("Set Temporary Basal Rate")
+        }
+        .sheet(isPresented: $showManualTempBasalOptions) {
+            ManualTempBasalEntryView(
+                enactBasal: { rate, duration, completion in
+                    completion(OmniBLEPumpManagerError.noPodPaired)
+                }, didCancel: {
+                    showManualTempBasalOptions = false
+                })
+        }
+    }
+
+
     func suspendResumeRow() -> some View {
         HStack {
             Button(action: {
@@ -283,6 +302,7 @@ struct OmniBLESettingsView: View  {
                             .foregroundColor(Color.secondary)
                     }
                 }
+                manualTempBasalRow
             }
             
             Section() {
@@ -450,7 +470,7 @@ struct OmniBLESettingsView: View  {
                 .cancel()
             ])
     }
-    
+
     func suspendResumeTapped() {
         switch self.viewModel.basalDeliveryState {
         case .active, .tempBasal:
@@ -461,6 +481,11 @@ struct OmniBLESettingsView: View  {
             break
         }
     }
+
+    func manualTempTapped() {
+        showManualTempBasalOptions = true
+    }
+
     
     private func errorText(_ error: Error) -> String {
         if let error = error as? LocalizedError {

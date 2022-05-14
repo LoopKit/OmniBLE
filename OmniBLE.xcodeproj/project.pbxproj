@@ -117,6 +117,7 @@
 		C1D27A1527908DC600C41EBA /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84752E8226ED0FFE009FD801 /* OmniBLE.framework */; };
 		C1D27A1727908DE500C41EBA /* OmniBLE.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84752E8226ED0FFE009FD801 /* OmniBLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1D27A1B27911E9900C41EBA /* PodAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */; };
+		C1DBD513282FF79D009FCF74 /* ManualTempBasalEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */; };
 		C1ED1E7027BAE1A600FED71C /* BeepPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */; };
 		C1ED1E7227BAE44E00FED71C /* BeepPreferenceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */; };
 		C1F67E8B27975B830017487F /* AttachPodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7327975B830017487F /* AttachPodView.swift */; };
@@ -314,6 +315,7 @@
 		C1C001C227A2351D00533D35 /* OmniBLEReservoirView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmniBLEReservoirView.xib; sourceTree = "<group>"; };
 		C1C001C327A2351D00533D35 /* OmniBLEReservoirView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEReservoirView.swift; sourceTree = "<group>"; };
 		C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodAdvertisement.swift; sourceTree = "<group>"; };
+		C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualTempBasalEntryView.swift; sourceTree = "<group>"; };
 		C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeepPreference.swift; sourceTree = "<group>"; };
 		C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeepPreferenceSelectionView.swift; sourceTree = "<group>"; };
 		C1F67E7327975B830017487F /* AttachPodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachPodView.swift; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				8475312426ED838A009FD801 /* PodLifeHUDView.xib */,
 				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
 				C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */,
+				C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				10289E7B2739F886000339E6 /* EapMessage.swift in Sources */,
 				C1C001C127A2349D00533D35 /* OmniBLE.swift in Sources */,
 				10389A3326FF7841002115E9 /* CancelDeliveryCommand.swift in Sources */,
+				C1DBD513282FF79D009FCF74 /* ManualTempBasalEntryView.swift in Sources */,
 				10389A2426FF7841002115E9 /* VersionResponse.swift in Sources */,
 				C1F67EA027975B830017487F /* PodSetupView.swift in Sources */,
 				C1ED1E7027BAE1A600FED71C /* BeepPreference.swift in Sources */,
