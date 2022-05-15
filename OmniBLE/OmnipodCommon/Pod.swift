@@ -68,6 +68,9 @@ public struct Pod {
     // Minimum duration of a single basal schedule entry
     public static let minimumBasalScheduleEntryDuration = TimeInterval.minutes(30)
 
+    // Supported temp basal durations (30m to 12h)
+    public static let supportedTempBasalDurations: [TimeInterval] = (1...24).map { Double($0) * TimeInterval(minutes: 30) }
+
     // Default amount for priming bolus using secondsPerPrimePulse timing.
     // Checked to verify it agrees with value returned by pod during the pairing process.
     public static let primeUnits = 2.6

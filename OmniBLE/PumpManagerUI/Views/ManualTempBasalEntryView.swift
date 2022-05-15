@@ -15,15 +15,29 @@ struct ManualTempBasalEntryView: View {
 
     @Environment(\.guidanceColors) var guidanceColors
 
+    var enactBasal: ((Double,TimeInterval,@escaping (Error?)->Void) -> Void)?
+    var didCancel: (() -> Void)?
+
     @State private var rateEntered: Double = 0.0
-    @State private var durationEntered: TimeInterval = 0.5
+    @State private var durationEntered: TimeInterval = .hours(0.5)
     @State private var showPicker: Bool = false
     @State private var error: Error?
     @State private var enacting: Bool = false
-    @State private var showingAlert: Bool = false
+    @State private var showingErrorAlert: Bool = false
+    @State private var showingMissingConfigAlert: Bool = false
 
-    var enactBasal: ((Double,TimeInterval,@escaping (Error?)->Void) -> Void)?
-    var didCancel: (() -> Void)?
+    var allowedRates: [Double]
+
+    init(enactBasal: ((Double,TimeInterval,@escaping (Error?)->Void) -> Void)? = nil, didCancel: (() -> Void)? = nil, allowedRates: [Double]) {
+        self.enactBasal = enactBasal
+        self.didCancel = didCancel
+        self.allowedRates = allowedRates
+        // This is to handle the temporary situation of devs/testers migrating from OmniBLEPumpManagerState with no
+        // max temp basal set
+        if allowedRates.count == 1 && allowedRates[0] == 0.0 {
+            _showingMissingConfigAlert = State(initialValue: true)
+        }
+    }
 
     private static let rateFormatter: QuantityFormatter = {
         let quantityFormatter = QuantityFormatter()
@@ -58,27 +72,28 @@ struct ManualTempBasalEntryView: View {
 
     func formatDuration(_ duration: TimeInterval) -> String {
         let unit = HKUnit.hour()
-        return ManualTempBasalEntryView.durationFormatter.string(from: HKQuantity(unit: unit, doubleValue: duration), for: unit) ?? ""
+        return ManualTempBasalEntryView.durationFormatter.string(from: HKQuantity(unit: unit, doubleValue: duration.hours), for: unit) ?? ""
     }
-
-    var supportedDurations: [TimeInterval] = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6]
 
     var body: some View {
         NavigationView {
             VStack {
                 List {
                     HStack {
+                        Text(LocalizedString("Rate", comment: "Label text for basal rate summary"))
                         Spacer()
                         Text(String(format: LocalizedString("%1$@ for %2$@", comment: "Summary string for temporary basal rate configuration page"), formatRate(rateEntered), formatDuration(durationEntered)))
                     }
                     HStack {
                         ResizeablePicker(selection: $rateEntered,
-                                         data: Pod.supportedBasalRates,
+                                         data: allowedRates,
                                          formatter: { formatRate($0) })
                         ResizeablePicker(selection: $durationEntered,
-                                         data: supportedDurations,
+                                         data: Pod.supportedTempBasalDurations,
                                          formatter: { formatDuration($0) })
-                    }.frame(maxHeight: 162.0)
+                    }
+                    .frame(maxHeight: 162.0)
+                    .alert(isPresented: $showingMissingConfigAlert, content: { missingConfigAlert })
                     Section {
                         Text(LocalizedString("Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.", comment: "Description text on manual temp basal action sheet"))
                             .font(.footnote)
@@ -89,37 +104,43 @@ struct ManualTempBasalEntryView: View {
                 Button(action: {
                     enacting = true
                     enactBasal?(rateEntered, durationEntered) { (error) in
-                        enacting = false
-                        self.error = error
                         if let error = error {
-                            showingAlert = true
+                            self.error = error
+                            showingErrorAlert = true
                         }
+                        enacting = false
                     }
                 }) {
                     HStack {
                         if enacting {
-                            SwiftUI.ProgressView()
+                            ProgressView()
                         } else {
                             Text(LocalizedString("Set Temporary Basal", comment: "Button text for setting manual temporary basal rate"))
                         }
                     }
                 }
-                .disabled(enacting)
                 .buttonStyle(ActionButtonStyle(.primary))
                 .padding()
             }
-            .navigationTitle(NSLocalizedString("Set Basal Rate", comment: "Navigation Title for ManualTempBasalEntryView"))
+            .navigationTitle(NSLocalizedString("Temporary Basal", comment: "Navigation Title for ManualTempBasalEntryView"))
             .navigationBarItems(trailing: cancelButton)
-            .alert(isPresented: $showingAlert, content: { alert })
-
+            .alert(isPresented: $showingErrorAlert, content: { errorAlert })
+            .disabled(enacting)
         }
     }
 
-    var alert: SwiftUI.Alert {
+    var errorAlert: SwiftUI.Alert {
         let errorMessage = error?.localizedDescription ?? "Unknown"
         return SwiftUI.Alert(
             title: Text(LocalizedString("Temporary Basal Failed", comment: "Alert title for a failure to set temporary basal")),
             message: Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@", comment: "Alert format string for a failure to set temporary basal. (1: error message)"), errorMessage))
+        )
+    }
+
+    var missingConfigAlert: SwiftUI.Alert {
+        return SwiftUI.Alert(
+            title: Text(LocalizedString("Missing Config", comment: "Alert title for missing temp basal configuration")),
+            message: Text(LocalizedString("This PumpManager has not been configured with a maximum temp basal because it was added before manual temp basal was a feature. Please go to therapy settings and set a new maximum temp basal.", comment: "Alert format string for missing temp basal configuration."))
         )
     }
 

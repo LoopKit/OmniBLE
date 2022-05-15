@@ -23,6 +23,7 @@ public enum OmniBLEPumpManagerError: Error {
     case podAlreadyPaired
     case insulinTypeNotConfigured
     case notReadyForCannulaInsertion
+    case invalidSetting
     case communication(Error)
     case state(Error)
 }
@@ -58,6 +59,8 @@ extension OmniBLEPumpManagerError: LocalizedError {
             } else {
                 return String(describing: error)
             }
+        case .invalidSetting:
+            return LocalizedString("Invalid Setting", comment: "Error description for OmniBLEPumpManagerError.invalidSetting")
         }
     }
 
@@ -1729,11 +1732,16 @@ extension OmniBLEPumpManager: PumpManager {
         }
     }
 
-    // Delivery limits are not enforced/displayed on omnipods
     public func syncDeliveryLimits(limits deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
-        completion(.success(deliveryLimits))
+        mutateState { state in
+            if let rate = deliveryLimits.maximumBasalRate?.doubleValue(for: .internationalUnitsPerHour) {
+                state.maximumTempBasalRate = rate
+                completion(.success(deliveryLimits))
+            } else {
+                completion(.failure(OmniBLEPumpManagerError.invalidSetting))
+            }
+        }
     }
-
 
     // MARK: - Alerts
 

@@ -202,9 +202,12 @@ struct OmniBLESettingsView: View  {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         completion(OmniBLEPumpManagerError.noPodPaired)
                     }
-                }, didCancel: {
+                },
+                didCancel: {
                     showManualTempBasalOptions = false
-                })
+                },
+                allowedRates: viewModel.allowedTempBasalRates
+            )
         }
     }
 

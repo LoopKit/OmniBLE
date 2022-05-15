@@ -437,6 +437,9 @@ class OmniBLESettingsViewModel: ObservableObject {
         }
     }
 
+    public var allowedTempBasalRates: [Double] {
+        return Pod.supportedBasalRates.filter { $0 <= pumpManager.state.maximumTempBasalRate }
+    }
 }
 
 extension OmniBLESettingsViewModel: PodStateObserver {
@@ -547,5 +550,6 @@ extension OmniBLEPumpManager {
         }
         return podDetails(fromPodState: podState, andDeviceName: nil)
     }
+
 }
 

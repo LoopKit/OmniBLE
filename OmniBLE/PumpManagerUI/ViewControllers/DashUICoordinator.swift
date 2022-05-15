@@ -85,8 +85,6 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
 
     private var pumpManagerType: OmniBLEPumpManager.Type?
     
-    private var basalSchedule: BasalRateSchedule?
-    
     private var allowedInsulinTypes: [InsulinType]
     
     private var allowDebugFeatures: Bool
@@ -309,12 +307,11 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         completionDelegate?.completionNotifyingDidComplete(self)
     }
     
-    init(pumpManager: OmniBLEPumpManager? = nil, colorPalette: LoopUIColorPalette, basalSchedule: BasalRateSchedule? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
+    init(pumpManager: OmniBLEPumpManager? = nil, colorPalette: LoopUIColorPalette, pumpManagerSettings: PumpManagerSetupSettings? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
     {
-        if pumpManager == nil,
-           let basalSchedule = basalSchedule
-        {
-            let pumpManagerState = OmniBLEPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil)
+        if pumpManager == nil, let pumpManagerSettings = pumpManagerSettings {
+            let basalSchedule = pumpManagerSettings.basalSchedule
+            let pumpManagerState = OmniBLEPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil, maximumTempBasalRate: pumpManagerSettings.maxBasalRateUnitsPerHour)
             self.pumpManager = OmniBLEPumpManager(state: pumpManagerState)
         } else {
             guard let pumpManager = pumpManager else {
@@ -324,9 +321,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         }
 
         self.colorPalette = colorPalette
-        
-        self.basalSchedule = basalSchedule
-        
+
         self.allowDebugFeatures = allowDebugFeatures
         
         self.allowedInsulinTypes = allowedInsulinTypes

@@ -62,6 +62,8 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     // Indicates that the user has completed initial configuration
     // which means they have configured any parameters, but may not have paired a pod yet.
     public var initialConfigurationCompleted: Bool = false
+
+    internal var maximumTempBasalRate: Double
     
     
     // From last status response
@@ -90,7 +92,7 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
 
     // MARK: -
 
-    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, controllerId: UInt32? = nil, podId: UInt32? = nil, insulinType: InsulinType?) {
+    public init(podState: PodState?, timeZone: TimeZone, basalSchedule: BasalSchedule, controllerId: UInt32? = nil, podId: UInt32? = nil, insulinType: InsulinType?, maximumTempBasalRate: Double) {
         self.podState = podState
         self.timeZone = timeZone
         self.basalSchedule = basalSchedule
@@ -110,6 +112,7 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
         self.acknowledgedTimeOffsetAlert = false
         self.activeAlerts = []
         self.alertsWithPendingAcknowledgment = []
+        self.maximumTempBasalRate = maximumTempBasalRate
     }
 
     public init?(rawValue: RawValue) {
@@ -168,13 +171,18 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             insulinType = InsulinType(rawValue: rawInsulinType)
         }
 
+        // If this doesn't exist (early adopters of dev/pre-3.0) set to zero
+        // Will not let them set a manual temp until a limits sync has been performed.
+        let maximumTempBasalRate = rawValue["maximumTempBasalRate"] as? Double ?? 0
+
         self.init(
             podState: podState,
             timeZone: timeZone,
             basalSchedule: basalSchedule,
             controllerId: controllerId,
             podId: podId,
-            insulinType: insulinType ?? .novolog
+            insulinType: insulinType ?? .novolog,
+            maximumTempBasalRate: maximumTempBasalRate
         )
         
         self.isOnboarded = rawValue["isOnboarded"] as? Bool ?? true // Backward compatibility
@@ -245,6 +253,7 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
             "acknowledgedTimeOffsetAlert": acknowledgedTimeOffsetAlert,
             "alertsWithPendingAcknowledgment": alertsWithPendingAcknowledgment.map { $0.rawValue },
             "initialConfigurationCompleted": initialConfigurationCompleted,
+            "maximumTempBasalRate": maximumTempBasalRate
         ]
         
         value["insulinType"] = insulinType?.rawValue
@@ -284,6 +293,7 @@ extension OmniBLEPumpManagerState: CustomDebugStringConvertible {
             "* isOnboarded: \(isOnboarded)",
             "* timeZone: \(timeZone)",
             "* basalSchedule: \(String(describing: basalSchedule))",
+            "* maximumTempBasalRate: \(maximumTempBasalRate)",
             "* unstoredDoses: \(String(describing: unstoredDoses))",
             "* suspendEngageState: \(String(describing: suspendEngageState))",
             "* bolusEngageState: \(String(describing: bolusEngageState))",
