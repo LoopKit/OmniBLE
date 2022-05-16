@@ -276,6 +276,11 @@ class OmniBLESettingsViewModel: ObservableObject {
             }
         }
     }
+
+    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+        pumpManager.enactTempBasal(unitsPerHour: unitsPerHour, for: duration, completion: completion)
+    }
+
     
     func saveScheduledExpirationReminder(_ selectedDate: Date?, _ completion: @escaping (Error?) -> Void) {
         if let podExpiresAt = pumpManager.podExpiresAt {

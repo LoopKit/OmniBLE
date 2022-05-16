@@ -199,8 +199,8 @@ struct OmniBLESettingsView: View  {
         .sheet(isPresented: $showManualTempBasalOptions) {
             ManualTempBasalEntryView(
                 enactBasal: { rate, duration, completion in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        completion(OmniBLEPumpManagerError.noPodPaired)
+                    viewModel.enactTempBasal(unitsPerHour: rate, for: duration) { error in
+                        completion(error)
                     }
                 },
                 didCancel: {
