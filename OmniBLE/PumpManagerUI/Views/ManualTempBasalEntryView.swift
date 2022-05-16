@@ -15,20 +15,20 @@ struct ManualTempBasalEntryView: View {
 
     @Environment(\.guidanceColors) var guidanceColors
 
-    var enactBasal: ((Double,TimeInterval,@escaping (Error?)->Void) -> Void)?
+    var enactBasal: ((Double,TimeInterval,@escaping (PumpManagerError?)->Void) -> Void)?
     var didCancel: (() -> Void)?
 
     @State private var rateEntered: Double = 0.0
     @State private var durationEntered: TimeInterval = .hours(0.5)
     @State private var showPicker: Bool = false
-    @State private var error: Error?
+    @State private var error: PumpManagerError?
     @State private var enacting: Bool = false
     @State private var showingErrorAlert: Bool = false
     @State private var showingMissingConfigAlert: Bool = false
 
     var allowedRates: [Double]
 
-    init(enactBasal: ((Double,TimeInterval,@escaping (Error?)->Void) -> Void)? = nil, didCancel: (() -> Void)? = nil, allowedRates: [Double]) {
+    init(enactBasal: ((Double,TimeInterval,@escaping (PumpManagerError?)->Void) -> Void)? = nil, didCancel: (() -> Void)? = nil, allowedRates: [Double]) {
         self.enactBasal = enactBasal
         self.didCancel = didCancel
         self.allowedRates = allowedRates
@@ -130,11 +130,18 @@ struct ManualTempBasalEntryView: View {
     }
 
     var errorAlert: SwiftUI.Alert {
-        let errorMessage = error?.localizedDescription ?? "Unknown"
+        let errorMessage = errorMessage(error: error!)
         return SwiftUI.Alert(
             title: Text(LocalizedString("Temporary Basal Failed", comment: "Alert title for a failure to set temporary basal")),
-            message: Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@", comment: "Alert format string for a failure to set temporary basal. (1: error message)"), errorMessage))
-        )
+            message: errorMessage)
+    }
+
+    func errorMessage(error: PumpManagerError) -> Text {
+        if let recovery = error.recoverySuggestion {
+            return Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@\n\n%2$@", comment: "Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text)"), error.localizedDescription, recovery))
+        } else {
+            return Text(String(format: LocalizedString("Unable to set a temporary basal rate: %1$@", comment: "Alert format string for a failure to set temporary basal. (1: error description)"), error.localizedDescription))
+        }
     }
 
     var missingConfigAlert: SwiftUI.Alert {
