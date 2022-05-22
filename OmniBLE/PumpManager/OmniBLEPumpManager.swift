@@ -1614,6 +1614,10 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+        runTemporaryBasalProgram(unitsPerHour: unitsPerHour, for: duration, automatic: false, completion: completion)
+    }
+
+    public func runTemporaryBasalProgram(unitsPerHour: Double, for duration: TimeInterval, automatic: Bool, completion: @escaping (PumpManagerError?) -> Void) {
         guard self.hasActivePod else {
             completion(.deviceState(OmniBLEPumpManagerError.noPodPaired))
             return
@@ -1692,7 +1696,9 @@ extension OmniBLEPumpManager: PumpManager {
                     let scheduledRate = self.state.basalSchedule.currentRate(using: calendar, at: self.dateGenerator())
                     let isHighTemp = rate > scheduledRate
 
-                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, acknowledgementBeep: false, completionBeep: false)
+                    let beep = !automatic && self.beepPreference.shouldBeepForManualCommand
+
+                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, acknowledgementBeep: beep, completionBeep: false)
                     session.dosesForStorage() { (doses) -> Bool in
                         return self.store(doses: doses, in: session)
                     }
