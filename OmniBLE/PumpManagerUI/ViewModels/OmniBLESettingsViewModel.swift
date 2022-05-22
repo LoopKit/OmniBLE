@@ -15,6 +15,7 @@ import HealthKit
 enum DashSettingsViewAlert {
     case suspendError(Error)
     case resumeError(Error)
+    case cancelManualBasalError(Error)
     case syncTimeError(OmniBLEPumpManagerError)
 }
 
@@ -30,7 +31,7 @@ struct DashSettingsNotice {
 }
 
 class OmniBLESettingsViewModel: ObservableObject {
-    
+
     @Published var lifeState: PodLifeState
     
     @Published var activatedAt: Date?
@@ -198,6 +199,16 @@ class OmniBLESettingsViewModel: ObservableObject {
         numberFormatter.minimumIntegerDigits = 1
         return numberFormatter
     }()
+
+    var manualBasalTimeRemaining: TimeInterval? {
+        if case .tempBasal(let dose) = basalDeliveryState, !(dose.automatic ?? true) {
+            let remaining = dose.endDate.timeIntervalSinceNow
+            if remaining > 0 {
+                return remaining
+            }
+        }
+        return nil
+    }
     
     let reservoirVolumeFormatter = QuantityFormatter(for: .internationalUnit())
     
@@ -227,6 +238,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         podDetails = self.pumpManager.podDetails
         previousPodDetails = self.pumpManager.previousPodDetails
         pumpManager.addPodStateObserver(self, queue: DispatchQueue.main)
+        pumpManager.addStatusObserver(self, queue: DispatchQueue.main)
         
         // Trigger refresh
         pumpManager.getPodStatus() { _ in }
@@ -277,7 +289,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         }
     }
 
-    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+    func runTemporaryBasalProgram(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
         pumpManager.runTemporaryBasalProgram(unitsPerHour: unitsPerHour, for: duration, automatic: false, completion: completion)
     }
     
@@ -449,7 +461,6 @@ class OmniBLESettingsViewModel: ObservableObject {
 extension OmniBLESettingsViewModel: PodStateObserver {
     func podStateDidUpdate(_ state: PodState?) {
         lifeState = self.pumpManager.lifeState
-        basalDeliveryState = self.pumpManager.status.basalDeliveryState
         basalDeliveryRate = self.pumpManager.basalDeliveryRate
         reservoirLevel = self.pumpManager.reservoirLevel
         activatedAt = state?.activatedAt
@@ -467,6 +478,15 @@ extension OmniBLESettingsViewModel: PodStateObserver {
         self.podConnected = isConnected
     }
 }
+
+extension OmniBLESettingsViewModel: PumpManagerStatusObserver {
+    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
+        basalDeliveryState = self.pumpManager.status.basalDeliveryState
+    }
+}
+
+
+
 
 extension OmniBLEPumpManager {
     var lifeState: PodLifeState {

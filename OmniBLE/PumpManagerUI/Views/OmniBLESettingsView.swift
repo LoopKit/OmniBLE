@@ -24,6 +24,8 @@ struct OmniBLESettingsView: View  {
     @State private var showSyncTimeOptions = false;
 
     @State private var sendingTestBeepsCommand = false;
+
+    @State private var cancelingTempBasal = false
     
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
@@ -192,15 +194,18 @@ struct OmniBLESettingsView: View  {
 
     var manualTempBasalRow: some View {
         Button(action: {
-            self.manualTempTapped()
+            self.manualBasalTapped()
         }) {
-            Text("Set Temporary Basal Rate")
+            FrameworkLocalText("Set Temporary Basal Rate", comment: "Button title to set temporary basal rate")
         }
         .sheet(isPresented: $showManualTempBasalOptions) {
             ManualTempBasalEntryView(
                 enactBasal: { rate, duration, completion in
-                    viewModel.enactTempBasal(unitsPerHour: rate, for: duration) { error in
+                    viewModel.runTemporaryBasalProgram(unitsPerHour: rate, for: duration) { error in
                         completion(error)
+                        if error == nil {
+                            showManualTempBasalOptions = false
+                        }
                     }
                 },
                 didCancel: {
@@ -307,8 +312,36 @@ struct OmniBLESettingsView: View  {
                             .foregroundColor(Color.secondary)
                     }
                 }
-                manualTempBasalRow
             }
+
+            Section() {
+                if let manualTempRemaining = self.viewModel.manualBasalTimeRemaining, let remainingText = self.viewModel.timeRemainingFormatter.string(from: manualTempRemaining) {
+                    HStack {
+                        if cancelingTempBasal {
+                            ProgressView()
+                                .padding(.trailing)
+                        } else {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 22))
+                                .foregroundColor(guidanceColors.warning)
+                        }
+                        Button(action: {
+                            self.cancelManualBasal()
+                        }) {
+                            FrameworkLocalText("Tap to Cancel Manual Basal", comment: "Button title to cancel manual basal")
+                        }
+                    }
+                    HStack {
+                        FrameworkLocalText("Remaining", comment: "Label for remaining time of manual basal")
+                        Spacer()
+                        Text(remainingText)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    manualTempBasalRow
+                }
+            }
+            .disabled(cancelingTempBasal)
             
             Section() {
                 HStack {
@@ -487,8 +520,18 @@ struct OmniBLESettingsView: View  {
         }
     }
 
-    func manualTempTapped() {
+    func manualBasalTapped() {
         showManualTempBasalOptions = true
+    }
+
+    func cancelManualBasal() {
+        cancelingTempBasal = true
+        viewModel.runTemporaryBasalProgram(unitsPerHour: 0, for: 0) { error in
+            cancelingTempBasal = false
+            if let error = error {
+                self.viewModel.activeAlert = .cancelManualBasalError(error)
+            }
+        }
     }
 
     
@@ -519,6 +562,13 @@ struct OmniBLESettingsView: View  {
                 title: Text("Failed to Set Pump Time", comment: "Alert title for time sync error"),
                 message: Text(errorText(error))
             )
+
+        case .cancelManualBasalError(let error):
+            return SwiftUI.Alert(
+                title: Text("Failed to Cancel Manual Basal", comment: "Alert title for failing to cancel manual basal error"),
+                message: Text(errorText(error))
+            )
+
         }
     }
 
