@@ -1708,7 +1708,7 @@ extension OmniBLEPumpManager: PumpManager {
 
                     let beep = !automatic && self.beepPreference.shouldBeepForManualCommand
 
-                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, acknowledgementBeep: beep, completionBeep: false)
+                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, automatic: automatic, acknowledgementBeep: beep, completionBeep: false)
                     session.dosesForStorage() { (doses) -> Bool in
                         return self.store(doses: doses, in: session)
                     }

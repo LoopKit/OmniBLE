@@ -510,7 +510,7 @@ public class PodCommsSession {
         }
     }
     
-    public func setTempBasal(rate: Double, duration: TimeInterval, isHighTemp: Bool, automatic: Bool = false, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) -> DeliveryCommandResult {
+    public func setTempBasal(rate: Double, duration: TimeInterval, isHighTemp: Bool, automatic: Bool, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) -> DeliveryCommandResult {
 
         guard podState.pendingCommand == nil else {
             return DeliveryCommandResult.certainFailure(error: .unacknowledgedCommandPending)
