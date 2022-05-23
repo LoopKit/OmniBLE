@@ -328,7 +328,7 @@ struct OmniBLESettingsView: View  {
                         Button(action: {
                             self.cancelManualBasal()
                         }) {
-                            FrameworkLocalText("Tap to Cancel Manual Basal", comment: "Button title to cancel manual basal")
+                            FrameworkLocalText("Cancel Manual Basal", comment: "Button title to cancel manual basal")
                         }
                     }
                     HStack {
