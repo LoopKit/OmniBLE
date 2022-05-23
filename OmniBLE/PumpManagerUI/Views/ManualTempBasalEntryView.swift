@@ -147,7 +147,7 @@ struct ManualTempBasalEntryView: View {
     var missingConfigAlert: SwiftUI.Alert {
         return SwiftUI.Alert(
             title: Text(LocalizedString("Missing Config", comment: "Alert title for missing temp basal configuration")),
-            message: Text(LocalizedString("This PumpManager has not been configured with a maximum temp basal because it was added before manual temp basal was a feature. Please go to therapy settings and set a new maximum temp basal.", comment: "Alert format string for missing temp basal configuration."))
+            message: Text(LocalizedString("This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.", comment: "Alert format string for missing temp basal configuration."))
         )
     }
 
