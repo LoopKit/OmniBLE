@@ -304,6 +304,30 @@ struct OmniBLESettingsView: View  {
                         .foregroundColor(Color.secondary)
                 }
                 
+                if let serviceTimeRemainingTI = viewModel.serviceTimeRemainingTI, serviceTimeRemainingTI < 28800 {
+                   HStack {
+                       FrameworkLocalText("Delivery Stoppage Timer", comment: "Label for insulin delivery stoppage timer row")
+                       Spacer()
+                       Text(self.viewModel.podServiceTimeRemainingString)
+                           .foregroundColor(Color.red)
+                   }
+               }
+                       
+                               
+               HStack {
+                   if let serviceTimeRemainingTI = viewModel.serviceTimeRemainingTI, serviceTimeRemainingTI < 0 {
+                       FrameworkLocalText("Insulin Delivery Stopped", comment: "Label for insulin delivery stop time row, past tense")
+                       Spacer()
+                       Text(self.viewModel.deliveryStopsAtString)
+                           .foregroundColor(Color.red)
+                   } else {
+                       FrameworkLocalText("Insulin Delivery Stops", comment: "Label for insulin delivery stop time row")
+                       Spacer()
+                       Text(self.viewModel.deliveryStopsAtString)
+                           .foregroundColor(Color.secondary)
+                   }
+               }
+
                 if let podDetails = self.viewModel.podDetails {
                     NavigationLink(destination: PodDetailsView(podDetails: podDetails, title: LocalizedString("Device Details", comment: "title for device details page"))) {
                         FrameworkLocalText("Device Details", comment: "Text for device details disclosure row").foregroundColor(Color.primary)
