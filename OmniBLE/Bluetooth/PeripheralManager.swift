@@ -161,7 +161,7 @@ extension PeripheralManager {
         queue.async(execute: configureAndRun(block))
     }
 
-    private func assertConfiguration() {
+    func assertConfiguration() {
         if peripheral.state == .connected && central?.state == .poweredOn {
             perform { (_) in
                 // Intentionally empty to trigger configuration if necessary
@@ -454,22 +454,8 @@ extension PeripheralManager: CBPeripheralDelegate {
 }
 
 
-extension PeripheralManager: CBCentralManagerDelegate {
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        self.log.debug("PeripheralManager - centralManagerDidUpdateState: %@", central)
-        switch central.state {
-        case .poweredOn:
-            assertConfiguration()
-        default:
-            break
-        }
-    }
+extension PeripheralManager {
 
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        // Clear the queue in case of connection error
-        sessionQueue.cancelAllOperations()
-    }
-    
     func clearCommsQueues() {
         queueLock.lock()
         if cmdQueue.count > 0 {
