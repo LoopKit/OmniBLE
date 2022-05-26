@@ -488,9 +488,9 @@ struct OmniBLESettingsView: View  {
     }
     
     var removePumpManagerActionSheet: ActionSheet {
-        ActionSheet(title: FrameworkLocalText("Remove Pump", comment: "Title for Omnipod PumpManager deletion action sheet."), message: FrameworkLocalText("Are you sure you want to stop using Omnipod?", comment: "Message for Omnipod PumpManager deletion action sheet"), buttons: [
-            .destructive(FrameworkLocalText("Delete Omnipod", comment: "Button text to confirm Omnipod PumpManager deletion")) {
-                self.viewModel.stopUsingOmnipodTapped()
+        ActionSheet(title: FrameworkLocalText("Remove Pump", comment: "Title for Omnipod DASH PumpManager deletion action sheet."), message: FrameworkLocalText("Are you sure you want to stop using Omnipod DASH?", comment: "Message for Omnipod DASH PumpManager deletion action sheet"), buttons: [
+            .destructive(FrameworkLocalText("Delete Omnipod DASH", comment: "Button text to confirm Omnipod DASH PumpManager deletion")) {
+                self.viewModel.stopUsingOmnipodDashTapped()
             },
             .cancel()
         ])

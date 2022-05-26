@@ -261,7 +261,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         self.didFinish?()
     }
     
-    func stopUsingOmnipodTapped() {
+    func stopUsingOmnipodDashTapped() {
         self.pumpManager.notifyDelegateOfDeactivation {
             DispatchQueue.main.async {
                 self.didFinish?()
