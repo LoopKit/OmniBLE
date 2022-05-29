@@ -131,10 +131,15 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             hostedView.navigationItem.backButtonDisplayMode = .generic
             return hostedView
         case .insulinTypeSelection:
-            let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes) { [weak self] (confirmedType) in
+            let didConfirm: (InsulinType) -> Void = { [weak self] (confirmedType) in
                 self?.pumpManager.insulinType = confirmedType
                 self?.stepFinished()
             }
+            let didCancel: () -> Void = { [weak self] in
+                self?.setupCanceled()
+            }
+            
+            let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes, didConfirm: didConfirm, didCancel: didCancel)
             let hostedView = hostingController(rootView: insulinSelectionView)
             hostedView.navigationItem.title = LocalizedString("Insulin Type", comment: "Title for insulin type selection screen")
             return hostedView
