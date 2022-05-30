@@ -113,6 +113,9 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 }
                 self.stepFinished()
             }
+            view.cancelButtonTapped = { [weak self] in
+                self?.setupCanceled()
+            }
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Expiration Reminder", comment: "Title for ExpirationReminderSetupView")
             return hostedView
@@ -125,7 +128,9 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.pumpManager.initialConfigurationCompleted = true
                 self?.stepFinished()
             }
-            
+            view.cancelButtonTapped = { [weak self] in
+                self?.setupCanceled()
+            }
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Low Reservoir", comment: "Title for LowReservoirReminderSetupView")
             hostedView.navigationItem.backButtonDisplayMode = .generic
