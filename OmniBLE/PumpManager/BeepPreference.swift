@@ -44,7 +44,6 @@ public enum BeepPreference: Int, CaseIterable {
     }
 
     var shouldBeepForAutomaticTempBasal: Bool {
-        let automaticTempBasalBeeps = true
-        return self == .extended && automaticTempBasalBeeps
+        return self == .extended
     }
 }
