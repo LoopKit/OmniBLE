@@ -557,7 +557,7 @@ extension OmniBLEPumpManager {
             fault: podState.fault?.faultEventCode,
             activatedAt: podState.activatedAt,
             activeTime: podState.activeTime,
-            pdmRef: podState.pdmRef
+            pdmRef: podState.fault?.pdmRef
         )
     }
 

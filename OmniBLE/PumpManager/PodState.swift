@@ -59,7 +59,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     
     public var activatedAt: Date?
     public var expiresAt: Date?  // set based on StatusResponse timeActive and can change with Pod clock drift and/or system time change
-    public var activeTime: TimeInterval?
+    public var activeTime: TimeInterval? // Useful after pod deactivated or faulted.
 
     public var setupUnitsDelivered: Double?
 
@@ -94,7 +94,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     }
 
     public var fault: DetailedStatus?
-    public var pdmRef: String?
     public var messageTransportState: MessageTransportState
     public var primeFinishTime: Date?
     public var setupProgress: SetupProgress
@@ -348,7 +347,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         self.bleFirmwareVersion = bleFirmwareVersion
         self.lotNo = lotNo
         self.lotSeq = lotSeq
-        self.pdmRef = rawValue["pdmRef"] as? String
         if let productId = rawValue["productId"] as? UInt8 {
             self.productId = productId
         } else {
@@ -514,7 +512,6 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         rawValue["activatedAt"] = activatedAt
         rawValue["expiresAt"] = expiresAt
         rawValue["setupUnitsDelivered"] = setupUnitsDelivered
-        rawValue["pdmRef"] = pdmRef
         rawValue["activeTime"] = activeTime
 
         if configuredAlerts.count > 0 {
@@ -553,7 +550,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "* primeFinishTime: \(String(describing: primeFinishTime))",
             "* configuredAlerts: \(String(describing: configuredAlerts))",
             "* insulinType: \(String(describing: insulinType))",
-            "* pdmRef: \(String(describing: pdmRef))",
+            "* pdmRef: \(String(describing: fault?.pdmRef))",
             "",
             fault != nil ? String(reflecting: fault!) : "fault: nil",
             "",

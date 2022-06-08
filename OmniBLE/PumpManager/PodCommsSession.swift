@@ -199,7 +199,6 @@ public class PodCommsSession {
     private func handlePodFault(fault: DetailedStatus) {
         if podState.fault == nil {
             podState.fault = fault // save the first fault returned
-            podState.pdmRef = fault.pdmRef // as well as the ref code
             if let activatedAt = podState.activatedAt {
                 podState.activeTime = Date().timeIntervalSince(activatedAt)
             } else {
@@ -891,7 +890,7 @@ public class PodCommsSession {
         }
     }
     
-    public func acknowledgePodAlerts(alerts: AlertSet, beepBlock: MessageBlock? = nil) throws -> [AlertSlot: PodAlert] {
+    public func acknowledgeAlerts(alerts: AlertSet, beepBlock: MessageBlock? = nil) throws -> [AlertSlot: PodAlert] {
         let cmd = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: alerts)
         let status: StatusResponse = try send([cmd], beepBlock: beepBlock)
         podState.updateFromStatusResponse(status)

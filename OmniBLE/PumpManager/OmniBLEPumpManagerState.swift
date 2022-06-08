@@ -58,7 +58,6 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     // user review and manufacturer reporting.
     internal var previousPodState: PodState?
 
-
     // Indicates that the user has completed initial configuration
     // which means they have configured any parameters, but may not have paired a pod yet.
     public var initialConfigurationCompleted: Bool = false
