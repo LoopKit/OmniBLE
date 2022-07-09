@@ -57,6 +57,40 @@ public struct StatusResponse : MessageBlock {
         
         self.reservoirLevel = Double((Int(encodedData[8] & 0x3) << 8) + Int(encodedData[9])) / Pod.pulsesPerUnit
     }
+
+    public init(
+        deliveryStatus: DeliveryStatus,
+        podProgressStatus: PodProgressStatus,
+        timeActive: TimeInterval,
+        reservoirLevel: Double,
+        insulinDelivered: Double,
+        bolusNotDelivered: Double,
+        lastProgrammingMessageSeqNum: UInt8,
+        alerts: AlertSet)
+    {
+        self.deliveryStatus = deliveryStatus
+        self.podProgressStatus = podProgressStatus
+        self.timeActive = timeActive
+        self.reservoirLevel = reservoirLevel
+        self.insulinDelivered = insulinDelivered
+        self.bolusNotDelivered = bolusNotDelivered
+        self.lastProgrammingMessageSeqNum = lastProgrammingMessageSeqNum
+        self.alerts = alerts
+        self.data = Data()
+    }
+
+    // convenience function to create a StatusResponse for a DetailedStatus
+    public init(detailedStatus: DetailedStatus) {
+        self.deliveryStatus = detailedStatus.deliveryStatus
+        self.podProgressStatus = detailedStatus.podProgressStatus
+        self.timeActive = detailedStatus.timeActive
+        self.reservoirLevel = detailedStatus.reservoirLevel
+        self.insulinDelivered = detailedStatus.totalInsulinDelivered
+        self.bolusNotDelivered = detailedStatus.bolusNotDelivered
+        self.lastProgrammingMessageSeqNum = detailedStatus.lastProgrammingMessageSeqNum
+        self.alerts = detailedStatus.unacknowledgedAlerts
+        self.data = Data()
+    }
 }
 
 extension StatusResponse: CustomDebugStringConvertible {
