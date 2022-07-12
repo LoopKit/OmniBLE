@@ -298,7 +298,10 @@ class PodMessageTransport: MessageTransport {
         let data = try StringLengthPrefixEncoding.parseKeys([RESPONSE_PREFIX], decrypted.payload)[0]
         log.info("Received decrypted response: %@ in packet: %@", data.hexadecimalString, decrypted.payload.hexadecimalString)
 
-        let response = try Message.init(encodedData: data)
+        // Dash pods generates a CRC16 for Omnipod Messages, but the actual algorithm is not understood and doesn't match the CRC16
+        // that the pod enforces for incoming Omnipod command message. The Dash PDM explicitly ignores the CRC16 for incoming messages,
+        // so we ignore them as well and rely on higher level BLE & Dash message data checking to provide data corruption protection.
+        let response = try Message(encodedData: data, checkCRC: false)
 
         log.default("Recv(Hex): %@", data.hexadecimalString)
         messageLogger?.didReceive(data)
