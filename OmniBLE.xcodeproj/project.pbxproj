@@ -405,15 +405,19 @@
 				1016325427185EE4007A3BC2 /* BasalDeliveryTable.swift */,
 				102111442709462300784F13 /* BasalSchedule+LoopKit.swift */,
 				1016325727185EE4007A3BC2 /* BasalSchedule.swift */,
+				C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */,
 				1016325127185EE4007A3BC2 /* BeepType.swift */,
 				10389A2026FF7841002115E9 /* CRC16.swift */,
 				1016325227185EE4007A3BC2 /* FaultEventCode.swift */,
 				10389A1D26FF7841002115E9 /* Message.swift */,
 				10389A0326FF7841002115E9 /* MessageBlocks */,
+				C1F67EDB2797A03A0017487F /* PendingCommand.swift */,
 				1016325327185EE4007A3BC2 /* Pod.swift */,
 				102111432709462300784F13 /* PodDoseProgressEstimator.swift */,
 				102111412709462300784F13 /* PodInsulinMeasurements.swift */,
 				1016325627185EE4007A3BC2 /* PodProgressStatus.swift */,
+				C1F67ED927979E400017487F /* PumpManagerAlert.swift */,
+				C1F67EE127985F580017487F /* ReservoirLevel.swift */,
 				1016325827185EE4007A3BC2 /* UnfinalizedDose.swift */,
 			);
 			path = OmnipodCommon;
@@ -553,10 +557,6 @@
 				1021114C2709467400784F13 /* PodComms.swift */,
 				102111402709462300784F13 /* PodState.swift */,
 				C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */,
-				C1F67ED927979E400017487F /* PumpManagerAlert.swift */,
-				C1F67EDB2797A03A0017487F /* PendingCommand.swift */,
-				C1F67EE127985F580017487F /* ReservoirLevel.swift */,
-				C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */,
 			);
 			path = PumpManager;
 			sourceTree = "<group>";
