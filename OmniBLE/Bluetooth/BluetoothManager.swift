@@ -280,6 +280,15 @@ extension BluetoothManager: CBCentralManagerDelegate {
         log.default("%{public}@: %{public}@", #function, String(describing: central.state.rawValue))
 
         if case .poweredOn = central.state {
+            // bluetooth may have reset; update peripheral references
+            for device in devices {
+                if let newPeripheral = central.retrievePeripherals(withIdentifiers: [device.manager.peripheral.identifier]).first {
+                    log.debug("Re-connecting to known peripheral %{public}@", newPeripheral.identifier.uuidString)
+                    device.manager.peripheral = newPeripheral
+                    central.connect(newPeripheral)
+                }
+            }
+
             updateConnections()
             
             if (discoveryModeEnabled || !hasDiscoveredAllAutoConnectDevices) && !manager.isScanning {
@@ -287,17 +296,10 @@ extension BluetoothManager: CBCentralManagerDelegate {
             } else if !discoveryModeEnabled && manager.isScanning {
                 stopScanning()
             }
-            
-            for device in devices {
-                if autoConnectIDs.contains(device.manager.peripheral.identifier.uuidString) && device.manager.peripheral.state != .connected {
-                    log.default("Connecting to discovered, but not connected device: %{public}@", device.manager.peripheral)
-                    manager.connect(device.manager.peripheral, options: nil)
-                }
-            }
         }
 
         for device in devices {
-            device.manager.centralManagerDidUpdateState(central)
+            device.manager.assertConfiguration()
         }
     }
 

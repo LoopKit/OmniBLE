@@ -85,8 +85,6 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
 
     private var pumpManagerType: OmniBLEPumpManager.Type?
     
-    private var basalSchedule: BasalRateSchedule?
-    
     private var allowedInsulinTypes: [InsulinType]
     
     private var allowDebugFeatures: Bool
@@ -115,6 +113,9 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 }
                 self.stepFinished()
             }
+            view.cancelButtonTapped = { [weak self] in
+                self?.setupCanceled()
+            }
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Expiration Reminder", comment: "Title for ExpirationReminderSetupView")
             return hostedView
@@ -127,16 +128,23 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.pumpManager.initialConfigurationCompleted = true
                 self?.stepFinished()
             }
-            
+            view.cancelButtonTapped = { [weak self] in
+                self?.setupCanceled()
+            }
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Low Reservoir", comment: "Title for LowReservoirReminderSetupView")
             hostedView.navigationItem.backButtonDisplayMode = .generic
             return hostedView
         case .insulinTypeSelection:
-            let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes) { [weak self] (confirmedType) in
+            let didConfirm: (InsulinType) -> Void = { [weak self] (confirmedType) in
                 self?.pumpManager.insulinType = confirmedType
                 self?.stepFinished()
             }
+            let didCancel: () -> Void = { [weak self] in
+                self?.setupCanceled()
+            }
+            
+            let insulinSelectionView = InsulinTypeConfirmation(initialValue: .novolog, supportedInsulinTypes: allowedInsulinTypes, didConfirm: didConfirm, didCancel: didCancel)
             let hostedView = hostingController(rootView: insulinSelectionView)
             hostedView.navigationItem.title = LocalizedString("Insulin Type", comment: "Title for insulin type selection screen")
             return hostedView
@@ -257,7 +265,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             hostedView.navigationItem.title = LocalizedString("Setup Complete", comment: "Title for setup complete screen")
             return hostedView
         case .pendingCommandRecovery:
-            if let pendingCommand = pumpManager.state.podState?.pendingCommand {
+            if let pendingCommand = pumpManager.state.podState?.unacknowledgedCommand, pumpManager.state.podState?.needsCommsRecovery == true {
 
                 let model = DeliveryUncertaintyRecoveryViewModel(appName: appName, uncertaintyStartedAt: pendingCommand.commandDate)
                 model.didRecover = { [weak self] in
@@ -309,12 +317,11 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         completionDelegate?.completionNotifyingDidComplete(self)
     }
     
-    init(pumpManager: OmniBLEPumpManager? = nil, colorPalette: LoopUIColorPalette, basalSchedule: BasalRateSchedule? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
+    init(pumpManager: OmniBLEPumpManager? = nil, colorPalette: LoopUIColorPalette, pumpManagerSettings: PumpManagerSetupSettings? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
     {
-        if pumpManager == nil,
-           let basalSchedule = basalSchedule
-        {
-            let pumpManagerState = OmniBLEPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil)
+        if pumpManager == nil, let pumpManagerSettings = pumpManagerSettings {
+            let basalSchedule = pumpManagerSettings.basalSchedule
+            let pumpManagerState = OmniBLEPumpManagerState(podState: nil, timeZone: basalSchedule.timeZone, basalSchedule: BasalSchedule(repeatingScheduleValues: basalSchedule.items), insulinType: nil, maximumTempBasalRate: pumpManagerSettings.maxBasalRateUnitsPerHour)
             self.pumpManager = OmniBLEPumpManager(state: pumpManagerState)
         } else {
             guard let pumpManager = pumpManager else {
@@ -324,9 +331,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         }
 
         self.colorPalette = colorPalette
-        
-        self.basalSchedule = basalSchedule
-        
+
         self.allowDebugFeatures = allowDebugFeatures
         
         self.allowedInsulinTypes = allowedInsulinTypes
@@ -339,7 +344,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     }
     
     private func determineInitialStep() -> DashUIScreen {
-        if pumpManager.state.podState?.pendingCommand != nil {
+        if pumpManager.state.podState?.needsCommsRecovery == true {
             return .pendingCommandRecovery
         } else if pumpManager.podCommState == .activating {
             if pumpManager.podAttachmentConfirmed {
@@ -382,6 +387,11 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         super.viewDidLoad()
         self.navigationBar.prefersLargeTitles = true
         delegate = self
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        completionDelegate?.completionNotifyingDidComplete(self)
     }
 
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {

@@ -19,11 +19,11 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         case suspend
         case resume
     }
-    
+
     enum ScheduledCertainty: Int {
         case certain = 0
         case uncertain
-        
+
         public var localizedDescription: String {
             switch self {
             case .certain:
@@ -33,27 +33,27 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             }
         }
     }
-    
+
     private let insulinFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 3
         return formatter
     }()
-    
+
     private let shortDateFormatter: DateFormatter = {
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .short
         timeFormatter.timeStyle = .medium
         return timeFormatter
     }()
-    
+
     private let dateFormatter = ISO8601DateFormatter()
-    
+
     fileprivate var uniqueKey: Data {
         return "\(doseType) \(scheduledUnits ?? units) \(dateFormatter.string(from: startTime))".data(using: .utf8)!
     }
-    
+
     let doseType: DoseType
     public var units: Double
     public var automatic: Bool      // Tracks if this dose was issued automatically or manually
@@ -73,7 +73,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             duration = newValue?.timeIntervalSince(startTime)
         }
     }
-    
+
     public func progress(at date: Date = Date()) -> Double {
         guard let duration = duration else {
             return 0
@@ -81,11 +81,11 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         let elapsed = -startTime.timeIntervalSince(date)
         return min(elapsed / duration, 1)
     }
-    
+
     public func isFinished(at date: Date = Date()) -> Bool {
         return progress(at: date) >= 1
     }
-    
+
     // Units per hour
     public var rate: Double {
         guard let duration = duration else {
@@ -111,15 +111,15 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         self.automatic = automatic
         self.insulinType = insulinType
     }
-    
-    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, isHighTemp: Bool, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType) {
+
+    init(tempBasalRate: Double, startTime: Date, duration: TimeInterval, isHighTemp: Bool, automatic: Bool, scheduledCertainty: ScheduledCertainty, insulinType: InsulinType) {
         self.doseType = .tempBasal
         self.units = tempBasalRate * duration.hours
         self.startTime = startTime
         self.duration = duration
         self.scheduledCertainty = scheduledCertainty
         self.scheduledUnits = nil
-        self.automatic = true
+        self.automatic = automatic
         self.isHighTemp = isHighTemp
         self.insulinType = insulinType
     }
@@ -198,7 +198,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             return String(format: LocalizedString("Resume: %1$@ %2$@", comment: "The format string describing a resume. (1: Time)(2: Scheduled certainty"), startTimeStr, scheduledCertainty.localizedDescription)
         }
     }
-    
+
     // RawRepresentable
     public init?(rawValue: RawValue) {
         guard
@@ -211,28 +211,26 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             else {
                 return nil
         }
-        
+
         self.doseType = doseType
         self.units = units
         self.startTime = startTime
         self.scheduledCertainty = scheduledCertainty
-        
-        if let scheduledUnits = rawValue["scheduledUnits"] as? Double {
-            self.scheduledUnits = scheduledUnits
-        }
 
-        if let scheduledTempRate = rawValue["scheduledTempRate"] as? Double {
-            self.scheduledTempRate = scheduledTempRate
-        }
+        self.scheduledUnits = rawValue["scheduledUnits"] as? Double
 
-        if let duration = rawValue["duration"] as? Double {
-            self.duration = duration
-        }
-        
+        self.scheduledTempRate = rawValue["scheduledTempRate"] as? Double
+
+        self.duration = rawValue["duration"] as? Double
+
         if let automatic = rawValue["automatic"] as? Bool {
             self.automatic = automatic
         } else {
-            self.automatic = false
+            if case .tempBasal = doseType {
+                self.automatic = true
+            } else {
+                self.automatic = false
+            }
         }
 
         if let isHighTemp = rawValue["isHighTemp"] as? Bool {
@@ -246,7 +244,7 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         }
 
     }
-    
+
     public var rawValue: RawValue {
         var rawValue: RawValue = [
             "doseType": doseType.rawValue,
@@ -256,23 +254,12 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
             "automatic": automatic,
             "isHighTemp": isHighTemp,
         ]
-        
-        if let scheduledUnits = scheduledUnits {
-           rawValue["scheduledUnits"] = scheduledUnits
-        }
 
-        if let scheduledTempRate = scheduledTempRate {
-            rawValue["scheduledTempRate"] = scheduledTempRate
-        }
+        rawValue["scheduledUnits"] = scheduledUnits
+        rawValue["scheduledTempRate"] = scheduledTempRate
+        rawValue["duration"] = duration
+        rawValue["insulinType"] = insulinType?.rawValue
 
-        if let duration = duration {
-            rawValue["duration"] = duration
-        }
-
-        if let insulinType = insulinType {
-            rawValue["insulinType"] = insulinType.rawValue
-        }
-        
         return rawValue
     }
 }
@@ -284,7 +271,7 @@ private extension TimeInterval {
         formatter.unitsStyle = .full
         formatter.zeroFormattingBehavior = .dropLeading
         formatter.maximumUnitCount = 2
-        
+
         return formatter.string(from: self)
     }
 }
@@ -321,6 +308,7 @@ extension DoseEntry {
                 unit: .unitsPerHour,
                 deliveredUnits: dose.finalizedUnits,
                 insulinType: dose.insulinType,
+                automatic: dose.automatic,
                 isMutable: dose.isMutable()
             )
         case .suspend:
@@ -336,8 +324,8 @@ extension StartProgram {
         switch self {
         case .bolus(volume: let volume, automatic: let automatic):
             return UnfinalizedDose(bolusAmount: volume, startTime: programDate, scheduledCertainty: certainty, insulinType: insulinType, automatic: automatic)
-        case .tempBasal(unitsPerHour: let rate, duration: let duration, let isHighTemp):
-            return UnfinalizedDose(tempBasalRate: rate, startTime: programDate, duration: duration, isHighTemp: isHighTemp, scheduledCertainty: certainty, insulinType: insulinType)
+        case .tempBasal(unitsPerHour: let rate, duration: let duration, let isHighTemp, let automatic):
+            return UnfinalizedDose(tempBasalRate: rate, startTime: programDate, duration: duration, isHighTemp: isHighTemp, automatic: automatic, scheduledCertainty: certainty, insulinType: insulinType)
         case .basalProgram:
             return UnfinalizedDose(resumeStartTime: programDate, scheduledCertainty: certainty, insulinType: insulinType)
         }
