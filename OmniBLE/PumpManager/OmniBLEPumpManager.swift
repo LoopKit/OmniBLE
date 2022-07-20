@@ -785,16 +785,16 @@ extension OmniBLEPumpManager {
         let mockCommsErrorDuringPairing = false
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .seconds(2)) {
             self.jumpStartPod(lotNo: 135601809, lotSeq: 0800525, mockFault: mockFaultDuringPairing)
-            let _: DetailedStatus? = self.setStateWithResult({ (state) in
+            let fault: DetailedStatus? = self.setStateWithResult({ (state) in
                 var podState = state.podState
                 podState?.setupProgress = .priming
                 state.updatePodStateFromPodComms(podState)
                 return state.podState?.fault
             })
-            if mockFaultDuringPairing {
-                // completion(.failure(PodCommsError.podFault(fault: fault!)))
+            if let fault = fault {
+                completion(.failure(PumpManagerError.deviceState(PodCommsError.podFault(fault: fault))))
             } else if mockCommsErrorDuringPairing {
-                // completion(.failure(PodCommsError.noResponse))
+                completion(.failure(PumpManagerError.communication(PodCommsError.noResponse)))
             } else {
                 let mockPrimeDuration = TimeInterval(.seconds(3))
                 completion(.success(mockPrimeDuration))
@@ -954,6 +954,9 @@ extension OmniBLEPumpManager {
     }
 
     public func checkCannulaInsertionFinished(completion: @escaping (OmniBLEPumpManagerError?) -> Void) {
+        #if targetEnvironment(simulator)
+        completion(nil)
+        #else
         self.podComms.runSession(withName: "Check cannula insertion finished") { (result) in
             switch result {
             case .success(let session):
@@ -969,6 +972,7 @@ extension OmniBLEPumpManager {
                 completion(.communication(error))
             }
         }
+        #endif
     }
 
     public func getPodStatus(completion: ((_ result: PumpManagerResult<StatusResponse>) -> Void)? = nil) {
@@ -1125,10 +1129,7 @@ extension OmniBLEPumpManager {
     public func deactivatePod(completion: @escaping (OmniBLEPumpManagerError?) -> Void) {
         #if targetEnvironment(simulator)
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .seconds(2)) {
-
-            self.forgetPod(completion: {
-                completion(nil)
-            })
+            completion(nil)
         }
         #else
         guard self.state.podState != nil else {
