@@ -77,7 +77,7 @@ public struct Pod {
 
     // Default amount for cannula insertion bolus using secondsPerPrimePulse timing.
     // Checked to verify it agrees with value returned by pod during the pairing process.
-    public static let cannulaInsertionUnits = 0.5
+    public static let cannulaInsertionUnits = 0.0
 
     public static let cannulaInsertionUnitsExtra = 0.5 // edit to add a fixed additional amount of insulin during cannula insertion
 
