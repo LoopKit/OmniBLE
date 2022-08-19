@@ -18,10 +18,14 @@ struct OmniBLESettingsView: View  {
     @State private var showingDeleteConfirmation = false
     
     @State private var showSuspendOptions = false;
-    
+
+    @State private var showManualTempBasalOptions = false;
+
     @State private var showSyncTimeOptions = false;
 
     @State private var sendingTestBeepsCommand = false;
+
+    @State private var cancelingTempBasal = false
     
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
@@ -188,6 +192,31 @@ struct OmniBLESettingsView: View  {
         }
     }
 
+    var manualTempBasalRow: some View {
+        Button(action: {
+            self.manualBasalTapped()
+        }) {
+            FrameworkLocalText("Set Temporary Basal Rate", comment: "Button title to set temporary basal rate")
+        }
+        .sheet(isPresented: $showManualTempBasalOptions) {
+            ManualTempBasalEntryView(
+                enactBasal: { rate, duration, completion in
+                    viewModel.runTemporaryBasalProgram(unitsPerHour: rate, for: duration) { error in
+                        completion(error)
+                        if error == nil {
+                            showManualTempBasalOptions = false
+                        }
+                    }
+                },
+                didCancel: {
+                    showManualTempBasalOptions = false
+                },
+                allowedRates: viewModel.allowedTempBasalRates
+            )
+        }
+    }
+
+
     func suspendResumeRow() -> some View {
         HStack {
             Button(action: {
@@ -284,6 +313,35 @@ struct OmniBLESettingsView: View  {
                     }
                 }
             }
+
+            Section() {
+                if let manualTempRemaining = self.viewModel.manualBasalTimeRemaining, let remainingText = self.viewModel.timeRemainingFormatter.string(from: manualTempRemaining) {
+                    HStack {
+                        if cancelingTempBasal {
+                            ProgressView()
+                                .padding(.trailing)
+                        } else {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 22))
+                                .foregroundColor(guidanceColors.warning)
+                        }
+                        Button(action: {
+                            self.cancelManualBasal()
+                        }) {
+                            FrameworkLocalText("Cancel Manual Basal", comment: "Button title to cancel manual basal")
+                        }
+                    }
+                    HStack {
+                        FrameworkLocalText("Remaining", comment: "Label for remaining time of manual basal")
+                        Spacer()
+                        Text(remainingText)
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    manualTempBasalRow
+                }
+            }
+            .disabled(cancelingTempBasal)
             
             Section() {
                 HStack {
@@ -430,9 +488,9 @@ struct OmniBLESettingsView: View  {
     }
     
     var removePumpManagerActionSheet: ActionSheet {
-        ActionSheet(title: FrameworkLocalText("Remove Pump", comment: "Title for Omnipod PumpManager deletion action sheet."), message: FrameworkLocalText("Are you sure you want to stop using Omnipod?", comment: "Message for Omnipod PumpManager deletion action sheet"), buttons: [
-            .destructive(FrameworkLocalText("Delete Omnipod", comment: "Button text to confirm Omnipod PumpManager deletion")) {
-                self.viewModel.stopUsingOmnipodTapped()
+        ActionSheet(title: FrameworkLocalText("Remove Pump", comment: "Title for Omnipod DASH PumpManager deletion action sheet."), message: FrameworkLocalText("Are you sure you want to stop using Omnipod DASH?", comment: "Message for Omnipod DASH PumpManager deletion action sheet"), buttons: [
+            .destructive(FrameworkLocalText("Delete Omnipod DASH", comment: "Button text to confirm Omnipod DASH PumpManager deletion")) {
+                self.viewModel.stopUsingOmnipodDashTapped()
             },
             .cancel()
         ])
@@ -440,8 +498,8 @@ struct OmniBLESettingsView: View  {
     
     var suspendOptionsActionSheet: ActionSheet {
         ActionSheet(
-            title: FrameworkLocalText("Delivery Suspension Reminder", comment: "Title for suspend duration selection action sheet"),
-            message: FrameworkLocalText("How long would you like to suspend insulin delivery?", comment: "Message for suspend duration selection action sheet"),
+            title: FrameworkLocalText("Suspend Delivery", comment: "Title for suspend duration selection action sheet"),
+            message: FrameworkLocalText("Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?", comment: "Message for suspend duration selection action sheet"),
             buttons: [
                 .default(FrameworkLocalText("30 minutes", comment: "Button text for 30 minute suspend duration"), action: { self.viewModel.suspendDelivery(duration: .minutes(30)) }),
                 .default(FrameworkLocalText("1 hour", comment: "Button text for 1 hour suspend duration"), action: { self.viewModel.suspendDelivery(duration: .hours(1)) }),
@@ -450,7 +508,7 @@ struct OmniBLESettingsView: View  {
                 .cancel()
             ])
     }
-    
+
     func suspendResumeTapped() {
         switch self.viewModel.basalDeliveryState {
         case .active, .tempBasal:
@@ -461,6 +519,21 @@ struct OmniBLESettingsView: View  {
             break
         }
     }
+
+    func manualBasalTapped() {
+        showManualTempBasalOptions = true
+    }
+
+    func cancelManualBasal() {
+        cancelingTempBasal = true
+        viewModel.runTemporaryBasalProgram(unitsPerHour: 0, for: 0) { error in
+            cancelingTempBasal = false
+            if let error = error {
+                self.viewModel.activeAlert = .cancelManualBasalError(error)
+            }
+        }
+    }
+
     
     private func errorText(_ error: Error) -> String {
         if let error = error as? LocalizedError {
@@ -489,6 +562,13 @@ struct OmniBLESettingsView: View  {
                 title: Text("Failed to Set Pump Time", comment: "Alert title for time sync error"),
                 message: Text(errorText(error))
             )
+
+        case .cancelManualBasalError(let error):
+            return SwiftUI.Alert(
+                title: Text("Failed to Cancel Manual Basal", comment: "Alert title for failing to cancel manual basal error"),
+                message: Text(errorText(error))
+            )
+
         }
     }
 

@@ -40,7 +40,7 @@ extension PeripheralManager {
         try setNotifyValue(true, for: dataChar, timeout: .seconds(2))
     }
         
-    func sendMessage(_ message: MessagePacket, _ forEncryption: Bool = false) -> SendMessageResult {
+    func sendPacket(_ message: MessagePacket, _ forEncryption: Bool = false) -> SendMessageResult {
         dispatchPrecondition(condition: .onQueue(queue))
         
         var didSend = false

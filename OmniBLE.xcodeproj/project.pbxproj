@@ -117,6 +117,7 @@
 		C1D27A1527908DC600C41EBA /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84752E8226ED0FFE009FD801 /* OmniBLE.framework */; };
 		C1D27A1727908DE500C41EBA /* OmniBLE.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84752E8226ED0FFE009FD801 /* OmniBLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1D27A1B27911E9900C41EBA /* PodAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */; };
+		C1DBD513282FF79D009FCF74 /* ManualTempBasalEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */; };
 		C1ED1E7027BAE1A600FED71C /* BeepPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */; };
 		C1ED1E7227BAE44E00FED71C /* BeepPreferenceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */; };
 		C1F67E8B27975B830017487F /* AttachPodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67E7327975B830017487F /* AttachPodView.swift */; };
@@ -314,6 +315,7 @@
 		C1C001C227A2351D00533D35 /* OmniBLEReservoirView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmniBLEReservoirView.xib; sourceTree = "<group>"; };
 		C1C001C327A2351D00533D35 /* OmniBLEReservoirView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEReservoirView.swift; sourceTree = "<group>"; };
 		C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodAdvertisement.swift; sourceTree = "<group>"; };
+		C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualTempBasalEntryView.swift; sourceTree = "<group>"; };
 		C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeepPreference.swift; sourceTree = "<group>"; };
 		C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeepPreferenceSelectionView.swift; sourceTree = "<group>"; };
 		C1F67E7327975B830017487F /* AttachPodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachPodView.swift; sourceTree = "<group>"; };
@@ -403,15 +405,19 @@
 				1016325427185EE4007A3BC2 /* BasalDeliveryTable.swift */,
 				102111442709462300784F13 /* BasalSchedule+LoopKit.swift */,
 				1016325727185EE4007A3BC2 /* BasalSchedule.swift */,
+				C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */,
 				1016325127185EE4007A3BC2 /* BeepType.swift */,
 				10389A2026FF7841002115E9 /* CRC16.swift */,
 				1016325227185EE4007A3BC2 /* FaultEventCode.swift */,
 				10389A1D26FF7841002115E9 /* Message.swift */,
 				10389A0326FF7841002115E9 /* MessageBlocks */,
+				C1F67EDB2797A03A0017487F /* PendingCommand.swift */,
 				1016325327185EE4007A3BC2 /* Pod.swift */,
 				102111432709462300784F13 /* PodDoseProgressEstimator.swift */,
 				102111412709462300784F13 /* PodInsulinMeasurements.swift */,
 				1016325627185EE4007A3BC2 /* PodProgressStatus.swift */,
+				C1F67ED927979E400017487F /* PumpManagerAlert.swift */,
+				C1F67EE127985F580017487F /* ReservoirLevel.swift */,
 				1016325827185EE4007A3BC2 /* UnfinalizedDose.swift */,
 			);
 			path = OmnipodCommon;
@@ -551,10 +557,6 @@
 				1021114C2709467400784F13 /* PodComms.swift */,
 				102111402709462300784F13 /* PodState.swift */,
 				C1D27A1A27911E9900C41EBA /* PodAdvertisement.swift */,
-				C1F67ED927979E400017487F /* PumpManagerAlert.swift */,
-				C1F67EDB2797A03A0017487F /* PendingCommand.swift */,
-				C1F67EE127985F580017487F /* ReservoirLevel.swift */,
-				C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */,
 			);
 			path = PumpManager;
 			sourceTree = "<group>";
@@ -674,6 +676,7 @@
 				8475312426ED838A009FD801 /* PodLifeHUDView.xib */,
 				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
 				C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */,
+				C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1047,6 +1050,7 @@
 				10289E7B2739F886000339E6 /* EapMessage.swift in Sources */,
 				C1C001C127A2349D00533D35 /* OmniBLE.swift in Sources */,
 				10389A3326FF7841002115E9 /* CancelDeliveryCommand.swift in Sources */,
+				C1DBD513282FF79D009FCF74 /* ManualTempBasalEntryView.swift in Sources */,
 				10389A2426FF7841002115E9 /* VersionResponse.swift in Sources */,
 				C1F67EA027975B830017487F /* PodSetupView.swift in Sources */,
 				C1ED1E7027BAE1A600FED71C /* BeepPreference.swift in Sources */,
@@ -1276,6 +1280,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.randallknutson.OmniBLE;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = framework;
@@ -1301,6 +1306,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.randallknutson.OmniBLE;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = framework;

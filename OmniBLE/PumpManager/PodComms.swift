@@ -73,7 +73,7 @@ public class PodComms: CustomDebugStringConvertible {
         podStateLock.unlock()
     }
     
-    public func disconnectPodAndFinalizeDelivery() {
+    public func forgetPod() {
         if let manager = manager {
             self.log.default("Removing %{public}@ from auto-connect ids", manager.peripheral)
             bluetoothManager.disconnectFromDevice(uuidString: manager.peripheral.identifier.uuidString)
@@ -81,7 +81,7 @@ public class PodComms: CustomDebugStringConvertible {
 
         podStateLock.lock()
         podState?.resolveAnyPendingCommandWithUncertainty()
-        podState?.finalizeFinishedDoses()
+        podState?.finalizeAllDoses()
         podStateLock.unlock()
     }
 
@@ -500,30 +500,26 @@ extension PodComms: OmniBLEConnectionDelegate {
 extension PodComms: PeripheralManagerDelegate {
     
     func completeConfiguration(for manager: PeripheralManager) throws {
-        log.default("PodComms completeConfiguration")
+        log.default("PodComms completeConfiguration: isPaired=%{public}@ needsSessionEstablishment=%{public}@", String(describing: self.isPaired), String(describing: needsSessionEstablishment))
 
         if self.isPaired && needsSessionEstablishment {
             let myId = self.myId
-            manager.runSession(withName: "establish pod session") { [weak self] in
 
-                guard let self = self  else {
-                    return
-                }
+            self.podStateLock.lock()
+            defer {
+                self.podStateLock.unlock()
 
-                self.podStateLock.lock()
-                defer {
-                    self.podStateLock.unlock()
-                }
-
-                do {
-                    try manager.sendHello(myId: myId)
-                    try manager.enableNotifications() // Seemingly this cannot be done before the hello command, or the pod disconnects
-                    try self.establishNewSession()
-                    self.delegate?.podCommsDidEstablishSession(self)
-                } catch {
-                    self.log.error("Pod session sync error: %{public}@", String(describing: error))
-                }
             }
+
+            do {
+                try manager.sendHello(myId: myId)
+                try manager.enableNotifications() // Seemingly this cannot be done before the hello command, or the pod disconnects
+                try self.establishNewSession()
+                self.delegate?.podCommsDidEstablishSession(self)
+            } catch {
+                self.log.error("Pod session sync error: %{public}@", String(describing: error))
+            }
+
         } else {
             log.default("Session already established.")
         }

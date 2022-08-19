@@ -90,7 +90,7 @@ class LTKExchanger {
             keys: [LTKExchanger.SP0GP0],
             payloads: [Data()]
         )
-        let result = manager.sendMessage(sp0gp0.message)
+        let result = manager.sendPacket(sp0gp0.message)
         guard case .sentWithAcknowledgment = result else {
             throw PodProtocolError.pairingException("Error sending SP0GP0: \(result)")
         }
@@ -113,7 +113,7 @@ class LTKExchanger {
     }
 
     private func throwOnSendError(_ msg: MessagePacket, _ msgType: String) throws {
-        let result = manager.sendMessage(msg)
+        let result = manager.sendPacket(msg)
         guard case .sentWithAcknowledgment = result else {
             throw PodProtocolError.pairingException("Send failure: \(result)")
         }

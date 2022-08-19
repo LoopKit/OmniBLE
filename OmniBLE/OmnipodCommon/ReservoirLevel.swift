@@ -1,6 +1,6 @@
 //
 //  ReservoirLevel.swift
-//  DashKit
+//  OmniBLE
 //
 //  Created by Pete Schwamb on 5/31/19.
 //  Copyright © 2019 LoopKit Authors. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 
 public enum ReservoirLevel: RawRepresentable, Equatable {
     public typealias RawValue = Double
-    
+
     case valid(Double)
     case aboveThreshold
 
@@ -25,10 +25,9 @@ public enum ReservoirLevel: RawRepresentable, Equatable {
     }
 
     public init(rawValue: RawValue) {
-        switch rawValue {
-        case Pod.reservoirLevelAboveThresholdMagicNumber:
+        if rawValue > Pod.maximumReservoirReading {
             self = .aboveThreshold
-        default:
+        } else {
             self = .valid(rawValue)
         }
     }

@@ -14,6 +14,7 @@ protocol MessageLogger: AnyObject {
     // Comms logging
     func didSend(_ message: Data)
     func didReceive(_ message: Data)
+    func didError(_ message: String)
 }
 
 public struct MessageTransportState: Equatable, RawRepresentable {
@@ -212,11 +213,12 @@ class PodMessageTransport: MessageTransport {
 
         let sendMessage = try getCmdMessage(cmd: message)
 
-        let writeResult = manager.sendMessage(sendMessage)
+        let writeResult = manager.sendPacket(sendMessage)
         switch writeResult {
         case .sentWithAcknowledgment:
             break;
         case .sentWithError(let error):
+            messageLogger?.didError("Unacknowledged message. seq:\(message.sequenceNum), error = \(error)")
             throw PodCommsError.unacknowledgedMessage(sequenceNumber: message.sequenceNum, error: error)
         case .unsentWithError(let error):
             throw PodCommsError.commsError(error: error)
@@ -227,6 +229,7 @@ class PodMessageTransport: MessageTransport {
             incrementMessageNumber() // bump the 4-bit Omnipod Message number
             return response
         } catch {
+            messageLogger?.didError("Unacknowledged message. seq:\(message.sequenceNum), error = \(error)")
             throw PodCommsError.unacknowledgedMessage(sequenceNumber: message.sequenceNum, error: error)
         }
     }
@@ -277,7 +280,7 @@ class PodMessageTransport: MessageTransport {
         incrementNonceSeq()
         let ack = try getAck(response: decrypted)
         log.debug("Sending ACK: %@ in packet $ack", ack.payload.hexadecimalString)
-        let ackResult = manager.sendMessage(ack)
+        let ackResult = manager.sendPacket(ack)
         guard case .sentWithAcknowledgment = ackResult else {
             throw PodProtocolError.messageIOException("Could not write $msgType: \(ackResult)")
         }
@@ -295,7 +298,10 @@ class PodMessageTransport: MessageTransport {
         let data = try StringLengthPrefixEncoding.parseKeys([RESPONSE_PREFIX], decrypted.payload)[0]
         log.info("Received decrypted response: %@ in packet: %@", data.hexadecimalString, decrypted.payload.hexadecimalString)
 
-        let response = try Message.init(encodedData: data)
+        // Dash pods generates a CRC16 for Omnipod Messages, but the actual algorithm is not understood and doesn't match the CRC16
+        // that the pod enforces for incoming Omnipod command message. The Dash PDM explicitly ignores the CRC16 for incoming messages,
+        // so we ignore them as well and rely on higher level BLE & Dash message data checking to provide data corruption protection.
+        let response = try Message(encodedData: data, checkCRC: false)
 
         log.default("Recv(Hex): %@", data.hexadecimalString)
         messageLogger?.didReceive(data)

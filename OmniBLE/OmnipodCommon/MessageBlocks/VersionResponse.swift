@@ -13,7 +13,7 @@ fileprivate let assignAddressVersionLength: UInt8 = 0x15
 fileprivate let setupPodVersionLength: UInt8 = 0x1B
 
 let erosProductId: UInt8 = 2        // 2nd gen Eros Omnipod (PM=PI=2.x.y)
-let dashProductId: UInt8 = 4        // 4th gen Dash Omnipod (firmware version 4.x.y)
+let dashProductId: UInt8 = 4        // Dash NXP BLE (firmware 3.x.y) or TWI BOARD (firmware 4.x.y)
 
 public struct VersionResponse : MessageBlock {
     
@@ -35,9 +35,9 @@ public struct VersionResponse : MessageBlock {
     
     public let blockType: MessageBlockType = .versionResponse
 
-    public let firmwareVersion: FirmwareVersion     // for Eros (PM) 2.x.y, for Dash 4.x.y, for Omnipod5 5.x.y?
-    public let iFirmwareVersion: FirmwareVersion    // for Eros (PI) same as PM, for Dash & Omnipod 5 BLE firmware version #
-    public let productId: UInt8                     // 02 for Eros 02, 04 for Dash, and guessing 05 for Omnipod 5
+    public let firmwareVersion: FirmwareVersion     // for Eros (PM) 2.x.y, for NXP Dash 3.x.y, for TWI Dash 4.x.y
+    public let iFirmwareVersion: FirmwareVersion    // for Eros (PI) same as PM, for Dash BLE firmware version #
+    public let productId: UInt8                     // 02 for Eros, 04 for Dash, perhaps 05 for Omnipod 5
     public let lot: UInt32
     public let tid: UInt32
     public let address: UInt32
@@ -51,8 +51,8 @@ public struct VersionResponse : MessageBlock {
     public let pulseSize: Double?                   // VVVV / 100,000, must be 0x1388 / 100,000 = 0.05U
     public let secondsPerBolusPulse: Double?        // BR / 8, nominally 0x10 / 8 = 2 seconds per pulse
     public let secondsPerPrimePulse: Double?        // PR / 8, nominally 0x08 / 8 = 1 seconds per priming pulse
-    public let primeUnits: Double?                  // PP * pulseSize, nominally 0x34 * 0.05U = 2.6U
-    public let cannulaInsertionUnits: Double?       // CP * pulseSize, nominally 0x0A * 0.05U = 0.5U
+    public let primeUnits: Double?                  // PP / pulsesPerUnit, nominally 0x34 / 20 = 2.6U
+    public let cannulaInsertionUnits: Double?       // CP / pulsesPerUnit, nominally 0x0A / 20 = 0.5U
     public let serviceDuration: TimeInterval?       // PL hours, nominally 0x50 = 80 hours
 
     public let data: Data
@@ -135,8 +135,8 @@ public struct VersionResponse : MessageBlock {
             pulseSize = Double(encodedData[2...].toBigEndian(UInt16.self)) / 100000
             secondsPerBolusPulse = Double(encodedData[4]) / 8
             secondsPerPrimePulse = Double(encodedData[5]) / 8
-            primeUnits = Double(encodedData[6]) * Pod.pulseSize
-            cannulaInsertionUnits = Double(encodedData[7]) * Pod.pulseSize
+            primeUnits = Double(encodedData[6]) / Pod.pulsesPerUnit
+            cannulaInsertionUnits = Double(encodedData[7]) / Pod.pulsesPerUnit
             serviceDuration = TimeInterval.hours(Double(encodedData[8]))
 
             // These values only included in the shorter 0x15 VersionResponse for the AssignAddress command for Eros.

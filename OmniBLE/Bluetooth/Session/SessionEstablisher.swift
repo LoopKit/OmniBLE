@@ -54,7 +54,7 @@ class SessionEstablisher {
     func negotiateSessionKeys() throws -> SessionResult {
         msgSeq += 1
         let challenge = try eapAkaChallenge()
-        let sendResult = manager.sendMessage(challenge)
+        let sendResult = manager.sendPacket(challenge)
         guard case .sentWithAcknowledgment = sendResult else {
             throw SessionEstablishmentException.CommunicationError("Could not send the EAP AKA challenge: $sendResult")
         }
@@ -72,7 +72,7 @@ class SessionEstablisher {
 
         msgSeq += 1
         let success = eapSuccess()
-        let _ = manager.sendMessage(success)
+        let _ = manager.sendPacket(success)
 
         return .SessionKeys(SessionKeys(
             ck: milenage.ck,
