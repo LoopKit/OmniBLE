@@ -60,7 +60,7 @@ public struct BolusExtraCommand : MessageBlock {
         let pulseCountX10 = encodedData[9...].toBigEndian(UInt16.self)
         squareWaveUnits = Double(pulseCountX10) / 200
         
-        let intervalCounts = encodedData[5...].toBigEndian(UInt32.self)
+        let intervalCounts = encodedData[13...].toBigEndian(UInt32.self)
         let timeBetweenExtendedPulses = TimeInterval(hundredthsOfMilliseconds: Double(intervalCounts))
         squareWaveDuration = timeBetweenExtendedPulses * Double(pulseCountX10) / 10
     }
