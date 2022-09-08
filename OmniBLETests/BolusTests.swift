@@ -63,6 +63,29 @@ class BolusTests: XCTestCase {
         let cmd = BolusExtraCommand(units: 2.6, timeBetweenPulses: .seconds(1))
         XCTAssertEqual("170d000208000186a0000000000000", cmd.data.hexadecimalString)
     }
+
+    func testBolusExtraSquareWave() {
+        // 30U bolus + 36U square wave
+        // 17 0d 7c 1770 00030d40 1c20 0007a120
+
+        do {
+            let cmd = try BolusExtraCommand(encodedData: Data(hexadecimalString: "170d7c177000030d401c200007a120")!)
+            XCTAssertEqual(30.0, cmd.units)
+            XCTAssertEqual(false, cmd.acknowledgementBeep)
+            XCTAssertEqual(true, cmd.completionBeep)
+            XCTAssertEqual(.hours(1), cmd.programReminderInterval)
+            XCTAssertEqual(.seconds(2), cmd.timeBetweenPulses)
+            XCTAssertEqual(36, cmd.squareWaveUnits)
+            XCTAssertEqual(.hours(1), cmd.squareWaveDuration)
+            
+        } catch (let error) {
+            XCTFail("message decoding threw error: \(error)")
+        }
+        
+        // Encode typical prime
+        let cmd = BolusExtraCommand(units: 2.6, timeBetweenPulses: .seconds(1), squareWaveUnits: 36, squareWaveDuration: .hours(1))
+        XCTAssertEqual("170d000208000186a01c200007a120", cmd.data.hexadecimalString)
+    }
     
     func testBolusExtraOddPulseCount() {
         // 17 0d 7c 00fa 00030d40 000000000000
