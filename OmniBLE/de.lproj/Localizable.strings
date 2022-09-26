@@ -34,7 +34,11 @@
 /* Text indicating ongoing pump time synchronization */
 "Adjusting Pump Time..." = "Pumpenzeit einstellen";
 
-/* Title for Attach Pod screen */
+/* Message for Omnipod DASH PumpManager deletion action sheet */
+"Are you sure you want to stop using Omnipod DASH?" = "Bist Du Sicher, dass Du keinen Omnipod mehr benutzen möchtest?";
+
+/* navigation bar title attach pod
+   Title for Attach Pod screen */
 "Attach Pod" = "Pod anbringen";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
@@ -48,6 +52,9 @@
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
 "Back" = "Zurück";
+
+/* Pod state when basal initialized */
+"Basal initialized" = "Basalrate initialisiert";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Unter 50 IE";
@@ -72,6 +79,9 @@
    Pairing interface navigation bar button text for cancel action */
 "Cancel" = "Abbrechen";
 
+/* Button title to cancel manual basal */
+"Cancel Manual Basal" = "Manuelles Basal abbrechen";
+
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
 "Cannula inserted successfully. Continue." = "Katheter erfolgreich eingeführt. Weiter.";
 
@@ -93,7 +103,8 @@
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Pod jetzt wechseln. Der Pod ist seit 72 Stunden aktiv.";
 
-/* Title for check cannula screen */
+/* navigation bar title for check cannula
+   Title for check cannula screen */
 "Check Cannula" = "Prüfe Katheter";
 
 /* Label text for step three of attach pod instructions */
@@ -117,7 +128,8 @@
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Kommunikationsproblem: Unbestätigter Befehl steht an.";
 
-/* Text for confidence reminders navigation link */
+/* navigation title for confidence reminders
+   Text for confidence reminders navigation link */
 "Confidence Reminders" = "Sicherheitserinnerung";
 
 /* Description for BeepPreference.manualCommands */
@@ -158,6 +170,7 @@
    Button text for deactivate pod button
    Button title to deactive pod on uncertain program
    Deactivate pod action button accessibility label while ready to deactivate
+   navigation bar title for deactivate pod
    Title for deactivate pod screen */
 "Deactivate Pod" = "Pod deaktivieren";
 
@@ -182,6 +195,9 @@
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Aus";
+
+/* No comment provided by engineer. */
+"Done" = "Fertig";
 
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Leeres Reservoir";
@@ -240,11 +256,15 @@
 /* Unit for plural hours in pod life remaining */
 "hours" = "Stunden";
 
+/* Alert message body for confirm pod attachment */
+"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Wenn Du die Einrichtung abbrichst, dann wird der Pod deaktiviert und unbrauchbar.";
+
 /* Pod inititialized */
 "Initialized" = "Initialisiert";
 
 /* Cannula insertion button text while ready to insert
    Insert cannula action button accessibility label while ready to pair
+   navigation bar title for insert cannula
    Title for insert cannula screen */
 "Insert Cannula" = "Katheter einführen";
 
@@ -309,6 +329,7 @@
 
 /* Alert content title for lowReservoir pod alert
    Label text for low reservoir value row
+   navigation bar title for low reservoir
    Title for LowReservoirReminderSetupView */
 "Low Reservoir" = "Niedriges Reservoir";
 
@@ -394,6 +415,9 @@
 /* navigation title for notification settings
    Text for pod details disclosure row */
 "Notification Settings" = "Benachrichtigungseinstellungen";
+
+/* No comment provided by engineer. */
+"Numbers" = "Zahlen";
 
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Verstopfung entdeckt";
@@ -514,6 +538,9 @@
 /* Title for PodSetupView */
 "Pod Setup" = "Pod-Einrichtung";
 
+/* Format string for poor pod signal strength */
+"Poor signal strength" = "Schlechte Signalstärke";
+
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Stelle reinigen";
 
@@ -542,6 +569,9 @@
 /* Label text for basal rate summary */
 "Rate" = "Rate";
 
+/* Pod state when ready for basal programming */
+"Ready for basal programming" = "Bereit zur Basalratenprogrammierung";
+
 /* Pod state when ready for cannula insertion */
 "Ready to insert cannula" = "Bereit zum Einführen des Katheters";
 
@@ -564,6 +594,9 @@
 /* Label indicating pod replacement necessary
    Settings page link description when next lifecycle action is to replace pod */
 "Replace Pod" = "Ersetze den Pod";
+
+/* Pump Event title for UnfinalizedDose with doseType of .resume */
+"Resume" = "Fortsetzen";
 
 /* Recovery suggestion when pod is suspended */
 "Resume delivery" = "Abgabe wiederaufnehmen";
@@ -674,6 +707,9 @@
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Die Insulinabschaltung ist beendet.\n\nDu kannst die Abgabe über das Banner auf dem Startbildschirm oder über den Bildschirm mit den Pumpeneinstellungen fortsetzen. Du wirst in 15 Minuten erneut erinnert.";
+
+/* Description of proper cannula insertion */
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Das Fenster oben auf dem Pod sollte pinkfarben sein, wenn der Katheter ordentlich in die Haut eingeführt wurde.";
 
 /* Alert format string for missing temp basal configuration. */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Dieser Pumpenmanager wurde nicht mit einer maximalen Basalrate konfiguriert, da er hinzugefügt wurde, bevor die Funktion manuelle temporäre Basalrate hinzugefügt wurde. Bitte gehe zu Therapieeinstellungen -> Abgabegrenzen und stelle eine neue maximale Basalrate ein.";
