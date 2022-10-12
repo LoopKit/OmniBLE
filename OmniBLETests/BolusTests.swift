@@ -65,26 +65,45 @@ class BolusTests: XCTestCase {
     }
 
     func testBolusExtraSquareWave() {
-        // 30U bolus + 36U square wave
-        // 17 0d 7c 1770 00030d40 1c20 0007a120
-
+        // 6.0U combo bolus with 2.0U immediate and 4.0U over 3 hours
+        // 17 0d 3c 0190 00030d40 0320 00cdfe60
         do {
-            let cmd = try BolusExtraCommand(encodedData: Data(hexadecimalString: "170d7c177000030d401c200007a120")!)
-            XCTAssertEqual(30.0, cmd.units)
+            let cmd = try BolusExtraCommand(encodedData: Data(hexadecimalString: "170d3c019000030d40032000cdfe60")!)            
+            XCTAssertEqual(2.0, cmd.units)
             XCTAssertEqual(false, cmd.acknowledgementBeep)
-            XCTAssertEqual(true, cmd.completionBeep)
+            XCTAssertEqual(false, cmd.completionBeep)
             XCTAssertEqual(.hours(1), cmd.programReminderInterval)
             XCTAssertEqual(.seconds(2), cmd.timeBetweenPulses)
-            XCTAssertEqual(36, cmd.squareWaveUnits)
-            XCTAssertEqual(.hours(1), cmd.squareWaveDuration)
-            
+            XCTAssertEqual(4, cmd.squareWaveUnits)
+            XCTAssertEqual(.hours(3), cmd.squareWaveDuration)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
-        
-        // Encode typical prime
-        let cmd = BolusExtraCommand(units: 2.6, timeBetweenPulses: .seconds(1), squareWaveUnits: 36, squareWaveDuration: .hours(1))
-        XCTAssertEqual("170d000208000186a01c200007a120", cmd.data.hexadecimalString)
+
+        // Encode 0.1 combo Bolus with 0.05U immediate, 0.05U over 30 minutes
+        let cmd = BolusExtraCommand(units: 0.05, timeBetweenPulses: .seconds(2), squareWaveUnits: 0.05, squareWaveDuration: .hours(0.5), programReminderInterval: .minutes(60))
+        XCTAssertEqual("170d3c000a00030d40000a0aba9500", cmd.data.hexadecimalString)
+    }
+
+    func testExtendedBolusNoImmediate() {
+        // 1.0U extended bolus over 1 hour with nothing immediate
+        // 17 0d 7c 0000 00030d40 00c8 0112a880
+        do {
+            let cmd = try BolusExtraCommand(encodedData: Data(hexadecimalString: "170d7c000000030d4000c80112a880")!)             
+            XCTAssertEqual(false, cmd.acknowledgementBeep)
+            XCTAssertEqual(true, cmd.completionBeep)
+            XCTAssertEqual(.minutes(60), cmd.programReminderInterval)
+            XCTAssertEqual(0.0, cmd.units)
+            XCTAssertEqual(.seconds(2), cmd.timeBetweenPulses)
+            XCTAssertEqual(1.0, cmd.squareWaveUnits)
+            XCTAssertEqual(.hours(1), cmd.squareWaveDuration)
+        } catch (let error) {
+            XCTFail("message decoding threw error: \(error)")
+        }
+
+        // Encode 1.0U extended bolus over 4.5 hours with nothing immediate
+        let cmd = BolusExtraCommand(units: 0.0, timeBetweenPulses: 0, squareWaveUnits: 1.0, squareWaveDuration: .hours(4.5))
+        XCTAssertEqual("170d00000000030d4000c804d3f640", cmd.data.hexadecimalString)
     }
     
     func testBolusExtraOddPulseCount() {

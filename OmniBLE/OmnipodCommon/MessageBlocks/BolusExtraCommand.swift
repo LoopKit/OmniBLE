@@ -70,7 +70,7 @@ public struct BolusExtraCommand : MessageBlock {
         self.completionBeep = completionBeep
         self.programReminderInterval = programReminderInterval
         self.units = units
-        self.timeBetweenPulses = timeBetweenPulses
+        self.timeBetweenPulses = timeBetweenPulses > 0 ? timeBetweenPulses : .seconds(2)
         self.squareWaveUnits = squareWaveUnits
         self.squareWaveDuration = squareWaveDuration
     }
