@@ -75,6 +75,22 @@ public struct BasalScheduleExtraCommand : MessageBlock {
 
     public init(schedule: BasalSchedule, scheduleOffset: TimeInterval, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) {
         var rateEntries = [RateEntry]()
+
+        // Returns RateEntry index, time remaining in RateEntry, pulses remaining in RateEntry, RateEntry delay between pulses
+        func rateEntryLookup(rateEntries: [RateEntry], offset: TimeInterval) -> (Int, TimeInterval, Double, TimeInterval) {
+            var t: TimeInterval = 0
+
+            for i in 0..<rateEntries.count {
+                let rateEntryDuration = rateEntries[i].duration
+                if offset >= t && offset <= t + rateEntryDuration {
+                    let timeRemaining = (t + rateEntryDuration) - offset
+                    let pulsesRemaining = rateEntries[i].totalPulses * (timeRemaining / rateEntryDuration)
+                    return (i, timeRemaining, pulsesRemaining == 0 ? 0.1 : pulsesRemaining, rateEntries[i].delayBetweenPulses)
+                }
+                t += rateEntryDuration
+            }
+            fatalError("RateEntry schedule incomplete")
+        }
         
         let mergedSchedule = BasalSchedule(entries: schedule.entries.adjacentEqualRatesMerged())
         for entry in mergedSchedule.durations() {
@@ -83,19 +99,10 @@ public struct BasalScheduleExtraCommand : MessageBlock {
         
         self.rateEntries = rateEntries
         let scheduleOffsetNearestSecond = round(scheduleOffset)
-        let (entryIndex, entry, duration) = mergedSchedule.lookup(offset: scheduleOffsetNearestSecond)
+        let (entryIndex, timeRemainingInEntry, pulsesRemainingInEntry, timeBetweenPulses) = rateEntryLookup(rateEntries: rateEntries, offset: scheduleOffsetNearestSecond)
         self.currentEntryIndex = UInt8(entryIndex)
-        let timeRemainingInEntry = duration - (scheduleOffsetNearestSecond - entry.startTime)
-        let rate = mergedSchedule.rateAt(offset: scheduleOffsetNearestSecond)
-        var rrate = roundToSupportedBasalTimingRate(rate: rate)
-        if rrate == 0.0 {
-            // prevent app crash if a 0.0 scheduled basal ever gets here for Eros
-            rrate = nearZeroBasalRate
-        }
-        let pulsesPerHour = rrate / Pod.pulseSize
-        let timeBetweenPulses = TimeInterval(hours: 1) / pulsesPerHour
         self.delayUntilNextTenthOfPulse = timeRemainingInEntry.truncatingRemainder(dividingBy: (timeBetweenPulses / 10))
-        self.remainingPulses = pulsesPerHour * (timeRemainingInEntry-self.delayUntilNextTenthOfPulse) / .hours(1) + 0.1
+        self.remainingPulses = ceil(pulsesRemainingInEntry * 10) / 10
         self.acknowledgementBeep = acknowledgementBeep
         self.completionBeep = completionBeep
         self.programReminderInterval = programReminderInterval
