@@ -1312,8 +1312,8 @@ extension OmniBLEPumpManager: PumpManager {
         return supportedBasalRates.last(where: { $0 <= unitsPerHour }) ?? 0
     }
     
-    public func estimatedDuration(toDeliver bolusUnits: Double) -> TimeInterval {
-        TimeInterval(bolusUnits / Pod.bolusDeliveryRate)
+    public func estimatedDuration(toBolus units: Double) -> TimeInterval {
+        TimeInterval(units / Pod.bolusDeliveryRate)
     }
 
     public var maximumBasalScheduleEntryCount: Int {
