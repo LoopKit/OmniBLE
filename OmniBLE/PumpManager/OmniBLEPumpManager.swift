@@ -574,25 +574,26 @@ extension OmniBLEPumpManager {
 
     public func buildPumpStatusHighlight(for state: OmniBLEPumpManagerState, andDate date: Date = Date()) -> PumpStatusHighlight? {
         if state.podState?.needsCommsRecovery == true {
-            return PumpStatusHighlight(localizedMessage: NSLocalizedString("Comms Issue", comment: "Status highlight that delivery is uncertain."),
-                                                         imageName: "exclamationmark.circle.fill",
-                                                         state: .critical)
+            return PumpStatusHighlight(
+                localizedMessage: LocalizedString("Comms Issue", comment: "Status highlight that delivery is uncertain."),
+                imageName: "exclamationmark.circle.fill",
+                state: .critical)
         }
 
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("Finish Deactivation", comment: "Status highlight that when pod is deactivating."),
+                localizedMessage: LocalizedString("Finish Deactivation", comment: "Status highlight that when pod is deactivating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .noPod:
             return PumpStatusHighlight(
-                localizedMessage: NSLocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
+                localizedMessage: LocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .fault(let detail):
@@ -614,22 +615,22 @@ extension OmniBLEPumpManager {
         case .active:
             if let reservoirPercent = state.reservoirLevel?.percentage, reservoirPercent == 0 {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
+                    localizedMessage: LocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
             } else if state.podState?.isSuspended == true {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
+                    localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                     imageName: "pause.circle.fill",
                     state: .warning)
             } else if date.timeIntervalSince(state.lastPumpDataReportDate ?? .distantPast) > .minutes(12) {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
+                    localizedMessage: LocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
             } else if isRunningManualTempBasal(for: state) {
                 return PumpStatusHighlight(
-                    localizedMessage: NSLocalizedString("Manual Basal", comment: "Status highlight when manual temp basal is running."),
+                    localizedMessage: LocalizedString("Manual Basal", comment: "Status highlight when manual temp basal is running."),
                     imageName: "exclamationmark.circle.fill",
                     state: .warning)
             }
@@ -1310,6 +1311,10 @@ extension OmniBLEPumpManager: PumpManager {
     public func roundToSupportedBasalRate(unitsPerHour: Double) -> Double {
         // We do support rounding a 0 U/hr rate to 0
         return supportedBasalRates.last(where: { $0 <= unitsPerHour }) ?? 0
+    }
+    
+    public func estimatedDuration(toBolus units: Double) -> TimeInterval {
+        TimeInterval(units / Pod.bolusDeliveryRate)
     }
 
     public var maximumBasalScheduleEntryCount: Int {
@@ -2059,7 +2064,7 @@ extension OmniBLEPumpManager: PumpManager {
             }
 
 
-            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastSync: lastSync, completion: { (error) in
+            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastReconciliation: lastSync, completion: { (error) in
                 if let error = error {
                     self.log.error("Error storing pod events: %@", String(describing: error))
                 } else {
