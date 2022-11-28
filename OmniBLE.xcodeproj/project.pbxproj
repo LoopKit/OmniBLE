@@ -170,6 +170,8 @@
 		D802CD1227DD9AE10072E3A1 /* BasalScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */; };
 		D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */; };
 		D895BF5B275DE64000D51FC7 /* StringLengthPrefixEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */; };
+		D897B06B29347ED500FDB009 /* BolusDeliveryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897B06A29347ED500FDB009 /* BolusDeliveryTable.swift */; };
+		D897B06D29347EE500FDB009 /* InsulinTableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897B06C29347EE500FDB009 /* InsulinTableEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -385,6 +387,8 @@
 		D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasalScheduleTests.swift; sourceTree = "<group>"; };
 		D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedStatus+OmniBLE.swift"; sourceTree = "<group>"; };
 		D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringLengthPrefixEncoding.swift; sourceTree = "<group>"; };
+		D897B06A29347ED500FDB009 /* BolusDeliveryTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusDeliveryTable.swift; sourceTree = "<group>"; };
+		D897B06C29347EE500FDB009 /* InsulinTableEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsulinTableEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,8 +429,10 @@
 				1016325727185EE4007A3BC2 /* BasalSchedule.swift */,
 				C1ED1E6F27BAE1A600FED71C /* BeepPreference.swift */,
 				1016325127185EE4007A3BC2 /* BeepType.swift */,
+				D897B06A29347ED500FDB009 /* BolusDeliveryTable.swift */,
 				10389A2026FF7841002115E9 /* CRC16.swift */,
 				1016325227185EE4007A3BC2 /* FaultEventCode.swift */,
+				D897B06C29347EE500FDB009 /* InsulinTableEntry.swift */,
 				10389A1D26FF7841002115E9 /* Message.swift */,
 				10389A0326FF7841002115E9 /* MessageBlocks */,
 				C1F67EDB2797A03A0017487F /* PendingCommand.swift */,
@@ -1010,6 +1016,7 @@
 				8475315C26EDA193009FD801 /* TimeZone.swift in Sources */,
 				8475315726EDA193009FD801 /* LocalizedString.swift in Sources */,
 				C1F67E9727975B830017487F /* PairPodView.swift in Sources */,
+				D897B06B29347ED500FDB009 /* BolusDeliveryTable.swift in Sources */,
 				10289E782734D10D000339E6 /* EnDecrypt.swift in Sources */,
 				C1F67EDA27979E400017487F /* PumpManagerAlert.swift in Sources */,
 				10389A2D26FF7841002115E9 /* BolusExtraCommand.swift in Sources */,
@@ -1051,6 +1058,7 @@
 				10389A2F26FF7841002115E9 /* PodInfoPulseLogPlus.swift in Sources */,
 				10389A2826FF7841002115E9 /* AcknowledgeAlertCommand.swift in Sources */,
 				C1C001C527A2351D00533D35 /* OmniBLEReservoirView.swift in Sources */,
+				D897B06D29347EE500FDB009 /* InsulinTableEntry.swift in Sources */,
 				84752EDF26ED13F5009FD801 /* PeripheralManager.swift in Sources */,
 				C1F67EA227975B830017487F /* PodDetailsView.swift in Sources */,
 				1029AE4B27094DDC00B7F5B6 /* OmniBLEPumpManager+UI.swift in Sources */,
