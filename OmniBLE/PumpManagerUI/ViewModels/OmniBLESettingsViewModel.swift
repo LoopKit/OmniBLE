@@ -497,8 +497,9 @@ extension OmniBLEPumpManager {
                 return .expired
             default:
                 let remaining = Pod.nominalPodLife - (status.faultEventTimeSinceActivation ?? Pod.nominalPodLife)
+                let podTimeUntilReminder = remaining - (state.scheduledExpirationReminderOffset ?? 0)
                 if remaining > 0 {
-                    return .timeRemaining(remaining)
+                    return .timeRemaining(timeUntilExpiration: remaining, timeUntilExpirationReminder: podTimeUntilReminder)
                 } else {
                     return .expired
                 }
@@ -513,7 +514,8 @@ extension OmniBLEPumpManager {
         case .active:
             if let podTimeRemaining = podTimeRemaining {
                 if podTimeRemaining > 0 {
-                    return .timeRemaining(podTimeRemaining)
+                    let podTimeUntilReminder = podTimeRemaining - (state.scheduledExpirationReminderOffset ?? 0)
+                    return .timeRemaining(timeUntilExpiration: podTimeRemaining, timeUntilExpirationReminder: podTimeUntilReminder)
                 } else {
                     return .expired
                 }
