@@ -1,8 +1,47 @@
+/* Format string for last status date on pod details screen */
+"%@ ago" = "%@ geleden";
+
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ dB";
+
+/* No comment provided by engineer. */
+"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ heeft de communicatie met de pod op je lichaam hersteld. \n\nDe gegevens over insulinetoediening zijn bijgewerkt en moeten overeenkomen met wat daadwerkelijk is toegediend. \n\nJe kunt %@ nu weer normaal gebruiken.";
+
+/* Format string for reservoir volume when above maximum reading. (1: The maximum reading) */
+"%@+ U" = "%@+ E";
+
+/* Format string for reservoir volume. (1: The localized volume) */
+"%@U" = "%@E";
+
+/* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ kan sinds %2$@ niet communiceren met de pod op je lichaam. \n\nZonder communicatie met de pod kan de app geen opdrachten voor insulinetoediening blijven sturen of nauwkeurige, recente informatie weergeven over uw actieve insuline of de insuline die door de pod wordt toegediend. \n\nHoud je glucose de komende 6 uur of langer nauwlettend in de gaten, omdat er wel of geen actieve insuline in uw lichaam aanwezig is die %3$@ niet kan weergeven.";
+
+/* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insuline of minder resterend in Pod. Vervang Pod binnenkort.";
+
+/* Format string for total delivery on pod details screen */
+"%g U" = "%g E";
+
+/* Button text for 1 hour suspend duration */
+"1 hour" = "1 uur";
+
+/* Button text for 1 hour 30 minute suspend duration */
+"1 hour 30 minutes" = "1 uur 30 minuten";
+
+/* Button text for 2 hour suspend duration */
+"2 hours" = "2 uren";
+
+/* Button text for 30 minute suspend duration */
+"30 minutes" = "30 minuten";
+
 /* Description for auto-off alarm */
 "Auto-off alarm" = "Auto-uit alarm";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Minder dan 50 eenheden";
+
+/* Pump Event title for UnfinalizedDose with doseType of .bolus */
+"Bolus" = "Bolus";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus bezig";
@@ -16,20 +55,93 @@
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Bolus met tijdelijk basaal";
 
+/* Button title for cancelling low reservoir reminder edit
+   Button title for cancelling scheduled reminder date edit
+   Cancel button text in navigation bar on insert cannula screen
+   Cancel button text in navigation bar on pair pod UI
+   Cancel button title
+   Pairing interface navigation bar button text for cancel action */
+"Cancel" = "Annuleer";
+
 /* Pod state when inserting cannula */
 "Cannula inserting" = "Canule wordt geplaatst";
 
 /* String describing a dose that was certainly scheduled */
 "Certain" = "Zeker";
 
+/* The action string on pod status page when pod expired */
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Vervang Pod nu. De insulinetoediening stop 8 uur nadat de Pod is verlopen of wanneer er geen insuline meer over is.";
+
+/* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Vervang Pod nu. De insulinetoediening stop over %1$@ of wanneer er geen insuline meer over is.";
+
+/* Alert content body for podExpireImminent pod alert */
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Vervang Pod nu. Insulinetoediening stopt over 1 uur.";
+
+/* Alert content body for podExpiring pod alert */
+"Change Pod now. Pod has been active for 72 hours." = "Vervang Pod nu. Pod is 72 uur in gebruik geweest.";
+
+/* Label text for step three of attach pod instructions */
+"Check Pod, apply to site, then confirm pod attachment." = "Controleer Pod, breng aan op infusieplaats en bevestig hechting pod.";
+
+/* navigation title for confidence reminders
+   Text for confidence reminders navigation link */
+"Confidence Reminders" = "Vertrouwensherinneringen";
+
+/* No comment provided by engineer. */
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Vertrouwensherinneringen zijn pieptonen van de pod die kunnen worden gebruikt ter bevestiging van de geselecteerde opdrachten.";
+
+/* Description for BeepPreference.manualCommands */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Vertrouwensherinneringen klinken voor opdrachten die je start, zoals bolussen, bolus annuleren, onderbreken, hervatten, meldingsherinneringen opslaan, enz. Wanneer Loop de toediening automatisch aanpast, worden er geen vertrouwensherinneringen gebruikt.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Vertrouwensherinneringen klinken wanneer Loop de toediening automatisch aanpast, evenals voor opdrachten die je geeft.";
+
+/* Section header for configuration section */
+"Configuration" = "Configuratie";
+
+/* Button title for confirm attachment option */
+"Confirm" = "Bevestigen";
+
+/* Alert title for confirm pod attachment */
+"Confirm Pod Attachment" = "Bevestig Pod Bevestiging";
+
+/* Action button description when deactivated
+   Action button title for attach pod view
+   Button title to continue
+   Cannula insertion button text when inserted
+   Pod pairing action button text when paired
+   Text for continue button
+   Text for continue button on PodSetupView
+   Title of button to continue discard */
+"Continue" = "Ga verder";
+
+/* Unit for singular day in pod life remaining */
+"day" = "dag";
+
+/* Unit for plural days in pod life remaining */
+"days" = "dagen";
+
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Gedeactiveerd";
+
+/* Title string for BeepPreference.silent */
+"Disabled" = "Uitgeschakeld";
+
+/* No comment provided by engineer. */
+"Done" = "Gereed";
 
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Reservoir leeg";
 
+/* The title for Empty Reservoir alarm notification */
+"Empty Reservoir" = "Reservoir Leeg";
+
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Lege/geen reactie van pod";
+
+/* Title string for BeepPreference.manualCommands */
+"Enabled" = "Ingeschakeld";
 
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Fout geconstateerd, sluit af";
@@ -37,11 +149,27 @@
 /* Description for expiration alert */
 "Expiration alert" = "Alarm vervaltijd";
 
+/* Alert title for error when updating confidence reminder preference */
+"Failed to update confidence reminder preference." = "Mislukt om vertrouwensherinneringen voorkeuren bij te werken.";
+
+/* Alert title for error when updating low reservoir reminder */
+"Failed to Update Low Reservoir Reminder" = "Bijwerken Reservoir Bijna Leeg Herinnering Mislukt";
+
 /* Description for finish setup */
 "Finish setup " = "Voltooi installatie";
 
+/* Unit for singular hour in pod life remaining */
+"hour" = "uur";
+
+/* Unit for plural hours in pod life remaining */
+"hours" = "uren";
+
 /* Pod inititialized */
 "Initialized" = "Geinitialiseerd";
+
+/* The action string on pod status page when pod faulted
+   The default notification body for AlarmCodes */
+"Insulin delivery stopped. Change Pod now." = "Insulinetoediening gestopt. Vervang Pod nu.";
 
 /* The format string for Internal pod fault (1: The fault code value) */
 "Internal pod fault %1$03d" = "Interne pod fout %1$03d";
@@ -49,14 +177,42 @@
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
 "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "OnderbrokenBolus: %1$@ U (%2$@ Eenheden gepland) %3$@ %4$@ %5$@";
 
+/* description label for lot number pod details row */
+"Lot Number" = "Lotnummer";
+
+/* Pod state when running with fifty or less units */
+"Low reservoir" = "Reservoir Bijna Leeg";
+
+/* Alert content title for lowReservoir pod alert
+   Label text for low reservoir value row
+   navigation bar title for low reservoir
+   Title for LowReservoirReminderSetupView */
+"Low Reservoir" = "Reservoir Bijna Leeg";
+
+/* Format string for description for low reservoir advisory (1: reminder units) */
+"Low reservoir advisory (%1$gU)" = "Reservoir Bijna Leeg Advies (%1$gE)";
+
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Reservoir bijna leeg alarm";
+
+/* Label for low reservoir reminder row
+   Title for low reservoir reminder edit page */
+"Low Reservoir Reminder" = "Herinnering Reservoir Bijna Leeg";
 
 /* Recovery suggestion when no RileyLink is available */
 "Make sure your RileyLink is nearby and powered on" = "Zorg ervoor dat je RileyLink dichtbij is en aanstaat";
 
+/* Unit for singular minute in pod life remaining */
+"minute" = "minuut";
+
+/* Unit for plural minutes in pod life remaining */
+"minutes" = "minuten";
+
 /* Pod alert state when no alerts are active */
 "No alerts" = "Geen foutmeldingen";
+
+/* Description for BeepPreference.silent */
+"No confidence reminders are used." = "Er worden vertrouwensherinneringen gebruikt.";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Geen pod verbonden";
@@ -67,21 +223,55 @@
 /* Error message shown when no response from pod was received */
 "No RileyLink available" = "Geen RileyLink aanwezig";
 
+/* Continue pairing button title of in pairing cancel modal */
+"No, Continue With Pod" = "Nee, Ga Verder Met Pod";
+
+/* Button text to cancel pump time sync */
+"No, Keep Pump As Is" = "Nee, Laat Pomp Ongewijzigd";
+
 /* Delivery status when basal is running
    Pod state when running above fifty units */
 "Normal" = "Normaal";
 
+/* navigation title for notification settings
+   Text for pod details disclosure row */
+"Notification Settings" = "Meldingsinstellingen";
+
+/* No comment provided by engineer. */
+"Numbers" = "Nummers";
+
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Afsluiting gedetecteerd";
+
+/* Action button default text for PodAlerts */
+"Ok" = "OK";
+
+/* Alert acknowledgment OK button */
+"OK" = "OK";
 
 /* Generic title of the omnipod pump manager */
 "Omnipod" = "Omnipod";
 
+/* Pair Pod navigationBarTitle
+   Pod pairing action button text while ready to pair
+   Settings page link description when next lifecycle action is to pair new pod
+   Title for pod pairing screen */
+"Pair Pod" = "Koppel Pod";
+
+/* Pairing action button accessibility label while ready to pair */
+"Pair pod." = "Koppel pod.";
+
 /* Pod status after pairing */
 "Paired" = "Verbonden";
 
+/* Error message description for PeripheralManagerError.notReady */
+"Peripheral Not Ready" = "Apparaat Niet Gereed";
+
 /* Recovery suggestion when no response is received from pod */
 "Please bring your pod closer to the RileyLink and try again" = "Breng de pod dichter bij de RileyLink en probeer opnieuw";
+
+/* recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.unauthorized) */
+"Please enable bluetooth permissions for this app in system settings" = "Schakel bluetooth-toestemmingen in voor deze app in de systeeminstellingen.";
 
 /* Recover suggestion shown when no pod is paired */
 "Please pair a new pod" = "Verbind een nieuwe pod";
@@ -101,11 +291,25 @@
 /* Description for Pod expired pod fault */
 "Pod expired" = "Pod verlopen";
 
+/* Alert content title for podExpireImminent pod alert
+   Alert content title for podExpiring pod alert
+   Error message for reservoir view when pod expired
+   Label for pod expiration row, past tense
+   Status highlight message for podExpired alarm.
+   The title for Pod Expired alarm notification */
+"Pod Expired" = "Pod Verlopen";
+
+/* Label for pod life state when time remaining */
+"Pod expires in" = "Pod verloopt over";
+
+/* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
+"Pod expires in %1$@." = "Pod verloopt over %1$@.";
+
 /* Format string for pod fault code */
-"Pod Fault: %1$@" = " Pod fout: %1S@";
+"Pod Fault: %1$@" = "Pod fout: %1$@";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
-"Pod is not in a state ready for cannula insertion." = "Pod is niet gereed voor canule plaatsing.";
+"Pod is not in a state ready for cannula insertion." = "Pod is niet gereed voor plaatsing canule.";
 
 /* Error message when prime fails because the pod is in an unexpected state */
 "Pod is not in a state ready for priming." = "Pod is niet gereed voor het voorvullen.";
@@ -116,6 +320,9 @@
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
 "Pod setup window expired" = "Insteltijd van de Pod is verlopen";
 
+/* Label text for step one of attach pod instructions */
+"Prepare site." = "Infusieplaats voorbereiden.";
+
 /* Delivery status when pod is priming
    Pod status when priming */
 "Priming" = "Voorvullen";
@@ -124,13 +331,19 @@
 "Ready for basal programming" = "Klaar voor programmeren basaal";
 
 /* Pod state when ready for cannula insertion */
-"Ready to insert cannula" = "Gereed for canule plaatsing";
+"Ready to insert cannula" = "Gereed voor plaatsing canule";
+
+/* Pump Event title for UnfinalizedDose with doseType of .resume */
+"Resume" = "Hervatten";
 
 /* The format string describing a resume. (1: Time)(2: Scheduled certainty */
 "Resume: %1$@ %2$@" = "Hervat: %1$@ %2$@";
 
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Gepland basaal";
+
+/* description label for sequence number pod details row */
+"Sequence Number" = "Volgnummer";
 
 /* Description for shutdown imminent alarm */
 "Shutdown imminent alarm" = "Sluit af wegens dreigend alarm";
@@ -147,6 +360,9 @@
 /* Pod power to motor activated */
 "Tank power activated" = "Opslag power geactiveerd";
 
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Tijdelijk Basaal";
+
 /* Error message shown when temp basal could not be set due to existing temp basal in progress */
 "Temp basal in progress" = "Tijdelijk basaal wordt uitgevoerd";
 
@@ -154,26 +370,106 @@
 "Temp basal running" = "Tijdelijk basaal werkend";
 
 /* The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty */
-"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Tijdelijk basaal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$";
+"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Tijdelijk basaal: %1$@ E/uur %2$@ %3$@ %4$@ E %5$@";
+
+/* Navigation Title for ManualTempBasalEntryView */
+"Temporary Basal" = "Tijdelijk Basaal";
+
+/* Message for pod sync time action sheet */
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "De tijd op je pomp is anders dan de huidige tijd. Wil je de tijd op je pomp bijwerken naar de huidige tijd?";
+
+/* Alert content body for timeOffsetChangeDetected pod alert */
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "De tijd op je pomp is anders dan de huidige tijd. Je kunt de tijd op de pomp bekijken en synchroniseren met de huidige tijd in instellingen.";
+
+/* description for time change detected notice */
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "De tijd op je pomp is anders dan de huidige tijd. De tijd van je pomp bepaalt je geplande therapie-instellingen. Blader omlaag naar de Pomptijd om het tijdsverschil te bekijken en de pomp te configureren.";
+
+/* Description of proper cannula insertion */
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Het venster aan de bovenkant van de pod moet roze gekleurd zijn wanneer de canule correct in de huid is ingebracht.";
+
+/* Format string for recovery suggestion during deactivate pod. */
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Er is een probleem opgetreden met de pod communicatie. Als dit probleem zich voor blijft doen, tik op Pod Verwijderen. Je kunt dan een nieuwe Pod activeren.";
+
+/* Footer text for scheduled reminder area */
+"This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die je hebt gepland toen je je huidige Pod koppelde.";
+
+/* Alert format string for missing temp basal configuration. */
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Deze pomp is niet geconfigureerd met een maximale basaalsnelheid omdat deze toegevoegd is voordat handmatige tijdelijke basaalsnelheid een functie was. Ga naar therapie-instellingen -> toedieningslimieten en stel een nieuwe maximale basaalsnelheid in.";
+
+/* Label for expiration reminder row
+   Label for scheduled expiration reminder row
+   Label for scheduled reminder value row */
+"Time" = "Tijd";
+
+/* Alert content title for timeOffsetChangeDetected pod alert
+   Title for pod sync time action sheet.
+   title for time change detected notice */
+"Time Change Detected" = "Tijdsverschil gedetecteerd";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
 "Time to replace your pod! Your pod will expire in %1$@" = "Tijd om je pod te vervangen! Vervang je pod in %1$@";
 
+/* Error message description for PeripheralManagerError.timeout */
+"Timeout" = "Timeout";
+
+/* Error message for PodCommsError.tooManyPodsFound */
+"Too many pods found" = "Te veel pods gevonden";
+
+/* Recovery suggestion when ack received instead of response
+   recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
+"Try again" = "Probeer opnieuw";
+
+/* recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.poweredOff) */
+"Turn bluetooth on" = "Zet Bluetooth aan";
+
+/* Units for showing temp basal rate */
+"U/hr" = "E/uur";
+
+/* Title of delivery uncertainty recovery page */
+"Unable to Reach Pod" = "Kan Pod niet Bereiken";
+
+/* Title for pending command recovery screen */
+"Unable To Reach Pod" = "Kan Pod niet Bereiken";
+
 /* String describing a dose that was possibly scheduled */
 "Uncertain" = "Onzeker";
+
+/* Format string for unexpected pod change */
+"Unexpected pod change" = "Onverwachte podwissel";
 
 /* Error message shown when empty response from pod was received */
 "Unexpected response from pod" = "Onverwachte reactie van pod";
 
+/* Label for pod life state when pod not fully activated */
+"Unfinished Activation" = "Onvoltooide Activering";
+
+/* Label for pod life state when pod not fully deactivated */
+"Unfinished deactivation" = "Onvoltooide deactivering";
+
 /* The format string for Unknown pod fault (1: The fault code value) */
 "Unknown pod fault %1$03d" = "Onbekende pod fout %1$03d";
+
+/* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
+"Unknown Value (%1$@) for type %2$@" = "Onbekende waarde (%1$@) voor type %2$@";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Wacht op huidige bolus of maak bolus ongedaan";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
-"Wait for existing temp basal to finish, or suspend to cancel" = "Wacht op huidig tijdelijk basaal of onderbreek om te annuleren";
+"Wait for existing temp basal to finish, or suspend to cancel" = "Wacht tot de huidig tijdelijk basaalsnelheid is voltooid, of onderbreek om te annuleren";
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Wacht op herinnering om te verbinden";
+
+/* Button label for user to answer cannula was properly inserted */
+"Yes" = "Ja";
+
+/* Button title for confirm deactivation option */
+"Yes, Deactivate Pod" = "Ja, Deactiveer Pod";
+
+/* Button text to confirm pump time sync */
+"Yes, Sync to Current Time" = "Ja, Synchroniseer met Huidige Tijd";
+
+/* Alert message body for confirm pod attachment */
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Je Pod kan nog steeds insuline toedienen.\nVerwijder de Pod van je lichaam en tik vervolgens op \"Doorgaan\".";
 

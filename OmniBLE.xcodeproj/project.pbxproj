@@ -325,6 +325,7 @@
 		A9D349312764F5D30037F77C /* PayloadJoinerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadJoinerTest.swift; sourceTree = "<group>"; };
 		C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLETests.swift; sourceTree = "<group>"; };
 		C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPlugin.swift; sourceTree = "<group>"; };
+		C126BB1029830A83002CEE4F /* zh-Hans-CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans-CN"; path = "zh-Hans-CN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinTypeConfirmation.swift; sourceTree = "<group>"; };
 		C187C197279086A8006E3557 /* OmniBLEPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OmniBLEPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		C187C199279086A8006E3557 /* OmniBLEPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OmniBLEPlugin.h; sourceTree = "<group>"; };
@@ -929,6 +930,7 @@
 				ro,
 				he,
 				tr,
+				"zh-Hans-CN",
 			);
 			mainGroup = 84752E7826ED0FFE009FD801;
 			packageReferences = (
@@ -1185,6 +1187,7 @@
 				4B23AA7128D90A06009B453B /* es */,
 				4B23AA7228D90A08009B453B /* sv */,
 				4B23AA7428D90A0D009B453B /* vi */,
+				C126BB1029830A83002CEE4F /* zh-Hans-CN */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

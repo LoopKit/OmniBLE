@@ -22,6 +22,12 @@
 /* String describing a dose that was certainly scheduled */
 "Certain" = "Programación acertada";
 
+/* Unit for singular day in pod life remaining */
+"day" = "día";
+
+/* Unit for plural days in pod life remaining */
+"days" = "días";
+
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Pod desactivado";
 
@@ -40,6 +46,12 @@
 /* Description for finish setup */
 "Finish setup " = "Fin de la configuración";
 
+/* Unit for singular hour in pod life remaining */
+"hour" = "hora";
+
+/* Unit for plural hours in pod life remaining */
+"hours" = "horas";
+
 /* Pod inititialized */
 "Initialized" = " iniciado";
 
@@ -54,6 +66,12 @@
 
 /* Recovery suggestion when no RileyLink is available */
 "Make sure your RileyLink is nearby and powered on" = "Asegúrese de que su RileyLink está cerca y encendido";
+
+/* Unit for singular minute in pod life remaining */
+"minute" = "minuto";
+
+/* Unit for plural minutes in pod life remaining */
+"minutes" = "minutos";
 
 /* Pod alert state when no alerts are active */
 "No alerts" = "No hay alertas";

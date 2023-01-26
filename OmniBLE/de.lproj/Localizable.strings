@@ -493,9 +493,6 @@
    Status highlight message for other alarm. */
 "Pod Error" = "Pod Fehler";
 
-/* Description for expiration advisory alarm */
-"Pod expiration advisory alarm" = "";
-
 /* Description for Pod expired pod fault */
 "Pod expired" = "Pod abgelaufen";
 
@@ -754,9 +751,6 @@
 
 /* String describing a dose that was possibly scheduled */
 "Uncertain" = "Unsicher";
-
-/* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Warte bis der aktuelle Bolus abgeschlossen ist, oder brich den Bolus ab";
