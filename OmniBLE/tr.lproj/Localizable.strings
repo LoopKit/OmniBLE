@@ -1,0 +1,33 @@
+/* The title for AlarmCode.other notification */
+"Critical Pod Error" = "Kritik Pod Hatası";
+
+/* Action button description for deactivate while pod still active
+   Button text for deactivate pod button
+   Button title to deactive pod on uncertain program
+   Deactivate pod action button accessibility label while ready to deactivate
+   navigation bar title for deactivate pod
+   Title for deactivate pod screen */
+"Deactivate Pod" = "Podu Devre Dışı Bırak";
+
+/* Pod state when pod has been deactivated */
+"Deactivated" = "Devre dışı bırakıldı";
+
+/* Deactivate pod action button accessibility label while deactivating */
+"Deactivating." = "Devre dışı bırakılıyor.";
+
+/* Action button description while deactivating */
+"Deactivating..." = "Devre dışı bırakılıyor...";
+
+/* Button text to confirm Omnipod DASH PumpManager deletion */
+"Delete Omnipod DASH" = "Dash Pompasını Sil";
+
+/* Text for device details disclosure row
+   title for device details page */
+"Device Details" = "Cihaz Detayları";
+
+/* description label for device name pod details row */
+"Device Name" = "Cihaz ismi";
+
+/* description label for last status date pod details row */
+"Last Status" = "Son Durum";
+
