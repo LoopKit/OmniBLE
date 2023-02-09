@@ -14,13 +14,32 @@
 "Bolusing" = "Bolus în derulare";
 
 /* Delivery status when bolusing and temp basal is running */
-"Bolusing with temp basal" = "Bolus în derulare cu bazală temporară";
+"Bolusing with temp basal" = "Bolus în derulare cu rata bazală temporară";
 
 /* Pod state when inserting cannula */
 "Cannula inserting" = "Se inserează canula";
 
 /* String describing a dose that was certainly scheduled */
 "Certain" = "Doză confirmată";
+
+/* Section header for configuration section */
+"Configuration" = "Configurare";
+
+/* Button title for confirm attachment option */
+"Confirm" = "Confirmați";
+
+/* Alert title for confirm pod attachment */
+"Confirm Pod Attachment" = "Confirmați atașarea Pod-ului";
+
+/* Action button description when deactivated
+   Action button title for attach pod view
+   Button title to continue
+   Cannula insertion button text when inserted
+   Pod pairing action button text when paired
+   Text for continue button
+   Text for continue button on PodSetupView
+   Title of button to continue discard */
+"Continue" = "Continuă";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Dezactivat";
