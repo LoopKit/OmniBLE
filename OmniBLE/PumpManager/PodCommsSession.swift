@@ -48,7 +48,7 @@ extension PodCommsError: LocalizedError {
         case .invalidData:
             return nil
         case .noResponse:
-            return LocalizedString("No response from pod; check Bluetooth", comment: "Error message shown when no response from DASH pod was received")
+            return LocalizedString("No response from pod", comment: "Error message shown when no response from pod was received")
         case .emptyResponse:
             return LocalizedString("Empty response from pod", comment: "Error message shown when empty response from pod was received")
         case .podAckedInsteadOfReturningResponse:
@@ -60,7 +60,7 @@ extension PodCommsError: LocalizedError {
         case .invalidAddress(address: let address, expectedAddress: let expectedAddress):
             return String(format: LocalizedString("Invalid address 0x%x. Expected 0x%x", comment: "Error message for when unexpected address is received (1: received address) (2: expected address)"), address, expectedAddress)
         case .podNotConnected:
-            return LocalizedString("Pod not connected; check Bluetooth", comment: "Error message shown when the pod is not connected.")
+            return LocalizedString("Pod not connected", comment: "Error message shown when the pod is not connected.")
         case .unfinalizedBolus:
             return LocalizedString("Bolus in progress", comment: "Error message shown when operation could not be completed due to existing bolus in progress")
         case .unfinalizedTempBasal:
