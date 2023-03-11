@@ -874,7 +874,10 @@
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Basal programmé";
 
-/* Title for scheduled expiration reminder edit page */
+/* Card title for scheduled reminder
+   Scheduled reminder card title on SetupCompleteView
+   Title for scheduled expiration reminder edit page
+   Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Rappel programmé";
 
 /* Title text for insulin type confirmation page */
@@ -889,7 +892,8 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Régler basal temporaire";
 
-/* Title for setup complete screen */
+/* Title for setup complete screen
+   Title of SetupCompleteView */
 "Setup Complete" = "L’installation est terminée";
 
 /* Description for shutdown imminent */
@@ -986,9 +990,6 @@
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "La période de suspension de l'insuline est terminée. \n\nVous pouvez relancer l'administration à partir de la bannière sur l'écran d'accueil ou à partir de l'écran des paramètres de votre pompe. Vous recevrez un nouveau rappel dans 15 minutes.";
-
-/* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Les rappels ci-dessus ne sonneront pas si votre appareil est en mode Silencieux ou Ne pas déranger. \n\n Il existe d'autres alertes et alarmes critiques du Pod qui retentiront même si votre appareil est réglé sur le mode Silencieux ou Ne pas déranger.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L'heure de votre pompe est différente de l'heure actuelle. Voulez vous mettre à jour l'heure de votre pompe avec l'heure actuelle ?";

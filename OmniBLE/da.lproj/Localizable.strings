@@ -874,7 +874,10 @@
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Planlagt basal";
 
-/* Title for scheduled expiration reminder edit page */
+/* Card title for scheduled reminder
+   Scheduled reminder card title on SetupCompleteView
+   Title for scheduled expiration reminder edit page
+   Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Planlagt påmindelse";
 
 /* Title text for insulin type confirmation page */
@@ -889,7 +892,8 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Indstil midlertidig basalrate";
 
-/* Title for setup complete screen */
+/* Title for setup complete screen
+   Title of SetupCompleteView */
 "Setup Complete" = "Opsætning fuldført";
 
 /* Description for shutdown imminent */
@@ -986,9 +990,6 @@
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Perioden for suspension af insulin er afsluttet.\n\nDu kan genoptage afgivelsen fra den øverste del af startskærmen eller fra skærmen med pumpeindstillinger. Du vil blive mindet om dette igen om 15 minutter.";
-
-/* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Påmindelserne ovenfor vil ikke fungere, hvis din enhed er i lydløs eller Forstyr ikke-tilstand.\n\nDer er andre kritiske Pod-advarsler og alarmer, der lyder, selvom din enhed er indstillet til lydløs eller Forstyr ikke-tilstand.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden på din pumpe er forskellig fra den aktuelle tid. Vil du opdatere tiden på din pumpe til det aktuelle tidspunkt?";

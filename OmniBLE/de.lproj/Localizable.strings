@@ -874,7 +874,10 @@
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Geplantes Basal";
 
-/* Title for scheduled expiration reminder edit page */
+/* Card title for scheduled reminder
+   Scheduled reminder card title on SetupCompleteView
+   Title for scheduled expiration reminder edit page
+   Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Geplante Erinnerung";
 
 /* Title text for insulin type confirmation page */
@@ -889,7 +892,8 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Temporärere Basalrate setzen";
 
-/* Title for setup complete screen */
+/* Title for setup complete screen
+   Title of SetupCompleteView */
 "Setup Complete" = "Einrichtung abgeschlossen";
 
 /* Description for shutdown imminent */
@@ -986,9 +990,6 @@
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Die Insulinabschaltung ist beendet.\n\nSie können die Abgabe über das Banner auf dem Startbildschirm oder über den Bildschirm mit den Pumpeneinstellungen fortsetzen. Sie werden in 15 Minuten erneut erinnert.";
-
-/* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Die obigen Erinnerungen ertönen nicht, wenn sich Ihr Gerät im Lautlos- oder Nicht-stören-Modus befindet.\n\nEs gibt andere kritische Pod-Warnungen und Alarme, die auch dann ertönen, wenn Ihr Gerät in den Lautlos- oder Nicht-stören-Modus geschaltet ist.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Die Uhrzeit Ihrer Pumpe unterscheidet sich von Ihrer aktuellen Uhrzeit. Möchten Sie die Uhrzeit Ihrer Pumpe auf Ihre aktuelle Uhrzeit aktualisieren?";

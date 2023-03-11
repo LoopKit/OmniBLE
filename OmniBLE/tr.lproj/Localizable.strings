@@ -874,7 +874,10 @@
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Programlanan Bazal";
 
-/* Title for scheduled expiration reminder edit page */
+/* Card title for scheduled reminder
+   Scheduled reminder card title on SetupCompleteView
+   Title for scheduled expiration reminder edit page
+   Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Planlanmış Hatırlatıcı";
 
 /* Title text for insulin type confirmation page */
@@ -889,7 +892,8 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Geçici Bazal Oranı Ayarla";
 
-/* Title for setup complete screen */
+/* Title for setup complete screen
+   Title of SetupCompleteView */
 "Setup Complete" = "Kurulum tamamlandı";
 
 /* Description for shutdown imminent */
@@ -986,9 +990,6 @@
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "İnsülin askıya alma süresi sona ermiştir.\n\nAna ekran üzerinden veya pompa ayarları ekranınızdan iletime devam edebilirsiniz. 15 dakika içinde tekrar hatırlatılacaktır.";
-
-/* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "Cihazınız Sessiz veya Rahatsız Etmeyin modundaysa yukarıdaki hatırlatıcılar çalmayacaktır. \n\n Cihazınız Sessiz veya Rahatsız Etmeyin moduna ayarlanmış olsa bile çalacak başka kritik pod uyarıları ve alarmları vardır.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat geçerli saatten farklı. Pompanızdaki saati geçerli saate güncellemek istiyor musunuz?";
