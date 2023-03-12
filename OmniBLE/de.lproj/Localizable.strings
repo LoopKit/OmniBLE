@@ -835,7 +835,7 @@
 
 /* Label indicating pod replacement necessary
    Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Ersetze den Pod";
+"Replace Pod" = "Pod ersetzen";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
 "Resume" = "Fortsetzen";
