@@ -410,7 +410,7 @@
 "Insulin\nSuspended" = "Insulina Suspendida";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Administración de Insulina";
+"Insulin Delivery" = "Insulin Delivery";
 
 /* The action string on pod status page when pod faulted
    The default notification body for AlarmCodes */
@@ -862,7 +862,7 @@
 
 /* button title for saving low reservoir reminder
    button title for saving scheduled reminder */
-"Save" = "Guardar";
+"Save" = "Agregar";
 
 /* button title for saving low reservoir reminder while saving
    button title for saving scheduled reminder while saving */
@@ -872,7 +872,7 @@
 "Scheduled basal" = "Insulina basal programada";
 
 /* Delivery status when basal is running */
-"Scheduled Basal" = "Basal programada";
+"Scheduled Basal" = "Insulina basal programada";
 
 /* Card title for scheduled reminder
    Scheduled reminder card title on SetupCompleteView
@@ -916,7 +916,7 @@
 "Suspend" = "Suspender";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspender la administración";
+"Suspend Delivery" = "Suspender la infusión";
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */
@@ -1051,7 +1051,7 @@
 "twoNotUsed" = "twoNotUsed";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hora";
+"U/hr" = "U/hra";
 
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "No se puede conectar el Pod";

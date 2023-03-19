@@ -135,7 +135,7 @@
    Cancel button text in navigation bar on pair pod UI
    Cancel button title
    Pairing interface navigation bar button text for cancel action */
-"Cancel" = "Afbryd";
+"Cancel" = "Annuller";
 
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Annuller manuel basal";
@@ -292,10 +292,10 @@
 "Error" = "Fejl";
 
 /* Pod state error event logged shutting down */
-"Error event logged, shutting down" = "Fejl hændelse logget, lukker ned";
+"Error event logged, shutting down" = "Fejlhændelse logget, lukker ned";
 
 /* Description for expiration advisory */
-"Expiration advisory" = "Udløbs-advarsel";
+"Expiration advisory" = "Påmindelse om udløb";
 
 /* Description for expiration alert */
 "Expiration alert" = "Udløbs-advarsel";
@@ -359,7 +359,7 @@
 "Finish Setup" = "Afslut setup";
 
 /* Description for finish setup */
-"Finish setup " = "Afslut indstilling";
+"Finish setup " = "Afslut opsætning";
 
 /* Description for finish setup reminder */
 "Finish setup reminder" = "Påmindelse om færdiggørelse af opsætning";
@@ -564,7 +564,7 @@
 "No Pod" = "Ingen Pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "Ingen pod parret";
+"No pod paired" = "Ingen Pod parret";
 
 /* Error message for PodCommsError.noPodsFound */
 "No pods found" = "Ingen Pods fundet";
@@ -932,7 +932,7 @@
 "Suspend: %1$@ %2$@" = "Pause: %1$@ %2$@";
 
 /* Delivery status when insulin delivery is suspended */
-"Suspended" = "Pauset";
+"Suspended" = "Suspenderet";
 
 /* Label for suspended at time */
 "Suspended At" = "Suspenderet";
@@ -950,10 +950,10 @@
 "Sync to Current Time" = "Synkroniser til aktuel tid";
 
 /* Pod tank fill completed */
-"Tank fill completed" = "Reservoir påfyldning komplet";
+"Tank fill completed" = "Reservoirpåfyldning færdig";
 
 /* Pod power to motor activated */
-"Tank power activated" = "Reservoir strøm aktiveret";
+"Tank power activated" = "Reservoir-strøm aktiveret";
 
 /* Label text for step one of insert cannula instructions */
 "Tap below to start cannula insertion." = "Tryk nedenfor for at starte kanyleindsættelse.";
@@ -968,7 +968,7 @@
 "Temp basal running" = "Midlertidig basal i gang";
 
 /* The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty */
-"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "MidlertidigBasal: %1$@ E/time %2$@ %3$@ %4$@ E %5$@";
+"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Midlertidig basal: %1$@ E/time %2$@ %3$@ %4$@ E %5$@";
 
 /* Navigation Title for ManualTempBasalEntryView */
 "Temporary Basal" = "Midlertidig basal";
@@ -1051,7 +1051,7 @@
 "twoNotUsed" = "twoNotUsed";
 
 /* Units for showing temp basal rate */
-"U/hr" = "E pr time";
+"U/hr" = "E/t";
 
 /* Title of delivery uncertainty recovery page */
 "Unable to Reach Pod" = "Kan ikke få kontakt til pumpen";
@@ -1096,10 +1096,10 @@
 "Validation failed: %1$@" = "Validering mislykkedes: %1$@";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
-"Wait for existing bolus to finish, or cancel bolus" = "Vent indtil eksisterende bolus er færdig, eller annuller bolus";
+"Wait for existing bolus to finish, or cancel bolus" = "Vent, indtil eksisterende bolus er færdig, eller annuller bolus";
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
-"Wait for existing temp basal to finish, or suspend to cancel" = "Vent indtil den eksisterende midlertidige basal er færdig, eller pause for at annullere";
+"Wait for existing temp basal to finish, or suspend to cancel" = "Vent, indtil den eksisterende midlertidige basal er færdig, eller pause for at annullere";
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Vent, indtil indsættelsen er afsluttet.";

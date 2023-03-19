@@ -150,7 +150,7 @@
 "Certain" = "Definita";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Cambiare il Pod ora. L'erogazione dell'insulina si interromperà  dopo 8 ore dalla scadenza del Pod o quando non rimane più insulina nel pod .";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Cambiare il Pod ora. L'erogazione dell'insulina si interromperà  dopo 8 ore dalla scadenza del Pod o quando non rimane più insulina nel Pod.";
 
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Cambiare Pod ora. L' erogazione d'insulina si interromperà tra %1$@ o quando non ci sarà più insulina nel serbatoio.";
@@ -172,7 +172,7 @@
 "Checking Insertion" = "Controllo dell'inserimento";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Controllo...";
+"Checking..." = "Controllo in corso";
 
 /* Format string for invalid message error code (1: error code number) */
 "Command error %1$u" = "Errore di comando %1$u";
@@ -277,7 +277,7 @@
 "Empty reservoir" = "Serbatoio vuoto";
 
 /* The title for Empty Reservoir alarm notification */
-"Empty Reservoir" = "Serbatoio vuoto";
+"Empty Reservoir" = "Serbatoio Vuoto";
 
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Risposta senza contenuto dal Pod";
@@ -362,7 +362,7 @@
 "Finish setup " = "Termina configurazione";
 
 /* Description for finish setup reminder */
-"Finish setup reminder" = "Promemoria per la configurazione completa";
+"Finish setup reminder" = "Promemoria configurazione completa";
 
 /* description label for firmware version pod details row */
 "Firmware Version" = "Versione Firmware";
@@ -401,7 +401,7 @@
 "Inserting cannula" = "Inserimento Cannula";
 
 /* Insert cannula action button accessibility label while pairing */
-"Inserting. Please wait." = "Inserimento.  Attendere prego.";
+"Inserting. Please wait." = "Inserimento. Attendere prego.";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserimento...";
@@ -414,7 +414,7 @@
 
 /* The action string on pod status page when pod faulted
    The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "L'erogazione dell'insulina si e' bloccata. cambiare il Pod ora.";
+"Insulin delivery stopped. Change Pod now." = "L'erogazione d'insulina si è interrotta. Cambiare Pod adesso.";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "La somministrazione d'insulina verrà interrotta fino a quando non riprenderà manualmente. Quando vuoi che Loop ti ricordi di riprendere la consegna?";
@@ -427,7 +427,7 @@
 
 /* Text for confidence reminders navigation link
    Title for insulin type selection screen */
-"Insulin Type" = "Tipo di Insulina";
+"Insulin Type" = "Tipo d'insulina";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
 "Insulin type not configured" = "Tipo d'insulina non Configurato";
@@ -593,7 +593,7 @@
 
 /* navigation title for notification settings
    Text for pod details disclosure row */
-"Notification Settings" = "Impostazione Notifiche";
+"Notification Settings" = "Impostazioni";
 
 /* No comment provided by engineer. */
 "Numbers" = "Numeri";
@@ -620,7 +620,7 @@
 "Omnipod Reminders" = "Promemoria Omnipod";
 
 /* Pod state oneNotUsed */
-"oneNotUsed" = "UnoNonUsato";
+"oneNotUsed" = "oneNotUsed";
 
 /* Pair Pod navigationBarTitle
    Pod pairing action button text while ready to pair
@@ -904,7 +904,7 @@
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Perdita di segnale";
+"Signal Loss" = "Perdita Segnale";
 
 /* Format string for pod signal strength too high */
 "Signal strength too high" = "Potenza del segnale troppo alta";
@@ -923,7 +923,7 @@
 "Suspend In Progress Reminder" = "Promemoria sospensione in corso";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Sospendi erogazione Insulina";
+"Suspend Insulin Delivery" = "Sospendi l'erogazione d'insulina";
 
 /* Description for suspend time expired */
 "Suspend time expired" = "il tempo della sospensione e' scaduto";
@@ -977,7 +977,7 @@
 "Temporary Basal Failed" = "Basale Temporanea Fallita";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "L'App puo' configurare un promemoria capace di avvisare in anticipo della scadenza del Pod.\n\nImposta il promemoria in anteprima con il numero di ore desiderato per l'abbinamento del nuovo Pod. ";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "L'App puo' configurare un promemoria capace di avvisare in anticipo della scadenza del Pod.\n\nPer impostare  il numero di ore preferito per il preavviso dalla voce Omnipod della schermata principale usare i submenu' Configurazione>Impostazioni Notifiche>Notifica Scadenza  e sceglire il numero di ore desiderato per l'avviso di scadenza.";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "L'App può avvisare in anticipo della scadenza del Pod.\n\nPer impostare il numero di ore in anticipo desiderato scorrere nella lista ore ed impostare il numero di ore desiderato";
@@ -1004,21 +1004,21 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "La finestra nella parte superiore del Pod sara' di colore rosa quando la cannula è stata inserita correttamente nella pelle.";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Si è verificato un problema di comunicazione con il pod. Se il problema persiste, toccare Elimina pod, e dopo procedere ad attivare un nuovo Pod.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Si è verificato un problema di comunicazione con il Pod. Se il problema persiste, toccare Elimina Pod, e dopo si procedere ad attivare un nuovo Pod.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "Questo e' un promemoria che hai programmato quando hai accoppiato il Pod attuale.";
+"This is a reminder that you scheduled when you paired your current Pod." = "Questo è un promemoria che hai pianificato quando hai accoppiato il tuo Pod corrente.";
 
 /* Alert format string for missing temp basal configuration. */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Il manager di questo microinfusore non è stato configurato con una dose di basale massima perché questa è stata inserita  prima che la basale temporanea manuale diventasse una funzione attiva. Si prega di Andare su Impostazioni terapia - > Limiti erogazione e impostare un nuovo profilo di basale massima.";
 
 /* Pod state threeNotUsed */
-"threeNotUsed" = "TreNonUsato";
+"threeNotUsed" = "threeNotUsed";
 
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
    Label for scheduled reminder value row */
-"Time" = "Tempo/orario";
+"Time" = "Tempo";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -1048,16 +1048,16 @@
 "Turn bluetooth on" = "Attiva il Bluetooth";
 
 /* Pod state twoNotUsed */
-"twoNotUsed" = "DueNonUsato";
+"twoNotUsed" = "twoNotUsed";
 
 /* Units for showing temp basal rate */
-"U/hr" = "Unita'/Ora";
+"U/hr" = "U/ora";
 
 /* Title of delivery uncertainty recovery page */
-"Unable to Reach Pod" = "Impossibile comunicare con il Pod";
+"Unable to Reach Pod" = "Impossibile raggiungere Pod";
 
 /* Title for pending command recovery screen */
-"Unable To Reach Pod" = "Impossibile comunicare con il Pod";
+"Unable To Reach Pod" = "Impossibile raggiungere Pod";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
 "Unable to set a temporary basal rate: %1$@" = "Impossibile impostare una velocità basale temporanea: %1$@";
@@ -1066,7 +1066,7 @@
 "Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Impossibile impostare una velocità basale temporanea: %1$@\n\n%2$@";
 
 /* String describing a dose that was possibly scheduled */
-"Uncertain" = "Non certa";
+"Uncertain" = "Incerto";
 
 /* Description for MessageError invalidSequence */
 "Unexpected message sequence number" = "Notifica inaspettata di sequenza numerica ";
@@ -1075,7 +1075,7 @@
 "Unexpected pod change" = "Cambio pod imprevisto";
 
 /* Error message shown when empty response from pod was received */
-"Unexpected response from pod" = "Risposta inaspettata da Pod";
+"Unexpected response from pod" = "Risposta inaspettata dal Pod";
 
 /* Label for pod life state when pod not fully activated */
 "Unfinished Activation" = "Attivazione non completata";

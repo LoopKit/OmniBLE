@@ -242,10 +242,10 @@
    Deactivate pod action button accessibility label while ready to deactivate
    navigation bar title for deactivate pod
    Title for deactivate pod screen */
-"Deactivate Pod" = "Podu Devre Dışı Bırak";
+"Deactivate Pod" = "Pod'u devre dışı bırak";
 
 /* Pod state when pod has been deactivated */
-"Deactivated" = "Devre dışı bırakıldı";
+"Deactivated" = "Devre dışı";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Devre dışı bırakılıyor.";
@@ -311,7 +311,7 @@
 "Extended" = "Yayma";
 
 /* Delivery status when extended bolus is running */
-"Extended bolus running" = "Yayma bolus çalışması";
+"Extended bolus running" = "Yayma bolus çalışıyor";
 
 /* Delivery status when extended bolus and temp basal is running */
 "Extended bolus running with temp basal" = "Geçici bazal ile çalışan yayma bolus";

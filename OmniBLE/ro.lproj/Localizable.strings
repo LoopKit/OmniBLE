@@ -135,7 +135,7 @@
    Cancel button text in navigation bar on pair pod UI
    Cancel button title
    Pairing interface navigation bar button text for cancel action */
-"Cancel" = "Anulați";
+"Cancel" = "Renunță";
 
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Anulați bazala manuală";
@@ -410,7 +410,7 @@
 "Insulin\nSuspended" = "Administrarea insulinei suspendată";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Administrarea insulinei";
+"Insulin Delivery" = "Insulin Delivery";
 
 /* The action string on pod status page when pod faulted
    The default notification body for AlarmCodes */
@@ -721,7 +721,7 @@
 "Pod Expiration Reminder" = "Memento pentru expirarea Pod-ului";
 
 /* Description for Pod expired pod fault */
-"Pod expired" = "Pod expirat";
+"Pod expired" = "Pod-ul a expirat.";
 
 /* Alert content title for podExpireImminent pod alert
    Alert content title for podExpiring pod alert
@@ -872,7 +872,7 @@
 "Scheduled basal" = "Bazala programată";
 
 /* Delivery status when basal is running */
-"Scheduled Basal" = "Bazală planificată";
+"Scheduled Basal" = "Bazală programată";
 
 /* Card title for scheduled reminder
    Scheduled reminder card title on SetupCompleteView
@@ -916,7 +916,7 @@
 "Suspend" = "Suspendați";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspendați administrarea";
+"Suspend Delivery" = "Suspendă administrarea";
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */

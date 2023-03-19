@@ -191,7 +191,7 @@
 "Confidence Reminders" = "Bekreftelser";
 
 /* No comment provided by engineer. */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Lydsignal fra Pod som bekrefter valgte kommandoer.";
+"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Tillitspåminnelser er pip fra pod som kan brukes til å bekrefte valgte kommandoer.";
 
 /* Description for BeepPreference.manualCommands */
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Tillitspåminnelser høres for kommandoer du starter, for eksempel bolus, avbryt bolus, suspendere, gjenoppta, lagre varslingspåminnelser osv. Når Loop automatisk justerer leveringen, brukes mistillitspåminnelser.";
@@ -216,7 +216,7 @@
    Text for continue button
    Text for continue button on PodSetupView
    Title of button to continue discard */
-"Continue" = "Fortsette";
+"Continue" = "Fortsett";
 
 /* The format string for PodProtocolError.couldNotParseMessageException (1: message associated with error) */
 "Could not parse message: %1$@" = "Kunne ikke analysere meldingen: %1$@";
@@ -225,7 +225,7 @@
 "Critical Alerts" = "Kritiske varsler";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Kritisk Pod-feil";
+"Critical Pod Error" = "Pod-feil";
 
 /* Recovery suggestion when unexpected address received */
 "Crosstalk possible. Please move to a new location" = "Crosstalk mulig. Vennligst flytt til et nytt sted";
@@ -410,7 +410,7 @@
 "Insulin\nSuspended" = "Insulintilførsel utsatt";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulintilførsel";
+"Insulin Delivery" = "Insulin Delivery";
 
 /* The action string on pod status page when pod faulted
    The default notification body for AlarmCodes */
@@ -548,7 +548,7 @@
 "No alerts" = "Ingen alarmer";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "Ingen påminnelser i bruk.";
+"No confidence reminders are used." = "Ingen aktive påminnelser.";
 
 /* Description for Fault Event Code .noFaults */
 "No faults" = "Ingen feil";
@@ -608,7 +608,7 @@
 "Ok" = "Ok";
 
 /* Alert acknowledgment OK button */
-"OK" = "OK";
+"OK" = "Ok";
 
 /* Generic title of the omnipod pump manager */
 "Omnipod" = "Omnipod";
@@ -677,7 +677,7 @@
 "Please enable bluetooth permissions for this app in system settings" = "Aktiver Bluetooth-tillatelser for denne appen i systeminnstillingene";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Fullfør paringen av pod.";
+"Please finish pairing your pod." = "Vennligst fullfør sammenkoblingen av pod.";
 
 /* Recover suggestion shown when no pod is paired */
 "Please pair a new pod" = "Vennligst koble til ny pod";
@@ -705,7 +705,7 @@
 "Pod already primed" = "Pod er allerede fyllt";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Vellykket deaktivering av Pod. Fortsett.";
+"Pod deactivated successfully. Continue." = "Pod ble deaktivert. Fortsett.";
 
 /* Error message for reservoir view during general pod fault
    Status highlight message for other alarm. */
@@ -721,7 +721,7 @@
 "Pod Expiration Reminder" = "Pod utløpspåminnelse";
 
 /* Description for Pod expired pod fault */
-"Pod expired" = "Utløpt pod";
+"Pod expired" = "Pod utløpt";
 
 /* Alert content title for podExpireImminent pod alert
    Alert content title for podExpiring pod alert
@@ -738,7 +738,7 @@
 "Pod expires in" = "Pod utløper om";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod utløper om %1$@";
+"Pod expires in %1$@." = "Pod utløper om %1$@ .";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod-feildetaljer";
@@ -778,7 +778,7 @@
 "Pod setup window expired" = "Tidsvindu for oppsett av pod er utløpt";
 
 /* Description for pod suspended reminder */
-"Pod suspended reminder" = "Pod utløpspåminnelse";
+"Pod suspended reminder" = "Pod påminnelse er suspendert";
 
 /* Format string for poor pod signal strength */
 "Poor signal strength" = "Dårlig signalstyrke";
@@ -913,10 +913,10 @@
 "Skip Omnipod Onboarding?" = "Vil du hoppe over Omnipod Introduseringen?";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Utsett";
+"Suspend" = "Utsette";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Utsett levering";
+"Suspend Delivery" = "Pause leveranse";
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */
@@ -932,7 +932,7 @@
 "Suspend: %1$@ %2$@" = "Pause: %1$@ %2$@";
 
 /* Delivery status when insulin delivery is suspended */
-"Suspended" = "Pauset";
+"Suspended" = "Suspendert";
 
 /* Label for suspended at time */
 "Suspended At" = "Utsatt klokken";
@@ -962,13 +962,13 @@
 "Temp Basal" = "Midlertidig basal";
 
 /* Error message shown when temp basal could not be set due to existing temp basal in progress */
-"Temp basal in progress" = "Temp-basal pågår";
+"Temp basal in progress" = "Midlertidig basal pågår";
 
 /* Delivery status when temp basal is running */
-"Temp basal running" = "Temp-basal kjører";
+"Temp basal running" = "Midlertidig basal kjører";
 
 /* The format string describing a temp basal. (1: The rate)(2: Start time)(3: duration)(4: volume)(5: scheduled certainty */
-"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Temp-basal: %1$@ E/time %2$@ %3$@ %4$@ E %5$@";
+"TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "Midlertidig basal: %1$@ E/time %2$@ %3$@ %4$@ E %5$@";
 
 /* Navigation Title for ManualTempBasalEntryView */
 "Temporary Basal" = "Midlertidig basal";
@@ -980,10 +980,10 @@
 "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Appen konfigurerer en påminnelse på pod for å varsle deg før pod utløper. Angi antall timer forhåndsvarsel du vil konfigurere når du parer en ny Pod.";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Appen varsler deg før Pod-utløp. \n\n Rull for å angi antall timer forhåndsvarsel du vil ha.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Appen varsler deg før pod utløper.\n\nBla for å angi antall timer forhåndsvarsel du vil ha.";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen varsler deg når mengden insulin i Pod når dette nivået (50-10 E). \n\n Rull for å angi antall enheter du ønsker å bli påminnet om.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen varsler deg når mengden insulin i Pod når dette nivået (50-10 E).\n\nBla for å angi antall enheter du vil bli minnet på.";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen varsler deg når mengden insulin i pod når dette nivået.";
