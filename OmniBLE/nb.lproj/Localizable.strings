@@ -141,7 +141,7 @@
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Kanyle satt inn vellykket. Fortsette.";
+"Cannula inserted successfully. Continue." = "Kanyle skutt inn vellykket. Fortsett.";
 
 /* Pod state when inserting cannula */
 "Cannula inserting" = "Setter inn kanyle";
@@ -398,7 +398,7 @@
 "Inserted" = "Ført inn";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Fører inn kanyle";
+"Inserting cannula" = "Skyter inn kanyle";
 
 /* Insert cannula action button accessibility label while pairing */
 "Inserting. Please wait." = "Fører inn. Vennligst vent.";
@@ -825,7 +825,7 @@
 "Reminder initialized" = "Påminnelse initialisert";
 
 /* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Fjern den blå nålehetten og sjekk kanylen. Fjern deretter plasterbeskyttelsen.";
+"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Fjern den blå nålehetten og sjekk at kanylen ikke stikker ut. Fjern deretter plasterbeskyttelsen.";
 
 /* Title for remove pod modal */
 "Remove Pod from Body" = "Fjern pod fra kroppen";
