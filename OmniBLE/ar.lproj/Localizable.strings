@@ -26,6 +26,10 @@
    Pod pairing action button text while showing error */
 "Retry" = "أعد المحاولة";
 
+/* Title for setup complete screen
+   Title of SetupCompleteView */
+"Setup Complete" = "Setup Complete";
+
 /* Units for showing temp basal rate */
 "U/hr" = "وحدة لكل ساعة";
 
