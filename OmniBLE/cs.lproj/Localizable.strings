@@ -155,9 +155,6 @@
    Title for insulin type selection screen */
 "Insulin Type" = "Typ inzulínu";
 
-/* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Interní chyba podu %1$03d";
-
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
 "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "Přerušený bolus: %1$@ U ( %2$@ U naplánované) %3$@ %4$@ %5$@";
 
@@ -373,9 +370,6 @@
 
 /* Error message shown when empty response from pod was received */
 "Unexpected response from pod" = "Neočekávaná odpověď od podu";
-
-/* The format string for Unknown pod fault (1: The fault code value) */
-"Unknown pod fault %1$03d" = "Neznámá chyba podu %1$03d";
 
 /* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
 "Unknown Value (%1$@) for type %2$@" = "Neznámá hodnota ( %1$@ ) pro typ %2$@";

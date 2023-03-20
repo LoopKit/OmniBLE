@@ -433,7 +433,7 @@
 "Insulin type not configured" = "Nie skonfigurowano rodzaju insuliny";
 
 /* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Wewnętrzny błąd PODa %1$03d";
+"Internal pod fault %1$03d" = "Wewnętrzny błąd POD'a %1$03d";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
 "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "Przerwany bolus: %1$@ jedn. (%2$@ jedn. zaplanowanych) %3$@ %4$@ %5$@";
@@ -1090,7 +1090,7 @@
 "Unknown Characteristic" = "Nieznane powiadomienie";
 
 /* The format string for Unknown pod fault (1: The fault code value) */
-"Unknown pod fault %1$03d" = "Nieznany błąd PODa %1$03d";
+"Unknown pod fault %1$03d" = "Nieznany błąd POD'a %1$03d";
 
 /* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
 "Unknown Value (%1$@) for type %2$@" = "Nieznana wartość (%1$@) dla typu %2$@";
