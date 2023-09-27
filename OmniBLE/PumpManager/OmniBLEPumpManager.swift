@@ -80,7 +80,7 @@ extension OmniBLEPumpManagerError: LocalizedError {
 
 public class OmniBLEPumpManager: DeviceManager {
 
-    public static let pluginIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
+    public let pluginIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
 
     public let localizedTitle = LocalizedString("Omnipod DASH", comment: "Generic title of the OmniBLE pump manager")
 
