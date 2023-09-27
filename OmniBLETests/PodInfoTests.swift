@@ -14,17 +14,36 @@ import XCTest
 
 class PodInfoTests: XCTestCase {
     func testFullMessage() {
+        // 02DATAOFF 0  1  2  3 4  5  6 7  8  910 1112 1314 15 16 17 18 19 2021
+        // 02 16 // 02 0J 0K LLLL MM NNNN PP QQQQ RRRR SSSS TT UU VV WW 0X YYYY
+        // 02 16 // 02 0d 00 0000 00 00ab 6a 0384 03ff 0386 00 00 28 57 08 030d
         do {
             // Decode
             let infoResponse = try PodInfoResponse(encodedData: Data(hexadecimalString: "0216020d0000000000ab6a038403ff03860000285708030d0000")!)
             XCTAssertEqual(infoResponse.podInfoResponseSubType, .detailedStatus)
             let faultEvent = infoResponse.podInfo as! DetailedStatus
+            XCTAssertEqual(faultEvent.podInfoType, .detailedStatus)
+            XCTAssertEqual(faultEvent.podProgressStatus, .faultEventOccurred)
+            XCTAssertEqual(faultEvent.deliveryStatus, .suspended)
+            XCTAssertEqual(faultEvent.bolusNotDelivered, 0)
+            XCTAssertEqual(faultEvent.lastProgrammingMessageSeqNum, 0)
+            XCTAssertEqual(faultEvent.totalInsulinDelivered, 0xab * Pod.pulseSize)
+            XCTAssertEqual(faultEvent.totalInsulinDelivered, 8.55)
+            XCTAssertEqual(faultEvent.faultEventCode.faultType, .occlusionCheckAboveThreshold)
+            XCTAssertEqual(faultEvent.faultEventTimeSinceActivation, 0x384 * 60)
+            XCTAssertEqual(faultEvent.faultEventTimeSinceActivation, 54000)
+            XCTAssertEqual(faultEvent.reservoirLevel, Pod.reservoirLevelAboveThresholdMagicNumber, accuracy: 0.01)
+            XCTAssertEqual(faultEvent.timeActive, 0x386 * 60)
+            XCTAssertEqual(faultEvent.timeActive, 54120)
+            XCTAssertEqual(faultEvent.unacknowledgedAlerts, AlertSet(rawValue: 0))
             XCTAssertEqual(faultEvent.faultAccessingTables, false)
             XCTAssertEqual(faultEvent.podProgressStatus, .faultEventOccurred)
             XCTAssertEqual(faultEvent.errorEventInfo?.insulinStateTableCorruption, false)
             XCTAssertEqual(faultEvent.errorEventInfo?.occlusionType, 1)
             XCTAssertEqual(faultEvent.errorEventInfo?.immediateBolusInProgress, false)
             XCTAssertEqual(faultEvent.errorEventInfo?.podProgressStatus, .aboveFiftyUnits)
+            XCTAssertEqual(faultEvent.receiverLowGain, 0b01)
+            XCTAssertEqual(faultEvent.radioRSSI, 0x17)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
@@ -134,7 +153,7 @@ class PodInfoTests: XCTestCase {
             XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, decoded.reservoirLevel, accuracy: 0.01)
             XCTAssertEqual(8100, decoded.timeActive)
             XCTAssertEqual(TimeInterval(minutes: 0x0087), decoded.timeActive)
-            XCTAssertEqual("02:15", decoded.timeActive.stringValue)
+            XCTAssertEqual("2h15m", decoded.timeActive.timeIntervalStr)
             XCTAssertEqual(0, decoded.unacknowledgedAlerts.rawValue)
             XCTAssertEqual(false, decoded.faultAccessingTables)
             XCTAssertNil(decoded.errorEventInfo)
@@ -208,7 +227,7 @@ class PodInfoTests: XCTestCase {
     }
 
     func testPodInfoFaultEventErrorShuttingDown() {
-        // Failed Pod after 1 day, 18+ hours of live use shortly after installing new omniloop.
+        // Failed Pod after 42+ hours of live use shortly after installing a buggy version of Loop.
         // 02DATAOFF 0  1  2  3 4  5  6 7  8  910 1112 1314 15 16 17 18 19 2021
         // 02 16 // 02 0J 0K LLLL MM NNNN PP QQQQ RRRR SSSS TT UU VV WW 0X YYYY
         // 02 16 // 02 0d 00 0000 04 07f2 86 09ff 03ff 0a02 00 00 08 23 08 0000
@@ -224,7 +243,7 @@ class PodInfoTests: XCTestCase {
             XCTAssertEqual(.basalOverInfusionPulse, decoded.faultEventCode.faultType)
             XCTAssertEqual(0, decoded.unacknowledgedAlerts.rawValue)
             XCTAssertEqual(TimeInterval(minutes: 0x09ff), decoded.faultEventTimeSinceActivation)
-            XCTAssertEqual("1 day plus 18:39", decoded.faultEventTimeSinceActivation?.stringValue)
+            XCTAssertEqual("42h39m", decoded.faultEventTimeSinceActivation?.timeIntervalStr)
             XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, decoded.reservoirLevel, accuracy: 0.01)
             XCTAssertEqual(TimeInterval(minutes: 0x0a02), decoded.timeActive)
             XCTAssertEqual(false, decoded.faultAccessingTables)
@@ -256,7 +275,7 @@ class PodInfoTests: XCTestCase {
             XCTAssertEqual(.occlusionCheckAboveThreshold, decoded.faultEventCode.faultType)
             XCTAssertEqual(0, decoded.unacknowledgedAlerts.rawValue)
             XCTAssertEqual(TimeInterval(minutes: 0x0e0c), decoded.faultEventTimeSinceActivation)
-            XCTAssertEqual("2 days plus 11:56", decoded.faultEventTimeSinceActivation?.stringValue)
+            XCTAssertEqual("59h56m", decoded.faultEventTimeSinceActivation?.timeIntervalStr)
             XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, decoded.reservoirLevel, accuracy: 0.01)
             XCTAssertEqual(TimeInterval(minutes: 0x0e14), decoded.timeActive)
             XCTAssertEqual(false, decoded.faultAccessingTables)
@@ -288,7 +307,7 @@ class PodInfoTests: XCTestCase {
             XCTAssertEqual(.occlusionCheckAboveThreshold, decoded.faultEventCode.faultType)
             XCTAssertEqual(0, decoded.unacknowledgedAlerts.rawValue)
             XCTAssertEqual(TimeInterval(minutes: 0x0268), decoded.faultEventTimeSinceActivation)
-            XCTAssertEqual("10:16", decoded.faultEventTimeSinceActivation?.stringValue)
+            XCTAssertEqual("10h16m", decoded.faultEventTimeSinceActivation?.timeIntervalStr)
             XCTAssertEqual(Pod.reservoirLevelAboveThresholdMagicNumber, decoded.reservoirLevel, accuracy: 0.01)
             XCTAssertEqual(TimeInterval(minutes: 0x026b), decoded.timeActive)
             XCTAssertEqual(false, decoded.faultAccessingTables)

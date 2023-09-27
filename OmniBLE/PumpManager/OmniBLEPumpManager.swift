@@ -192,6 +192,14 @@ public class OmniBLEPumpManager: DeviceManager {
                     })
                 }
             }
+
+            if oldValue.podState?.setupProgress != newValue.podState?.setupProgress, newValue.podState?.setupProgress == .completed {
+                self.pumpDelegate.notify() { (delegate) in
+                    let date = Date()
+                    let event = NewPumpEvent(date: date, dose: nil, raw: "Pod Change \(date)".data(using: .utf8)!, title: "Pod Change", type: .replaceComponent(componentType: .pump))
+                    delegate?.pumpManager(self, hasNewPumpEvents: [event], lastReconciliation: self.lastSync, replacePendingEvents: false) { _ in }
+                }
+            }
         }
 
         // Ideally we ensure that oldValue.rawValue != newValue.rawValue, but the types aren't
@@ -2064,7 +2072,7 @@ extension OmniBLEPumpManager: PumpManager {
             }
 
 
-            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastReconciliation: lastSync, completion: { (error) in
+            delegate.pumpManager(self, hasNewPumpEvents: doses.map { NewPumpEvent($0) }, lastReconciliation: lastSync, replacePendingEvents: true) { (error) in
                 if let error = error {
                     self.log.error("Error storing pod events: %@", String(describing: error))
                 } else {
@@ -2072,7 +2080,7 @@ extension OmniBLEPumpManager: PumpManager {
                 }
 
                 completion(error)
-            })
+            }
         }
     }
 }
