@@ -632,7 +632,7 @@
 "Pair pod." = "Sammenkoble pod.";
 
 /* Pod status after pairing */
-"Paired" = "Sammenkoblbet";
+"Paired" = "Sammenkoblet";
 
 /* Pod status when pairing completed */
 "Pairing completed" = "Sammenkobling fullført";
