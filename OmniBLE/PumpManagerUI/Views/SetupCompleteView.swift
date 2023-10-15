@@ -85,6 +85,9 @@ struct SetupCompleteView: View {
         }
         .animation(.default)
         .navigationBarTitle(LocalizedString("Setup Complete", comment: "Title of SetupCompleteView"), displayMode: .automatic)
+        // disable iphone auto-lock when view is active
+        .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
+        .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
     }
     
     private func scheduledReminderDateString(_ scheduledDate: Date?) -> String {

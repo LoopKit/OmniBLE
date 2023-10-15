@@ -86,6 +86,9 @@ struct InsertCannulaView: View {
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: cancelButton)
+        // disable iphone auto-lock when view is active
+        .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
+        .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
     }
     
     var cancelButton: some View {

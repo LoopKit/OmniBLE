@@ -186,7 +186,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.navigateTo(.deactivate)
             }
             
-            let view = hostingController(rootView: PairPodView(viewModel: viewModel).onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
+            let view = hostingController(rootView: PairPodView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Pair Pod", comment: "Title for pod pairing screen")
             view.navigationItem.backButtonDisplayMode = .generic
             return view
@@ -200,7 +200,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self?.navigateTo(.deactivate)
                 })
             
-            let vc = hostingController(rootView: view.onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
+            let vc = hostingController(rootView: view)
             vc.navigationItem.title = LocalizedString("Attach Pod", comment: "Title for Attach Pod screen")
             vc.navigationItem.hidesBackButton = true
             return vc
@@ -215,7 +215,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.navigateTo(.deactivate)
             }
 
-            let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel).onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
+            let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Insert Cannula", comment: "Title for insert cannula screen")
             view.navigationItem.hidesBackButton = true
             return view
@@ -229,7 +229,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 }
             )
             
-            let hostedView = hostingController(rootView: view.onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
+            let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Check Cannula", comment: "Title for check cannula screen")
             hostedView.navigationItem.hidesBackButton = true
             return hostedView
@@ -262,7 +262,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 }
             )
             
-            let hostedView = hostingController(rootView: view.onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
+            let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Setup Complete", comment: "Title for setup complete screen")
             return hostedView
         case .pendingCommandRecovery:
@@ -302,8 +302,8 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         }
     }
     
-    private func hostingController<Content: View>(rootView: Content, onDisappear: @escaping () -> Void = {}) -> DismissibleHostingController<some View> {
-        return DismissibleHostingController(content: rootView, onDisappear: onDisappear, colorPalette: colorPalette)
+    private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController<some View> {
+        return DismissibleHostingController(content: rootView, colorPalette: colorPalette)
     }
     
     private func stepFinished() {

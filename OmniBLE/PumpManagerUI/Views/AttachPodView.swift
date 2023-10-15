@@ -58,6 +58,9 @@ struct AttachPodView: View {
         .navigationBarTitle(LocalizedString("Attach Pod", comment: "navigation bar title attach pod"), displayMode: .automatic)
         .navigationBarItems(trailing: cancelButton)
         .navigationBarBackButtonHidden(true)
+        // disable iphone auto-lock when view is active
+        .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
+        .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
     }
     
     var cancelButton: some View {
