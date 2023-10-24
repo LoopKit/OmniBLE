@@ -67,6 +67,7 @@
 		10389A3C26FF7841002115E9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A1D26FF7841002115E9 /* Message.swift */; };
 		10389A3F26FF7841002115E9 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A2026FF7841002115E9 /* CRC16.swift */; };
 		10389A4126FF7841002115E9 /* MessageTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A2226FF7841002115E9 /* MessageTransport.swift */; };
+		2742C7052AD875B100E67833 /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = 2742C7042AD875B100E67833 /* SlideButton */; };
 		4B67E2D5289B4EDB002D92AF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B67E2D3289B4EDB002D92AF /* Localizable.strings */; };
 		84752E9326ED0FFE009FD801 /* OmniBLE.h in Headers */ = {isa = PBXBuildFile; fileRef = 84752E8526ED0FFE009FD801 /* OmniBLE.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84752ED626ED13F5009FD801 /* Id.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84752EBF26ED13F5009FD801 /* Id.swift */; };
@@ -456,6 +457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2742C7052AD875B100E67833 /* SlideButton in Frameworks */,
 				847530F626ED65DD009FD801 /* LoopKit.framework in Frameworks */,
 				8475306E26ED15DE009FD801 /* CryptoSwift in Frameworks */,
 				847530F826ED65DD009FD801 /* LoopKitUI.framework in Frameworks */,
@@ -916,6 +918,7 @@
 			name = OmniBLE;
 			packageProductDependencies = (
 				8475306D26ED15DE009FD801 /* CryptoSwift */,
+				2742C7042AD875B100E67833 /* SlideButton */,
 			);
 			productName = OmniBLE;
 			productReference = 84752E8226ED0FFE009FD801 /* OmniBLE.framework */;
@@ -1035,6 +1038,7 @@
 			mainGroup = 84752E7826ED0FFE009FD801;
 			packageReferences = (
 				8475306C26ED15DE009FD801 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				2742C7032AD875B100E67833 /* XCRemoteSwiftPackageReference "SlideButton" */,
 			);
 			productRefGroup = 84752E8326ED0FFE009FD801 /* Products */;
 			projectDirPath = "";
@@ -1776,6 +1780,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2742C7032AD875B100E67833 /* XCRemoteSwiftPackageReference "SlideButton" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/no-comment/SlideButton";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		8475306C26ED15DE009FD801 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
@@ -1787,6 +1799,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2742C7042AD875B100E67833 /* SlideButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2742C7032AD875B100E67833 /* XCRemoteSwiftPackageReference "SlideButton" */;
+			productName = SlideButton;
+		};
 		8475306D26ED15DE009FD801 /* CryptoSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8475306C26ED15DE009FD801 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
