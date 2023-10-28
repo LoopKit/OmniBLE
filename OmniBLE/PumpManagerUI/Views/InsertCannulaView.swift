@@ -118,38 +118,6 @@ struct InsertCannulaView: View {
         
     }
     
-    
-    var actionText : some View {
-        Text(self.viewModel.state.nextActionButtonDescription)
-            .accessibility(identifier: "button_next_action")
-            .accessibility(label: Text(self.viewModel.state.actionButtonAccessibilityLabel))
-            .font(.headline)
-            
-    }
-    
-    
-    @ViewBuilder
-    var actionButton: some View {
-        if self.viewModel.stateNeedsDeliberateUserAcceptance {
-            SlideButton(action: {
-                self.viewModel.continueButtonTapped()
-            }) {
-                actionText
-            }
-            
-        } else {
-            Button(action: {
-                self.viewModel.continueButtonTapped()
-            }) {
-                actionText
-                    .actionButtonStyle(.primary)
-            }
-            
-        }
-        
-        
-    }
-    
     var cancelButton: some View {
         Button(LocalizedString("Cancel", comment: "Cancel button text in navigation bar on insert cannula screen")) {
             cancelModalIsPresented = true
