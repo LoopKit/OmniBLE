@@ -310,6 +310,14 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         return DismissibleHostingController(content: rootView, colorPalette: colorPalette)
     }
     
+    private func stepFinished() {
+       if let nextStep = currentScreen.next() {
+           navigateTo(nextStep)
+       } else {
+           completionDelegate?.completionNotifyingDidComplete(self)
+       }
+   }
+    
     private func setupCanceled() {
         completionDelegate?.completionNotifyingDidComplete(self)
     }
