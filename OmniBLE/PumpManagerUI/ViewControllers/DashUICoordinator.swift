@@ -303,16 +303,11 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     }
     
     private func hostingController<Content: View>(rootView: Content, isIdleTimerDisabled: bool = false) -> DismissibleHostingController<some View> {
-        return DismissibleHostingController(
-            content: isIdleTimerDisabled
-            ?
-            rootView
-                .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
-                .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
-            :
-            rootView,
-            colorPalette: colorPalette
-        )
+        if isIdleTimerDisabled {
+            return DismissibleHostingController(content: rootView.onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false}, colorPalette: colorPalette)
+        }
+        
+        return DismissibleHostingController(content: rootView, colorPalette: colorPalette)
     }
     
     private func setupCanceled() {
