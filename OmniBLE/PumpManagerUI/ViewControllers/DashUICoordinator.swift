@@ -228,6 +228,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self?.stepFinished()
                 }
             )
+            
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Check Cannula", comment: "Title for check cannula screen")
             hostedView.navigationItem.hidesBackButton = true

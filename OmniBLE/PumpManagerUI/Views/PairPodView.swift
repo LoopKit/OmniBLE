@@ -83,6 +83,9 @@ struct PairPodView: View {
         .navigationBarTitle(LocalizedString("Pair Pod", comment: "Pair Pod navigationBarTitle"), displayMode: .automatic)
         .navigationBarBackButtonHidden(self.viewModel.backButtonHidden)
         .navigationBarItems(trailing: self.viewModel.state.navBarVisible ? cancelButton : nil)
+        // disable iphone auto-lock when view is active
+        .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
+        .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
     }
         
     var cancelButton: some View {

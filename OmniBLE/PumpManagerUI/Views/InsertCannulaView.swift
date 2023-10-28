@@ -81,6 +81,41 @@ struct InsertCannulaView: View {
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: cancelButton)
+        // disable iphone auto-lock when view is active
+        .onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true})
+        .onDisappear(perform: {UIApplication.shared.isIdleTimerDisabled = false})
+    }
+    
+    
+    var actionText : some View {
+        Text(self.viewModel.state.nextActionButtonDescription)
+            .accessibility(identifier: "button_next_action")
+            .accessibility(label: Text(self.viewModel.state.actionButtonAccessibilityLabel))
+            .font(.headline)
+            
+    }
+    
+    
+    @ViewBuilder
+    var actionButton: some View {
+        if self.viewModel.stateNeedsDeliberateUserAcceptance {
+            SlideButton(action: {
+                self.viewModel.continueButtonTapped()
+            }) {
+                actionText
+            }
+            
+        } else {
+            Button(action: {
+                self.viewModel.continueButtonTapped()
+            }) {
+                actionText
+                    .actionButtonStyle(.primary)
+            }
+            
+        }
+        
+        
     }
     
     
