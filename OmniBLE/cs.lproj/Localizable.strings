@@ -64,7 +64,7 @@
 /* Title for uncertainty recovered screen */
 "Comms Recovered" = "Komunikace obnovena";
 
-/* No comment provided by engineer. */
+/* Help text for BeepPreferenceSelectionView */
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Ujištující upozornění jsou pípnutí podu, které lze použít k potvrzení zadaných příkazů.";
 
 /* Section header for configuration section */
