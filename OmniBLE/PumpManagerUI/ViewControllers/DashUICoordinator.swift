@@ -158,7 +158,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.setupCanceled()
             }
             let view = DeactivatePodView(viewModel: viewModel)
-            let hostedView = hostingController(rootView: view, isIdleTimerDisabled: true)
+            let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Deactivate Pod", comment: "Title for deactivate pod screen")
             return hostedView
         case .settings:
@@ -186,7 +186,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.navigateTo(.deactivate)
             }
             
-            let view = hostingController(rootView: PairPodView(viewModel: viewModel), isIdleTimerDisabled: true)
+            let view = hostingController(rootView: PairPodView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Pair Pod", comment: "Title for pod pairing screen")
             view.navigationItem.backButtonDisplayMode = .generic
             return view
@@ -200,7 +200,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self?.navigateTo(.deactivate)
                 })
             
-            let vc = hostingController(rootView: view, isIdleTimerDisabled: true)
+            let vc = hostingController(rootView: view)
             vc.navigationItem.title = LocalizedString("Attach Pod", comment: "Title for Attach Pod screen")
             vc.navigationItem.hidesBackButton = true
             return vc
@@ -215,7 +215,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.navigateTo(.deactivate)
             }
 
-            let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel), isIdleTimerDisabled: true)
+            let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel))
             view.navigationItem.title = LocalizedString("Insert Cannula", comment: "Title for insert cannula screen")
             view.navigationItem.hidesBackButton = true
             return view
@@ -228,8 +228,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self?.stepFinished()
                 }
             )
-            
-            let hostedView = hostingController(rootView: view, isIdleTimerDisabled: true)
+            let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Check Cannula", comment: "Title for check cannula screen")
             hostedView.navigationItem.hidesBackButton = true
             return hostedView
@@ -262,7 +261,7 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 }
             )
             
-            let hostedView = hostingController(rootView: view, isIdleTimerDisabled: true)
+            let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.title = LocalizedString("Setup Complete", comment: "Title for setup complete screen")
             return hostedView
         case .pendingCommandRecovery:
@@ -302,28 +301,17 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         }
     }
     
-    private func hostingController<Content: View>(rootView: Content, isIdleTimerDisabled: Bool = false) -> DismissibleHostingController<some View> {
-        let rootViewWithAppearance = rootView.onAppear {
-            if isIdleTimerDisabled {
-                UIApplication.shared.isIdleTimerDisabled = true
-            }
-        }
-        .onDisappear {
-            if isIdleTimerDisabled {
-                UIApplication.shared.isIdleTimerDisabled = false
-            }
-        }
-        
-        return DismissibleHostingController(content: rootViewWithAppearance, colorPalette: colorPalette)
+    private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController<some View> {
+        return DismissibleHostingController(content: rootView, colorPalette: colorPalette)
     }
     
     private func stepFinished() {
-       if let nextStep = currentScreen.next() {
-           navigateTo(nextStep)
-       } else {
-           completionDelegate?.completionNotifyingDidComplete(self)
-       }
-   }
+        if let nextStep = currentScreen.next() {
+            navigateTo(nextStep)
+        } else {
+            completionDelegate?.completionNotifyingDidComplete(self)
+        }
+    }
     
     private func setupCanceled() {
         completionDelegate?.completionNotifyingDidComplete(self)
