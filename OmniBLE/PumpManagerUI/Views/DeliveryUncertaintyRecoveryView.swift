@@ -19,16 +19,23 @@ struct DeliveryUncertaintyRecoveryView: View {
 
     var body: some View {
         GuidePage(content: {
-            Text(String(format: LocalizedString("%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nDo not Deactivate the Pod without an attempt to reconnect first.\nIf you cannot resolve communication with this pod, you should monitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.\nCommunication was interrupted during a critical time and the app cannot resolve information about your active insulin or the insulin being delivered by the Pod. The app will keep trying to restore communication.\nYou can toggle the phone Bluetooth off and then on. If you decide to give up because communication cannot be restored, the Deactivate Pod action will offer to discard the pod and start a new one.", comment: "Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name)"), self.model.appName, self.uncertaintyDateLocalizedString, self.model.appName))
+            Text(String(format: LocalizedString("%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nDo not Deactivate the Pod without an attempt to reconnect first.\nIf you cannot resolve communication with this pod, you should monitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display.\nCommunication was interrupted during a critical time and the app cannot resolve information about your active insulin or the insulin being delivered by the Pod. The app will keep trying to restore communication.\nYou can toggle the phone Bluetooth off and then on. If you decide to give up because communication cannot be restored, tap the Discard Pod button, follow the steps and start a new pod.", comment: "Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name)"), self.model.appName, self.uncertaintyDateLocalizedString, self.model.appName))
                 .padding([.top, .bottom])
         }) {
             VStack {
                 Text(LocalizedString("Attemping to re-establish communication", comment: "Description string above progress indicator while attempting to re-establish communication from an unacknowledged command")).padding(.top)
                 ProgressIndicatorView(state: .indeterminantProgress)
                 Button(action: {
+                    self.model.onDismiss?()
+                }) {
+                    Text(LocalizedString("Keep Waiting", comment: "Button title to return to prior screen"))
+                    .actionButtonStyle(.primary)
+                    .padding([.horizontal])
+                }
+                Button(action: {
                     self.model.podDeactivationChosen()
                 }) {
-                    Text(LocalizedString("Deactivate Pod", comment: "Button title to deactive pod on uncertain program"))
+                    Text(LocalizedString("Discard Pod", comment: "Button title to discard pod on uncertain program"))
                     .actionButtonStyle(.destructive)
                     .padding()
                 }
