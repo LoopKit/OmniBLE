@@ -103,7 +103,7 @@ struct DeactivatePodView: View {
                 self.viewModel.continueButtonTapped()
             }) {
                 actionText
-            }
+            }.environment(\.layoutDirection, .leftToRight)
         } else {
             Button(action: {
                 self.viewModel.continueButtonTapped()
