@@ -105,12 +105,16 @@ extension AlertConfiguration {
         if autoOffModifier {
             firstByte += 1 << 1
         }
+
+        // The 9-bit duration is limited to 2^9-1 minutes max value
+        let durationMinutes = min(UInt(duration.minutes), 0x1ff)
+
         // High bit of duration
-        firstByte += UInt8((Int(duration.minutes) >> 8) & 0x1)
+        firstByte += UInt8((durationMinutes >> 8) & 0x1)
 
         var data = Data([
             firstByte,
-            UInt8(Int(duration.minutes) & 0xff)
+            UInt8(durationMinutes & 0xff)
             ])
 
         switch trigger {

@@ -49,88 +49,71 @@ class PodInfoTests: XCTestCase {
         }
     }
     
-    func testPodInfoConfiguredAlertsNoAlerts() {
+    func testPodInfoTriggeredAlertsEmpty() {
         // 02DATAOFF 0  1 2  3 4  5 6  7 8  910 1112 1314 1516 1718
         // 02 13 // 01 XXXX VVVV VVVV VVVV VVVV VVVV VVVV VVVV VVVV
         // 02 13 // 01 0000 0000 0000 0000 0000 0000 0000 0000 0000
         do {
             // Decode
-            let decoded = try PodInfoConfiguredAlerts(encodedData: Data(hexadecimalString: "01000000000000000000000000000000000000")!)
-            XCTAssertEqual(.configuredAlerts, decoded.podInfoType)
+            let decoded = try PodInfoTriggeredAlerts(encodedData: Data(hexadecimalString: "01000000000000000000000000000000000000")!)
+            XCTAssertEqual(.triggeredAlerts, decoded.podInfoType)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
     }
     
-    func testPodInfoConfiguredAlertsSuspendStillActive() {
+    func testPodInfoTriggeredAlertsSuspendStillActive() {
         // 02DATAOFF 0  1 2  3 4  5 6  7 8  910 1112 1314 1516 1718
         // 02 13 // 01 XXXX VVVV VVVV VVVV VVVV VVVV VVVV VVVV VVVV
         // 02 13 // 01 0000 0000 0000 0000 0000 0000 0bd7 0c40 0000 // real alert value after 2 hour suspend
-        // 02 13 // 01 0000 0102 0304 0506 0708 090a 0bd7 0c40 0000 // used as a tester to find each alarm
         do {
             // Decode
-            let decoded = try PodInfoConfiguredAlerts(encodedData: Data(hexadecimalString: "010000000000000000000000000bd70c400000")!)
-            XCTAssertEqual(.configuredAlerts, decoded.podInfoType)
-            XCTAssertEqual(.beepBeepBeep, decoded.alertsActivations[5].beepType)
-            XCTAssertEqual(11, decoded.alertsActivations[5].timeFromPodStart) // in minutes
-            XCTAssertEqual(10.75, decoded.alertsActivations[5].unitsLeft) //, accuracy: 1)
-            XCTAssertEqual(.beeeeeep, decoded.alertsActivations[6].beepType)
-            XCTAssertEqual(12, decoded.alertsActivations[6].timeFromPodStart) // in minutes
-            XCTAssertEqual(3.2, decoded.alertsActivations[6].unitsLeft) //, accuracy: 1)
+            let decoded = try PodInfoTriggeredAlerts(encodedData: Data(hexadecimalString: "010000000000000000000000000bd70c400000")!)
+            XCTAssertEqual(.triggeredAlerts, decoded.podInfoType)
+            XCTAssertEqual("50h31m", decoded.alertActivations[5].timeIntervalStr)
+            XCTAssertEqual("52h16m", decoded.alertActivations[6].timeIntervalStr)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
     }
     
-    func testPodInfoConfiguredAlertsReplacePodAfter3DaysAnd8Hours() {
+    func testPodInfoTriggeredAlertsReplacePodAfter3DaysAnd8Hours() {
         // 02DATAOFF 0  1 2  3 4  5 6  7 8  910 1112 1314 1516 1718
         // 02 13 // 01 XXXX VVVV VVVV VVVV VVVV VVVV VVVV VVVV VVVV
         // 02 13 // 01 0000 0000 0000 0000 0000 0000 0000 0000 10e1
         do {
-            let decoded = try PodInfoConfiguredAlerts(encodedData: Data(hexadecimalString: "010000000000000000000000000000000010e1")!)
-            XCTAssertEqual(.configuredAlerts, decoded.podInfoType)
-            XCTAssertEqual(.bipBipBipbipBipBip, decoded.alertsActivations[7].beepType)
-            XCTAssertEqual(16, decoded.alertsActivations[7].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(11.25, decoded.alertsActivations[7].unitsLeft, accuracy: 1)
+            let decoded = try PodInfoTriggeredAlerts(encodedData: Data(hexadecimalString: "010000000000000000000000000000000010e1")!)
+            XCTAssertEqual(.triggeredAlerts, decoded.podInfoType)
+            XCTAssertEqual("72h1m", decoded.alertActivations[7].timeIntervalStr)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
     }
     
-    func testPodInfoConfiguredAlertsReplacePodAfterReservoirEmpty() {
+    func testPodInfoTriggeredAlertsReplacePodAfterReservoirEmpty() {
         // 02DATAOFF 0  1 2  3 4  5 6  7 8  910 1112 1314 1516 1718
         // 02 13 // 01 XXXX VVVV VVVV VVVV VVVV VVVV VVVV VVVV VVVV
         // 02 13 // 01 0000 0000 0000 1285 0000 11c7 0000 0000 119c
         do {
-            let decoded = try PodInfoConfiguredAlerts(encodedData: Data(hexadecimalString: "010000000000001285000011c700000000119c")!)
-            XCTAssertEqual(.configuredAlerts, decoded.podInfoType)
-            XCTAssertEqual(.bipBeepBipBeepBipBeepBipBeep, decoded.alertsActivations[2].beepType)
-            XCTAssertEqual(18, decoded.alertsActivations[2].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(6.6, decoded.alertsActivations[2].unitsLeft, accuracy: 1)
-            XCTAssertEqual(.beep, decoded.alertsActivations[4].beepType)
-            XCTAssertEqual(17, decoded.alertsActivations[4].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(9.95, decoded.alertsActivations[4].unitsLeft, accuracy: 2)
-            XCTAssertEqual(.bipBipBipbipBipBip, decoded.alertsActivations[7].beepType)
-            XCTAssertEqual(17, decoded.alertsActivations[7].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(7.8, decoded.alertsActivations[7].unitsLeft, accuracy: 1)
+            let decoded = try PodInfoTriggeredAlerts(encodedData: Data(hexadecimalString: "010000000000001285000011c700000000119c")!)
+            XCTAssertEqual(.triggeredAlerts, decoded.podInfoType)
+            XCTAssertEqual("79h1m", decoded.alertActivations[2].timeIntervalStr)
+            XCTAssertEqual("75h51m", decoded.alertActivations[4].timeIntervalStr)
+            XCTAssertEqual("75h8m", decoded.alertActivations[7].timeIntervalStr)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
     }
     
-    func testPodInfoConfiguredAlertsReplacePod() {
+    func testPodInfoTriggeredAlertsReplacePod() {
         // 02DATAOFF 0  1 2  3 4  5 6  7 8  910 1112 1314 1516 1718
         // 02 13 // 01 XXXX VVVV VVVV VVVV VVVV VVVV VVVV VVVV VVVV
         // 02 13 // 01 0000 0000 0000 1284 0000 0000 0000 0000 10e0
         do {
-            let decoded = try PodInfoConfiguredAlerts(encodedData: Data(hexadecimalString: "010000000000001284000000000000000010e0")!)
-            XCTAssertEqual(.configuredAlerts, decoded.podInfoType)
-            XCTAssertEqual(.bipBeepBipBeepBipBeepBipBeep, decoded.alertsActivations[2].beepType)
-            XCTAssertEqual(18, decoded.alertsActivations[2].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(6.6, decoded.alertsActivations[2].unitsLeft, accuracy: 1)
-            XCTAssertEqual(.bipBipBipbipBipBip, decoded.alertsActivations[7].beepType)
-            XCTAssertEqual(16, decoded.alertsActivations[7].timeFromPodStart) // in 2 hours steps
-            XCTAssertEqual(11.2, decoded.alertsActivations[7].unitsLeft, accuracy: 1)
+            let decoded = try PodInfoTriggeredAlerts(encodedData: Data(hexadecimalString: "010000000000001284000000000000000010e0")!)
+            XCTAssertEqual(.triggeredAlerts, decoded.podInfoType)
+            XCTAssertEqual("79h", decoded.alertActivations[2].timeIntervalStr)
+            XCTAssertEqual("72h", decoded.alertActivations[7].timeIntervalStr)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
@@ -414,13 +397,12 @@ class PodInfoTests: XCTestCase {
             let decoded = try PodInfoActivationTime(encodedData: Data(hexadecimalString: "059200010000000000000000091912170e")!)
             XCTAssertEqual(.activationTime, decoded.podInfoType)
             XCTAssertEqual(.tempPulseChanInactive, decoded.faultEventCode.faultType)
-            XCTAssertEqual(TimeInterval(minutes: 0x0001), decoded.timeActivation)
-            let decodedDateTime = decoded.dateTime
-            XCTAssertEqual(2018, decodedDateTime.year)
-            XCTAssertEqual(09, decodedDateTime.month)
-            XCTAssertEqual(25, decodedDateTime.day)
-            XCTAssertEqual(23, decodedDateTime.hour)
-            XCTAssertEqual(14, decodedDateTime.minute)
+            XCTAssertEqual(TimeInterval(minutes: 0x0001), decoded.faultTime)
+            XCTAssertEqual(18, decoded.year)
+            XCTAssertEqual(09, decoded.month)
+            XCTAssertEqual(25, decoded.day)
+            XCTAssertEqual(23, decoded.hour)
+            XCTAssertEqual(14, decoded.minute)
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }
