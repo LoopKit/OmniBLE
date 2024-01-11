@@ -1,6 +1,6 @@
 //
 //  PodCommsSession.swift
-//  OmnipodKit
+//  OmniBLE
 //
 //  From OmniKit/PumpManager/PodCommsSession.swift
 //  Created by Pete Schwamb on 10/13/17.
@@ -38,6 +38,7 @@ public enum PodCommsError: Error {
     case podIncompatible(str: String)
     case noPodsFound
     case tooManyPodsFound
+    case setupNotComplete
 }
 
 extension PodCommsError: LocalizedError {
@@ -96,7 +97,8 @@ extension PodCommsError: LocalizedError {
             return LocalizedString("No pods found", comment: "Error message for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
             return LocalizedString("Too many pods found", comment: "Error message for PodCommsError.tooManyPodsFound")
-
+        case .setupNotComplete:
+            return LocalizedString("Pod setup is not complete", comment: "Error description when pod setup is not complete")
         }
     }
     
@@ -158,6 +160,8 @@ extension PodCommsError: LocalizedError {
             return LocalizedString("Make sure your pod is filled and nearby.", comment: "Recovery suggestion for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
             return LocalizedString("Move to a new area away from any other pods and try again.", comment: "Recovery suggestion for PodCommsError.tooManyPodsFound")
+        case .setupNotComplete:
+            return nil
         }
     }
 
@@ -274,6 +278,7 @@ public class PodCommsSession {
 
             let message = Message(address: podState.address, messageBlocks: blocksToSend, sequenceNum: messageNumber, expectFollowOnMessage: expectFollowOnMessage)
 
+            self.podState.deliveryStatusVerified = false // until delivery status is successfully verified
             let response = try transport.sendMessage(message)
             
             // Simulate fault
@@ -367,6 +372,7 @@ public class PodCommsSession {
             podState.updateFromStatusResponse(status, at: currentDate)
             if status.podProgressStatus == .basalInitialized {
                 podState.setupProgress = .initialBasalScheduleSet
+                podState.finalizedDoses.append(UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .certain, insulinType: podState.insulinType))
                 return
             }
         }
@@ -380,6 +386,11 @@ public class PodCommsSession {
 
     @discardableResult
     func configureAlerts(_ alerts: [PodAlert], beepBlock: MessageBlock? = nil) throws -> StatusResponse {
+
+        guard podState.unacknowledgedCommand == nil else {
+            throw PodCommsError.unacknowledgedCommandPending
+        }
+
         let configurations = alerts.map { $0.configuration }
         let configureAlerts = ConfigureAlertsCommand(nonce: podState.currentNonce, configurations: configurations)
         let status: StatusResponse = try send([configureAlerts], beepBlock: beepBlock)
@@ -494,7 +505,9 @@ public class PodCommsSession {
         let timeBetweenPulses = TimeInterval(seconds: Pod.secondsPerBolusPulse)
         let bolusScheduleCommand = SetInsulinScheduleCommand(nonce: podState.currentNonce, units: units, timeBetweenPulses: timeBetweenPulses, extendedUnits: extendedUnits, extendedDuration: extendedDuration)
         
-        if podState.unfinalizedBolus != nil {
+        // Do a getstatus to verify that there isn't an on-going bolus in progress if the last bolus command is still
+        // finalized or if the pod's delivery status wasn't verified meaning there's a possibilty of an ongoing bolus.
+        if podState.unfinalizedBolus != nil || podState.deliveryStatusVerified == false {
             var ongoingBolus = true
             if let statusResponse: StatusResponse = try? send([GetStatusCommand()]) {
                 podState.updateFromStatusResponse(statusResponse, at: currentDate)
@@ -602,6 +615,11 @@ public class PodCommsSession {
             return .certainFailure(error: .unacknowledgedCommandPending)
         }
 
+        guard podState.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            return .certainFailure(error: PodCommsError.setupNotComplete)
+        }
+
         do {
             var alertConfigurations: [AlertConfiguration] = []
             var podSuspendedReminderAlert: PodAlert? = nil
@@ -679,6 +697,11 @@ public class PodCommsSession {
             return .certainFailure(error: .unacknowledgedCommandPending)
         }
 
+        guard podState.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            return .certainFailure(error: PodCommsError.setupNotComplete)
+        }
+
         do {
             podState.unacknowledgedCommand = PendingCommand.stopProgram(deliveryType, transport.messageNumber, currentDate)
             let cancelDeliveryCommand = CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: deliveryType, beepType: beepType)
@@ -727,6 +750,11 @@ public class PodCommsSession {
         let basalExtraCommand = BasalScheduleExtraCommand.init(schedule: schedule, scheduleOffset: scheduleOffset, acknowledgementBeep: acknowledgementBeep, programReminderInterval: programReminderInterval)
 
         do {
+            if podState.setupProgress == .completed && podState.deliveryStatusVerified == false {
+                // The pod setup is complete and the current delivery state can't be trusted so
+                // do a cancel all to be sure that setting the basal program won't fault the pod.
+                let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
+            }
             var status: StatusResponse = try send([basalScheduleCommand, basalExtraCommand])
             let now = currentDate
             podState.suspendState = .resumed(now)
@@ -856,10 +884,10 @@ public class PodCommsSession {
             self.log.default("Recovering from unacknowledged command %{public}@, status = %{public}@", String(describing: pendingCommand), String(describing: status))
 
             if status.lastProgrammingMessageSeqNum == pendingCommand.sequence {
-                self.log.debug("Unacknowledged command was received by pump")
+                self.log.default("Unacknowledged command was received by pump")
                 unacknowledgedCommandWasReceived(pendingCommand: pendingCommand, podStatus: status)
             } else {
-                self.log.debug("Unacknowledged command was not received by pump")
+                self.log.default("Unacknowledged command was not received by pump")
             }
             podState.unacknowledgedCommand = nil
         }
@@ -912,6 +940,11 @@ public class PodCommsSession {
     }
     
     public func acknowledgeAlerts(alerts: AlertSet, beepBlock: MessageBlock? = nil) throws -> [AlertSlot: PodAlert] {
+
+        guard podState.unacknowledgedCommand == nil else {
+            throw PodCommsError.unacknowledgedCommandPending
+        }
+
         let cmd = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: alerts)
         let status: StatusResponse = try send([cmd], beepBlock: beepBlock)
         podState.updateFromStatusResponse(status, at: currentDate)

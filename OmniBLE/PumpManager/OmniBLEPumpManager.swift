@@ -44,7 +44,7 @@ extension OmniBLEPumpManagerError: LocalizedError {
         case .podAlreadyPaired:
             return LocalizedString("Pod already paired", comment: "Error message shown when user cannot pair because pod is already paired")
         case .insulinTypeNotConfigured:
-            return LocalizedString("Insulin type not configured", comment: "Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured")
+            return LocalizedString("Insulin type not configured", comment: "Error description for insulin type not configured")
         case .notReadyForCannulaInsertion:
             return LocalizedString("Pod is not in a state ready for cannula insertion.", comment: "Error message when cannula insertion fails because the pod is in an unexpected state")
         case .communication(let error):
@@ -60,7 +60,7 @@ extension OmniBLEPumpManagerError: LocalizedError {
                 return String(describing: error)
             }
         case .invalidSetting:
-            return LocalizedString("Invalid Setting", comment: "Error description for OmniBLEPumpManagerError.invalidSetting")
+            return LocalizedString("Invalid Setting", comment: "Error description for invalid setting")
         }
     }
 
@@ -1047,6 +1047,12 @@ extension OmniBLEPumpManager {
             return
         }
 
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.state(PodCommsError.setupNotComplete))
+            return
+        }
+
         guard state.podState?.unfinalizedBolus?.isFinished() != false else {
             completion(.state(PodCommsError.unfinalizedBolus))
             return
@@ -1079,6 +1085,11 @@ extension OmniBLEPumpManager {
                 // If there's no active pod yet, save the basal schedule anyway
                 state.basalSchedule = schedule
                 return .success(false)
+            }
+
+            guard state.podState?.setupProgress == .completed else {
+                // A cancel delivery command before pod setup is complete will fault the pod
+                return .failure(PumpManagerError.deviceState(PodCommsError.setupNotComplete))
             }
 
             guard state.podState?.unfinalizedBolus?.isFinished() != false else {
@@ -1603,6 +1614,12 @@ extension OmniBLEPumpManager: PumpManager {
             return
         }
 
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.failure(PumpManagerError.deviceState(PodCommsError.setupNotComplete)))
+            return
+        }
+
         self.podComms.runSession(withName: "Cancel Bolus") { (result) in
 
             let session: PodCommsSession
@@ -1697,28 +1714,36 @@ extension OmniBLEPumpManager: PumpManager {
                     throw PodCommsError.unfinalizedBolus
                 }
 
-                let status: StatusResponse
+                // Do the cancel temp basal command if currently running a temp basal OR
+                // if resuming scheduled basal delivery OR if the delivery status is uncertain.
+                if self.state.podState?.unfinalizedTempBasal != nil || resumingScheduledBasal ||
+                    self.state.podState?.deliveryStatusVerified == false
+                {
+                    let status: StatusResponse
 
-                // if resuming scheduled basal delivery & an acknowledgement beep is needed, use the cancel TB beep
-                let beepType: BeepType = resumingScheduledBasal && acknowledgementBeep ? .beep : .noBeepCancel
-                let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: beepType)
-                switch result {
-                case .certainFailure(let error):
-                    throw error
-                case .unacknowledged(let error):
-                    throw error
-                case .success(let cancelTempStatus, _):
-                    status = cancelTempStatus
-                }
+                    // if resuming scheduled basal delivery & an acknowledgement beep is needed, use the cancel TB beep
+                    let beepType: BeepType = resumingScheduledBasal && acknowledgementBeep ? .beep : .noBeepCancel
+                    let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: beepType)
+                    switch result {
+                    case .certainFailure(let error):
+                        throw error
+                    case .unacknowledged(let error):
+                        throw error
+                    case .success(let cancelTempStatus, _):
+                        status = cancelTempStatus
+                    }
 
-                // If pod is bolusing, fail if not resuming the scheduled basal
-                guard !status.deliveryStatus.bolusing || resumingScheduledBasal else {
-                    throw PodCommsError.unfinalizedBolus
-                }
+                    // If pod is bolusing, fail if not resuming the scheduled basal
+                    guard !status.deliveryStatus.bolusing || resumingScheduledBasal else {
+                        throw PodCommsError.unfinalizedBolus
+                    }
 
-                guard status.deliveryStatus != .suspended else {
-                    self.log.info("Canceling temp basal because status return indicates pod is suspended.")
-                    throw PodCommsError.podSuspended
+                    guard status.deliveryStatus != .suspended else {
+                        self.log.info("Canceling temp basal because status return indicates pod is suspended.")
+                        throw PodCommsError.podSuspended
+                    }
+                } else {
+                    self.log.info("Skipped Cancel TB command before enacting temp basal")
                 }
 
                 defer {
