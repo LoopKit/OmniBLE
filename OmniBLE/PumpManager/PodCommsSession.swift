@@ -278,7 +278,12 @@ public class PodCommsSession {
 
             let message = Message(address: podState.address, messageBlocks: blocksToSend, sequenceNum: messageNumber, expectFollowOnMessage: expectFollowOnMessage)
 
-            self.podState.deliveryStatusVerified = false // until delivery status is successfully verified
+            // The deliveryStatusVerified flag is disabled before each command is sent and then only reenabled
+            // in updateDeliveryStatus() after each active delivery type in the status response has been verified
+            // against the current active podState delivery status. This flag can then be used to ensure that we
+            // never send an insulin delivery command unless we know for absolute certain it is safe to do so.
+            self.podState.deliveryStatusVerified = false
+
             let response = try transport.sendMessage(message)
             
             // Simulate fault
