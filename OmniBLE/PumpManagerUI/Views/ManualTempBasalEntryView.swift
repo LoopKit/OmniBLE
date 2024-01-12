@@ -81,12 +81,23 @@ struct ManualTempBasalEntryView: View {
                         Text(String(format: LocalizedString("%1$@ for %2$@", comment: "Summary string for temporary basal rate configuration page"), formatRate(rateEntered), formatDuration(durationEntered)))
                     }
                     HStack {
-                        ResizeablePicker(selection: $rateEntered,
-                                         data: allowedRates,
-                                         formatter: { formatRate($0) })
-                        ResizeablePicker(selection: $durationEntered,
-                                         data: Pod.supportedTempBasalDurations,
-                                         formatter: { formatDuration($0) })
+                        Picker(selection: $rateEntered) {
+                            ForEach(allowedRates, id: \.self) { value in
+                                Text(formatRate(value))
+                            }
+                        } label: {
+                            EmptyView()
+                        }
+                        .pickerStyle(.wheel)
+                        
+                        Picker(selection: $durationEntered) {
+                            ForEach(Pod.supportedTempBasalDurations, id: \.self) { value in
+                                Text(formatDuration(value))
+                            }
+                        } label: {
+                            EmptyView()
+                        }
+                        .pickerStyle(.wheel)
                     }
                     .frame(maxHeight: 162.0)
                     .alert(isPresented: $showingMissingConfigAlert, content: { missingConfigAlert })
