@@ -43,9 +43,14 @@ struct ExpirationReminderPickerView: View {
                 }
             }
             if showingHourPicker {
-                ResizeablePicker(selection: expirationReminderDefault,
-                                 data: Array(Self.expirationReminderHoursAllowed),
-                                 formatter: { expirationReminderHourString($0) })
+                Picker(selection: expirationReminderDefault) {
+                    ForEach(Array(Self.expirationReminderHoursAllowed), id: \.self) { value in
+                        Text(expirationReminderHourString(value))
+                    }
+                } label: {
+                    EmptyView()
+                }
+                .pickerStyle(.wheel)
             }
         }
     }
