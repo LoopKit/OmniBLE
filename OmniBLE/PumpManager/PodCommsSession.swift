@@ -278,11 +278,11 @@ public class PodCommsSession {
 
             let message = Message(address: podState.address, messageBlocks: blocksToSend, sequenceNum: messageNumber, expectFollowOnMessage: expectFollowOnMessage)
 
-            // The deliveryStatusVerified flag is disabled before each command is sent and then only reenabled
+            // The deliveryStateInconsistencyDetected state variable is enabled before each send and only cleared
             // in updateDeliveryStatus() after each active delivery type in the status response has been verified
             // against the current active podState delivery status. This flag can then be used to ensure that we
             // never send an insulin delivery command unless we know for absolute certain it is safe to do so.
-            self.podState.deliveryStatusVerified = false
+            self.podState.deliveryStateInconsistencyDetected = true // assume the worse case until verified otherwise
 
             let response = try transport.sendMessage(message)
             
@@ -512,7 +512,7 @@ public class PodCommsSession {
         
         // Do a getstatus to verify that there isn't an on-going bolus in progress if the last bolus command is still
         // finalized or if the pod's delivery status wasn't verified meaning there's a possibilty of an ongoing bolus.
-        if podState.unfinalizedBolus != nil || podState.deliveryStatusVerified == false {
+        if podState.unfinalizedBolus != nil || podState.deliveryStateInconsistencyDetected {
             var ongoingBolus = true
             if let statusResponse: StatusResponse = try? send([GetStatusCommand()]) {
                 podState.updateFromStatusResponse(statusResponse, at: currentDate)
@@ -755,10 +755,13 @@ public class PodCommsSession {
         let basalExtraCommand = BasalScheduleExtraCommand.init(schedule: schedule, scheduleOffset: scheduleOffset, acknowledgementBeep: acknowledgementBeep, programReminderInterval: programReminderInterval)
 
         do {
-            if podState.setupProgress == .completed && podState.deliveryStatusVerified == false {
-                // The pod setup is complete and the current delivery state can't be trusted so
-                // do a cancel all to be sure that setting the basal program won't fault the pod.
-                let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
+            if podState.isSuspended == false || podState.deliveryStateInconsistencyDetected {
+                // It appears that the pod isn't currently suspended or there was some inconsistent delivery state.
+                // To prevent a possible 0x31 pod fault, execute a cancel all command here before setting the basal,
+                // but only if the pod setup is complete as a cancel command during setup will definitely fault the pod!
+                if podState.setupProgress == .completed  {
+                    let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
+                }
             }
             var status: StatusResponse = try send([basalScheduleCommand, basalExtraCommand])
             let now = currentDate
