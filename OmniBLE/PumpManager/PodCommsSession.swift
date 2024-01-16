@@ -391,11 +391,6 @@ public class PodCommsSession {
 
     @discardableResult
     func configureAlerts(_ alerts: [PodAlert], beepBlock: MessageBlock? = nil) throws -> StatusResponse {
-
-        guard podState.unacknowledgedCommand == nil else {
-            throw PodCommsError.unacknowledgedCommandPending
-        }
-
         let configurations = alerts.map { $0.configuration }
         let configureAlerts = ConfigureAlertsCommand(nonce: podState.currentNonce, configurations: configurations)
         let status: StatusResponse = try send([configureAlerts], beepBlock: beepBlock)
@@ -948,11 +943,6 @@ public class PodCommsSession {
     }
     
     public func acknowledgeAlerts(alerts: AlertSet, beepBlock: MessageBlock? = nil) throws -> [AlertSlot: PodAlert] {
-
-        guard podState.unacknowledgedCommand == nil else {
-            throw PodCommsError.unacknowledgedCommandPending
-        }
-
         let cmd = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: alerts)
         let status: StatusResponse = try send([cmd], beepBlock: beepBlock)
         podState.updateFromStatusResponse(status, at: currentDate)
