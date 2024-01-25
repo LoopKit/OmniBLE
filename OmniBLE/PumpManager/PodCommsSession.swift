@@ -278,11 +278,10 @@ public class PodCommsSession {
 
             let message = Message(address: podState.address, messageBlocks: blocksToSend, sequenceNum: messageNumber, expectFollowOnMessage: expectFollowOnMessage)
 
-            // The deliveryStateInconsistencyDetected state variable is enabled before each send and only cleared
-            // in updateDeliveryStatus() after each active delivery type in the status response has been verified
-            // against the current active podState delivery status. This flag can then be used to ensure that we
-            // never send an insulin delivery command unless we know for absolute certain it is safe to do so.
-            self.podState.deliveryStateInconsistencyDetected = true // assume the worse case until verified otherwise
+            // Reset the lastDeliveryStatusReceived variable here which will be reinitialized with returned delivery status
+            // in updateDeliveryStatus(). This variable can be used to ensure that we never sent a particular nsulin delivery
+            // command unless we received a status response indicating that insulin delivery for that delivery type is off.
+            podState.lastDeliveryStatusReceived = nil
 
             let response = try transport.sendMessage(message)
             
@@ -505,16 +504,18 @@ public class PodCommsSession {
         let timeBetweenPulses = TimeInterval(seconds: Pod.secondsPerBolusPulse)
         let bolusScheduleCommand = SetInsulinScheduleCommand(nonce: podState.currentNonce, units: units, timeBetweenPulses: timeBetweenPulses, extendedUnits: extendedUnits, extendedDuration: extendedDuration)
         
-        // Do a getstatus to verify that there isn't an on-going bolus in progress if the last bolus command is still
-        // finalized or if the pod's delivery status wasn't verified meaning there's a possibilty of an ongoing bolus.
-        if podState.unfinalizedBolus != nil || podState.deliveryStateInconsistencyDetected {
-            var ongoingBolus = true
+        // Do a get status here to verify that there isn't an on-going bolus in progress if the last bolus command
+        // is still not finalized OR we don't have the last pod delivery status confirming that no bolus is active.
+        if podState.unfinalizedBolus != nil || podState.lastDeliveryStatusReceived == nil || podState.lastDeliveryStatusReceived!.bolusing {
             if let statusResponse: StatusResponse = try? send([GetStatusCommand()]) {
                 podState.updateFromStatusResponse(statusResponse, at: currentDate)
-                ongoingBolus = podState.unfinalizedBolus != nil
-            }
-            guard !ongoingBolus else {
-                return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
+                guard podState.unfinalizedBolus == nil else {
+                    log.default("bolus: pod is still bolusing")
+                    return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
+                }
+            } else {
+                log.default("bolus: failed to read pod status to verify there is no bolus running")
+                return DeliveryCommandResult.certainFailure(error: .noResponse)
             }
         }
 
@@ -750,10 +751,10 @@ public class PodCommsSession {
         let basalExtraCommand = BasalScheduleExtraCommand.init(schedule: schedule, scheduleOffset: scheduleOffset, acknowledgementBeep: acknowledgementBeep, programReminderInterval: programReminderInterval)
 
         do {
-            if podState.isSuspended == false || podState.deliveryStateInconsistencyDetected {
-                // It appears that the pod isn't currently suspended or there was some inconsistent delivery state.
-                // To prevent a possible 0x31 pod fault, execute a cancel all command here before setting the basal,
-                // but only if the pod setup is complete as a cancel command during setup will definitely fault the pod!
+            if !podState.isSuspended || podState.lastDeliveryStatusReceived == nil || !podState.lastDeliveryStatusReceived!.suspended {
+                // The podState or the last pod delivery status return indicates that the pod is not currently suspended.
+                // So execute a cancel all command here before setting the basal to prevent a possible 0x31 pod fault,
+                // but only when the pod startup is complete as a cancel command during pod setup also fault the pod!
                 if podState.setupProgress == .completed  {
                     let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
                 }

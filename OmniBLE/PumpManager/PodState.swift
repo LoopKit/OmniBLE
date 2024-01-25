@@ -118,9 +118,11 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         return false
     }
 
-    var deliveryStateInconsistencyDetected: Bool // this variable is not persistent across app restarts
+    var lastDeliveryStatusReceived: DeliveryStatus? // this variable is not persistent across app restarts
 
-    public init(address: UInt32, ltk: Data, firmwareVersion: String, bleFirmwareVersion: String, lotNo: UInt32, lotSeq: UInt32, productId: UInt8, messageTransportState: MessageTransportState? = nil, bleIdentifier: String, insulinType: InsulinType) {
+    public init(address: UInt32, ltk: Data, firmwareVersion: String, bleFirmwareVersion: String, lotNo: UInt32, lotSeq: UInt32, productId: UInt8,
+        messageTransportState: MessageTransportState? = nil, bleIdentifier: String, insulinType: InsulinType, initialDeliveryStatus: DeliveryStatus? = nil)
+    {
         self.address = address
         self.ltk = ltk
         self.firmwareVersion = firmwareVersion
@@ -139,7 +141,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         self.configuredAlerts = [.slot7: .waitingForPairingReminder]
         self.bleIdentifier = bleIdentifier
         self.insulinType = insulinType
-        self.deliveryStateInconsistencyDetected = true // assume the worse case until verified otherwise
+        self.lastDeliveryStatusReceived = initialDeliveryStatus // can be non-nil when testing
     }
     
     public var unfinishedSetup: Bool {
@@ -287,21 +289,20 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
 
     private mutating func updateDeliveryStatus(deliveryStatus: DeliveryStatus, podProgressStatus: PodProgressStatus, bolusNotDelivered: Double, at date: Date) {
 
-        deliveryStateInconsistencyDetected = false
-        // See if the pod deliveryStatus indicates an active bolus or temp basal that the PodState isn't tracking (possible Loop restart)
-        if deliveryStatus.bolusing && unfinalizedBolus == nil { // active bolus that Loop doesn't know about?
+        // save the current pod delivery state for verification before any insulin delivery command
+        self.lastDeliveryStatusReceived = deliveryStatus
+
+        // See if the pod's deliveryStatus indicates some insulin delivery that podState isn't tracking
+        if deliveryStatus.bolusing && unfinalizedBolus == nil { // active bolus that we aren't tracking
             if podProgressStatus.readyForDelivery {
-                deliveryStateInconsistencyDetected = true // remember that we had inconsistent (bolus) delivery status
                 // Create an unfinalizedBolus with the remaining bolus amount to capture what we can.
                 unfinalizedBolus = UnfinalizedDose(bolusAmount: bolusNotDelivered, startTime: date, scheduledCertainty: .certain, insulinType: insulinType, automatic: false)
             }
         }
-        if deliveryStatus.tempBasalRunning && unfinalizedTempBasal == nil { // active temp basal that app isn't tracking
-            deliveryStateInconsistencyDetected = true // remember that we had inconsistent (temp basal) delivery status
+        if deliveryStatus.tempBasalRunning && unfinalizedTempBasal == nil { // active temp basal that we aren't tracking
             // unfinalizedTempBasal = UnfinalizedDose(tempBasalRate: 0, startTime: Date(), duration: .minutes(30), isHighTemp: false, scheduledCertainty: .certain, insulinType: insulinType)
         }
-        if deliveryStatus != .suspended && isSuspended { // active basal that app isn't tracking
-            deliveryStateInconsistencyDetected = true // remember that we had inconsistent (basal) delivery status
+        if deliveryStatus != .suspended && isSuspended { // active basal that we aren't tracking
             let resumeStartTime = Date()
             suspendState = .resumed(resumeStartTime)
             unfinalizedResume = UnfinalizedDose(resumeStartTime: resumeStartTime, scheduledCertainty: .certain, insulinType: insulinType)
@@ -492,7 +493,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             self.insulinType = .novolog
         }
 
-        self.deliveryStateInconsistencyDetected = true // assume the worse case until verified otherwise
+        self.lastDeliveryStatusReceived = nil
     }
     
     public var rawValue: RawValue {
