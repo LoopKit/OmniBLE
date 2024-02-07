@@ -748,23 +748,26 @@
 		8475311E26ED838A009FD801 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D8D9275B2B744A4D00D154B2 /* FirstAppear.swift */,
-				C1C001C327A2351D00533D35 /* OmniBLEReservoirView.swift */,
-				C1C001C227A2351D00533D35 /* OmniBLEReservoirView.xib */,
-				C1F67EB227975E710017487F /* DesignElements */,
 				C1F67E7327975B830017487F /* AttachPodView.swift */,
 				C1F67E7A27975B830017487F /* BasalStateView.swift */,
+				C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */,
 				C1F67E8027975B830017487F /* CheckInsertedCannulaView.swift */,
-				C1F67E7727975B830017487F /* OmniBLESettingsView.swift */,
 				C1F67E7927975B830017487F /* DeactivatePodView.swift */,
 				C1F67E8227975B830017487F /* DeliveryUncertaintyRecoveryView.swift */,
+				C1F67EB227975E710017487F /* DesignElements */,
 				C1F67E7B27975B830017487F /* ExpirationReminderPickerView.swift */,
 				C1F67E7827975B830017487F /* ExpirationReminderSetupView.swift */,
+				D8D9275B2B744A4D00D154B2 /* FirstAppear.swift */,
 				C1F67E7D27975B830017487F /* HUDAssets.xcassets */,
 				C1F67E8527975B830017487F /* InsertCannulaView.swift */,
+				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
 				C1F67E8627975B830017487F /* LowReservoirReminderEditView.swift */,
 				C1F67E7C27975B830017487F /* LowReservoirReminderSetupView.swift */,
+				C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */,
 				C1F67E8127975B830017487F /* NotificationSettingsView.swift */,
+				C1C001C327A2351D00533D35 /* OmniBLEReservoirView.swift */,
+				C1C001C227A2351D00533D35 /* OmniBLEReservoirView.xib */,
+				C1F67E7727975B830017487F /* OmniBLESettingsView.swift */,
 				C1F67E7F27975B830017487F /* PairPodView.swift */,
 				C1F67E8A27975B830017487F /* PodDetailsView.swift */,
 				C1F67E8827975B830017487F /* PodSetupView.swift */,
@@ -772,9 +775,6 @@
 				C1F67E8727975B830017487F /* SetupCompleteView.swift */,
 				C1F67E7627975B830017487F /* TimeView.swift */,
 				C1F67E8427975B830017487F /* UncertaintyRecoveredView.swift */,
-				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
-				C1ED1E7127BAE44E00FED71C /* BeepPreferenceSelectionView.swift */,
-				C1DBD512282FF79D009FCF74 /* ManualTempBasalEntryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
