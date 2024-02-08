@@ -81,6 +81,10 @@ struct InsertCannulaView: View {
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: cancelButton)
+        .onFirstAppear {
+            // handle possible restart without waiting for a button action
+            self.viewModel.handlePossibleRestart()
+        }
     }
     
     
