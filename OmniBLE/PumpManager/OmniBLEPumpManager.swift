@@ -457,7 +457,7 @@ extension OmniBLEPumpManager {
         } else if !podState.isSetupComplete {
             return .activating
         }
-        return .deactivating
+        return .deactivating // Can't be reached and thus will never be returned
     }
 
     public var cannulaInsertionSuccessfullyStarted: Bool {
@@ -595,7 +595,7 @@ extension OmniBLEPumpManager {
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Setup", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
@@ -750,6 +750,25 @@ extension OmniBLEPumpManager {
         }
     }
 
+    // Reset any PumpManager state that is really per pod state
+    private func resetPerPodPumpManagerState() {
+        setState({ (state) in
+            state.podAttachmentConfirmed = false
+
+            // Remove any per pod triggeringSlot based pump manager alerts
+            // that don't span pods (i.e., all but timeOffsetChangeDetected).
+            for alert in state.activeAlerts {
+                if alert != .timeOffsetChangeDetected {
+                    state.activeAlerts.remove(alert)
+                }
+            }
+            for alert in state.alertsWithPendingAcknowledgment {
+                if alert != .timeOffsetChangeDetected {
+                    state.alertsWithPendingAcknowledgment.remove(alert)
+                }
+            }
+        })
+    }
 
     // MARK: Testing
 
@@ -773,6 +792,8 @@ extension OmniBLEPumpManager {
 
         self.podComms.delegate = self
         self.podComms.messageLogger = self
+
+        self.resetPerPodPumpManagerState()
 
         setState({ (state) in
             state.updatePodStateFromPodComms(podState)
@@ -870,6 +891,8 @@ extension OmniBLEPumpManager {
                 case .success:
                     self.podComms.pairAndSetupPod(timeZone: .currentFixed, insulinType: insulinType, messageLogger: self)
                     { (result) in
+
+                        self.resetPerPodPumpManagerState()
 
                         // Calls completion
                         primeSession(result)
