@@ -429,7 +429,8 @@ public class PodCommsSession {
             if status.podProgressStatus == .insertingCannula {
                 podState.setupProgress = .cannulaInserting
                 podState.updateFromStatusResponse(status, at: currentDate)
-                return insertionWait // Not sure when it started, wait full time to be sure
+                // return a non-zero wait time based on the bolus not yet delivered
+                return (status.bolusNotDelivered / Pod.primeDeliveryRate) + 1
             }
             if status.podProgressStatus.readyForDelivery {
                 markSetupProgressCompleted(statusResponse: status)
