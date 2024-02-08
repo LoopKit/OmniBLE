@@ -460,6 +460,10 @@ extension OmniBLEPumpManager {
         return .deactivating
     }
 
+    public var cannulaInsertionSuccessfullyStarted: Bool {
+        return state.podState?.setupProgress.cannulaInsertionSuccessfullyStarted == true
+    }
+
     public var podCommState: PodCommState {
         return podCommState(for: state)
     }
