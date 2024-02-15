@@ -29,9 +29,9 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         
         var actionButtonAccessibilityLabel: String {
             switch self {
-            case .ready, .startingInsertion:
+            case .ready:
                 return LocalizedString("Slide Button to insert Cannula", comment: "Insert cannula slider button accessibility label while ready to pair")
-            case .inserting, .restarting:
+            case .inserting, .startingInsertion, .restarting:
                 return LocalizedString("Inserting. Please wait.", comment: "Insert cannula action button accessibility label while pairing")
             case .checkingInsertion:
                 return LocalizedString("Checking Insertion", comment: "Insert cannula action button accessibility label checking insertion")
@@ -176,8 +176,8 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func insertCannula(initState: InsertCannulaViewModelState) {
-        state = initState
+    private func insertCannula() {
+        state = .startingInsertion
         cannulaInserter.insertCannula { (result) in
             DispatchQueue.main.async {
                 switch(result) {
@@ -212,19 +212,19 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
             didFinish?()
         case .error(let error):
             if error.recoverable {
-                insertCannula(initState: .startingInsertion)
+                insertCannula()
             } else {
                 didRequestDeactivation?()
             }
         default:
-            insertCannula(initState: .startingInsertion)
+            insertCannula()
         }
     }
 
     func handlePossibleRestart() {
         // if restarting, start without waiting for a button action
         if restarting {
-            insertCannula(initState: .restarting)
+            insertCannula()
         }
     }
 }
