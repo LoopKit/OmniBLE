@@ -12,9 +12,14 @@ import LoopKitUI
 public protocol CannulaInserter {
     func insertCannula(completion: @escaping (Result<TimeInterval,OmniBLEPumpManagerError>) -> ())
     func checkCannulaInsertionFinished(completion: @escaping (OmniBLEPumpManagerError?) -> Void)
+    var cannulaInsertionSuccessfullyStarted: Bool { get }
 }
 
-extension OmniBLEPumpManager: CannulaInserter { }
+extension OmniBLEPumpManager: CannulaInserter {
+    public var cannulaInsertionSuccessfullyStarted: Bool {
+        return state.podState?.setupProgress.cannulaInsertionSuccessfullyStarted == true
+    }
+}
 
 class InsertCannulaViewModel: ObservableObject, Identifiable {
 
@@ -25,13 +30,12 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         case checkingInsertion
         case error(OmniBLEPumpManagerError)
         case finished
-        case restarting
         
         var actionButtonAccessibilityLabel: String {
             switch self {
             case .ready:
                 return LocalizedString("Slide Button to insert Cannula", comment: "Insert cannula slider button accessibility label while ready to pair")
-            case .inserting, .startingInsertion, .restarting:
+            case .inserting, .startingInsertion:
                 return LocalizedString("Inserting. Please wait.", comment: "Insert cannula action button accessibility label while pairing")
             case .checkingInsertion:
                 return LocalizedString("Checking Insertion", comment: "Insert cannula action button accessibility label checking insertion")
@@ -57,7 +61,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                 return LocalizedString("Slide to Insert Cannula", comment: "Cannula insertion button text while ready to insert")
             case .error:
                 return LocalizedString("Retry", comment: "Cannula insertion button text while showing error")
-            case .inserting, .startingInsertion, .restarting:
+            case .inserting, .startingInsertion:
                 return LocalizedString("Inserting...", comment: "Cannula insertion button text while inserting")
             case .checkingInsertion:
                 return LocalizedString("Checking...", comment: "Cannula insertion button text while checking insertion")
@@ -82,7 +86,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
             switch self {
             case .ready, .error:
                 return .hidden
-            case .startingInsertion, .checkingInsertion, .restarting:
+            case .startingInsertion, .checkingInsertion:
                 return .indeterminantProgress
             case .inserting(let finishTime):
                 return .timedProgress(finishTime: finishTime)
@@ -102,7 +106,7 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         
         var isProcessing: Bool {
             switch self {
-            case .startingInsertion, .inserting, .restarting:
+            case .startingInsertion, .inserting:
                 return true
             default:
                 return false
@@ -134,13 +138,6 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
         }
     }
     
-    var restarting: Bool {
-        if case .restarting = self.state {
-            return true
-        }
-        return false
-    }
-
     var didFinish: (() -> Void)?
     
     var didRequestDeactivation: (() -> Void)?
@@ -149,19 +146,12 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
     
     init(cannulaInserter: CannulaInserter) {
         self.cannulaInserter = cannulaInserter
+
+        // If resuming, don't wait for the button action
+        if cannulaInserter.cannulaInsertionSuccessfullyStarted {
+            insertCannula()
+        }
     }
-    
-//    private func handleEvent(_ event: ActivationStep2Event) {
-//        switch event {
-//        case .insertingCannula:
-//            let finishTime = TimeInterval(Pod.estimatedCannulaInsertionDuration)
-//            state = .inserting(finishTime: CACurrentMediaTime() + finishTime)
-//        case .step2Completed:
-//            state = .finished
-//        default:
-//            break
-//        }
-//    }
     
     private func checkCannulaInsertionFinished() {
         state = .checkingInsertion
@@ -195,14 +185,6 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                     self.state = .error(error)
                 }
             }
-
-            
-//            switch status {
-//            case .error(let error):
-//                self.state = .error(error)
-//            case .event(let event):
-//                self.handleEvent(event)
-//            }
         }
     }
     
@@ -217,13 +199,6 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                 didRequestDeactivation?()
             }
         default:
-            insertCannula()
-        }
-    }
-
-    func handlePossibleRestart() {
-        // if restarting, start without waiting for a button action
-        if restarting {
             insertCannula()
         }
     }

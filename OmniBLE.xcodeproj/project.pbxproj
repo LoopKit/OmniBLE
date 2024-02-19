@@ -212,7 +212,6 @@
 		D8C72C042A50D95200268D82 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10389A1D26FF7841002115E9 /* Message.swift */; };
 		D8C72C052A50D96800268D82 /* Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1016325327185EE4007A3BC2 /* Pod.swift */; };
 		D8C72C062A50D97500268D82 /* PodProgressStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1016325627185EE4007A3BC2 /* PodProgressStatus.swift */; };
-		D8D9275C2B744A4D00D154B2 /* FirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D9275B2B744A4D00D154B2 /* FirstAppear.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -451,7 +450,6 @@
 		D897B06C29347EE500FDB009 /* InsulinTableEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsulinTableEntry.swift; sourceTree = "<group>"; };
 		D8C72BD92A50D7D700268D82 /* OmniBLEParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OmniBLEParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C72BDB2A50D7D700268D82 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		D8D9275B2B744A4D00D154B2 /* FirstAppear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstAppear.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -757,7 +755,6 @@
 				C1F67EB227975E710017487F /* DesignElements */,
 				C1F67E7B27975B830017487F /* ExpirationReminderPickerView.swift */,
 				C1F67E7827975B830017487F /* ExpirationReminderSetupView.swift */,
-				D8D9275B2B744A4D00D154B2 /* FirstAppear.swift */,
 				C1F67E7D27975B830017487F /* HUDAssets.xcassets */,
 				C1F67E8527975B830017487F /* InsertCannulaView.swift */,
 				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
@@ -1185,7 +1182,6 @@
 				84752EE326ED13F5009FD801 /* BLEPacket.swift in Sources */,
 				102111472709462300784F13 /* PodState.swift in Sources */,
 				1021114B2709462300784F13 /* BasalSchedule+LoopKit.swift in Sources */,
-				D8D9275C2B744A4D00D154B2 /* FirstAppear.swift in Sources */,
 				84752EE626ED13F5009FD801 /* LTKExchanger.swift in Sources */,
 				10389A2A26FF7841002115E9 /* MessageBlock.swift in Sources */,
 				C1F67ECA27975F360017487F /* OmniBLESettingsViewModel.swift in Sources */,

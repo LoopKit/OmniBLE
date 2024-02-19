@@ -83,10 +83,6 @@ struct PairPodView: View {
         .navigationBarTitle(LocalizedString("Pair Pod", comment: "Pair Pod navigationBarTitle"), displayMode: .automatic)
         .navigationBarBackButtonHidden(self.viewModel.backButtonHidden)
         .navigationBarItems(trailing: self.viewModel.state.navBarVisible ? cancelButton : nil)
-        .onFirstAppear {
-            // handle possible restart without waiting for a button action
-            self.viewModel.handlePossibleRestart()
-        }
     }
         
     var cancelButton: some View {

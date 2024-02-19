@@ -186,11 +186,6 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self?.navigateTo(.deactivate)
             }
 
-            if pumpManager.podCommState == .activating {
-                // Looks we are restarting, use an alternate restarting state to immediately continue
-                viewModel.state = .restarting
-            }
-
             let view = hostingController(rootView: PairPodView(viewModel: viewModel).onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})
             view.navigationItem.title = LocalizedString("Pair Pod", comment: "Title for pod pairing screen")
             view.navigationItem.backButtonDisplayMode = .generic
@@ -218,11 +213,6 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             }
             viewModel.didRequestDeactivation = { [weak self] in
                 self?.navigateTo(.deactivate)
-            }
-
-            if pumpManager.cannulaInsertionSuccessfullyStarted {
-                // Looks we are restarting, use an alternate restarting state to immediately continue
-                viewModel.state = .restarting
             }
 
             let view = hostingController(rootView: InsertCannulaView(viewModel: viewModel).onAppear(perform: {UIApplication.shared.isIdleTimerDisabled = true}), onDisappear: {UIApplication.shared.isIdleTimerDisabled = false})

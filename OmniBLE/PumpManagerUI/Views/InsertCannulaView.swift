@@ -81,10 +81,6 @@ struct InsertCannulaView: View {
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: cancelButton)
-        .onFirstAppear {
-            // handle possible restart without waiting for a button action
-            self.viewModel.handlePossibleRestart()
-        }
     }
     
     
@@ -134,8 +130,9 @@ struct InsertCannulaView: View {
     }
 
 }
+
 class MockCannulaInserter: CannulaInserter {
-    public func insertCannula(completion: @escaping (Result<TimeInterval,OmniBLEPumpManagerError>) -> Void) {
+    func insertCannula(completion: @escaping (Result<TimeInterval,OmniBLEPumpManagerError>) -> Void) {
         let mockDelay = TimeInterval(seconds: 3)
         let result :Result<TimeInterval, OmniBLEPumpManagerError> = .success(mockDelay)
         completion(result)
@@ -145,15 +142,13 @@ class MockCannulaInserter: CannulaInserter {
         completion(nil)
     }
     
-    
+    var cannulaInsertionSuccessfullyStarted: Bool = false
 }
+
 struct InsertCannulaView_Previews: PreviewProvider {
     static var mockInserter = MockCannulaInserter()
     static var model = InsertCannulaViewModel(cannulaInserter: mockInserter)
     static var previews: some View {
         InsertCannulaView(viewModel: model)
- 
-
-        
     }
 }
