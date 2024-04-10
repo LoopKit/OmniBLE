@@ -106,6 +106,7 @@
 		A9A5BCF5276C1E6D00B02C86 /* PayloadSplitJoinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D054D627651D4F00FAFEFB /* PayloadSplitJoinTests.swift */; };
 		A9A5BCF6276C1E6D00B02C86 /* MessagePacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D054CC2764FDB700FAFEFB /* MessagePacketTests.swift */; };
 		A9A5BCF7276C1E7000B02C86 /* KeyExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D054DB27655F9C00FAFEFB /* KeyExchangeTests.swift */; };
+		B60BB2E62BC6E74100D2BB39 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60BB2E52BC6E74000D2BB39 /* Bundle.swift */; };
 		C10D6D6C27A2393800F53D58 /* OmniBLETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */; };
 		C10D6D6E27A2395700F53D58 /* OmniBLEPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */; };
 		C187C191278FCEC9006E3557 /* InsulinTypeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */; };
@@ -379,6 +380,7 @@
 		A9D054DB27655F9C00FAFEFB /* KeyExchangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyExchangeTests.swift; sourceTree = "<group>"; };
 		A9D3492F2764F5780037F77C /* EnDecryptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnDecryptTests.swift; sourceTree = "<group>"; };
 		A9D349312764F5D30037F77C /* PayloadJoinerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadJoinerTest.swift; sourceTree = "<group>"; };
+		B60BB2E52BC6E74000D2BB39 /* Bundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLETests.swift; sourceTree = "<group>"; };
 		C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPlugin.swift; sourceTree = "<group>"; };
 		C121D8D829C7866D00DA0520 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				8475314F26EDA193009FD801 /* TimeZone.swift */,
 				8475314C26EDA193009FD801 /* UIColor.swift */,
 				C1F67EB927975EB70017487F /* FrameworkLocalText.swift */,
+				B60BB2E52BC6E74000D2BB39 /* Bundle.swift */,
 				C1F67EDD2797AFF10017487F /* Image.swift */,
 			);
 			path = Common;
@@ -1215,6 +1218,7 @@
 				10389A2A26FF7841002115E9 /* MessageBlock.swift in Sources */,
 				C1F67ECA27975F360017487F /* OmniBLESettingsViewModel.swift in Sources */,
 				C1F67EBA27975EB70017487F /* FrameworkLocalText.swift in Sources */,
+				B60BB2E62BC6E74100D2BB39 /* Bundle.swift in Sources */,
 				C1F67E9227975B830017487F /* BasalStateView.swift in Sources */,
 				1024E32B27446DB000DE01F2 /* MessagePacket.swift in Sources */,
 				10289E7B2739F886000339E6 /* EapMessage.swift in Sources */,

@@ -303,6 +303,8 @@ class DashUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     }
     
     private func hostingController<Content: View>(rootView: Content, onDisappear: @escaping () -> Void = {}) -> DismissibleHostingController<some View> {
+        let rootView = rootView
+            .environment(\.appName, Bundle.main.bundleDisplayName)
         return DismissibleHostingController(content: rootView, onDisappear: onDisappear, colorPalette: colorPalette)
     }
     
