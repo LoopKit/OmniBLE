@@ -285,13 +285,15 @@ public class OmniBLEPumpManager: DeviceManager {
     public var debugDescription: String {
         let lines = [
             "## OmniBLEPumpManager",
-            "podComms: \(String(reflecting: podComms))",
             "provideHeartbeat: \(provideHeartbeat)",
             "connected: \(isConnected)",
-            "state: \(String(reflecting: state))",
-            "status: \(String(describing: status))",
-            "podStateObservers.count: \(podStateObservers.cleanupDeallocatedElements().count)",
+            "",
+            "podComms: \(String(reflecting: podComms))",
             "statusObservers.count: \(statusObservers.cleanupDeallocatedElements().count)",
+            "status: \(String(describing: status))",
+            "",
+            "podStateObservers.count: \(podStateObservers.cleanupDeallocatedElements().count)",
+            "state: \(String(reflecting: state))",
         ]
         return lines.joined(separator: "\n")
     }
