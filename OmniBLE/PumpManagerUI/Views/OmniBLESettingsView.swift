@@ -31,6 +31,7 @@ struct OmniBLESettingsView: View  {
     
     @Environment(\.guidanceColors) var guidanceColors
     @Environment(\.insulinTintColor) var insulinTintColor
+    @Environment(\.appName) private var appName
     
     private var daysRemaining: Int? {
         if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining > .days(1) {
@@ -532,7 +533,7 @@ struct OmniBLESettingsView: View  {
     var suspendOptionsActionSheet: ActionSheet {
         ActionSheet(
             title: FrameworkLocalText("Suspend Delivery", comment: "Title for suspend duration selection action sheet"),
-            message: FrameworkLocalText("Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?", comment: "Message for suspend duration selection action sheet"),
+            message: Text(String(format: LocalizedString("Insulin delivery will be stopped until you resume manually. When would you like %1$@ to remind you to resume delivery?", comment: "Message for suspend duration selection action sheet (1: appName)"), self.appName)),
             buttons: [
                 .default(FrameworkLocalText("30 minutes", comment: "Button text for 30 minute suspend duration"), action: { self.viewModel.suspendDelivery(duration: .minutes(30)) }),
                 .default(FrameworkLocalText("1 hour", comment: "Button text for 1 hour suspend duration"), action: { self.viewModel.suspendDelivery(duration: .hours(1)) }),
