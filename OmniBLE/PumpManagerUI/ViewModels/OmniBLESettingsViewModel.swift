@@ -164,7 +164,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         switch basalDeliveryState {
         case .active(_), .initiatingTempBasal:
             return true
-        case .tempBasal(_), .cancelingTempBasal, .suspending, .suspended(_), .resuming, .none:
+        default:
             return false
         }
     }

@@ -361,7 +361,7 @@ extension OmniBLEPumpManager {
 
         switch podCommState(for: state) {
         case .fault:
-            return .active(.distantPast)
+            return .pumpInoperable
         default:
             break
         }
