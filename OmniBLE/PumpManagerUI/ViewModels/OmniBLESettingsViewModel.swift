@@ -46,23 +46,46 @@ class OmniBLESettingsViewModel: ObservableObject {
 
     var activatedAtString: String {
         if let activatedAt = activatedAt {
-            return dateFormatter.string(from: activatedAt)
+            print("ptm: relDateAndTimeFormatter :" + relDateAndTimeFormatter.string(from: activatedAt))
+                if relDateFormatter.string(from: activatedAt) == absDateFormatter.string(from: activatedAt) {
+                    return altRelFormatter.string(from: activatedAt)
+                }
+                return relDateAndTimeFormatter.string(from: activatedAt)
+            } else {
+                return "—"
+            }
+        }
+
+    var expiresAtString: String {
+        if let expiresAt = expiresAt {
+            if relDateFormatter.string(from: expiresAt) == absDateFormatter.string(from: expiresAt) {
+                return altRelFormatter.string(from: expiresAt)
+            }
+            return relDateAndTimeFormatter.string(from: expiresAt)
         } else {
             return "—"
         }
     }
-    
-    var expiresAtString: String {
-        if let expiresAt = expiresAt {
-            return dateFormatter.string(from: expiresAt)
+
+    var deliveryStopsAtString: String {
+        if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining {
+            let deliveryStopsAt = Date().addingTimeInterval(serviceTimeRemaining)
+            if relDateFormatter.string(from: deliveryStopsAt) == absDateFormatter.string(from: deliveryStopsAt) {
+                return altRelFormatter.string(from: deliveryStopsAt)
+            }
+            return relDateAndTimeFormatter.string(from: deliveryStopsAt)
         } else {
             return "—"
         }
     }
 
     var serviceTimeRemainingString: String? {
-        if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining, let serviceTimeRemainingString = timeRemainingFormatter.string(from: serviceTimeRemaining) {
-            return serviceTimeRemainingString
+        if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining {
+            timeRemainingFormatter.allowedUnits =  [.day, .hour, .minute, .second]
+            timeRemainingFormatter.maximumUnitCount = 2
+            if let serviceTimeRemainingString = timeRemainingFormatter.string(from: serviceTimeRemaining) {
+                return serviceTimeRemainingString
+            }
         } else {
             return nil
         }
@@ -151,7 +174,12 @@ class OmniBLESettingsViewModel: ObservableObject {
             return nil
         }
     }
-    
+    var podServiceTimeRemainingString: String {
+        if let serviceTimeRemainingString = serviceTimeRemainingString {
+          return serviceTimeRemainingString
+        }
+        return "-"
+    }
     var notice: DashSettingsNotice? {
         if pumpManager.isClockOffset {
             return DashSettingsNotice(
@@ -170,19 +198,52 @@ class OmniBLESettingsViewModel: ObservableObject {
             return false
         }
     }
-    
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.dateStyle = .medium
-        dateFormatter.doesRelativeDateFormatting = true
-        return dateFormatter
-    }()
-    
     let timeFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .none
+        return dateFormatter
+    }()
+
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale.current
+        dateFormatter.doesRelativeDateFormatting = true
+        return dateFormatter
+    }()
+    
+    let relDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale.current
+        dateFormatter.doesRelativeDateFormatting = true
+        return dateFormatter
+    }()
+    let absDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale.current
+        dateFormatter.doesRelativeDateFormatting = false
+        return dateFormatter
+    }()
+
+    let altRelFormatter: DateFormatter = {
+        let fullDF = DateFormatter()
+        fullDF.locale = Locale.current
+        fullDF.setLocalizedDateFormatFromTemplate("E, hh:mm a")
+        return fullDF
+    }()
+
+    let relDateAndTimeFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale.current
+        dateFormatter.doesRelativeDateFormatting = true
         return dateFormatter
     }()
     
@@ -566,7 +627,7 @@ extension OmniBLEPumpManager {
         guard let podTimeRemaining = podTimeRemaining else {
             return nil;
         }
-        return max(0, Pod.serviceDuration - Pod.nominalPodLife + podTimeRemaining);
+        return Pod.serviceDuration - Pod.nominalPodLife + podTimeRemaining;
     }
     
     private func podDetails(fromPodState podState: PodState, andDeviceName deviceName: String?) -> PodDetails {
