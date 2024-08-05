@@ -355,19 +355,22 @@ struct OmniBLESettingsView: View  {
                         .foregroundColor(Color.secondary)
                 }
 
-                HStack {
-                    if let expiresAt = viewModel.expiresAt, expiresAt < Date() {
+                if let expiresAt = viewModel.expiresAt, expiresAt < Date() {
+                    HStack {
                         FrameworkLocalText("Pod Expired", comment: "Label for pod expiration row, past tense")
                         Spacer()
                         Text(self.viewModel.expiresAtString)
                             .foregroundColor(Color.red)
-                    } else {
+                    }
+                } else {
+                    HStack {
                         FrameworkLocalText("Pod Expires", comment: "Label for pod expiration row")
                         Spacer()
                         Text(self.viewModel.expiresAtString)
                             .foregroundColor(Color.secondary)
                     }
                 }
+
                 if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < Pod.serviceDuration - Pod.nominalPodLife {
                    HStack {
                        FrameworkLocalText("Delivery Stoppage Timer", comment: "Label for insulin delivery stoppage timer row")
@@ -375,22 +378,24 @@ struct OmniBLESettingsView: View  {
                        Text(self.viewModel.podServiceTimeRemainingString)
                            .foregroundColor(Color.red)
                    }
-               }
+                }
 
-
-               HStack {
-                   if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < 0 {
+               if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < 0 {
+                   HStack {
                        FrameworkLocalText("Insulin Delivery Stopped", comment: "Label for insulin delivery stop time row, past tense")
                        Spacer()
                        Text(self.viewModel.deliveryStopsAtString)
                            .foregroundColor(Color.red)
-                   } else {
+                   }
+               } else {
+                   HStack {
                        FrameworkLocalText("Insulin Delivery Stops", comment: "Label for insulin delivery stop time row")
                        Spacer()
                        Text(self.viewModel.deliveryStopsAtString)
                            .foregroundColor(Color.secondary)
                    }
                }
+
                 if let podDetails = self.viewModel.podDetails {
                     NavigationLink(destination: PodDetailsView(podDetails: podDetails, title: LocalizedString("Pod Details", comment: "title for pod details page"))) {
                         FrameworkLocalText("Pod Details", comment: "Text for pod details disclosure row")

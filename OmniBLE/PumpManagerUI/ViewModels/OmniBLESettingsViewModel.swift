@@ -78,7 +78,14 @@ class OmniBLESettingsViewModel: ObservableObject {
             return "—"
         }
     }
-
+    
+    var serviceTimeRemainingTI: TimeInterval {
+        if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining {
+            return serviceTimeRemaining
+        }
+        return 0
+    }
+    
     var serviceTimeRemainingString: String? {
         if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining {
             timeRemainingFormatter.allowedUnits =  [.day, .hour, .minute, .second]
@@ -86,9 +93,8 @@ class OmniBLESettingsViewModel: ObservableObject {
             if let serviceTimeRemainingString = timeRemainingFormatter.string(from: serviceTimeRemaining) {
                 return serviceTimeRemainingString
             }
-        } else {
-            return nil
         }
+        return nil
     }
 
     // Expiration reminder date for current pod
