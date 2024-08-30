@@ -389,7 +389,7 @@ struct OmniBLESettingsView: View  {
                    }
                } else {
                    HStack {
-                       FrameworkLocalText("Insulin Delivery Stops", comment: "Label for insulin delivery stop time row")
+                       FrameworkLocalText("Insulin Stops", comment: "Label for insulin delivery stop time row")
                        Spacer()
                        Text(self.viewModel.deliveryStopsAtString)
                            .foregroundColor(Color.secondary)
