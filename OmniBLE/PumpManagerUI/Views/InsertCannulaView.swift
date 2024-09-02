@@ -132,16 +132,30 @@ struct InsertCannulaView: View {
 }
 
 class MockCannulaInserter: CannulaInserter {
+    let mockError: Bool = false
+    let mockPodAlreadyPairedError: Bool = false
+
     func insertCannula(completion: @escaping (Result<TimeInterval,OmniBLEPumpManagerError>) -> Void) {
-        let mockDelay = TimeInterval(seconds: 3)
-        let result :Result<TimeInterval, OmniBLEPumpManagerError> = .success(mockDelay)
+        let result :Result<TimeInterval, OmniBLEPumpManagerError>
+        if mockError {
+            if mockPodAlreadyPairedError {
+                // A podAlreadyPaired "error" should be treated as an immediate success
+                result = .failure(OmniBLEPumpManagerError.podAlreadyPaired)
+            } else {
+                // Others should display the error text and show Deactivate Pod & Retry options
+                result = .failure(OmniBLEPumpManagerError.noPodPaired)
+            }
+        } else {
+            let mockDelay = TimeInterval(seconds: 3)
+            result = .success(mockDelay)
+        }
         completion(result)
     }
-    
+
     func checkCannulaInsertionFinished(completion: @escaping (OmniBLEPumpManagerError?) -> Void) {
         completion(nil)
     }
-    
+
     var cannulaInsertionSuccessfullyStarted: Bool = false
 }
 

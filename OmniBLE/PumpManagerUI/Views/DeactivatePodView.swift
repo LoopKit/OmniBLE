@@ -73,6 +73,7 @@ struct DeactivatePodView: View {
         }
         .alert(isPresented: $removePodModalIsPresented) { removePodModal }
         .navigationBarTitle(LocalizedString("Deactivate Pod", comment: "navigation bar title for deactivate pod"), displayMode: .automatic)
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing:
             Button("Cancel") {
                 viewModel.didCancel?()
