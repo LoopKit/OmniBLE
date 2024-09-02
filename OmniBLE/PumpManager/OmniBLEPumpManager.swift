@@ -489,7 +489,6 @@ extension OmniBLEPumpManager {
     // If time remaining is negative, the pod has been expired for that amount of time.
     public var podTimeRemaining: TimeInterval? {
         guard let expiresAt = state.podState?.expiresAt else { return nil }
-        // return -32000 // for testing expired pods
         return expiresAt.timeIntervalSince(dateGenerator())
     }
 

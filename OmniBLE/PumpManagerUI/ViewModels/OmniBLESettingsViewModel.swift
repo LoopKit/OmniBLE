@@ -46,7 +46,6 @@ class OmniBLESettingsViewModel: ObservableObject {
 
     var activatedAtString: String {
         if let activatedAt = activatedAt {
-            print("ptm: relDateAndTimeFormatter :" + relDateAndTimeFormatter.string(from: activatedAt))
                 if relDateFormatter.string(from: activatedAt) == absDateFormatter.string(from: activatedAt) {
                     return altRelFormatter.string(from: activatedAt)
                 }
