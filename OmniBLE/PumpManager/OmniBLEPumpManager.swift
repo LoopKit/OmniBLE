@@ -784,6 +784,9 @@ extension OmniBLEPumpManager {
     #if targetEnvironment(simulator)
     private func jumpStartPod(lotNo: UInt32, lotSeq: UInt32, fault: DetailedStatus? = nil, startDate: Date? = nil, mockFault: Bool) {
         let start = startDate ?? Date()
+        //let start = startDate ?? Date.init(timeIntervalSinceNow: -(73 * 60 * 60) + 134) // Expired Pod within 8 hour grace period
+        //let start = startDate ?? Date.init(timeIntervalSinceNow: -(80 * 60 * 60) - 154) // Expired Pod beyond 8 hour grace period
+        //let start = startDate ?? Date.init(timeIntervalSinceNow: -(37 * 60 * 60) - 134) // Active Pod within 72 hour expiration
         let fakeLtk = Data(hexadecimalString: "fedcba98765432100123456789abcdef")!
         var podState = PodState(address: state.podId, ltk: fakeLtk,
             firmwareVersion: "jumpstarted", bleFirmwareVersion: "jumpstarted",
