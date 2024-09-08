@@ -87,11 +87,26 @@ class OmniBLESettingsViewModel: ObservableObject {
     
     var serviceTimeRemainingString: String? {
         if let serviceTimeRemaining = pumpManager.podServiceTimeRemaining {
-            timeRemainingFormatter.allowedUnits =  [.day, .hour, .minute, .second]
-            timeRemainingFormatter.maximumUnitCount = 2
             if let serviceTimeRemainingString = timeRemainingFormatter.string(from: serviceTimeRemaining) {
                 return serviceTimeRemainingString
             }
+        }
+        return nil
+    }
+    
+    var insulinTimeRemainingString: String? {
+        if let insulinTimeRemaining = pumpManager.podServiceTimeRemaining {
+            let insulinTimeRemainingString = insulinTimeRemainingFormatter.string(from: insulinTimeRemaining)
+            return insulinTimeRemainingString
+
+        }
+        return nil
+    }
+    var insulinTimeExpiredString: String? {
+        if let insulinTimeExpired = pumpManager.podServiceTimeRemaining {
+            let insulinTimeExpiredString = insulinTimeExpiredFormatter.localizedString(fromTimeInterval: insulinTimeExpired)
+            return insulinTimeExpiredString
+
         }
         return nil
     }
@@ -185,6 +200,18 @@ class OmniBLESettingsViewModel: ObservableObject {
         }
         return "-"
     }
+    var insulinServiceTimeRemainingString: String {
+        if let insulinTimeRemainingString = insulinTimeRemainingString {
+          return insulinTimeRemainingString
+        }
+        return "-"
+    }
+    var insulinServiceTimeExpiredString: String {
+        if let insulinTimeExpiredString = insulinTimeExpiredString {
+          return insulinTimeExpiredString
+        }
+        return "-"
+    }
     var notice: DashSettingsNotice? {
         if pumpManager.isClockOffset {
             return DashSettingsNotice(
@@ -257,6 +284,23 @@ class OmniBLESettingsViewModel: ObservableObject {
         dateComponentsFormatter.allowedUnits = [.hour, .minute]
         dateComponentsFormatter.unitsStyle = .full
         dateComponentsFormatter.zeroFormattingBehavior = .dropAll
+        return dateComponentsFormatter
+    }()
+    
+    let insulinTimeRemainingFormatter: DateComponentsFormatter = {
+        let dateComponentsFormatter = DateComponentsFormatter()
+        dateComponentsFormatter.allowedUnits =  [.day, .hour, .minute, .second]
+        dateComponentsFormatter.maximumUnitCount = 2
+        dateComponentsFormatter.unitsStyle = .short
+        dateComponentsFormatter.zeroFormattingBehavior = .dropAll
+        return dateComponentsFormatter
+    }()
+    
+    let insulinTimeExpiredFormatter: RelativeDateTimeFormatter = {
+        let dateComponentsFormatter = RelativeDateTimeFormatter()
+        dateComponentsFormatter.locale = Locale.current
+        dateComponentsFormatter.unitsStyle = .short
+        dateComponentsFormatter.dateTimeStyle = .numeric
         return dateComponentsFormatter
     }()
     

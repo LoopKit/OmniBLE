@@ -371,6 +371,7 @@ struct OmniBLESettingsView: View  {
                     }
                 }
 
+                /*
                 if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < Pod.serviceDuration - Pod.nominalPodLife, serviceTimeRemainingTI > 0 {
                    HStack {
                        FrameworkLocalText("Delivery Stoppage Timer", comment: "Label for insulin delivery stoppage timer row")
@@ -379,20 +380,41 @@ struct OmniBLESettingsView: View  {
                            .foregroundColor(Color.red)
                    }
                 }
+                */
 
-               if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < 0 {
-                   HStack {
+               if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI <= 0 {
+                   HStack (alignment: .firstTextBaseline){
                        FrameworkLocalText("Insulin Delivery Stopped", comment: "Label for insulin delivery stop time row, past tense")
                        Spacer()
-                       Text(self.viewModel.deliveryStopsAtString)
-                           .foregroundColor(Color.red)
+                       VStack(alignment: .trailing) {
+                           Text(self.viewModel.deliveryStopsAtString)
+                               .foregroundColor(Color.red)
+                               .frame(alignment: .trailing)
+                           Text(self.viewModel.insulinServiceTimeExpiredString)
+                               .foregroundColor(Color.red)
+                               .frame(alignment: .trailing)
+                       }
+                       .layoutPriority(1)
                    }
                } else {
-                   HStack {
-                       FrameworkLocalText("Insulin Stops", comment: "Label for insulin delivery stop time row")
+                   HStack(alignment: .firstTextBaseline) {
+                       FrameworkLocalText("Insulin Delivery Stops", comment: "Label for insulin delivery stop time row")
                        Spacer()
-                       Text(self.viewModel.deliveryStopsAtString)
-                           .foregroundColor(Color.secondary)
+                       VStack(alignment: .trailing) {
+                           if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < Pod.serviceDuration - Pod.nominalPodLife {
+                               Text(self.viewModel.deliveryStopsAtString)
+                                   .foregroundColor(Color.red)
+                                   .frame(alignment: .trailing)
+                               Text(self.viewModel.insulinServiceTimeRemainingString)
+                                   .foregroundColor(Color.red)
+                                   .frame(alignment: .trailing)
+                           } else {
+                               Text(self.viewModel.deliveryStopsAtString)
+                                   .foregroundColor(Color.secondary)
+                                   .frame(alignment: .trailing)
+                           }
+                       }
+                       .layoutPriority(1)
                    }
                }
 
