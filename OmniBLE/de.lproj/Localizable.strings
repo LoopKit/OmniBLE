@@ -22,9 +22,6 @@
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ für %2$@";
 
-/* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ konnte seit %2$@ nicht mehr mit Deinem Pod kommunizieren.\n\nOhne Kommunikation mit dem Pod kann die App keine Befehle für die Insulinabgabe senden oder genaue, aktuelle Informationen über Dein aktives Insulin oder das vom Pod abgegebene Insulin anzeigen.\n\nÜberwache Deinen Blutzucker für die nächsten 6 oder mehr Stunden genau, da in Deinem Körper Insulin aktiv sein kann oder auch nicht, das %3$@ nicht anzeigen kann.";
-
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ Insulin oder weniger verbleibend im Pod. Pod bald wechseln.";
 
@@ -236,9 +233,7 @@
 /* Unit for plural days in pod life remaining */
 "days" = "Tage";
 
-/* Action button description for deactivate while pod still active
-   Button text for deactivate pod button
-   Button title to deactive pod on uncertain program
+/* Button text for deactivate pod button
    Deactivate pod action button accessibility label while ready to deactivate
    navigation bar title for deactivate pod
    Title for deactivate pod screen */
@@ -266,7 +261,8 @@
 /* Title string for BeepPreference.silent */
 "Disabled" = "Deaktiviert";
 
-/* Pairing interface navigation bar button text for discard pod action
+/* Button title to discard pod on uncertain program
+   Pairing interface navigation bar button text for discard pod action
    Text for discard pod button */
 "Discard Pod" = "Pod verwerfen";
 
@@ -385,9 +381,7 @@
 /* Pod inititialized */
 "Initialized" = "Initialisiert";
 
-/* Cannula insertion button text while ready to insert
-   Insert cannula action button accessibility label while ready to pair
-   navigation bar title for insert cannula
+/* navigation bar title for insert cannula
    Title for insert cannula screen */
 "Insert Cannula" = "Kanüle einsetzen";
 
@@ -904,6 +898,18 @@
 /* No comment provided by engineer. */
 "Skip Omnipod Onboarding?" = "Omnipod-Onboarding überspringen?";
 
+/* Insert cannula slider button accessibility label while ready to pair */
+"Slide Button to insert Cannula" = "Zum Einführen wischen";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Wische den Schalter unten, um mit dem Einführen der Kanüle zu beginnen.";
+
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Zum Deaktivieren wischen";
+
+/* Cannula insertion button text while ready to insert */
+"Slide to Insert Cannula" = "Zum Einführen wischen";
+
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Unterbrechen";
 
@@ -946,9 +952,6 @@
 
 /* Pod power to motor activated */
 "Tank power activated" = "Energieversorgung für den Podmotor aktiviert";
-
-/* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tippe unten, um das Einführen der Kanüle zu starten.";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Temporäre Basalrate";
