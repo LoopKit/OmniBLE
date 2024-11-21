@@ -7,8 +7,8 @@
 //
 
 import Foundation
+import LoopAlgorithm
 import LoopKit
-import HealthKit
 
 public enum PumpManagerAlert: Hashable {
     case multiCommand(triggeringSlot: AlertSlot?)
@@ -72,8 +72,8 @@ public enum PumpManagerAlert: Hashable {
         case .podExpireImminent:
             return LocalizedString("Change Pod now. Insulin delivery will stop in 1 hour.", comment: "Alert content body for podExpireImminent pod alert")
         case .lowReservoir(_, let lowReservoirReminderValue):
-            let quantityFormatter = QuantityFormatter(for: .internationalUnit())
-            let valueString = quantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: lowReservoirReminderValue)) ?? String(describing: lowReservoirReminderValue)
+            let quantityFormatter = QuantityFormatter(for: .internationalUnit)
+            let valueString = quantityFormatter.string(from: LoopQuantity(unit: .internationalUnit, doubleValue: lowReservoirReminderValue)) ?? String(describing: lowReservoirReminderValue)
             return String(format: LocalizedString("%1$@ insulin or less remaining in Pod. Change Pod soon.", comment: "Format string for alert content body for lowReservoir pod alert. (1: reminder value)"), valueString)
         case .suspendInProgress:
             return LocalizedString("Suspend In Progress Reminder", comment: "Alert content body for suspendInProgress pod alert")

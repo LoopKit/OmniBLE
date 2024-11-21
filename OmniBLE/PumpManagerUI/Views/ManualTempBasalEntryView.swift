@@ -6,10 +6,10 @@
 //  Copyright © 2022 LoopKit Authors. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
 import LoopKitUI
 import LoopKit
-import HealthKit
+import SwiftUI
 
 struct ManualTempBasalEntryView: View {
 
@@ -51,7 +51,7 @@ struct ManualTempBasalEntryView: View {
     }
 
     private static let durationFormatter: QuantityFormatter = {
-        let quantityFormatter = QuantityFormatter(for: .hour())
+        let quantityFormatter = QuantityFormatter(for: .hour)
         quantityFormatter.numberFormatter.minimumFractionDigits = 1
         quantityFormatter.numberFormatter.maximumFractionDigits = 1
         quantityFormatter.unitStyle = .long
@@ -59,16 +59,16 @@ struct ManualTempBasalEntryView: View {
     }()
 
     private var durationUnitsLabel: some View {
-        Text(QuantityFormatter(for: .hour()).localizedUnitStringWithPlurality())
+        Text(QuantityFormatter(for: .hour).localizedUnitStringWithPlurality())
             .foregroundColor(Color(.secondaryLabel))
     }
 
     func formatRate(_ rate: Double) -> String {
-        return ManualTempBasalEntryView.rateFormatter.string(from: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: rate)) ?? ""
+        return ManualTempBasalEntryView.rateFormatter.string(from: LoopQuantity(unit: .internationalUnitsPerHour, doubleValue: rate)) ?? ""
     }
 
     func formatDuration(_ duration: TimeInterval) -> String {
-        return ManualTempBasalEntryView.durationFormatter.string(from: HKQuantity(unit: .hour(), doubleValue: duration.hours)) ?? ""
+        return ManualTempBasalEntryView.durationFormatter.string(from: LoopQuantity(unit: .hour, doubleValue: duration.hours)) ?? ""
     }
 
     var body: some View {

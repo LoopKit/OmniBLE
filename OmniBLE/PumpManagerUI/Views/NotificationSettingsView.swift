@@ -6,10 +6,10 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
 import LoopKit
 import LoopKitUI
-import HealthKit
+import SwiftUI
 
 struct NotificationSettingsView: View {
 
@@ -29,7 +29,7 @@ struct NotificationSettingsView: View {
     
     var onSaveLowReservoirReminder: ((_ selectedValue: Int, _ completion: @escaping (_ error: Error?) -> Void) -> Void)?
     
-    var insulinQuantityFormatter = QuantityFormatter(for: .internationalUnit())
+    var insulinQuantityFormatter = QuantityFormatter(for: .internationalUnit)
 
     var body: some View {
         RoundedCardScrollView {
@@ -114,7 +114,7 @@ struct NotificationSettingsView: View {
         {
             RoundedCardValueRow(
                 label: LocalizedString("Low Reservoir Reminder", comment: "Label for low reservoir reminder row"),
-                value: insulinQuantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: Double(lowReservoirReminderValue))) ?? "",
+                value: insulinQuantityFormatter.string(from: LoopQuantity(unit: .internationalUnit, doubleValue: Double(lowReservoirReminderValue))) ?? "",
                 highlightValue: false,
                 disclosure: true)
         }
