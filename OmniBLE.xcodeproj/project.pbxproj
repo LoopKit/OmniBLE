@@ -90,7 +90,6 @@
 		8475315726EDA193009FD801 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314A26EDA193009FD801 /* LocalizedString.swift */; };
 		8475315826EDA193009FD801 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314B26EDA193009FD801 /* OSLog.swift */; };
 		8475315926EDA193009FD801 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314C26EDA193009FD801 /* UIColor.swift */; };
-		8475315A26EDA193009FD801 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314D26EDA193009FD801 /* HKUnit.swift */; };
 		8475315B26EDA193009FD801 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314E26EDA193009FD801 /* NibLoadable.swift */; };
 		8475315C26EDA193009FD801 /* TimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475314F26EDA193009FD801 /* TimeZone.swift */; };
 		8475315D26EDA193009FD801 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8475315026EDA193009FD801 /* Data.swift */; };
@@ -354,7 +353,6 @@
 		8475314A26EDA193009FD801 /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		8475314B26EDA193009FD801 /* OSLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
 		8475314C26EDA193009FD801 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		8475314D26EDA193009FD801 /* HKUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		8475314E26EDA193009FD801 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		8475314F26EDA193009FD801 /* TimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZone.swift; sourceTree = "<group>"; };
 		8475315026EDA193009FD801 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -705,7 +703,6 @@
 			isa = PBXGroup;
 			children = (
 				8475315026EDA193009FD801 /* Data.swift */,
-				8475314D26EDA193009FD801 /* HKUnit.swift */,
 				10289E69271B2A3E000339E6 /* IdentifiableClass.swift */,
 				8475314A26EDA193009FD801 /* LocalizedString.swift */,
 				8475314E26EDA193009FD801 /* NibLoadable.swift */,
@@ -1104,7 +1101,6 @@
 				10389A2B26FF7841002115E9 /* PlaceholderMessageBlock.swift in Sources */,
 				10389A3026FF7841002115E9 /* StatusResponse.swift in Sources */,
 				1021114A2709462300784F13 /* PodDoseProgressEstimator.swift in Sources */,
-				8475315A26EDA193009FD801 /* HKUnit.swift in Sources */,
 				10389A2626FF7841002115E9 /* TempBasalExtraCommand.swift in Sources */,
 				8475315C26EDA193009FD801 /* TimeZone.swift in Sources */,
 				8475315726EDA193009FD801 /* LocalizedString.swift in Sources */,
