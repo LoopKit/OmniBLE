@@ -47,7 +47,7 @@ struct OmniBLESettingsView: View  {
     }
     
     private var minutesRemaining: Int? {
-        if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining < .hours(2) {
+        if case .timeRemaining(let remaining, _) = viewModel.lifeState, remaining < .days(1) {
             return Int(remaining.minutes.truncatingRemainder(dividingBy: 60))
         }
         return nil
@@ -355,16 +355,68 @@ struct OmniBLESettingsView: View  {
                         .foregroundColor(Color.secondary)
                 }
 
-                HStack {
-                    if let expiresAt = viewModel.expiresAt, expiresAt < Date() {
+                if let expiresAt = viewModel.expiresAt, expiresAt < Date() {
+                    HStack {
                         FrameworkLocalText("Pod Expired", comment: "Label for pod expiration row, past tense")
-                    } else {
-                        FrameworkLocalText("Pod Expires", comment: "Label for pod expiration row")
+                        Spacer()
+                        Text(self.viewModel.expiresAtString)
+                            .foregroundColor(Color.red)
                     }
-                    Spacer()
-                    Text(self.viewModel.expiresAtString)
-                        .foregroundColor(Color.secondary)
+                } else {
+                    HStack {
+                        FrameworkLocalText("Pod Expires", comment: "Label for pod expiration row")
+                        Spacer()
+                        Text(self.viewModel.expiresAtString)
+                            .foregroundColor(Color.secondary)
+                    }
                 }
+
+                /*
+                if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < Pod.serviceDuration - Pod.nominalPodLife, serviceTimeRemainingTI > 0 {
+                   HStack {
+                       FrameworkLocalText("Delivery Stoppage Timer", comment: "Label for insulin delivery stoppage timer row")
+                       Spacer()
+                       Text(self.viewModel.podServiceTimeRemainingString)
+                           .foregroundColor(Color.red)
+                   }
+                }
+                */
+
+               if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI <= 0 {
+                   HStack (alignment: .firstTextBaseline){
+                       FrameworkLocalText("Insulin Delivery Stopped", comment: "Label for insulin delivery stop time row, past tense")
+                       Spacer()
+                       VStack(alignment: .trailing) {
+                           Text(self.viewModel.deliveryStopsAtString)
+                               .foregroundColor(Color.red)
+                               .frame(alignment: .trailing)
+                           Text(self.viewModel.insulinServiceTimeExpiredString)
+                               .foregroundColor(Color.red)
+                               .frame(alignment: .trailing)
+                       }
+                       .layoutPriority(1)
+                   }
+               } else {
+                   HStack(alignment: .firstTextBaseline) {
+                       FrameworkLocalText("Insulin Delivery Stops", comment: "Label for insulin delivery stop time row")
+                       Spacer()
+                       VStack(alignment: .trailing) {
+                           if let serviceTimeRemainingTI = Optional(viewModel.serviceTimeRemainingTI), serviceTimeRemainingTI < Pod.serviceDuration - Pod.nominalPodLife {
+                               Text(self.viewModel.deliveryStopsAtString)
+                                   .foregroundColor(Color.red)
+                                   .frame(alignment: .trailing)
+                               Text(self.viewModel.insulinServiceTimeRemainingString)
+                                   .foregroundColor(Color.red)
+                                   .frame(alignment: .trailing)
+                           } else {
+                               Text(self.viewModel.deliveryStopsAtString)
+                                   .foregroundColor(Color.secondary)
+                                   .frame(alignment: .trailing)
+                           }
+                       }
+                       .layoutPriority(1)
+                   }
+               }
 
                 if let podDetails = self.viewModel.podDetails {
                     NavigationLink(destination: PodDetailsView(podDetails: podDetails, title: LocalizedString("Pod Details", comment: "title for pod details page"))) {

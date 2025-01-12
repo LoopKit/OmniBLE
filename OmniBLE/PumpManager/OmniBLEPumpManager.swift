@@ -830,8 +830,12 @@ extension OmniBLEPumpManager {
         // If we're in the simulator, create a mock PodState
         let mockFaultDuringPairing = false
         let mockCommsErrorDuringPairing = false
+        let mockStartDate = Date()
+        //let mockStartDate = Date.init(timeIntervalSinceNow: -(37 * 60 * 60) - 134) // Active Pod within 72 hour expiration : 37 hours, 2 mins, 14 secs
+        //let mockStartDate = Date.init(timeIntervalSinceNow: -(74 * 60 * 60) - 134) // Expired Pod within 8 hour grace period : 74 hours, 2 mins, 14 secs
+        //let mockStartDate = Date.init(timeIntervalSinceNow: -(80 * 60 * 60) - 134) // Expired Pod beyond 8 hour grace period : 80 hours, 2 mins, 14 secs
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .seconds(2)) {
-            self.jumpStartPod(lotNo: 135601809, lotSeq: 0800525, mockFault: mockFaultDuringPairing)
+            self.jumpStartPod(lotNo: 135601809, lotSeq: 0800525, startDate: mockStartDate, mockFault: mockFaultDuringPairing)
             let fault: DetailedStatus? = self.setStateWithResult({ (state) in
                 var podState = state.podState
                 podState?.setupProgress = .priming
