@@ -66,7 +66,7 @@ class PodCommsSessionTests: XCTestCase, PodCommsSessionDelegate {
 
     func testBolusFinishedEarlyOnPodIsMarkedNonMutable() {
          let mockStart = Date()
-         podState.unfinalizedBolus = UnfinalizedDose(bolusAmount: 4.45, startTime: mockStart, scheduledCertainty: .certain, insulinType: .novolog)
+         podState.unfinalizedBolus = UnfinalizedDose(decisionId: nil, bolusAmount: 4.45, startTime: mockStart, scheduledCertainty: .certain, insulinType: .novolog)
          let session = PodCommsSession(podState: podState, transport: mockTransport, delegate: self)
 
          // Simulate a status request a bit before the bolus is expected to finish
