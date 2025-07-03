@@ -1493,9 +1493,9 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     fileprivate func clearSuspendReminder() {
-        self.pumpDelegate.notify { (delegate) in
-            delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).alertIdentifier))
-            delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).repeatingAlertIdentifier))
+        Task {
+            await self.pumpDelegate.delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).alertIdentifier))
+            await self.pumpDelegate.delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).repeatingAlertIdentifier))
         }
     }
 
@@ -1912,16 +1912,16 @@ extension OmniBLEPumpManager: PumpManager {
     func issueAlert(alert: PumpManagerAlert) {
         let identifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.alertIdentifier)
         let loopAlert = Alert(identifier: identifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .immediate)
-        pumpDelegate.notify { (delegate) in
-            delegate?.issueAlert(loopAlert)
+        Task {
+            await self.pumpDelegate.delegate?.issueAlert(loopAlert)
         }
 
         if let repeatInterval = alert.repeatInterval {
             // Schedule an additional repeating 15 minute reminder for suspend period ended.
             let repeatingIdentifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.repeatingAlertIdentifier)
             let loopAlert = Alert(identifier: repeatingIdentifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .repeating(repeatInterval: repeatInterval))
-            pumpDelegate.notify { (delegate) in
-                delegate?.issueAlert(loopAlert)
+            Task {
+                await self.pumpDelegate.delegate?.issueAlert(loopAlert)
             }
         }
 
@@ -1932,13 +1932,13 @@ extension OmniBLEPumpManager: PumpManager {
 
     func retractAlert(alert: PumpManagerAlert) {
         let identifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.alertIdentifier)
-        pumpDelegate.notify { (delegate) in
-            delegate?.retractAlert(identifier: identifier)
+        Task {
+            await self.pumpDelegate.delegate?.retractAlert(identifier: identifier)
         }
         if alert.isRepeating {
             let repeatingIdentifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.repeatingAlertIdentifier)
-            pumpDelegate.notify { (delegate) in
-                delegate?.retractAlert(identifier: repeatingIdentifier)
+            Task {
+                await self.pumpDelegate.delegate?.retractAlert(identifier: repeatingIdentifier)
             }
         }
         self.mutateState { (state) in
@@ -2027,11 +2027,11 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     private func notifyPodFault(fault: DetailedStatus) {
-        pumpDelegate.notify { delegate in
+        Task {
             let content = Alert.Content(title: fault.faultEventCode.notificationTitle,
                                         body: fault.faultEventCode.notificationBody,
                                         acknowledgeActionButtonLabel: LocalizedString("OK", comment: "Alert acknowledgment OK button"))
-            delegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: OmniBLEPumpManager.podAlarmNotificationIdentifier,
+            await self.pumpDelegate.delegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: OmniBLEPumpManager.podAlarmNotificationIdentifier,
                                                                     alertIdentifier: fault.faultEventCode.description),
                                        foregroundContent: content, backgroundContent: content,
                                        trigger: .immediate))
