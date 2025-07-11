@@ -312,7 +312,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         if deliveryStatus.tempBasalRunning && unfinalizedTempBasal == nil { // active temp basal that we aren't tracking
             // unfinalizedTempBasal = UnfinalizedDose(tempBasalRate: 0, startTime: Date(), duration: .minutes(30), isHighTemp: false, scheduledCertainty: .certain, insulinType: insulinType)
         }
-        if deliveryStatus != .suspended && isSuspended { // active basal that we aren't tracking
+        if !deliveryStatus.suspended && isSuspended { // active basal that we aren't tracking
             let resumeStartTime = Date()
             suspendState = .resumed(resumeStartTime)
             unfinalizedResume = UnfinalizedDose(resumeStartTime: resumeStartTime, scheduledCertainty: .certain, insulinType: insulinType)
@@ -570,7 +570,7 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "* expiresAt: \(String(reflecting: expiresAt))",
             "* podTime: \(podTime.timeIntervalStr)",
             "* podTimeUpdated: \(String(reflecting: podTimeUpdated))",
-            "* setupUnitsDelivered: \(String(reflecting: setupUnitsDelivered))",
+            "* setupUnitsDelivered: \(setupUnitsDelivered == nil ? "?" : setupUnitsDelivered!.twoDecimals) U",
             "* firmwareVersion: \(firmwareVersion)",
             "* bleFirmwareVersion: \(bleFirmwareVersion)",
             "* lotNo: \(lotNo)",
@@ -583,6 +583,8 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             "* unfinalizedResume: \(String(describing: unfinalizedResume))",
             "* finalizedDoses: \(String(describing: finalizedDoses))",
             "* activeAlertsSlots: \(alertSetString(alertSet: activeAlertSlots))",
+            "* delivered: \(lastInsulinMeasurements == nil ? "?" : lastInsulinMeasurements!.delivered.twoDecimals) U",
+            "* reservoirLevel: \(lastInsulinMeasurements == nil || lastInsulinMeasurements!.reservoirLevel == nil || lastInsulinMeasurements!.reservoirLevel == Pod.reservoirLevelAboveThresholdMagicNumber ? "50+" : lastInsulinMeasurements!.reservoirLevel!.twoDecimals) U",
             "* messageTransportState: \(String(describing: messageTransportState))",
             "* setupProgress: \(setupProgress)",
             "* primeFinishTime: \(String(describing: primeFinishTime))",
