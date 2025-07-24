@@ -2176,39 +2176,40 @@ extension OmniBLEPumpManager: AlertSoundVendor {
 
 // MARK: - AlertResponder implementation
 extension OmniBLEPumpManager {
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+    public func acknowledgeAlert(alertIdentifier: LoopKit.Alert.AlertIdentifier) async throws {
         guard self.hasActivePod else {
-            completion(OmniBLEPumpManagerError.noPodPaired)
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
 
         for alert in state.activeAlerts {
             if alert.alertIdentifier == alertIdentifier {
                 // If this alert was triggered by the pod find the slot to clear it.
                 if let slot = alert.triggeringSlot {
-                    self.podComms.runSession(withName: "Acknowledge Alert") { (result) in
-                        switch result {
-                        case .success(let session):
-                            do {
-                                let beepBlock = self.beepMessageBlock(beepType: .beep)
-                                let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
-                            } catch {
+                    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+                        self.podComms.runSession(withName: "Acknowledge Alert") { (result) in
+                            switch result {
+                            case .success(let session):
+                                do {
+                                    let beepBlock = self.beepMessageBlock(beepType: .beep)
+                                    let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
+                                } catch {
+                                    self.mutateState { state in
+                                        state.alertsWithPendingAcknowledgment.insert(alert)
+                                    }
+                                    continuation.resume(throwing: error)
+                                    return
+                                }
+                                self.mutateState { state in
+                                    state.activeAlerts.remove(alert)
+                                }
+                                continuation.resume()
+                            case .failure(let error):
                                 self.mutateState { state in
                                     state.alertsWithPendingAcknowledgment.insert(alert)
                                 }
-                                completion(error)
+                                continuation.resume(throwing: error)
                                 return
                             }
-                            self.mutateState { state in
-                                state.activeAlerts.remove(alert)
-                            }
-                            completion(nil)
-                        case .failure(let error):
-                            self.mutateState { state in
-                                state.alertsWithPendingAcknowledgment.insert(alert)
-                            }
-                            completion(error)
-                            return
                         }
                     }
                 } else {
@@ -2219,7 +2220,6 @@ extension OmniBLEPumpManager {
                             state.acknowledgedTimeOffsetAlert = true
                         }
                     }
-                    completion(nil)
                 }
             }
         }
