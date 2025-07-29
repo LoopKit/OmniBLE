@@ -1493,9 +1493,9 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     fileprivate func clearSuspendReminder() {
-        self.pumpDelegate.notify { (delegate) in
-            delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).alertIdentifier))
-            delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).repeatingAlertIdentifier))
+        Task {
+            await self.pumpDelegate.delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).alertIdentifier))
+            await self.pumpDelegate.delegate?.retractAlert(identifier: Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: PumpManagerAlert.suspendEnded(triggeringSlot: nil).repeatingAlertIdentifier))
         }
     }
 
@@ -1912,16 +1912,16 @@ extension OmniBLEPumpManager: PumpManager {
     func issueAlert(alert: PumpManagerAlert) {
         let identifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.alertIdentifier)
         let loopAlert = Alert(identifier: identifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .immediate)
-        pumpDelegate.notify { (delegate) in
-            delegate?.issueAlert(loopAlert)
+        Task {
+            await self.pumpDelegate.delegate?.issueAlert(loopAlert)
         }
 
         if let repeatInterval = alert.repeatInterval {
             // Schedule an additional repeating 15 minute reminder for suspend period ended.
             let repeatingIdentifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.repeatingAlertIdentifier)
             let loopAlert = Alert(identifier: repeatingIdentifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .repeating(repeatInterval: repeatInterval))
-            pumpDelegate.notify { (delegate) in
-                delegate?.issueAlert(loopAlert)
+            Task {
+                await self.pumpDelegate.delegate?.issueAlert(loopAlert)
             }
         }
 
@@ -1932,13 +1932,13 @@ extension OmniBLEPumpManager: PumpManager {
 
     func retractAlert(alert: PumpManagerAlert) {
         let identifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.alertIdentifier)
-        pumpDelegate.notify { (delegate) in
-            delegate?.retractAlert(identifier: identifier)
+        Task {
+            await self.pumpDelegate.delegate?.retractAlert(identifier: identifier)
         }
         if alert.isRepeating {
             let repeatingIdentifier = Alert.Identifier(managerIdentifier: self.pluginIdentifier, alertIdentifier: alert.repeatingAlertIdentifier)
-            pumpDelegate.notify { (delegate) in
-                delegate?.retractAlert(identifier: repeatingIdentifier)
+            Task {
+                await self.pumpDelegate.delegate?.retractAlert(identifier: repeatingIdentifier)
             }
         }
         self.mutateState { (state) in
@@ -2027,11 +2027,11 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     private func notifyPodFault(fault: DetailedStatus) {
-        pumpDelegate.notify { delegate in
+        Task {
             let content = Alert.Content(title: fault.faultEventCode.notificationTitle,
                                         body: fault.faultEventCode.notificationBody,
                                         acknowledgeActionButtonLabel: LocalizedString("OK", comment: "Alert acknowledgment OK button"))
-            delegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: OmniBLEPumpManager.podAlarmNotificationIdentifier,
+            await self.pumpDelegate.delegate?.issueAlert(Alert(identifier: Alert.Identifier(managerIdentifier: OmniBLEPumpManager.podAlarmNotificationIdentifier,
                                                                     alertIdentifier: fault.faultEventCode.description),
                                        foregroundContent: content, backgroundContent: content,
                                        trigger: .immediate))
@@ -2176,39 +2176,40 @@ extension OmniBLEPumpManager: AlertSoundVendor {
 
 // MARK: - AlertResponder implementation
 extension OmniBLEPumpManager {
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+    public func acknowledgeAlert(alertIdentifier: LoopKit.Alert.AlertIdentifier) async throws {
         guard self.hasActivePod else {
-            completion(OmniBLEPumpManagerError.noPodPaired)
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
 
         for alert in state.activeAlerts {
             if alert.alertIdentifier == alertIdentifier {
                 // If this alert was triggered by the pod find the slot to clear it.
                 if let slot = alert.triggeringSlot {
-                    self.podComms.runSession(withName: "Acknowledge Alert") { (result) in
-                        switch result {
-                        case .success(let session):
-                            do {
-                                let beepBlock = self.beepMessageBlock(beepType: .beep)
-                                let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
-                            } catch {
+                    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+                        self.podComms.runSession(withName: "Acknowledge Alert") { (result) in
+                            switch result {
+                            case .success(let session):
+                                do {
+                                    let beepBlock = self.beepMessageBlock(beepType: .beep)
+                                    let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
+                                } catch {
+                                    self.mutateState { state in
+                                        state.alertsWithPendingAcknowledgment.insert(alert)
+                                    }
+                                    continuation.resume(throwing: error)
+                                    return
+                                }
+                                self.mutateState { state in
+                                    state.activeAlerts.remove(alert)
+                                }
+                                continuation.resume()
+                            case .failure(let error):
                                 self.mutateState { state in
                                     state.alertsWithPendingAcknowledgment.insert(alert)
                                 }
-                                completion(error)
+                                continuation.resume(throwing: error)
                                 return
                             }
-                            self.mutateState { state in
-                                state.activeAlerts.remove(alert)
-                            }
-                            completion(nil)
-                        case .failure(let error):
-                            self.mutateState { state in
-                                state.alertsWithPendingAcknowledgment.insert(alert)
-                            }
-                            completion(error)
-                            return
                         }
                     }
                 } else {
@@ -2219,7 +2220,6 @@ extension OmniBLEPumpManager {
                             state.acknowledgedTimeOffsetAlert = true
                         }
                     }
-                    completion(nil)
                 }
             }
         }
