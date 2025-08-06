@@ -17,7 +17,7 @@
 "%1$@ units remaining at %2$@" = "%1$@ enheter återstår kl. %2$@";
 
 /* Format string for activation time exceeded
-   Pod state when activation not completed in the time allowed */
+Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Tid för aktivering överskriden";
 
 /* description label for active time pod details row */
@@ -53,12 +53,14 @@
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Ger bolus med temporär basal";
 
-/* Button title for cancelling low reservoir reminder edit
-   Button title for cancelling scheduled reminder date edit
-   Cancel button text in navigation bar on insert cannula screen
-   Cancel button text in navigation bar on pair pod UI
-   Cancel button title
-   Pairing interface navigation bar button text for cancel action */
+/* Button title for cancelling confidence reminders edit
+Button title for cancelling low reservoir reminder edit
+Button title for cancelling scheduled reminder date edit
+Button title for cancelling silence pod edit
+Cancel button text in navigation bar on insert cannula screen
+Cancel button text in navigation bar on pair pod UI
+Cancel button title
+Pairing interface navigation bar button text for cancel action */
 "Cancel" = "Avbryt";
 
 /* Pod state when inserting cannula */
@@ -80,27 +82,25 @@
 "Configuration" = "Konfiguration";
 
 /* Action button description when deactivated
-   Action button title for attach pod view
-   Button title to continue
-   Cannula insertion button text when inserted
-   Pod pairing action button text when paired
-   Text for continue button
-   Text for continue button on PodSetupView
-   Title of button to continue discard */
+Action button title for attach pod view
+Button title to continue
+Cannula insertion button text when inserted
+Pod pairing action button text when paired
+Text for continue button
+Text for continue button on PodSetupView
+Title of button to continue discard */
 "Continue" = "Fortsätt";
 
-/* Action button description for deactivate while pod still active
-   Button text for deactivate pod button
-   Button title to deactive pod on uncertain program
-   Deactivate pod action button accessibility label while ready to deactivate
-   navigation bar title for deactivate pod
-   Title for deactivate pod screen */
+/* Button text for deactivate pod button
+Deactivate pod action button accessibility label while ready to deactivate
+Title for deactivate pod screen
+navigation bar title for deactivate pod */
 "Deactivate Pod" = "Inaktivera podd";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Inaktiverad";
 
-/* No comment provided by engineer. */
+/* Title of done button on OmniBLESettingsView */
 "Done" = "Färdig";
 
 /* Description for Empty reservoir pod fault */
@@ -121,8 +121,8 @@
 /* Description for expiration alert */
 "Expiration alert" = "Larm om utgångsdatum";
 
-/* navigation bar title for expiration reminder
-   Title for ExpirationReminderSetupView */
+/* Title for ExpirationReminderSetupView
+navigation bar title for expiration reminder */
 "Expiration Reminder" = "Påminnelse om utgångsdatum";
 
 /* Alert title for resume error */
@@ -143,10 +143,8 @@
 /* Pod inititialized */
 "Initialized" = "Pod initialiserad";
 
-/* Cannula insertion button text while ready to insert
-   Insert cannula action button accessibility label while ready to pair
-   navigation bar title for insert cannula
-   Title for insert cannula screen */
+/* Title for insert cannula screen
+navigation bar title for insert cannula */
 "Insert Cannula" = "För in kanyl";
 
 /* Pod state when inserting cannula */
@@ -158,8 +156,8 @@
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulintillförsel pausad";
 
-/* Text for confidence reminders navigation link
-   Title for insulin type selection screen */
+/* Text for insulin type navigation link
+Title for insulin type selection screen */
 "Insulin Type" = "Insulintyp";
 
 /* The format string for Internal pod fault (1: The fault code value) */
@@ -177,7 +175,8 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Ogiltigt CRC";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Låg reservoarvolym";
 
 /* Description for low reservoir alarm */
@@ -196,13 +195,13 @@
 "No faults" = "Inga fel";
 
 /* Error message for reservoir view when reservoir empty
-   Status highlight message for emptyReservoir alarm.
-   Status highlight that a pump is out of insulin. */
+Status highlight message for emptyReservoir alarm.
+Status highlight that a pump is out of insulin. */
 "No Insulin" = "Inget insulin";
 
 /* Label for pod life state when no pod paired
-   Status highlight that when no pod is paired.
-   Text shown in insulin remaining space when no pod is paired */
+Status highlight that when no pod is paired.
+Text shown in insulin remaining space when no pod is paired */
 "No Pod" = "Ingen Podd";
 
 /* Error message shown when no pod is paired */
@@ -261,11 +260,11 @@
 "Pod expired" = "Pod har utgått";
 
 /* Alert content title for podExpireImminent pod alert
-   Alert content title for podExpiring pod alert
-   Error message for reservoir view when pod expired
-   Label for pod expiration row, past tense
-   Status highlight message for podExpired alarm.
-   The title for Pod Expired alarm notification */
+Alert content title for podExpiring pod alert
+Error message for reservoir view when pod expired
+Label for pod expiration row, past tense
+Status highlight message for podExpired alarm.
+The title for Pod Expired alarm notification */
 "Pod Expired" = "Poddens utgångsdatum passerat";
 
 /* Format string for pod fault code */
@@ -315,12 +314,14 @@
 "Resume: %1$@ %2$@" = "Återuppta: %1$@ %2$@";
 
 /* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
+Cannula insertion button text while showing error
+Pod pairing action button text while showing error */
 "Retry" = "Försök igen";
 
-/* button title for saving low reservoir reminder
-   button title for saving scheduled reminder */
+/* button title for saving confidence reminder
+button title for saving low reservoir reminder
+button title for saving scheduled reminder
+button title for saving silence pod preference */
 "Save" = "Spara";
 
 /* Delivery status when scheduled basal is running */
@@ -333,7 +334,7 @@
 "Select the type of insulin that you will be using in this pod." = "Välj vilken typ av insulin du kommer att använda.";
 
 /* Title for setup complete screen
-   Title of SetupCompleteView */
+Title of SetupCompleteView */
 "Setup Complete" = "Inställning klar";
 
 /* Description for shutdown imminent alarm */
@@ -373,15 +374,15 @@
 "threeNotUsed" = "threeNotUsed";
 
 /* Label for expiration reminder row
-   Label for scheduled expiration reminder row
-   Label for scheduled reminder value row */
+Label for scheduled expiration reminder row
+Label for scheduled reminder value row */
 "Time" = "Tid";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
 "Time to replace your pod! Your pod will expire in %1$@" = "Byt din pod! Din pod går ut om %1$@";
 
 /* Recovery suggestion when ack received instead of response
-   recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
+recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
 "Try again" = "Försök igen";
 
 /* Pod state twoNotUsed */

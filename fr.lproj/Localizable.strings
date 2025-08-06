@@ -1,0 +1,114 @@
+/* Description for expiration reminder alert */
+"Expiration reminder" = "Rappel d'expiration";
+
+/* Delivery status when extended bolus and temp basal is running */
+"Extended bolus running with temp basal" = "Bolus prolongé en cours avec débit basal temporaire";
+
+/* Pod state when fault event has occurred */
+"Fault event occurred" = "Une erreur s'est produite";
+
+/* Description for finish setup reminder alert */
+"Finish setup reminder" = "Terminer le paramétrage du rappel";
+
+/* Pod initialized */
+"Initialized" = "Initialisé";
+
+/* Pod state when inserting cannula */
+"Inserting cannula" = "Insertion de la canule";
+
+/* The format string for Internal pod fault (1: The fault code value) */
+"Internal pod fault %1$03d" = "Code d'erreur interne du Pod %1$03d";
+
+/* Description for MessageError invalidAddress */
+"Invalid address: (%1$@)" = "Adresse invalide : %1$@";
+
+/* Description for MessageError invalidCrc */
+"Invalid CRC" = "CRC invalide";
+
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
+"Low reservoir" = "Niveau réservoir bas";
+
+/* Pod memory initialized */
+"Memory initialized" = "Mémoire initialisée";
+
+/* Pod alert state when no alerts are active */
+"No alerts" = "Pas d’alertes";
+
+/* Description for Fault Event Code .noFaults */
+"No faults" = "Pas de défauts";
+
+/* Pod state when running above fifty units */
+"Normal" = "Normal";
+
+/* Description for MessageError notEnoughData */
+"Not enough data" = "Pas assez de données";
+
+/* Description for not used slot alert */
+"Not used" = "Non utilisé";
+
+/* Description for Occlusion detected pod fault */
+"Occlusion detected" = "Occlusion détectée";
+
+/* Pod state oneNotUsed */
+"oneNotUsed" = "oneNotUsed";
+
+/* Pod status when pairing completed */
+"Pairing completed" = "Association terminée";
+
+/* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
+"Parsing Error: %1$@ in (%2$@)" = "Erreur d'analyse : %1$@ dans (%2$@)";
+
+/* Description for Pod expired pod fault
+Description for pod expired alert */
+"Pod expired" = "Pod expiré";
+
+/* Description for pod suspended reminder alert */
+"Pod suspended reminder" = "Rappel de Pod suspendu";
+
+/* Delivery status when pod is priming
+Pod status when priming */
+"Priming" = "Amorçage";
+
+/* Pod state when priming completed */
+"Priming completed" = "Amorçage terminé";
+
+/* Pod pairing reminder initialized */
+"Reminder initialized" = "Rappel initialisé";
+
+/* Delivery status when scheduled basal is running */
+"Scheduled basal" = "Débit basal programmé";
+
+/* Description for shutdown imminent alert */
+"Shutdown imminent" = "Arrêt imminent";
+
+/* Description for suspend time expired alert */
+"Suspend time expired" = "Délai de suspension expiré";
+
+/* Delivery status when insulin delivery is suspended */
+"Suspended" = "Suspendu";
+
+/* Delivery status when temp basal is running */
+"Temp basal running" = "Débit basal temporaire en cours";
+
+/* Pod state threeNotUsed */
+"threeNotUsed" = "threeNotUsed";
+
+/* Pod state twoNotUsed */
+"twoNotUsed" = "twoNotUsed";
+
+/* Description for MessageError invalidSequence */
+"Unexpected message sequence number" = "Numéro de séquence du message inattendu";
+
+/* The format string for Unknown pod fault (1: The fault code value) */
+"Unknown pod fault %1$03d" = "Erreur de Pod inconnue %1$03d";
+
+/* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
+"Unknown Value (%1$@) for type %2$@" = "Valeur inconnue (%1$@) pour le type %2$@";
+
+/* Format string for description of MessageError validationFailed. (1: description of validation failure) */
+"Validation failed: %1$@" = "Échec de la validation : %1$@";
+
+/* Description waiting for pairing reminder alert */
+"Waiting for pairing reminder" = "En attente d'association";
+

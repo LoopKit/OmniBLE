@@ -381,6 +381,8 @@
 		A9D3492F2764F5780037F77C /* EnDecryptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnDecryptTests.swift; sourceTree = "<group>"; };
 		A9D349312764F5D30037F77C /* PayloadJoinerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadJoinerTest.swift; sourceTree = "<group>"; };
 		B60BB2E52BC6E74000D2BB39 /* Bundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		B65E14E72E439C9700E30FCF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B6CAD8C82E439C340088BAAB /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C10D6D6B27A2393800F53D58 /* OmniBLETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLETests.swift; sourceTree = "<group>"; };
 		C10D6D6D27A2395700F53D58 /* OmniBLEPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBLEPlugin.swift; sourceTree = "<group>"; };
 		C121D8D829C7866D00DA0520 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1400,6 +1402,8 @@
 				C17C23AA2AE58C87003AD249 /* nl */,
 				C1FD685F2AE58C9A003DDFFD /* pl */,
 				C1FC36162AE58CCE00AC033A /* ru */,
+				B6CAD8C82E439C340088BAAB /* da */,
+				B65E14E72E439C9700E30FCF /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

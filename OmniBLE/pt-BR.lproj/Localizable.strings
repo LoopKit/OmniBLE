@@ -37,12 +37,14 @@
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Aplicando bolus com basal temp";
 
-/* Button title for cancelling low reservoir reminder edit
-   Button title for cancelling scheduled reminder date edit
-   Cancel button text in navigation bar on insert cannula screen
-   Cancel button text in navigation bar on pair pod UI
-   Cancel button title
-   Pairing interface navigation bar button text for cancel action */
+/* Button title for cancelling confidence reminders edit
+Button title for cancelling low reservoir reminder edit
+Button title for cancelling scheduled reminder date edit
+Button title for cancelling silence pod edit
+Cancel button text in navigation bar on insert cannula screen
+Cancel button text in navigation bar on pair pod UI
+Cancel button title
+Pairing interface navigation bar button text for cancel action */
 "Cancel" = "Cancelar";
 
 /* Pod state when inserting cannula */
@@ -55,21 +57,19 @@
 "Configuration" = "Configuração";
 
 /* Action button description when deactivated
-   Action button title for attach pod view
-   Button title to continue
-   Cannula insertion button text when inserted
-   Pod pairing action button text when paired
-   Text for continue button
-   Text for continue button on PodSetupView
-   Title of button to continue discard */
+Action button title for attach pod view
+Button title to continue
+Cannula insertion button text when inserted
+Pod pairing action button text when paired
+Text for continue button
+Text for continue button on PodSetupView
+Title of button to continue discard */
 "Continue" = "Continuar";
 
-/* Action button description for deactivate while pod still active
-   Button text for deactivate pod button
-   Button title to deactive pod on uncertain program
-   Deactivate pod action button accessibility label while ready to deactivate
-   navigation bar title for deactivate pod
-   Title for deactivate pod screen */
+/* Button text for deactivate pod button
+Deactivate pod action button accessibility label while ready to deactivate
+Title for deactivate pod screen
+navigation bar title for deactivate pod */
 "Deactivate Pod" = "Desativar Pod";
 
 /* Pod state when pod has been deactivated */
@@ -93,8 +93,8 @@
 /* Description for expiration alert */
 "Expiration alert" = "Alerta de expiração";
 
-/* navigation bar title for expiration reminder
-   Title for ExpirationReminderSetupView */
+/* Title for ExpirationReminderSetupView
+navigation bar title for expiration reminder */
 "Expiration Reminder" = "Lembrete de Expiração";
 
 /* Description for finish setup */
@@ -109,10 +109,8 @@
 /* Pod inititialized */
 "Initialized" = "Inicializado";
 
-/* Cannula insertion button text while ready to insert
-   Insert cannula action button accessibility label while ready to pair
-   navigation bar title for insert cannula
-   Title for insert cannula screen */
+/* Title for insert cannula screen
+navigation bar title for insert cannula */
 "Insert Cannula" = "Inserir Cânula";
 
 /* Title of insulin delivery section */
@@ -214,19 +212,21 @@
 "Resume: %1$@ %2$@" = "Retomar: %1$@ %2$@";
 
 /* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
+Cannula insertion button text while showing error
+Pod pairing action button text while showing error */
 "Retry" = "Tentar de Novo";
 
-/* button title for saving low reservoir reminder
-   button title for saving scheduled reminder */
+/* button title for saving confidence reminder
+button title for saving low reservoir reminder
+button title for saving scheduled reminder
+button title for saving silence pod preference */
 "Save" = "Salvar";
 
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Basal Agendado";
 
 /* Title for setup complete screen
-   Title of SetupCompleteView */
+Title of SetupCompleteView */
 "Setup Complete" = "Instalação Concluída";
 
 /* Description for shutdown imminent alarm */

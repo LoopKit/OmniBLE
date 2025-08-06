@@ -4,7 +4,7 @@
 /* Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Activeringstijd overschreden";
 
-/* Description for auto-off */
+/* Description for auto-off alert */
 "Auto-off" = "Automatisch uitschakelen";
 
 /* Pod state when basal initialized */
@@ -22,9 +22,6 @@
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Reservoir leeg";
 
-/* Description for expiration alert */
-"Expiration alert" = "Vervaldatum melding";
-
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Verlengde bolus actief";
 
@@ -34,7 +31,7 @@
 /* Pod state when fault event has occurred */
 "Fault event occurred" = "Fout opgetreden";
 
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Herinnering voor voltooien installatie";
 
 /* Pod initialized */
@@ -52,11 +49,9 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Ongeldige CRC";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Reservoir bijna leeg";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Reservoir bijna leeg (%1$gE)";
 
 /* Pod memory initialized */
 "Memory initialized" = "Geheugen geïnitialiseerd";
@@ -85,14 +80,15 @@
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
 "Parsing Error: %1$@ in (%2$@)" = "Parseerfout: %1$@ in (%2$@)";
 
-/* Description for Pod expired pod fault */
+/* Description for Pod expired pod fault
+Description for pod expired alert */
 "Pod expired" = "Pod verlopen";
 
-/* Description for pod suspended reminder */
+/* Description for pod suspended reminder alert */
 "Pod suspended reminder" = "Herinnering onderbroken Pod";
 
 /* Delivery status when pod is priming
-   Pod status when priming */
+Pod status when priming */
 "Priming" = "Voorbereiden";
 
 /* Pod state when priming completed */
@@ -104,10 +100,10 @@
 /* Delivery status when scheduled basal is running */
 "Scheduled basal" = "Gepland basaal";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Afsluiting nadert";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Onderbrekingstijd verstreken";
 
 /* Delivery status when insulin delivery is suspended */
@@ -134,6 +130,6 @@
 /* Format string for description of MessageError validationFailed. (1: description of validation failure) */
 "Validation failed: %1$@" = "Validatie mislukt: %1$@";
 
-/* Description waiting for pairing reminder */
+/* Description waiting for pairing reminder alert */
 "Waiting for pairing reminder" = "Wacht op herinnering om te verbinden";
 

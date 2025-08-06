@@ -19,9 +19,6 @@
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "1 pre 2";
 
-/* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ sa nepodarilo komunikovať s podom na vašom tele od %2$@ . \n\nBez komunikácie s podom, nemôže aplikácia pokračovať v odosielaní príkazov na aplikáciu inzulínu, ani zobrazovať presné a aktuálne informácie o vašom aktívnom inzulíne alebo o inzulíne podávanom podom. \n\nPočas nasledujúcich 6 alebo viac hodín pozorne sledujte svoju glykémiu, pretože vo vašom tele môže alebo nemusí aktívne pôsobiť inzulín, ktorý %3$@ nedokáže zobraziť.";
-
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "V podu zostáva %1$@ inzulínu alebo menej. Čoskoro vymeňte pod.";
 
@@ -35,7 +32,7 @@
 "%g U" = "%g j";
 
 /* Format string for activation time exceeded
-   Pod state when activation not completed in the time allowed */
+Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Čas aktivácie bol prekročený";
 
 /* description label for active time pod details row */
@@ -47,14 +44,14 @@
 /* No comment provided by engineer. */
 "Are you sure you want to skip Omnipod Onboarding?" = "Naozaj chcete preskočiť nastavovanie Omnipodu?";
 
-/* navigation bar title attach pod
-   Title for Attach Pod screen */
+/* Title for Attach Pod screen
+navigation bar title attach pod */
 "Attach Pod" = "Aplikujte pod";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
 "Attemping to re-establish communication" = "Prebieha obnovenie komunikácie";
 
-/* Description for auto-off */
+/* Description for auto-off alert */
 "Auto-off" = "Automatické vypnutie";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
@@ -81,12 +78,14 @@
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Bolusovanie s dočasným bazálom";
 
-/* Button title for cancelling low reservoir reminder edit
-   Button title for cancelling scheduled reminder date edit
-   Cancel button text in navigation bar on insert cannula screen
-   Cancel button text in navigation bar on pair pod UI
-   Cancel button title
-   Pairing interface navigation bar button text for cancel action */
+/* Button title for cancelling confidence reminders edit
+Button title for cancelling low reservoir reminder edit
+Button title for cancelling scheduled reminder date edit
+Button title for cancelling silence pod edit
+Cancel button text in navigation bar on insert cannula screen
+Cancel button text in navigation bar on pair pod UI
+Cancel button title
+Pairing interface navigation bar button text for cancel action */
 "Cancel" = "Zrušiť";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
@@ -110,8 +109,8 @@
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Vymeniť pod teraz. Pod bol aktívny 72 hodín.";
 
-/* navigation bar title for check cannula
-   Title for check cannula screen */
+/* Title for check cannula screen
+navigation bar title for check cannula */
 "Check Cannula" = "Skontrolujte kanylu";
 
 /* Label text for step three of attach pod instructions */
@@ -123,32 +122,24 @@
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Kontroluje sa...";
 
-/* Title for uncertainty recovered screen */
+/* Title for uncertainty recovered screen
+navigation bar title for comms recovered */
 "Comms Recovered" = "Príkazy obnovené";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Problém s komunikáciou: Čaká sa na potvrdenie príkazu.";
 
-/* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Potvrdzovacie pripomienky sú pípnutia z podu, ktoré možno použiť pre potvrdenie vybraných príkazov.";
-
-/* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Pripomienky spoľahlivosti zaznejú pri príkazoch, ktoré spustíte, ako je bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie upozornení atď. Keď Loop automaticky upraví podanie, nepoužijú sa žiadne pripomenutia spoľahlivosti.";
-
-/* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Keď Loop automaticky upraví podávanie, ako aj prevedie príkazy, ktoré iniciujete, zaznejú pripomenutia spoľahlivosti.";
-
 /* Section header for configuration section */
 "Configuration" = "Konfigurácia";
 
 /* Action button description when deactivated
-   Action button title for attach pod view
-   Button title to continue
-   Cannula insertion button text when inserted
-   Pod pairing action button text when paired
-   Text for continue button
-   Text for continue button on PodSetupView
-   Title of button to continue discard */
+Action button title for attach pod view
+Button title to continue
+Cannula insertion button text when inserted
+Pod pairing action button text when paired
+Text for continue button
+Text for continue button on PodSetupView
+Title of button to continue discard */
 "Continue" = "Pokračovať";
 
 /* Title for critical alerts description */
@@ -163,12 +154,10 @@
 /* Unit for plural days in pod life remaining */
 "days" = "dni";
 
-/* Action button description for deactivate while pod still active
-   Button text for deactivate pod button
-   Button title to deactive pod on uncertain program
-   Deactivate pod action button accessibility label while ready to deactivate
-   navigation bar title for deactivate pod
-   Title for deactivate pod screen */
+/* Button text for deactivate pod button
+Deactivate pod action button accessibility label while ready to deactivate
+Title for deactivate pod screen
+navigation bar title for deactivate pod */
 "Deactivate Pod" = "Deaktivovať pod";
 
 /* Pod state when pod has been deactivated */
@@ -180,15 +169,12 @@
 /* Action button description while deactivating */
 "Deactivating..." = "Deaktivuje sa...";
 
-/* Text for device details disclosure row
-   title for device details page */
-"Device Details" = "Podrobnosti o zariadení";
-
-/* Pairing interface navigation bar button text for discard pod action
-   Text for discard pod button */
+/* Button title to discard pod on uncertain program
+Pairing interface navigation bar button text for discard pod action
+Text for discard pod button */
 "Discard Pod" = "Zlikvidujte pod";
 
-/* No comment provided by engineer. */
+/* Title of done button on OmniBLESettingsView */
 "Done" = "Hotovo";
 
 /* Description for Empty reservoir pod fault */
@@ -203,14 +189,11 @@
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Zaprotokolovaná udalosť chyby, vypína sa";
 
-/* Description for expiration advisory */
-"Expiration advisory" = "Upozornenie na vypršanie platnosti";
-
 /* Description for expiration alert */
 "Expiration alert" = "Varovanie o expirácii";
 
-/* navigation bar title for expiration reminder
-   Title for ExpirationReminderSetupView */
+/* Title for ExpirationReminderSetupView
+navigation bar title for expiration reminder */
 "Expiration Reminder" = "Pripomienka o expirácii";
 
 /* Label text for expiration reminder default row */
@@ -249,13 +232,14 @@
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Dokončiť deaktiváciu";
 
-/* Action button title to continue at Setup Complete */
+/* Action button title to continue at Setup Complete
+Status highlight that when pod is activating. */
 "Finish Setup" = "Dokončiť nastavenie";
 
 /* Description for finish setup */
 "Finish setup " = "Dokončiť nastavenie";
 
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Dokončiť nastavenie pripomienky";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
@@ -270,10 +254,8 @@
 /* Pod inititialized */
 "Initialized" = "Inicializované";
 
-/* Cannula insertion button text while ready to insert
-   Insert cannula action button accessibility label while ready to pair
-   navigation bar title for insert cannula
-   Title for insert cannula screen */
+/* Title for insert cannula screen
+navigation bar title for insert cannula */
 "Insert Cannula" = "Zaviesť kanylu";
 
 /* Pod state when inserting cannula */
@@ -288,18 +270,17 @@
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Podávanie inzulínu";
 
-/* The action string on pod status page when pod faulted
-   The default notification body for AlarmCodes */
+/* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Podávanie inzulínu sa zastavilo. Vymeňte modul teraz.";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Zostávajúci inzulín";
 
-/* Text for confidence reminders navigation link
-   Title for insulin type selection screen */
+/* Text for insulin type navigation link
+Title for insulin type selection screen */
 "Insulin Type" = "Typ inzulínu";
 
-/* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
+/* Error description for insulin type not configured */
 "Insulin type not configured" = "Typ inzulínu nie je nakonfigurovaný";
 
 /* The format string for Internal pod fault (1: The fault code value) */
@@ -317,35 +298,30 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Neplatný kód CRC";
 
-/* Error description for OmniBLEPumpManagerError.invalidSetting */
+/* Error description for invalid setting */
 "Invalid Setting" = "Neplatné nastavenie";
 
 /* description label for last status date pod details row */
 "Last Status" = "Posledný stav";
 
-/* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop nebude automaticky upravovať podávanie inzulínu, kým dočasná bazálna dávka nebude ukončená alebo zrušená.";
-
 /* description label for lot number pod details row */
 "Lot Number" = "Číslo šarže";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Nízka hladina v rezervoári";
 
 /* Alert content title for lowReservoir pod alert
-   Label text for low reservoir value row
-   navigation bar title for low reservoir
-   Title for LowReservoirReminderSetupView */
+Label text for low reservoir value row
+Title for LowReservoirReminderSetupView
+navigation bar title for low reservoir */
 "Low Reservoir" = "Nízka hladina v rezervoári";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Nízka hladina v rezervoári  (%1$gU)";
 
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Nízka hladina v rezervoári";
 
 /* Label for low reservoir reminder row
-   Title for low reservoir reminder edit page */
+Title for low reservoir reminder edit page */
 "Low Reservoir Reminder" = "Pripomienka Nízka hladina v rezervoári";
 
 /* The action string on pod status page when pod data is stale */
@@ -375,13 +351,9 @@
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
 "Move to a new area away from any other pods and try again." = "Presuňte sa ďalej od ostatných modulov a skúste znova.";
 
-/* Alert content body for multiCommand pod alert
-   Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Upozornenie na viacero príkazov";
-
 /* String shown on pod details for active time when conversion fails.
-   String shown on pod details for last status date when not available.
-   String shown on pod details for total delivery when not available. */
+String shown on pod details for last status date when not available.
+String shown on pod details for total delivery when not available. */
 "NA" = "NA";
 
 /* Text of continue button on ExpirationReminderSetupView */
@@ -400,13 +372,13 @@
 "No faults" = "Žiadne chyby";
 
 /* Error message for reservoir view when reservoir empty
-   Status highlight message for emptyReservoir alarm.
-   Status highlight that a pump is out of insulin. */
+Status highlight message for emptyReservoir alarm.
+Status highlight that a pump is out of insulin. */
 "No Insulin" = "Žiadny inzulín";
 
 /* Label for pod life state when no pod paired
-   Status highlight that when no pod is paired.
-   Text shown in insulin remaining space when no pod is paired */
+Status highlight that when no pod is paired.
+Text shown in insulin remaining space when no pod is paired */
 "No Pod" = "Žiadny pod";
 
 /* Error message shown when no pod is paired */
@@ -431,8 +403,8 @@
 /* Description for MessageError notEnoughData */
 "Not enough data" = "Nedostatok dát";
 
-/* navigation title for notification settings
-   Text for pod details disclosure row */
+/* Text for pod details disclosure row
+navigation title for notification settings */
 "Notification Settings" = "Nastavenia oznámení";
 
 /* No comment provided by engineer. */
@@ -457,9 +429,9 @@
 "oneNotUsed" = "jednoNepoužité";
 
 /* Pair Pod navigationBarTitle
-   Pod pairing action button text while ready to pair
-   Settings page link description when next lifecycle action is to pair new pod
-   Title for pod pairing screen */
+Pod pairing action button text while ready to pair
+Settings page link description when next lifecycle action is to pair new pod
+Title for pod pairing screen */
 "Pair Pod" = "Párovať pod";
 
 /* Pairing action button accessibility label while ready to pair */
@@ -495,8 +467,8 @@
 /* Recover suggestion shown when no pod is paired */
 "Please pair a new pod" = "Spárujte nový pod";
 
-/* description label for activated at timne pod details row
-   Label for pod insertion row */
+/* Label for pod insertion row
+description label for activated at time pod details row */
 "Pod Activated" = "Pod aktivovaný";
 
 /* Error message shown when user cannot pair because pod is already paired */
@@ -508,8 +480,7 @@
 /* Deactivate pod action button accessibility label when deactivation complete */
 "Pod deactivated successfully. Continue." = "Pod deaktivovaný úspešne. Pokračovať.";
 
-/* Error message for reservoir view during general pod fault
-   Status highlight message for other alarm. */
+/* Status highlight message for other alarm. */
 "Pod Error" = "Chyba podu";
 
 /* Description for expiration advisory alarm */
@@ -522,11 +493,11 @@
 "Pod expired" = "Pod vypršal";
 
 /* Alert content title for podExpireImminent pod alert
-   Alert content title for podExpiring pod alert
-   Error message for reservoir view when pod expired
-   Label for pod expiration row, past tense
-   Status highlight message for podExpired alarm.
-   The title for Pod Expired alarm notification */
+Alert content title for podExpiring pod alert
+Error message for reservoir view when pod expired
+Label for pod expiration row, past tense
+Status highlight message for podExpired alarm.
+The title for Pod Expired alarm notification */
 "Pod Expired" = "Pod expiroval";
 
 /* Label for pod life state when time remaining */
@@ -548,7 +519,7 @@
 "Pod is suspended" = "Pod je pozastavený";
 
 /* Error message for reservoir view when pod occlusion checks failed
-   Status highlight message for occlusion alarm. */
+Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Oklúzia podu";
 
 /* Pairing action button accessibility label when pairing succeeded */
@@ -566,7 +537,7 @@
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
 "Pod setup window expired" = "Okno nastavenia podov vypršalo";
 
-/* Description for pod suspended reminder */
+/* Description for pod suspended reminder alert */
 "Pod suspended reminder" = "Pripomenutie pozastaveného podu";
 
 /* Format string for poor pod signal strength */
@@ -622,16 +593,20 @@
 "Resuming insulin delivery..." = "Obnovuje sa podávanie inzulínu...";
 
 /* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
+Cannula insertion button text while showing error
+Pod pairing action button text while showing error */
 "Retry" = "Skúsiť znova";
 
-/* button title for saving low reservoir reminder
-   button title for saving scheduled reminder */
+/* button title for saving confidence reminder
+button title for saving low reservoir reminder
+button title for saving scheduled reminder
+button title for saving silence pod preference */
 "Save" = "Uložiť";
 
-/* button title for saving low reservoir reminder while saving
-   button title for saving scheduled reminder while saving */
+/* button title for saving confidence reminder while saving
+button title for saving low reservoir reminder while saving
+button title for saving scheduled reminder while saving
+button title for saving silence pod preference while saving */
 "Saving..." = "Ukladá sa...";
 
 /* Delivery status when scheduled basal is running */
@@ -641,9 +616,9 @@
 "Scheduled Basal" = "Naplánovaný bazál";
 
 /* Card title for scheduled reminder
-   Scheduled reminder card title on SetupCompleteView
-   Title for scheduled expiration reminder edit page
-   Title of scheduled reminder card on NotificationSettingsView */
+Scheduled reminder card title on SetupCompleteView
+Title for scheduled expiration reminder edit page
+Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Naplánovaná pripomienka";
 
 /* Title text for insulin type confirmation page */
@@ -656,17 +631,17 @@
 "Set Temporary Basal" = "Nastaviť dočasný bazál";
 
 /* Title for setup complete screen
-   Title of SetupCompleteView */
+Title of SetupCompleteView */
 "Setup Complete" = "Nastavenie je dokončené";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Vypnutie každú chvilu";
 
 /* Description for shutdown imminent alarm */
 "Shutdown imminent alarm" = "Varovanie bezprostredného vypnutia";
 
-/* Error message for reservoir view during general pod fault
-   Status highlight when communications with the pod haven't happened recently. */
+/* Error message for reservoir view during signal loss
+Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Strata signálu";
 
 /* Format string for pod signal strength too high */
@@ -679,13 +654,13 @@
 "Suspend" = "Pozastavenie";
 
 /* Alert content body for suspendInProgress pod alert
-   Alert content title for suspendInProgress pod alert */
+Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Pripomienka prebiehajúceho pozastavenia";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Zastavte podávanie inzulínu";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Čas pozastavenia vypršal";
 
 /* The format string describing a suspend. (1: Time)(2: Scheduled certainty */
@@ -706,9 +681,6 @@
 /* Pod power to motor activated */
 "Tank power activated" = "Napájanie nádrže je aktivované";
 
-/* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Ťuknutím nižšie spustíte zavádzanie kanyly.";
-
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Dočasný bazál";
 
@@ -727,18 +699,6 @@
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Dočasný bazál zlyhal";
 
-/* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Aplikácia nakonfiguruje pripomienku do podu, aby vás vopred upozornila na expiráciu podu. Počas párovania nového podu, nastavte, koľko hodín vopred, by ste chceli pripomienku nakonfigurovať.";
-
-/* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Aplikácia vás vopred upozorní na expiráciu podu. \n\nRolovaním nastavte počet hodín vopred, kedy chcete upozornenie dostať.";
-
-/* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v pode dosiahne túto úroveň (50 – 10 U). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
-
-/* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia vás upozorní, keď množstvo inzulínu v pode dosiahne túto úroveň.";
-
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia inzulínu sa skončilo.\n\nPodávanie inzulínu môžete obnoviť z bannera na domovskej obrazovke alebo z obrazovky nastavení pumpy. Pripomienka sa vám znova zobrazí o 15 minút.";
 
@@ -751,20 +711,17 @@
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Nastal problém s komunikáciou s podom. Ak tento problém pretrváva, ťuknite na položku Zlikvidovať Pod. Potom môžete aktivovať nový pod.";
 
-/* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "Toto je pripomienka, ktorú ste naplánovali pri spárovaní aktuálneho Podu.";
-
 /* Pod state threeNotUsed */
 "threeNotUsed" = "triNepoužité";
 
 /* Label for expiration reminder row
-   Label for scheduled expiration reminder row
-   Label for scheduled reminder value row */
+Label for scheduled expiration reminder row
+Label for scheduled reminder value row */
 "Time" = "Čas";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
-   Title for pod sync time action sheet.
-   title for time change detected notice */
+Title for pod sync time action sheet.
+title for time change detected notice */
 "Time Change Detected" = "Zistila sa zmena času";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
@@ -780,7 +737,7 @@
 "Total Delivery" = "Celková dávka";
 
 /* Recovery suggestion when ack received instead of response
-   recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
+recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
 "Try again" = "Skúste znova";
 
 /* Pod state twoNotUsed */
@@ -842,7 +799,4 @@
 
 /* bodyText for PodSetupView */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Teraz začnete s procesom konfigurácie pripomienok, naplnením podu inzulínom, jeho spárovaním s vašim zariadením a umiestnením podu na telo.";
-
-/* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Váš pod je pripravený na použitie. \n\n %1$@ vám pripomenie, aby ste vymenili svoj pod pred časom jeho expirácie. Môžete to zmeniť na čas, ktorý vám vyhovuje.";
 

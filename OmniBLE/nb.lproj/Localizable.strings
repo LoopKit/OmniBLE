@@ -1,3 +1,51 @@
+/* The format string for fault code in decimal and hex: (1: fault code for decimal display) (2: fault code for hex display) */
+"\n\n⚠️ Critical Pod Fault %1$03d (0x%2$02X)" = "↩\n \n ⚠️ Kritisk podfeil %1$03d (0x %2$02X)";
+
+/* The format string for immediate bolus in progress: (1: immediate bolus in progress) */
+"\n  Immediate Bolus In Progress: %1$@" = "↩\n  Umiddelbar bolus pågår: %1$@";
+
+/* The format string for insulin state table corrupted: (1: insulin state corrupted) */
+"\n  Insulin State Table Corrupted: %@" = "↩\n  Insulinstatustabell ødelagt: %@";
+
+/* The format string for occlusion type: (1: occlusion type) */
+"\n  Occlusion Type: %1$@" = "↩\n  Okklusjonstype: %1$@";
+
+/* The format string for previous pod progress: (1: previous pod progress string) */
+"\n  Previous Pod Progress: %1$@" = "↩\n  Forrige pod-fremdrift: %1$@";
+
+/* The format string for Alerts: (1: the alerts string) */
+"\nAlerts: %1$@" = "↩\n  Varsler: %1$@";
+
+/* The format string for Bolus Not Delivered: (1: bolus not delivered string) */
+"\nBolus Not Delivered: %1$@ U" = "↩\n  Bolus ikke levert: %1$@ E";
+
+/* The format string for Delivery Status: (1: delivery status string) */
+"\nDelivery Status: %1$@" = "↩\n  Leveringsstatus: %1$@";
+
+/* The format string for fault event info: (1: fault event info) */
+"\nFault Event Info: %1$03d (0x%2$02X)," = "↩\nInformasjon om feilhendelse: %1$03d (0x %2$02X),";
+
+/* The format string for fault time: (1: fault time string) */
+"\nFault Time: %1$@" = "↩\nFeiltid: %1$@";
+
+/* The format string for last programming sequence number: (1: last programming sequence number) */
+"\nLast Programming Seq Num: %1$@" = "↩\nSiste programmeringssekvensnummer: %1$@";
+
+/* The format string for Pod Progress: (1: pod progress string) */
+"\nPod Progress: %1$@" = "↩\nPod-fremdrift: %1$@";
+
+/* The format string for Pulse Count (1: pulse count) */
+"\nPulse Count: %1$d" = "↩\nPulsantall: %1$d";
+
+/* The Ref format string (1: pdm ref string) */
+"\nRef: %@" = "↩\n Ref: %@";
+
+/* The format string for Reservoir Level: (1: reservoir level string) */
+"\nReservoir Level: %1$@ U" = "↩\nReservoarnivå: %1$@ E";
+
+/* The format string for RSSI: (1: RSSI value) */
+"\nRSSI: %1$@" = "↩\nRSSI: %1$@";
+
 /* Description for an inactive alert modifier */
 " (inactive)" = "(inaktiv)";
 
@@ -10,9 +58,6 @@
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
 
-/* No comment provided by engineer. */
-"%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ har gjenopprettet kommunikasjonen med pod på kroppen din. \n\n Insulintilførselsjournaler er oppdatert og bør samsvare med det som faktisk ble levert. \n\n Du kan fortsette å bruke %@ normalt nå.";
-
 /* Format string for reservoir volume when above maximum reading. (1: The maximum reading) */
 "%@+ U" = "%@+ E";
 
@@ -23,10 +68,16 @@
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
 /* Format string for main text of delivery uncertainty recovery page. (1: app name)(2: date of command)(3: app name) */
-"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nWithout communication with the pod, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered by the Pod.\n\nMonitor your glucose closely for the next 6 or more hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har ikke vært i stand til å kommunisere med pod på kroppen din siden %2$@ . \n\n Uten kommunikasjon med pod kan ikke appen fortsette å sende kommandoer for insulintilførsel eller vise nøyaktig, fersk informasjon om ditt aktive insulin eller insulinet som leveres av pod. \n\n Overvåk blodsukkerverdi nøye de neste 6 timene eller mer, siden det kan være insulin som virker aktivt i kroppen din som %3$@ ikke kan vise.";
+"%1$@ has been unable to communicate with the pod on your body since %2$@.\n\nDo not Discard the Pod without scrolling to read this entire screen.\n\nCommunication was interrupted at a critical time. Information about active insulin / pod temp basal rate is uncertain.\n\nYou can toggle phone Bluetooth off and on or quit and restart the app. (Wait up to 30 seconds for recovery.)\n\nIf you decide to give up because communication cannot be restored, tap the Discard Pod button, follow the steps and start a new pod.\nMonitor your glucose closely for the next 6 hours, as there may or may not be insulin actively working in your body that %3$@ cannot display." = "%1$@ har ikke vært i stand til å kommunisere med pod på kroppen din siden %2$@.\n\nIkke kast pod uten å bla for å lese hele beskjeden.\n\nKommunikasjonen ble avbrutt på et kritisk tidspunkt. Informasjon om aktivt insulin / podens midlertidige basalhastighet er usikker.\n\nDu kan slå telefonens Bluetooth av og på, eller avslutte og starte appen på nytt. (Vent i opptil 30 sekunder på gjenoppretting.)\n\nHvis du bestemmer deg for å gi opp fordi kommunikasjonen ikke kan gjenopprettes, trykk på Kast pod-knappen, følg trinnene og start en ny pod.\nOvervåk blodsukkeret dit nøye de neste 6 timene, da det kan være insulin som aktivt virker i kroppen din som %3$@ ikke kan vise.";
+
+/* Text body for page showing insulin uncertainty has been recovered (1: appName) (2: appName) */
+"%1$@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %2$@ normally now." = "%1$@ har gjenopprettet kommunikasjonen med pod på kroppen din.\n\nInsulintilførselsjournaler er oppdatert og bør samsvare med det som faktisk ble levert. \n\n Du kan fortsette å bruke %2$@ normalt nå.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin eller mindre gjenstår i Pod. Bytt Pod snart.";
+
+/* The format string for minutes (1: number of minutes string) */
+"%1$@ minutes" = "%1$@ minutter";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ enheter gjenstår ved %2$@";
@@ -36,6 +87,9 @@
 
 /* Format string for total delivery on pod details screen */
 "%g U" = "%g E";
+
+/* The action string on pod status page when pod faulted */
+"⚠️ Insulin delivery stopped. Change Pod now." = "⚠️ Insulintilførsel stoppet. Bytt pod nå.";
 
 /* Button text for 1 hour suspend duration */
 "1 hour" = "1 time";
@@ -49,8 +103,11 @@
 /* Button text for 30 minute suspend duration */
 "30 minutes" = "30 minutter";
 
+/* Footer text for omnipod reminders section */
+"A reminder is configured during Pod setup to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "En påminnelse konfigureres under pod-oppsettet for å varsle deg på forhånd når pod utløper. Angi antall timers forhåndsvarsel du vil konfigurere som standard når du kobler en ny pod.";
+
 /* Format string for activation time exceeded
-   Pod state when activation not completed in the time allowed */
+Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Aktiveringstiden er overskredet";
 
 /* description label for active time pod details row */
@@ -62,6 +119,9 @@
 /* Text indicating ongoing pump time synchronization */
 "Adjusting Pump Time..." = "Justerer pumpetid...";
 
+/* Description for SilencePodPreference.enabled */
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - If your phone is out of range of the pod while this feature is enabled, you will not receive any in-app notifications; and the pod will not beep to alert you." = "Alle pod-varsler bruker ingen pipelyder, og bekreftelsespipelyder undertrykkes. Pod piper bare ved fatale pod-feil og når testpipelyder spilles av. \n \n⚠️Advarsel – Hvis telefonen din er utenfor rekkevidde for pod mens denne funksjonen er aktivert, vil du ikke motta noen varsler i appen, og pod vil ikke pipe for å varsle deg.";
+
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Er du sikker på at du vil avbryte Pod-oppsettet?";
 
@@ -71,14 +131,14 @@
 /* Message for Omnipod DASH PumpManager deletion action sheet */
 "Are you sure you want to stop using Omnipod DASH?" = "Er du sikker på at du vil slutte å bruke Omnipod DASH?";
 
-/* navigation bar title attach pod
-   Title for Attach Pod screen */
+/* Title for Attach Pod screen
+navigation bar title attach pod */
 "Attach Pod" = "Fest Pod";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
 "Attemping to re-establish communication" = "Prøver å gjenopprette kommunikasjonen";
 
-/* Description for auto-off */
+/* Description for auto-off alert */
 "Auto-off" = "Auto-av";
 
 /* Description for auto-off alarm */
@@ -129,19 +189,21 @@
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Gir bolus med temp-basal";
 
-/* Button title for cancelling low reservoir reminder edit
-   Button title for cancelling scheduled reminder date edit
-   Cancel button text in navigation bar on insert cannula screen
-   Cancel button text in navigation bar on pair pod UI
-   Cancel button title
-   Pairing interface navigation bar button text for cancel action */
+/* Button title for cancelling confidence reminders edit
+Button title for cancelling low reservoir reminder edit
+Button title for cancelling scheduled reminder date edit
+Button title for cancelling silence pod edit
+Cancel button text in navigation bar on insert cannula screen
+Cancel button text in navigation bar on pair pod UI
+Cancel button title
+Pairing interface navigation bar button text for cancel action */
 "Cancel" = "Avbryt";
 
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Avbryt manuell basal";
 
 /* Insert cannula action button accessibility label when cannula insertion succeeded */
-"Cannula inserted successfully. Continue." = "Kanyle skutt inn vellykket. Fortsett.";
+"Cannula inserted successfully. Continue." = "Kanyle er satt inn. Fortsett.";
 
 /* Pod state when inserting cannula */
 "Cannula inserting" = "Innsetting av kanyle";
@@ -161,8 +223,8 @@
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Bytt Pod nå. Pod har vært aktiv i 72 timer.";
 
-/* navigation bar title for check cannula
-   Title for check cannula screen */
+/* Title for check cannula screen
+navigation bar title for check cannula */
 "Check Cannula" = "Sjekk kanyle";
 
 /* Label text for step three of attach pod instructions */
@@ -180,24 +242,25 @@
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Kommunikasjonsutgave";
 
-/* Title for uncertainty recovered screen */
+/* Title for uncertainty recovered screen
+navigation bar title for comms recovered */
 "Comms Recovered" = "Kommunikasjon gjenopprettet";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Kommunikasjonsproblem: Ukjent kommando venter.";
 
-/* navigation title for confidence reminders
-   Text for confidence reminders navigation link */
+/* Text for confidence reminders navigation link
+navigation title for confidence reminders */
 "Confidence Reminders" = "Bekreftelser";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Tillitspåminnelser er pip fra poden som kan brukes til å bekrefte valgte kommandoer.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Tillitspåminnelser er pip fra pod som kan brukes til å bekrefte valgte kommandoer når pod ikke er satt til lydløs.";
 
-/* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Tillitspåminnelser høres for kommandoer du starter, for eksempel bolus, avbryt bolus, suspendere, gjenoppta, lagre varslingspåminnelser osv. Når Loop automatisk justerer leveringen, brukes mistillitspåminnelser.";
+/* Description for BeepPreference.manualCommands (1: appName) */
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When %1$@ automatically adjusts delivery, no confidence reminders are used." = "Tillitspåminnelser høres for kommandoer du starter, for eksempel bolus, avbryt bolus, suspendere, gjenoppta, lagre varslingspåminnelser osv. Når %1$@ automatisk justerer leveringen, brukes ingen tillitspåminnelser.";
 
-/* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Tillitspåminnelser vil høres når Loop automatisk justerer leveringen så vel som for kommandoer du starter.";
+/* Description for BeepPreference.extended (1: appName) */
+"Confidence reminders will sound when %1$@ automatically adjusts delivery as well as for commands you initiate." = "Tillitspåminnelser vil høres når %1$@ automatisk justerer leveringen så vel som for kommandoer du starter.";
 
 /* Section header for configuration section */
 "Configuration" = "Konfigurasjon";
@@ -209,13 +272,13 @@
 "Confirm Pod Attachment" = "Bekreft at Pod er festet";
 
 /* Action button description when deactivated
-   Action button title for attach pod view
-   Button title to continue
-   Cannula insertion button text when inserted
-   Pod pairing action button text when paired
-   Text for continue button
-   Text for continue button on PodSetupView
-   Title of button to continue discard */
+Action button title for attach pod view
+Button title to continue
+Cannula insertion button text when inserted
+Pod pairing action button text when paired
+Text for continue button
+Text for continue button on PodSetupView
+Title of button to continue discard */
 "Continue" = "Fortsette";
 
 /* The format string for PodProtocolError.couldNotParseMessageException (1: message associated with error) */
@@ -224,8 +287,8 @@
 /* Title for critical alerts description */
 "Critical Alerts" = "Kritiske varsler";
 
-/* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Kritisk Pod-feil";
+/* The title for AlarmCode.other notification: (1: fault code value) */
+"Critical Pod Fault %1$03d" = "Kritisk pod-feil %1$03d";
 
 /* Recovery suggestion when unexpected address received */
 "Crosstalk possible. Please move to a new location" = "Crosstalk mulig. Vennligst flytt til et nytt sted";
@@ -236,12 +299,10 @@
 /* Unit for plural days in pod life remaining */
 "days" = "dager";
 
-/* Action button description for deactivate while pod still active
-   Button text for deactivate pod button
-   Button title to deactive pod on uncertain program
-   Deactivate pod action button accessibility label while ready to deactivate
-   navigation bar title for deactivate pod
-   Title for deactivate pod screen */
+/* Button text for deactivate pod button
+Deactivate pod action button accessibility label while ready to deactivate
+Title for deactivate pod screen
+navigation bar title for deactivate pod */
 "Deactivate Pod" = "Deaktiver Pod";
 
 /* Pod state when pod has been deactivated */
@@ -256,21 +317,19 @@
 /* Button text to confirm Omnipod DASH PumpManager deletion */
 "Delete Omnipod DASH" = "Slett Omnipod DASH";
 
-/* Text for device details disclosure row
-   title for device details page */
-"Device Details" = "Enhetsdetaljer";
-
 /* description label for device name pod details row */
 "Device Name" = "Enhetsnavn";
 
-/* Title string for BeepPreference.silent */
+/* Title string for BeepPreference.silent
+Title string for SilencePodPreference.disabled */
 "Disabled" = "Deaktivert";
 
-/* Pairing interface navigation bar button text for discard pod action
-   Text for discard pod button */
+/* Button title to discard pod on uncertain program
+Pairing interface navigation bar button text for discard pod action
+Text for discard pod button */
 "Discard Pod" = "Kast Pod";
 
-/* No comment provided by engineer. */
+/* Title of done button on OmniBLESettingsView */
 "Done" = "Ferdig";
 
 /* Description for Empty reservoir pod fault */
@@ -294,18 +353,21 @@
 /* Pod state error event logged shutting down */
 "Error event logged, shutting down" = "Feil logget, avslutter";
 
-/* Description for expiration advisory */
-"Expiration advisory" = "Veiledning for utløp";
-
 /* Description for expiration alert */
 "Expiration alert" = "Utløpsalarm";
 
-/* navigation bar title for expiration reminder
-   Title for ExpirationReminderSetupView */
+/* Description for expiration reminder alert */
+"Expiration reminder" = "Utløpspåminnelse";
+
+/* Title for ExpirationReminderSetupView
+navigation bar title for expiration reminder */
 "Expiration Reminder" = "Påminnelse om utløp";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Utløpspåminnelse Standard";
+
+/* Footer text for scheduled reminder area */
+"Expiration reminder time for the current Pod." = "Utløpspåminnelse for nåværende pod.";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Forlenget";
@@ -313,11 +375,32 @@
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Forlenget boluskjøring";
 
+/* Delivery status when extended bolus is running while suspended */
+"Extended bolus running while suspended" = "Forlenget bolus kjører mens den er suspendert";
+
 /* Delivery status when extended bolus and temp basal is running */
 "Extended bolus running with temp basal" = "Forlenget boluskjøring med temp basal";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Kunne ikke avbryte manuell basal";
+
+/* Alert title for error when playing test beeps */
+"Failed to play test beeps." = "Kunne ikke spille testpip.";
+
+/* Alert title for error when reading activation time */
+"Failed to read activation time." = "Kunne ikke lese aktiveringstid.";
+
+/* Alert title for error when reading pod status */
+"Failed to read pod status." = "Kunne ikke lese pod-status.";
+
+/* Alert title for error when reading pulse log plus */
+"Failed to read pulse log plus." = "Kunne ikke lese pulslogg pluss.";
+
+/* Alert title for error when reading pulse log */
+"Failed to read pulse log." = "Kunne ikke lese pulslogg.";
+
+/* Alert title for error when reading triggered alerts */
+"Failed to read triggered alerts." = "Kunne ikke lese utløste varsler.";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "Kunne ikke gjenoppta insulinlevering";
@@ -337,6 +420,9 @@
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "Kunne ikke oppdatere påminnelsen om lavt reservoar";
 
+/* Alert title for error when updating silence pod preference */
+"Failed to update silence pod preference." = "Kunne ikke oppdatere innstillingen for stille pod.";
+
 /* Pod state when fault event has occurred */
 "Fault event occurred" = "Feilhendelse oppstod";
 
@@ -349,16 +435,14 @@
 /* Status highlight that when pod is deactivating. */
 "Finish Deactivation" = "Fullfør deaktivering";
 
-/* Status highlight that when pod is activating. */
-"Finish Pairing" = "Fullfør sammenkoblingen";
-
-/* Action button title to continue at Setup Complete */
+/* Action button title to continue at Setup Complete
+Status highlight that when pod is activating. */
 "Finish Setup" = "Fullfør oppsettet";
 
 /* Description for finish setup */
 "Finish setup " = "Ferdigstill oppsett";
 
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Fullfør varselinnstilling";
 
 /* description label for firmware version pod details row */
@@ -385,10 +469,8 @@
 /* Pod inititialized */
 "Initialized" = "Klargjort";
 
-/* Cannula insertion button text while ready to insert
-   Insert cannula action button accessibility label while ready to pair
-   navigation bar title for insert cannula
-   Title for insert cannula screen */
+/* Title for insert cannula screen
+navigation bar title for insert cannula */
 "Insert Cannula" = "Sett inn kanyle";
 
 /* Label text indicating insertion finished. */
@@ -409,12 +491,11 @@
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulintilførsel";
 
-/* The action string on pod status page when pod faulted
-   The default notification body for AlarmCodes */
+/* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulintilførselen stoppet. Bytt Pod nå.";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulintilførselen vil bli stoppet til du gjenopptar manuelt. Når vil du at Loop skal minne deg på å gjenoppta leveringen?";
+"Insulin delivery will be stopped until you resume manually. Select when you want to be reminded to resume delivery?" = "Insulintilførselen stoppes inntil du gjenopptar manuelt. Velg når du vil bli minnet på å gjenoppta tilførselen?";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Gjenværende insulin";
@@ -422,15 +503,18 @@
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulintilførsel utsatt";
 
-/* Text for confidence reminders navigation link
-   Title for insulin type selection screen */
+/* Text for insulin type navigation link
+Title for insulin type selection screen */
 "Insulin Type" = "Insulintype";
 
-/* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
+/* Error description for insulin type not configured */
 "Insulin type not configured" = "Insulintype ikke konfigurert";
 
 /* The format string for Internal pod fault (1: The fault code value) */
 "Internal pod fault %1$03d" = "Intern pod-feil %1$03d";
+
+/* The format string for the pod fault info: (1: fault code) (2: fault description) (3: pdm ref string) */
+"Internal Pod fault code %1$03d\n%2$@\nRef: %3$@\n" = "Intern pod-feilkode %1$03d\n%2$@\nRef: %3$@↩\n↪";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
 "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "InterruptedBolus: %1$@ E (%2$@ E planlagt) %3$@ %4$@ %5$@";
@@ -447,11 +531,14 @@
 /* The format string for PodProtocolError.invalidLTKKey (1: message associated with error) */
 "Invalid LTK Key: %1$@" = "Ugyldig LTK-nøkkel: %1$@";
 
-/* Error description for OmniBLEPumpManagerError.invalidSetting */
+/* Error description for invalid setting */
 "Invalid Setting" = "Ugyldig konfigurasjon";
 
 /* Question to confirm the cannula is inserted properly */
 "Is the cannula inserted properly?" = "Er kanylen satt inn riktig?";
+
+/* Button title to return to prior screen */
+"Keep Waiting" = "Fortsett å vente";
 
 /* description label for last status date pod details row */
 "Last Status" = "Siste status";
@@ -459,29 +546,24 @@
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lytt etter 2 pip.";
 
-/* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop vil ikke automatisk justere insulintilførselen før den midlertidige basaldosen er ferdig eller avbrytes.";
-
 /* description label for lot number pod details row */
 "Lot Number" = "Lot-nummer";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Lavt reservoar";
 
 /* Alert content title for lowReservoir pod alert
-   Label text for low reservoir value row
-   navigation bar title for low reservoir
-   Title for LowReservoirReminderSetupView */
+Label text for low reservoir value row
+Title for LowReservoirReminderSetupView
+navigation bar title for low reservoir */
 "Low Reservoir" = "Lavt reservoar";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Varsel om lavt reservoar (%1$gU)";
 
 /* Description for low reservoir alarm */
 "Low reservoir advisory alarm" = "Anbefalt alarm for lavt reservoar";
 
 /* Label for low reservoir reminder row
-   Title for low reservoir reminder edit page */
+Title for low reservoir reminder edit page */
 "Low Reservoir Reminder" = "Påminnelse om lavt reservoar";
 
 /* Recovery suggestion when no response is received from pod */
@@ -520,13 +602,9 @@
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
 "Move to a new area away from any other pods and try again." = "Flytt til et nytt område borte fra andre pods og prøv igjen.";
 
-/* Alert content body for multiCommand pod alert
-   Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Alarm for fler-kommandoer";
-
 /* String shown on pod details for active time when conversion fails.
-   String shown on pod details for last status date when not available.
-   String shown on pod details for total delivery when not available. */
+String shown on pod details for last status date when not available.
+String shown on pod details for total delivery when not available. */
 "NA" = "N/A";
 
 /* Error message description for PeripheralManagerError.nack */
@@ -551,13 +629,13 @@
 "No faults" = "Ingen feil";
 
 /* Error message for reservoir view when reservoir empty
-   Status highlight message for emptyReservoir alarm.
-   Status highlight that a pump is out of insulin. */
+Status highlight message for emptyReservoir alarm.
+Status highlight that a pump is out of insulin. */
 "No Insulin" = "Ingen insulin";
 
 /* Label for pod life state when no pod paired
-   Status highlight that when no pod is paired.
-   Text shown in insulin remaining space when no pod is paired */
+Status highlight that when no pod is paired.
+Text shown in insulin remaining space when no pod is paired */
 "No Pod" = "Ingen Pod";
 
 /* Error message shown when no pod is paired */
@@ -585,11 +663,17 @@
    Pod state when running above fifty units */
 "Normal" = "Normal";
 
+/* Description for SilencePodPreference.disabled */
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal driftsmodus der hørbare pod-pip brukes for alle pod-varsler og når tillitspåminnelser er aktivert.";
+
 /* Description for MessageError notEnoughData */
 "Not enough data" = "Ikke nok data";
 
-/* navigation title for notification settings
-   Text for pod details disclosure row */
+/* Description for not used slot alert */
+"Not used" = "Ikke brukt";
+
+/* Text for pod details disclosure row
+navigation title for notification settings */
 "Notification Settings" = "Varslingsinnstillinger";
 
 /* No comment provided by engineer. */
@@ -620,10 +704,10 @@
 "oneNotUsed" = "oneNotUsed";
 
 /* Pair Pod navigationBarTitle
-   Pod pairing action button text while ready to pair
-   Settings page link description when next lifecycle action is to pair new pod
-   Title for pod pairing screen */
-"Pair Pod" = "Par Pod";
+Pod pairing action button text while ready to pair
+Settings page link description when next lifecycle action is to pair new pod
+Title for pod pairing screen */
+"Pair Pod" = "Parkoble pod";
 
 /* Pairing action button accessibility label while ready to pair */
 "Pair pod." = "Sammenkoble pod.";
@@ -653,7 +737,17 @@
 "Percent = %lf" = "Prosent = %lf";
 
 /* Error message description for PeripheralManagerError.notReady */
-"Peripheral Not Ready" = "Periferutstyr ikke klar";
+"Peripheral Not Ready" = "Tilbehøret ikke klart";
+
+/* Text for play test beeps navigation link
+navigation title for play test beeps */
+"Play Test Beeps" = "Spill av testpip";
+
+/* Success message for play test beeps */
+"Play test beeps command sent successfully.\n\nIf you did not hear any beeps from your Pod, the piezo speaker in your Pod may be broken or disabled." = "Kommandoen Spill av testpip sendt vellykket.\n\nHvis du ikke hørte noen pip fra pod, kan piezohøyttaleren i pod være ødelagt eller deaktivert.";
+
+/* button title when executing play test beeps */
+"Playing Test Beeps..." = "Spiller av testpip...";
 
 /* Recovery suggestion on unexpected pod change */
 "Please bring only original pod in range or deactivate original pod" = "Ta kun med original pod innenfor rekkevidde eller deaktiver original pod";
@@ -662,7 +756,7 @@
 "Please bring your pod closer to the RileyLink and try again" = "Prøv å sette pod og RileyLink nærmere hverandre og prøv så igjen";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Vennligst bekreft at Poden er godt festet til kroppen din. \n\n Kanylen kan bare settes inn én gang med hver Pod. Trykk på \"Bekreft\" når Pod er festet.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Vennligst bekreft at pod er godt festet til kroppen din.\n\nKanylen kan bare settes inn én gang med hver pod. Trykk på \"Bekreft\" når pod er festet til kroppen.";
 
 /* Instructions for deactivate pod when pod not on body */
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Vennligst deaktiver pod. Når deaktiveringen er fullført, kan du pare en ny pod.";
@@ -674,7 +768,7 @@
 "Please enable bluetooth permissions for this app in system settings" = "Aktiver Bluetooth-tillatelser for denne appen i systeminnstillingene";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Fullfør sammenkoblingen av poden.";
+"Please finish pairing your pod." = "Fullfør sammenkoblingen av pod.";
 
 /* Recover suggestion shown when no pod is paired */
 "Please pair a new pod" = "Vennligst koble til ny pod";
@@ -688,9 +782,12 @@
 /* recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.unsupported) */
 "Please use a different device with bluetooth capabilities" = "Bruk en annen enhet med Bluetooth-funksjoner";
 
-/* description label for activated at timne pod details row
-   Label for pod insertion row */
-"Pod Activated" = "Pod Aktivert";
+/* Label for pod insertion row
+description label for activated at time pod details row */
+"Pod Activated" = "Pod aktivert";
+
+/* The format string for Pod Active: (1: formatted time) */
+"Pod Active: %1$@" = "Pod aktiv: %1$@";
 
 /* Error message shown when user cannot pair because pod is already paired */
 "Pod already paired" = "Pod er allerede sammenkoblet";
@@ -699,11 +796,18 @@
 "Pod already primed" = "Pod er allerede fyllt";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Poden ble deaktivert. Fortsette.";
+"Pod deactivated successfully. Continue." = "Pod ble deaktivert. Fortsett.";
 
-/* Error message for reservoir view during general pod fault
-   Status highlight message for other alarm. */
-"Pod Error" = "Pod Feil";
+/* Text for pod details disclosure row
+title for pod details page */
+"Pod Details" = "Pod-detaljer";
+
+/* Text for pod diagnostics row
+Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod-diagnostikk";
+
+/* Status highlight message for other alarm. */
+"Pod Error" = "Pod-feil";
 
 /* Description for expiration advisory alarm */
 "Pod expiration advisory alarm" = "Anbefalt utløpsalarm for pod";
@@ -718,21 +822,24 @@
 "Pod expired" = "Pod utløpt";
 
 /* Alert content title for podExpireImminent pod alert
-   Alert content title for podExpiring pod alert
-   Error message for reservoir view when pod expired
-   Label for pod expiration row, past tense
-   Status highlight message for podExpired alarm.
-   The title for Pod Expired alarm notification */
-"Pod Expired" = "Pod Utløpt";
+Alert content title for podExpiring pod alert
+Error message for reservoir view when pod expired
+Label for pod expiration row, past tense
+Status highlight message for podExpired alarm.
+The title for Pod Expired alarm notification */
+"Pod Expired" = "Pod utløpt";
 
 /* Label for pod expiration row */
-"Pod Expires" = "Pod Utløper";
+"Pod Expires" = "Pod utløper";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Pod utløper om";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Poden utløper om %1$@ .";
+"Pod expires in %1$@." = "Pod utløper om %1$@ .";
+
+/* Error message for reservoir view during general pod fault: (1: fault code value) */
+"Pod Fault %1$03d" = "Pod-feil %1$03d";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod-feildetaljer";
@@ -741,7 +848,7 @@
 "Pod Fault: %1$@" = "Pod-feil: %1$@";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
-"Pod is not in a state ready for cannula insertion." = "Poden er ikke i en tilstand for kanyleinnsetting.";
+"Pod is not in a state ready for cannula insertion." = "Pod er ikke klar for å sette inn kanyle.";
 
 /* Error message when prime fails because the pod is in an unexpected state */
 "Pod is not in a state ready for priming." = "Pod er ikke klar for fylling";
@@ -753,8 +860,8 @@
 "Pod not connected" = "Pod ikke tilkoblet";
 
 /* Error message for reservoir view when pod occlusion checks failed
-   Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Okklusjon";
+Status highlight message for occlusion alarm. */
+"Pod Occlusion" = "Okklusjon";
 
 /* Pairing action button accessibility label when pairing succeeded */
 "Pod paired successfully. Continue." = "Vellykket sammenkobling av Pod. Fortsett.";
@@ -766,16 +873,22 @@
 "Pod sent ack instead of response" = "Pod sendte ack i stedet for svar";
 
 /* Title for PodSetupView */
-"Pod Setup" = "Pod oppsett";
+"Pod Setup" = "Pod-oppsett";
+
+/* Error description when pod setup is not complete */
+"Pod setup is not complete" = "Pod-oppsettet er ikke fullført";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
 "Pod setup window expired" = "Tidsvindu for oppsett av pod er utløpt";
 
-/* Description for pod suspended reminder */
+/* Description for pod suspended reminder alert */
 "Pod suspended reminder" = "Pod suspendert påminnelse";
 
 /* Format string for poor pod signal strength */
 "Poor signal strength" = "Dårlig signalstyrke";
+
+/* Error description for possible bluetooth issue */
+"Possible Bluetooth issue" = "Mulig Bluetooth-problem";
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Klargjør infusjonsstedet";
@@ -783,8 +896,8 @@
 /* title for previous pod page */
 "Previous Pod" = "Forrige pod";
 
-/* Text for previous pod information row */
-"Previous Pod Information" = "Informasjon om forrige pod";
+/* Text for previous pod details row */
+"Previous Pod Details" = "Informasjon om forrige pod";
 
 /* Delivery status when pod is priming
    Pod status when priming */
@@ -799,17 +912,62 @@
 /* Pod pairing action button text while priming */
 "Priming..." = "Fyller...";
 
+/* Text for pump manager details navigation link
+navigation title for pump manager details */
+"Pump Manager Details" = "Detaljer om pumpeadministrator";
+
 /* The title of the command to change pump time zone */
 "Pump Time" = "Pumpetid";
 
 /* Label text for basal rate summary */
 "Rate" = "Rate";
 
+/* Text for read activation time navigation link
+Text for read activation time title */
+"Read Activation Time" = "Les aktiveringstid";
+
+/* Text for read pod status navigation link
+navigation title for read pod status */
+"Read Pod Status" = "Les podstatus";
+
+/* Text for read pulse log navigation link
+Text for read pulse log title */
+"Read Pulse Log" = "Les pulslogg";
+
+/* Text for read pulse log plus navigation link
+Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Les pulslogg pluss";
+
+/* Text for read triggered alerts navigation link
+Text for read triggered alerts title */
+"Read Triggered Alerts" = "Les utløste varsler";
+
+/* Text for read activation time action */
+"Reading Activation Time..." = "Leser aktiveringstid...";
+
+/* button title when executing read pod status */
+"Reading Pod Status..." = "Leser podstatus…";
+
+/* Text for read pulse log plus action */
+"Reading Pulse Log Plus..." = "Leser pulslogg pluss...";
+
+/* Text for read pulse log action */
+"Reading Pulse Log..." = "Leser pulslogg...";
+
+/* Text for read triggered alerts action */
+"Reading Triggered Alerts..." = "Leser utløste varsler...";
+
 /* Pod state when ready for basal programming */
 "Ready for basal programming" = "Klar for basal-programmering";
 
 /* Pod state when ready for cannula insertion */
 "Ready to insert cannula" = "Klar til å sette inn kanyle";
+
+/* PDM Ref string line */
+"Ref: " = "Ref:";
+
+/* button title to refresh pump manager details */
+"Refresh Pump Manager Details" = "Oppdater detaljer om pumpeadministratoren";
 
 /* Label for remaining time of manual basal */
 "Remaining" = "Gjenstående";
@@ -847,17 +1005,24 @@
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Gjenopptar insulintilførsel...";
 
+/* button title when retrieving pump manager details */
+"Retrieving Pump Manager Details..." = "Henter detaljer om pumpeadministratoren...";
+
 /* Action button description for deactivate after failed attempt
-   Cannula insertion button text while showing error
-   Pod pairing action button text while showing error */
+Cannula insertion button text while showing error
+Pod pairing action button text while showing error */
 "Retry" = "Prøv på nytt";
 
-/* button title for saving low reservoir reminder
-   button title for saving scheduled reminder */
+/* button title for saving confidence reminder
+button title for saving low reservoir reminder
+button title for saving scheduled reminder
+button title for saving silence pod preference */
 "Save" = "Lagre";
 
-/* button title for saving low reservoir reminder while saving
-   button title for saving scheduled reminder while saving */
+/* button title for saving confidence reminder while saving
+button title for saving low reservoir reminder while saving
+button title for saving scheduled reminder while saving
+button title for saving silence pod preference while saving */
 "Saving..." = "Lagrer...";
 
 /* Delivery status when scheduled basal is running */
@@ -867,9 +1032,9 @@
 "Scheduled Basal" = "Planlagt basal";
 
 /* Card title for scheduled reminder
-   Scheduled reminder card title on SetupCompleteView
-   Title for scheduled expiration reminder edit page
-   Title of scheduled reminder card on NotificationSettingsView */
+Scheduled reminder card title on SetupCompleteView
+Title for scheduled expiration reminder edit page
+Title of scheduled reminder card on NotificationSettingsView */
 "Scheduled Reminder" = "Planlagt påminnelse";
 
 /* Title text for insulin type confirmation page */
@@ -885,24 +1050,46 @@
 "Set Temporary Basal Rate" = "Still inn midlertidig basaldose";
 
 /* Title for setup complete screen
-   Title of SetupCompleteView */
+Title of SetupCompleteView */
 "Setup Complete" = "Klargjøring ferdig";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Avslutning nært forestående";
 
 /* Description for shutdown imminent alarm */
 "Shutdown imminent alarm" = "Avslutt forestående alarm";
 
-/* Error message for reservoir view during general pod fault
-   Status highlight when communications with the pod haven't happened recently. */
+/* Error message for reservoir view during signal loss
+Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signal Tap";
 
 /* Format string for pod signal strength too high */
 "Signal strength too high" = "Signalstyrken er for høy";
 
+/* Text for silence pod navigation link
+navigation title for Silnce Pod */
+"Silence Pod" = "Stillemodus pod";
+
+/* Help text for Silence Pod view */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stillemodus for pod undertrykker all varsling og bekreftelsespip fra pod.";
+
+/* Title string for SilencePodPreference.enabled */
+"Silenced" = "Stillemodus";
+
 /* No comment provided by engineer. */
 "Skip Omnipod Onboarding?" = "Vil du hoppe over Omnipod Introduseringen?";
+
+/* Insert cannula slider button accessibility label while ready to pair */
+"Slide Button to insert Cannula" = "Skyveknapp for å sette inn kanylen";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Skyv bryteren nedenfor for å starte innskyting av kanylen.";
+
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Skyv for å deaktivere pod";
+
+/* Cannula insertion button text while ready to insert */
+"Slide to Insert Cannula" = "Skyv for å sette inn kanyle";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Utsette";
@@ -911,13 +1098,13 @@
 "Suspend Delivery" = "Utsett levering";
 
 /* Alert content body for suspendInProgress pod alert
-   Alert content title for suspendInProgress pod alert */
+Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Varsel om aktivert Utsettelse";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Insulintilførsel utsatt";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Utsettelse utløpt";
 
 /* The format string describing a suspend. (1: Time)(2: Scheduled certainty */
@@ -947,9 +1134,6 @@
 /* Pod power to motor activated */
 "Tank power activated" = "Tank-motor aktivert";
 
-/* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Trykk nedenfor for å starte innsetting av kanyle.";
-
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Midlertidig basal";
 
@@ -968,23 +1152,11 @@
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Midlertidig basal mislyktes";
 
-/* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Appen konfigurerer en påminnelse på pod for å varsle deg før pod utløper. Angi antall timer forhåndsvarsel du vil konfigurere når du parer en ny Pod.";
-
-/* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Appen varsler deg før Pod-utløp. \n\n Rull for å angi antall timer forhåndsvarsel du vil ha.";
-
-/* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Appen varsler deg når mengden insulin i Pod når dette nivået (50-10 U). \n\n Rull for å angi antall enheter du ønsker å bli påminnet om.";
-
-/* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen varsler deg når mengden insulin i pod når dette nivået.";
-
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Perioden med insulinsuspensjon er avsluttet.\n\nDu kan gjenoppta leveringen fra banneret på startskjermen eller fra skjermbildet for pumpeinnstillinger. Du vil bli påminnet igjen om 15 minutter.";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Påminnelsene ovenfor vil ikke høres hvis enheten er i Stille- eller Ikke forstyrr-modus. \n\n Det er andre kritiske Pod-varsler og alarmer som vil høres selv om enheten er satt til Stille eller Ikke forstyrr-modus.";
+"The reminders above will not sound on your device when it is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound on your device even when set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Påminnelsene ovenfor vil ikke høres hvis enheten er i Stille- eller Ikke forstyrr-modus. \nDet er andre kritiske pod-varsler og alarmer som vil høres selv om enheten er satt til Stille eller Ikke forstyrr-modus.\n\nPod vil også bruke lydsignaler for alle pod-påminnelser og -varsler, bortsett fra når pod er i Lydløs-modus.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Klokken på pumpen er forskjellig fra gjeldende tid. Vil du oppdatere tiden på pumpen til gjeldende tid?";
@@ -1001,23 +1173,20 @@
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Det oppsto et problem med pod-kommunikasjonen. Hvis problemet fortsetter, trykk Forkaste pod. Deretter kan du aktivere en ny pod.";
 
-/* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "Dette er en påminnelse som du planla når du koblet til din nåværende pod.";
-
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Denne PumpManageren er ikke konfigurert med en maksimal basaldose fordi den ble lagt til før manuell temp basal var en funksjon. Vennligst gå til terapiinnstillinger - > leveringsgrenser og angi en ny maksimal basaldose.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please set a new maximum basal rate." = "Denne pumpen er ikke konfigurert med maksimal basaldose fordi den ble lagt til før manuell midlertidig basaldose var en tilgjengelig funksjon.\nGå til Behandlingsinnstillinger -> Leveringsgrenser og sett en ny maksimal basaldose.";
 
 /* Pod state threeNotUsed */
 "threeNotUsed" = "treNotUsed";
 
 /* Label for expiration reminder row
-   Label for scheduled expiration reminder row
-   Label for scheduled reminder value row */
+Label for scheduled expiration reminder row
+Label for scheduled reminder value row */
 "Time" = "Tid";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
-   Title for pod sync time action sheet.
-   title for time change detected notice */
+Title for pod sync time action sheet.
+title for time change detected notice */
 "Time Change Detected" = "Tidsendring oppdaget";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
@@ -1035,8 +1204,11 @@
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total levering";
 
+/* Recovery suggestion for possible bluetooth issue */
+"Try adjusting pod position or toggle Bluetooth off and then on in iPhone Settings." = "Prøv å justere pod-posisjonen eller slå Bluetooth av og på i iPhone-innstillingene.";
+
 /* Recovery suggestion when ack received instead of response
-   recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
+recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.resetting) */
 "Try again" = "Prøv igjen";
 
 /* recoverySuggestion for BluetoothManagerError.bluetoothNotAvailable(.poweredOff) */
@@ -1063,8 +1235,14 @@
 /* String describing a dose that was possibly scheduled */
 "Uncertain" = "Usikker";
 
+/* Alert content title for unexpected pod alert */
+"Unexpected Alert" = "Uventet varsel";
+
 /* Description for MessageError invalidSequence */
 "Unexpected message sequence number" = "Uventet meldings sekvensnummer";
+
+/* Alert content body for unexpected pod alert (1: slotNumberString) */
+"Unexpected Pod Alert #%1@!" = "Uventet pod-varsel #%1@!";
 
 /* Format string for unexpected pod change */
 "Unexpected pod change" = "Uventet pod-endring";
@@ -1111,11 +1289,23 @@
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ja, Synkroniser til gjeldende tid";
 
+/* Description text on ExpirationReminderSetupView */
+"You will be notified in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Du vil bli varslet i forkant av at pod utløper.\n\nBla for å angi hvor mange timers forhåndsvarsel du vil ha.";
+
+/* Description text on LowReservoirReminderSetupView */
+"You will be notified when the amount of insulin in the Pod reaches a selected level.\n\nScroll to set the number of units (1 to 50) at which you would like to be reminded." = "Du vil bli varslet når mengden insulin i pod når et valgt nivå.\n\nBla for å angi antall enheter (1-50) for når du ønsker å bli påminnet.";
+
+/* Footer text for low reservoir value row */
+"You will be notified when the amount of insulin in the Pod reaches this level." = "Du vil bli varslet når mengden insulin i pod når dette nivået.";
+
 /* bodyText for PodSetupView */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Du vil nå begynne prosessen med å konfigurere påminnelsene, fylle pod med insulin, pare til enheten og plassere den på kroppen.";
 
-/* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod er klar til bruk. \n\n %1$@ vil minne deg på å bytte pod før den utløper. Du kan endre dette til et tidspunkt som passer deg.";
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Insulintilførselen din vil ikke bli justert automatisk, før den midlertidige basalen er ferdig eller avbrutt.";
+
+/* Format string for instructions for setup complete view */
+"Your Pod is ready for use.\n\nThe default reminder was scheduled for this Pod at setup. You can change the reminder to a more convenient time in Pod Notification Settings." = "Pod er nå klar til bruk.\n\nStandardpåminnelsen ble planlagt for denne pod under oppsettet. Du kan endre påminnelsen til et mer passende tidspunkt i varslingsinnstillingene for pod.";
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Pod kan fortsatt levere insulin.\nFjern den fra kroppen din, og trykk deretter på \"Fortsett\".";

@@ -4,7 +4,7 @@
 /* Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Превышено время для активации";
 
-/* Description for auto-off */
+/* Description for auto-off alert */
 "Auto-off" = "Авто выключение";
 
 /* Pod state when basal initialized */
@@ -22,12 +22,6 @@
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Резервуар пуст";
 
-/* Description for expiration advisory */
-"Expiration advisory" = "Совет по истечению срока действия";
-
-/* Description for expiration alert */
-"Expiration alert" = "Оповещение об истечении срока";
-
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Вводится квадратный или болюс двойной волны";
 
@@ -37,7 +31,7 @@
 /* Pod state when fault event has occurred */
 "Fault event occurred" = "Произошел сбой";
 
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Напоминание о завершении настройки";
 
 /* Pod initialized */
@@ -55,11 +49,9 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Неверная контрольная сумма";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Мало инсулина в резервуаре";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Предупреждение о низком уровне резервуара (%1$gU)";
 
 /* Pod memory initialized */
 "Memory initialized" = "Память инициализирована";
@@ -88,14 +80,15 @@
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
 "Parsing Error: %1$@ in (%2$@)" = "Ошибка синтаксического анализа: %1$@ in (%2$@)";
 
-/* Description for Pod expired pod fault */
+/* Description for Pod expired pod fault
+Description for pod expired alert */
 "Pod expired" = "Срок работы Omnipod истек";
 
-/* Description for pod suspended reminder */
+/* Description for pod suspended reminder alert */
 "Pod suspended reminder" = "Напоминание о приостановке подачи инсулина";
 
 /* Delivery status when pod is priming
-   Pod status when priming */
+Pod status when priming */
 "Priming" = "Прокачивание инсулина";
 
 /* Pod state when priming completed */
@@ -107,10 +100,10 @@
 /* Delivery status when scheduled basal is running */
 "Scheduled basal" = "Запланированная база";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Выключение неизбежно";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Время приостановки истекло";
 
 /* Delivery status when insulin delivery is suspended */
@@ -137,6 +130,6 @@
 /* Format string for description of MessageError validationFailed. (1: description of validation failure) */
 "Validation failed: %1$@" = "Ошибка проверки: %1$@";
 
-/* Description waiting for pairing reminder */
+/* Description waiting for pairing reminder alert */
 "Waiting for pairing reminder" = "Все еще ожидается сопряжение";
 

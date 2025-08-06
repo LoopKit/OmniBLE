@@ -4,7 +4,7 @@
 /* Pod state when activation not completed in the time allowed */
 "Activation time exceeded" = "Aktiveringstiden er overskredet";
 
-/* Description for auto-off */
+/* Description for auto-off alert */
 "Auto-off" = "Auto-av";
 
 /* Pod state when basal initialized */
@@ -22,22 +22,22 @@
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Tomt reservoar";
 
-/* Description for expiration advisory */
-"Expiration advisory" = "Rådgivning om utløp";
-
-/* Description for expiration alert */
-"Expiration alert" = "Utløpsalarm";
+/* Description for expiration reminder alert */
+"Expiration reminder" = "Utløpspåminnelse";
 
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Forlenget boluskjøring";
 
+/* Delivery status when extended bolus is running while suspended */
+"Extended bolus running while suspended" = "Forlenget bolus kjører mens den er suspendert";
+
 /* Delivery status when extended bolus and temp basal is running */
-"Extended bolus running with temp basal" = "Forlenget bolus kjører med midlertidig basalrate";
+"Extended bolus running with temp basal" = "Forlenget bolus kjører med midlertidig basaldose";
 
 /* Pod state when fault event has occurred */
 "Fault event occurred" = "Det oppstod en feilhendelse";
 
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Fullføre konfigurasjonspåminnelsen";
 
 /* Pod initialized */
@@ -55,11 +55,9 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Ugyldig CRC";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Lavt reservoar";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Rådgivning om lavt reservoarnivå (%1$gU)";
 
 /* Pod memory initialized */
 "Memory initialized" = "Minne initialisert";
@@ -76,6 +74,9 @@
 /* Description for MessageError notEnoughData */
 "Not enough data" = "Ikke nok data";
 
+/* Description for not used slot alert */
+"Not used" = "Ikke brukt";
+
 /* Description for Occlusion detected pod fault */
 "Occlusion detected" = "Okklusjon oppdaget";
 
@@ -88,14 +89,15 @@
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
 "Parsing Error: %1$@ in (%2$@)" = "Analysefeil: %1$@ in (%2$@)";
 
-/* Description for Pod expired pod fault */
+/* Description for Pod expired pod fault
+Description for pod expired alert */
 "Pod expired" = "Pod utløpt";
 
-/* Description for pod suspended reminder */
+/* Description for pod suspended reminder alert */
 "Pod suspended reminder" = "Pod suspendert påminnelse";
 
 /* Delivery status when pod is priming
-   Pod status when priming */
+Pod status when priming */
 "Priming" = "Fyller";
 
 /* Pod state when priming completed */
@@ -107,10 +109,10 @@
 /* Delivery status when scheduled basal is running */
 "Scheduled basal" = "Planlagt basal";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Avslutning nært forestående";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Suspensjonstiden er utløpt";
 
 /* Delivery status when insulin delivery is suspended */
@@ -137,6 +139,6 @@
 /* Format string for description of MessageError validationFailed. (1: description of validation failure) */
 "Validation failed: %1$@" = "Validering mislyktes: %1$@";
 
-/* Description waiting for pairing reminder */
+/* Description waiting for pairing reminder alert */
 "Waiting for pairing reminder" = "Venter på påminnelse om sammenkobling";
 

@@ -1,4 +1,4 @@
-/* Description for finish setup reminder */
+/* Description for finish setup reminder alert */
 "Finish setup reminder" = "Erinnerung zum Abschluss der Einrichtung";
 
 /* Pod initialized */
@@ -10,11 +10,9 @@
 /* Description for MessageError invalidCrc */
 "Invalid CRC" = "Ungültige CRC";
 
-/* Pod state when running with fifty or less units */
+/* Format string for description for low reservoir alert
+Pod state when running with fifty or less units */
 "Low reservoir" = "Niedriges Reservoir";
-
-/* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Hinweis auf niedriges Reservoir (%1$g IE)";
 
 /* Pod memory initialized */
 "Memory initialized" = "Speicher initialisiert";
@@ -37,20 +35,21 @@
 /* Pod status when pairing completed */
 "Pairing completed" = "Kopplung abgeschlossen";
 
-/* Description for Pod expired pod fault */
+/* Description for Pod expired pod fault
+Description for pod expired alert */
 "Pod expired" = "Pod abgelaufen";
 
 /* Delivery status when pod is priming
-   Pod status when priming */
+Pod status when priming */
 "Priming" = "Befüllen";
 
 /* Pod state when priming completed */
 "Priming completed" = "Befüllen abgeschlossen";
 
-/* Description for shutdown imminent */
+/* Description for shutdown imminent alert */
 "Shutdown imminent" = "Direkt herunterfahren";
 
-/* Description for suspend time expired */
+/* Description for suspend time expired alert */
 "Suspend time expired" = "Anhaltezeit abgelaufen";
 
 /* Delivery status when insulin delivery is suspended */
@@ -71,6 +70,6 @@
 /* Format string for description of MessageError validationFailed. (1: description of validation failure) */
 "Validation failed: %1$@" = "Überprüfung fehlgeschlagen: %1$@";
 
-/* Description waiting for pairing reminder */
+/* Description waiting for pairing reminder alert */
 "Waiting for pairing reminder" = "Warten auf Kopplungserinnerung";
 

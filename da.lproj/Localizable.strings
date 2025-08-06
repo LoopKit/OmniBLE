@@ -1,116 +1,116 @@
 /* Description for an inactive alert modifier */
-" (inactive)" = " (inactive)";
+" (inactive)" = " (inaktiv)";
 
 /* Pod state when activation not completed in the time allowed */
-"Activation time exceeded" = "Przekroczono czas aktywacji";
+"Activation time exceeded" = "Aktiveringstid overskredet";
 
 /* Description for auto-off alert */
-"Auto-off" = "Automatyczne wyłączanie";
+"Auto-off" = "Auto-sluk";
 
 /* Pod state when basal initialized */
-"Basal initialized" = "Zainicjowano bazę";
+"Basal initialized" = "Basal initialiseret";
 
 /* Delivery status when bolusing */
-"Bolusing" = "Podawanie bolusa";
+"Bolusing" = "Indgiver bolus";
 
 /* Delivery status when bolusing and temp basal is running */
-"Bolusing with temp basal" = "Podawanie bolusa z dawką podstawową";
+"Bolusing with temp basal" = "Indgiver bolus med midlertidig basal";
 
 /* Pod state when deactivated */
-"Deactivated" = "Deaktywowany";
+"Deactivated" = "Deaktiveret";
 
 /* Description for Empty reservoir pod fault */
-"Empty reservoir" = "Pusty zbiorniczek";
+"Empty reservoir" = "Tomt reservoir";
 
 /* Delivery status when extended bolus is running */
-"Extended bolus running" = "Trwa podawanie bolusa przedłużonego";
+"Extended bolus running" = "Forlænget bolus kører";
 
 /* Delivery status when extended bolus and temp basal is running */
-"Extended bolus running with temp basal" = "Bolus przedłużony uruchomiony z tymczasową bazą";
+"Extended bolus running with temp basal" = "Forlænget bolus med midlertidig basal";
 
 /* Pod state when fault event has occurred */
-"Fault event occurred" = "Wystąpiła usterka";
+"Fault event occurred" = "Fejlhændelse indtraf";
 
 /* Description for finish setup reminder alert */
-"Finish setup reminder" = "Przypomnienie o zakończeniu konfiguracji";
+"Finish setup reminder" = "Påmindelse om færdiggørelse af opsætning";
 
 /* Pod initialized */
-"Initialized" = "Zainicjowany";
+"Initialized" = "Initialiseret";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Wprowadzanie kaniuli";
+"Inserting cannula" = "Indsætter kanyle";
 
 /* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Wewnętrzny błąd POD'a %1$03d";
+"Internal pod fault %1$03d" = "Intern Pod-fejl %1$03d";
 
 /* Description for MessageError invalidAddress */
-"Invalid address: (%1$@)" = "Nieprawidłowy adres: ( %1$@ )";
+"Invalid address: (%1$@)" = "Ugyldig adresse: %1$@";
 
 /* Description for MessageError invalidCrc */
-"Invalid CRC" = "Nieprawidłowy CRC";
+"Invalid CRC" = "Ugyldig CRC";
 
 /* Format string for description for low reservoir alert
 Pod state when running with fifty or less units */
-"Low reservoir" = "Niski poziom w zbiorniczku";
+"Low reservoir" = "Lavt reservoir";
 
 /* Pod memory initialized */
-"Memory initialized" = "Zainicjowano pamięć";
+"Memory initialized" = "Hukommelse initialiseret";
 
 /* Pod alert state when no alerts are active */
-"No alerts" = "Brak alertów";
+"No alerts" = "Ingen alarmer";
 
 /* Description for Fault Event Code .noFaults */
-"No faults" = "Brak usterek";
+"No faults" = "Ingen fejl";
 
 /* Pod state when running above fifty units */
-"Normal" = "Normalny";
+"Normal" = "Normal";
 
 /* Description for MessageError notEnoughData */
-"Not enough data" = "Za mało danych";
+"Not enough data" = "Ikke nok data";
 
 /* Description for Occlusion detected pod fault */
-"Occlusion detected" = "Wykryto niedrożność";
+"Occlusion detected" = "Pod er blokeret";
 
 /* Pod state oneNotUsed */
 "oneNotUsed" = "oneNotUsed";
 
 /* Pod status when pairing completed */
-"Pairing completed" = "Parowanie zakończone";
+"Pairing completed" = "Parring fuldført";
 
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
-"Parsing Error: %1$@ in (%2$@)" = "Błąd analizy: %1$@ w (%2$@)";
+"Parsing Error: %1$@ in (%2$@)" = "Indlæsningfejl: %1$@ i %2$@";
 
 /* Description for Pod expired pod fault
 Description for pod expired alert */
-"Pod expired" = "Termin ważności POD'a upłynął";
+"Pod expired" = "Pod udløbet";
 
 /* Description for pod suspended reminder alert */
-"Pod suspended reminder" = "Przypomnienie o zawieszeniu POD'a";
+"Pod suspended reminder" = "Påmindelse om suspenderet pod";
 
 /* Delivery status when pod is priming
 Pod status when priming */
-"Priming" = "Napełnianie";
+"Priming" = "Klargør";
 
 /* Pod state when priming completed */
-"Priming completed" = "Wypełnianie zakończone";
+"Priming completed" = "Klargøring afsluttet";
 
 /* Pod pairing reminder initialized */
-"Reminder initialized" = "Zainicjowano przypomnienie";
+"Reminder initialized" = "Påmindelse initialiseret";
 
 /* Delivery status when scheduled basal is running */
-"Scheduled basal" = "Zaplanowana dawka podstawowa";
+"Scheduled basal" = "Planlagt basal";
 
 /* Description for shutdown imminent alert */
-"Shutdown imminent" = "Zbliża się zamknięcie";
+"Shutdown imminent" = "Nedlukning forestående";
 
 /* Description for suspend time expired alert */
-"Suspend time expired" = "Upłynął czas zawieszenia";
+"Suspend time expired" = "Suspenderingstid udløbet";
 
 /* Delivery status when insulin delivery is suspended */
-"Suspended" = "Zawieszony";
+"Suspended" = "Suspenderet";
 
 /* Delivery status when temp basal is running */
-"Temp basal running" = "Tymczasowa dawka podstawowa uruchomiona";
+"Temp basal running" = "Midlertidig basal i gang";
 
 /* Pod state threeNotUsed */
 "threeNotUsed" = "threeNotUsed";
@@ -119,17 +119,17 @@ Pod status when priming */
 "twoNotUsed" = "twoNotUsed";
 
 /* Description for MessageError invalidSequence */
-"Unexpected message sequence number" = "Nieoczekiwany numer kolejny komunikatu";
+"Unexpected message sequence number" = "Uventet beskedsekvensnummer";
 
 /* The format string for Unknown pod fault (1: The fault code value) */
-"Unknown pod fault %1$03d" = "Nieznany błąd POD'a %1$03d";
+"Unknown pod fault %1$03d" = "Ukendt Podfejl %1$03d";
 
 /* Format string for description of MessageError unknownValue. (1: value) (2: Type) */
-"Unknown Value (%1$@) for type %2$@" = "Nieznana wartość (%1$@) dla typu %2$@";
+"Unknown Value (%1$@) for type %2$@" = "Ukendt værdi (%1$@) for typen %2$@";
 
 /* Format string for description of MessageError validationFailed. (1: description of validation failure) */
-"Validation failed: %1$@" = "Weryfikacja nie powiodła się: %1$@";
+"Validation failed: %1$@" = "Validering mislykkedes: %1$@";
 
 /* Description waiting for pairing reminder alert */
-"Waiting for pairing reminder" = "Poczekaj na przypomnienie o parowaniu";
+"Waiting for pairing reminder" = "Venter på parringspåmindelse";
 
