@@ -259,7 +259,7 @@ class PodMessageTransport: MessageTransport {
         return try enDecrypt.encrypt(msg, nonceSeq)
     }
     
-    func readAndAckResponse() throws -> Message {
+    private func readAndAckResponse() throws -> Message {
         guard let enDecrypt = self.enDecrypt else { throw PodCommsError.podNotConnected }
 
         let readResponse = try manager.readMessagePacket()
@@ -276,13 +276,29 @@ class PodMessageTransport: MessageTransport {
         incrementNonceSeq()
         let ack = try getAck(response: decrypted)
         let ackResult = manager.sendMessagePacket(ack)
-        guard case .sentWithAcknowledgment = ackResult else {
-            throw PodProtocolError.messageIOException("Could not write $msgType: \(ackResult)")
-        }
 
         // verify that the Omnipod message # matches the expected value
         guard response.sequenceNum == messageNumber else {
             throw MessageError.invalidSequence
+        }
+
+        switch ackResult {
+        case .sentWithAcknowledgment:
+            break
+        case .sentWithError, .unsentWithError:
+            // We had a communications error trying to send the response ack to the pod.
+            let ackErrStr = String(format: "Send of ack failed: %@", String(describing: ackResult))
+
+            // The original behavior here was to throw for this error which will throw out the verified response
+            // for a received pod command which forces the unacknowledged response code to try to resolve any insulin
+            // delivery related commands while treating other commands types as failures even though they were received.
+            // throw PodProtocolError.messageIOException(ackErrStr)
+
+            // Since we already have a fully verified response, simply log the ack comms error and return
+            // the received response since the pod has already accepted the command and provided its response.
+            // This results in less bogus failures on successfully received and handled pod commands and
+            // could result in a failure trying to send the next pod command but with less ill side effects.
+            log.error("%@, but still using validated response %@", ackErrStr, String(describing: response))
         }
 
         return response
@@ -291,7 +307,6 @@ class PodMessageTransport: MessageTransport {
     private func parseResponse(decrypted: MessagePacket) throws -> Message {
 
         let data = try StringLengthPrefixEncoding.parseKeys([RESPONSE_PREFIX], decrypted.payload)[0]
-        log.debug("Received decrypted response: %{public}@ in packet: %{public}@", data.hexadecimalString, decrypted.payload.hexadecimalString)
 
         // Dash pods generates a CRC16 for Omnipod Messages, but the actual algorithm is not understood and doesn't match the CRC16
         // that the pod enforces for incoming Omnipod command message. The Dash PDM explicitly ignores the CRC16 for incoming messages,

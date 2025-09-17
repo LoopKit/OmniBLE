@@ -155,7 +155,10 @@ public struct UnfinalizedDose: RawRepresentable, Equatable, CustomStringConverti
         case .bolus:
             let oldRate = rate
             if let remaining = remaining {
-                units = units - remaining
+                // Guard against negative bolus if incorrectly called a 2nd time or with a bad remaining
+                if remaining <= units {
+                    units -= remaining
+                }
             } else {
                 units = oldRate * newDuration.hours
             }
