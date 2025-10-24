@@ -79,6 +79,13 @@ extension OmniBLEPumpManagerError: LocalizedError {
 }
 
 public class OmniBLEPumpManager: DeviceManager {
+    public var inSignalLoss: Bool {
+        isSignalLost()
+    }
+    
+    public var isInoperable: Bool {
+        basalDeliveryState(for: state) == .pumpInoperable
+    }
 
     public let pluginIdentifier: String = "Omnipod-Dash" // use a single token to make parsing log files easier
 
@@ -631,7 +638,7 @@ extension OmniBLEPumpManager {
                     localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                     imageName: "pause.circle.fill",
                     state: .warning)
-            } else if date.timeIntervalSince(state.lastPumpDataReportDate ?? .distantPast) > .minutes(12) {
+            } else if isSignalLost(at: date) {
                 return PumpStatusHighlight(
                     localizedMessage: LocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
                     imageName: "exclamationmark.circle.fill",
@@ -644,6 +651,10 @@ extension OmniBLEPumpManager {
             }
             return nil
         }
+    }
+    
+    private func isSignalLost(at date: Date = Date()) -> Bool {
+        date.timeIntervalSince(state.lastPumpDataReportDate ?? .distantPast) > .minutes(12)
     }
 
     public func isRunningManualTempBasal(for state: OmniBLEPumpManagerState) -> Bool {
