@@ -20741,6 +20741,10 @@
         }
       }
     },
+    "Flashlight" : {
+      "comment" : "The label for the flashlight toggle in the \"Check Cannula\" view.",
+      "extractionState" : "manual"
+    },
     "Greater than %1$@ units remaining at %2$@" : {
       "comment" : "Accessibility format string for (1: localized volume)(2: time)",
       "localizations" : {
