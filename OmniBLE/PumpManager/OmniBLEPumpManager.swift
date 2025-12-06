@@ -349,15 +349,10 @@ extension OmniBLEPumpManager {
     }
 
     private func basalDeliveryState(for state: OmniBLEPumpManagerState, at date: Date = Date()) -> PumpManagerStatus.BasalDeliveryState {
-        guard let podState = state.podState else {
-            return .active(.distantPast)
-        }
 
-        switch podCommState(for: state) {
-        case .fault:
+        // Treat a non-active (faulted or setup incomplete) pod just like no pod
+        guard let podState = state.podState, podState.isActive else {
             return .active(.distantPast)
-        default:
-            break
         }
 
         switch state.suspendEngageState {
@@ -1849,7 +1844,7 @@ extension OmniBLEPumpManager: PumpManager {
 
         switch shouldFetchStatus {
         case .none:
-            completion?(lastSync)
+            completion?(self.lastSync)
             return // No active pod
         case true?:
             log.default("Fetching status because pumpData is too old")
@@ -2468,7 +2463,7 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     func store(doses: [UnfinalizedDose], completion: @escaping (_ error: Error?) -> Void) {
-        let lastSync = lastSync
+        let lastSync = self.lastSync
 
         pumpDelegate.notify { (delegate) in
             guard let delegate = delegate else {

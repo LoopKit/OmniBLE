@@ -1,0 +1,4 @@
+files:
+  - source: /OmniBLE/Localizable.xcstrings
+    translation: /OmniBLE/Localizable.xcstrings
+    multilingual: 1

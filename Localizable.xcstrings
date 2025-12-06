@@ -39,6 +39,12 @@
     "Activation time exceeded" : {
       "comment" : "Pod state when activation not completed in the time allowed",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivierungszeit überschritten"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +69,12 @@
             "value" : "Przekroczono czas aktywacji"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timpul de activare a fost depășit"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -74,6 +86,12 @@
     "Auto-off" : {
       "comment" : "Description for auto-off alert",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatische Abschaltung"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +116,12 @@
             "value" : "Automatyczne wyłączanie"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprire automată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,6 +133,12 @@
     "Basal initialized" : {
       "comment" : "Pod state when basal initialized",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basal initialisiert"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -133,6 +163,12 @@
             "value" : "Zainicjowano bazę"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bazală inițializată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -144,6 +180,12 @@
     "Bolusing" : {
       "comment" : "Delivery status when bolusing",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolusabgabe"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,10 +210,22 @@
             "value" : "Podawanie bolusa"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus în derulare"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подается болюс"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大剂量推注中"
           }
         }
       }
@@ -179,6 +233,12 @@
     "Bolusing with temp basal" : {
       "comment" : "Delivery status when bolusing and temp basal is running",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolusabgabe mit temporärer Basalrate"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -203,10 +263,22 @@
             "value" : "Podawanie bolusa z dawką podstawową"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus în derulare cu rata bazală temporară"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подача болюса при подаче ВБС"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用临时基础率推注"
           }
         }
       }
@@ -214,6 +286,12 @@
     "Deactivated" : {
       "comment" : "Pod state when deactivated",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم إلغاء التنشيط"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -374,6 +452,12 @@
     "Expiration reminder" : {
       "comment" : "Description for expiration reminder alert",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pod-Ablauferinnerung"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -385,12 +469,24 @@
             "state" : "translated",
             "value" : "Utløpspåminnelse"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificare de expirare"
+          }
         }
       }
     },
     "Extended bolus running" : {
       "comment" : "Delivery status when extended bolus is running",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzögerter Bolus läuft"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -415,6 +511,12 @@
             "value" : "Trwa podawanie bolusa przedłużonego"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus prelungit în funcțiune"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -426,6 +528,12 @@
     "Extended bolus running while suspended" : {
       "comment" : "Delivery status when extended bolus is running while suspended",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzögerter Bolus läuft während der Unterbrechung"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -437,12 +545,24 @@
             "state" : "translated",
             "value" : "Forlenget bolus kjører mens den er suspendert"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Execuție bolus prelungit în timpul suspendării"
+          }
         }
       }
     },
     "Extended bolus running with temp basal" : {
       "comment" : "Delivery status when extended bolus and temp basal is running",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzögerter Bolus mit temporärer Basalrate aktiv"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -467,6 +587,12 @@
             "value" : "Bolus przedłużony uruchomiony z tymczasową bazą"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus prelungit activ împreună cu bazală temporară"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -478,6 +604,12 @@
     "Fault event occurred" : {
       "comment" : "Pod state when fault event has occurred",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehlerereignis aufgetreten"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -500,6 +632,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wystąpiła usterka"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A apărut un eveniment de eroare"
           }
         },
         "ru" : {
@@ -543,6 +681,12 @@
             "value" : "Przypomnienie o zakończeniu konfiguracji"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificare pentru finalizarea configurării"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -584,6 +728,12 @@
             "value" : "Zainicjowany"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inițializat"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -595,6 +745,12 @@
     "Inserting cannula" : {
       "comment" : "Pod state when inserting cannula",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kanüle wird eingeführt"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -619,6 +775,12 @@
             "value" : "Wprowadzanie kaniuli"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se inserează canula"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -630,6 +792,12 @@
     "Internal pod fault %1$03d" : {
       "comment" : "The format string for Internal pod fault (1: The fault code value)",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interner Podfehler %1$03d"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -652,6 +820,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wewnętrzny błąd POD'a %1$03d"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Defecțiune internă pompă %1$03d"
           }
         },
         "ru" : {
@@ -695,6 +869,12 @@
             "value" : "Nieprawidłowy adres: ( %1$@ )"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresă invalidă: (%1$@)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -734,6 +914,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nieprawidłowy CRC"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CRC invalid"
           }
         },
         "ru" : {
@@ -777,6 +963,12 @@
             "value" : "Niski poziom w zbiorniczku"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rezervor scăzut"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -816,6 +1008,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zainicjowano pamięć"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memorie inițializată"
           }
         },
         "ru" : {
@@ -859,6 +1057,12 @@
             "value" : "Brak alertów"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fără alerte"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -898,6 +1102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Brak usterek"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fără defecțiuni"
           }
         },
         "ru" : {
@@ -941,6 +1151,12 @@
             "value" : "Normalny"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -982,10 +1198,22 @@
             "value" : "Za mało danych"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu sunt suficiente date"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Недостаточно данных"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有足够数据"
           }
         }
       }
@@ -1040,10 +1268,22 @@
             "value" : "Wykryto niedrożność"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocluzie detectată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обнаружена закупорка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检测到堵塞"
           }
         }
       }
@@ -1116,10 +1356,22 @@
             "value" : "Parowanie zakończone"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asociere finalizată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сопряжение завершено"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配对完成"
           }
         }
       }
@@ -1192,10 +1444,22 @@
             "value" : "Termin ważności POD'a upłynął"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pompă expirată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Срок работы Omnipod истек"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pod 已到期"
           }
         }
       }
@@ -1203,6 +1467,18 @@
     "Pod suspended reminder" : {
       "comment" : "Description for pod suspended reminder alert",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pod angehalten Erinnerung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel de Pod suspendu"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1227,10 +1503,22 @@
             "value" : "Przypomnienie o zawieszeniu POD'a"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificare pompa suspendată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Напоминание о приостановке подачи инсулина"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pod 暂停提醒"
           }
         }
       }
@@ -1242,6 +1530,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Befüllen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorçage"
           }
         },
         "it" : {
@@ -1268,10 +1562,22 @@
             "value" : "Napełnianie"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorsare"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Прокачивание инсулина"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灌注中"
           }
         }
       }
@@ -1283,6 +1589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Befüllen abgeschlossen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorçage terminé"
           }
         },
         "it" : {
@@ -1309,10 +1621,22 @@
             "value" : "Wypełnianie zakończone"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorsare finalizată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Прокачка инсулина завершена"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灌注完成"
           }
         }
       }
@@ -1320,6 +1644,12 @@
     "Reminder initialized" : {
       "comment" : "Pod pairing reminder initialized",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerung initialisiert"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1344,10 +1674,22 @@
             "value" : "Zainicjowano przypomnienie"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificare inițializată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Инициализация напоминания"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提醒功能已启动"
           }
         }
       }
@@ -1355,6 +1697,18 @@
     "Scheduled basal" : {
       "comment" : "Delivery status when scheduled basal is running",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant Basal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débit basal programmé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1379,10 +1733,22 @@
             "value" : "Zaplanowana dawka podstawowa"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bazala programată"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Запланированная база"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "计划基础率"
           }
         }
       }
@@ -1394,6 +1760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Direkt herunterfahren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêt imminent"
           }
         },
         "it" : {
@@ -1420,10 +1792,22 @@
             "value" : "Zbliża się zamknięcie"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprirea iminentă"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выключение неизбежно"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即将关闭"
           }
         }
       }
@@ -1435,6 +1819,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anhaltezeit abgelaufen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée de suspension écoulée"
           }
         },
         "it" : {
@@ -1461,10 +1851,22 @@
             "value" : "Upłynął czas zawieszenia"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timpul de suspendare a expirat"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Время приостановки истекло"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停时间已到期"
           }
         }
       }
@@ -1472,6 +1874,12 @@
     "Suspended" : {
       "comment" : "Delivery status when insulin delivery is suspended",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suspended"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1603,6 +2011,12 @@
             "value" : "Temp Basal läuft"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débit basal temporaire actif"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1627,10 +2041,22 @@
             "value" : "Tymczasowa dawka podstawowa uruchomiona"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funcționare bazală temporară"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Подается ВБС"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "临时基础率运行中"
           }
         }
       }
@@ -1738,6 +2164,12 @@
             "value" : "Nieoczekiwany numer kolejny komunikatu"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Număr de secvență al mesajului neașteptat"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1777,6 +2209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nieznany błąd POD'a %1$03d"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eroare necunoscută a pompei %1$03d"
           }
         },
         "ru" : {
@@ -1878,6 +2316,12 @@
             "value" : "Warten auf Kopplungserinnerung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente du rappel d'appairage"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1900,6 +2344,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poczekaj na przypomnienie o parowaniu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se așteaptă notificarea de asociere"
           }
         },
         "ru" : {

@@ -88,7 +88,9 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
     var finalizedDoses: [UnfinalizedDose]
 
     public var dosesToStore: [UnfinalizedDose] {
-        return  finalizedDoses + [unfinalizedTempBasal, unfinalizedSuspend, unfinalizedBolus].compactMap {$0}
+        /// Also include unfinalized bolus and temp basal doses which are mututable until finalized.
+        /// Suspends and resumes are now "finalized" upon getting a response confirming delivery state.
+        return finalizedDoses + [unfinalizedBolus, unfinalizedTempBasal].compactMap {$0}
     }
 
     public var suspendState: SuspendState
@@ -310,10 +312,10 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             }
         }
         if deliveryStatus.tempBasalRunning && unfinalizedTempBasal == nil { // active temp basal that we aren't tracking
-            // unfinalizedTempBasal = UnfinalizedDose(tempBasalRate: 0, startTime: Date(), duration: .minutes(30), isHighTemp: false, scheduledCertainty: .certain, insulinType: insulinType)
+            // unfinalizedTempBasal = UnfinalizedDose(tempBasalRate: 0, startTime: date, duration: .minutes(30), isHighTemp: false, scheduledCertainty: .certain, insulinType: insulinType)
         }
         if !deliveryStatus.suspended && isSuspended { // active basal that we aren't tracking
-            let resumeStartTime = Date()
+            let resumeStartTime = date
             suspendState = .resumed(resumeStartTime)
             unfinalizedResume = UnfinalizedDose(resumeStartTime: resumeStartTime, scheduledCertainty: .certain, insulinType: insulinType)
         }
@@ -335,14 +337,18 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
             unfinalizedTempBasal = nil
         }
 
-        if let suspend = unfinalizedSuspend {
+        /// Resumes and suspends have no associated delivery amounts to be finalized,
+        /// but we finalize these "doses" as soon as we have deliveryStatus confirmation
+        /// so the associated resume and suspend events can be created without delay.
 
-            if let resume = unfinalizedResume, suspend.startTime < resume.startTime {
-                finalizedDoses.append(suspend)
-                finalizedDoses.append(resume)
-                unfinalizedSuspend = nil
-                unfinalizedResume = nil
-            }
+        if let resume = unfinalizedResume, !deliveryStatus.suspended {
+            finalizedDoses.append(resume)
+            unfinalizedResume = nil
+        }
+
+        if let suspend = unfinalizedSuspend, deliveryStatus.suspended {
+            finalizedDoses.append(suspend)
+            unfinalizedSuspend = nil
         }
     }
 
