@@ -1473,6 +1473,12 @@
             "value" : "Pod angehalten Erinnerung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel de Pod suspendu"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1526,6 +1532,12 @@
             "value" : "Befüllen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorçage"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1577,6 +1589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Befüllen abgeschlossen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amorçage terminé"
           }
         },
         "it" : {
@@ -1685,6 +1703,12 @@
             "value" : "Geplant Basal"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débit basal programmé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1738,6 +1762,12 @@
             "value" : "Direkt herunterfahren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêt imminent"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1789,6 +1819,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anhaltezeit abgelaufen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée de suspension écoulée"
           }
         },
         "it" : {
@@ -1973,6 +2009,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temp Basal läuft"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débit basal temporaire actif"
           }
         },
         "it" : {
@@ -2272,6 +2314,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Warten auf Kopplungserinnerung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente du rappel d'appairage"
           }
         },
         "it" : {

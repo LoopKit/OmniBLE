@@ -1127,7 +1127,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追加胰岛素未注射：%1$@ 单位"
+            "value" : "大剂量未注射：%1$@ U"
           }
         }
       }

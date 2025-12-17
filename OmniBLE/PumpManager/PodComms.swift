@@ -72,7 +72,58 @@ public class PodComms: CustomDebugStringConvertible {
         podState?.insulinType = insulinType
         podStateLock.unlock()
     }
-    
+
+    /// Handle any dosing and pump event cleanup when discarding a pod without going thru normal pod deactivation
+    func handleDiscardedPodDosing(podTime: TimeInterval, reservoirLevel: Double?) {
+        guard podState != nil else {
+            return
+        }
+
+        /// Any suspended pod either already went through normal pod deactivation that does a cancelDelivery,
+        /// pod fault handling for the faulted and suspended pod &/or was already suspended by the user.
+        guard !podState!.isSuspended else {
+            return
+        }
+
+        /// If the initial basal still needs to be programmed,
+        /// then don't create suspend pump event without the resume.
+        guard !podState!.setupProgress.needsInitialBasalSchedule else {
+            return
+        }
+
+        podStateLock.lock()
+        let now = Date()
+
+        /// Compute the bolusNotDelivered if there was a bolus in progress when the pod was discarded.
+        var bolusNotDelivered = 0.0
+        if let bolus = podState!.unfinalizedBolus {
+            let bolusDelivered = (((bolus.units * bolus.progress(at: now)) / Pod.pulseSize).rounded()) * Pod.pulseSize
+            log.info("Cancelling unfinished bolus with calculated bolus delivered of %@", bolusDelivered.twoDecimals)
+            bolusNotDelivered = bolus.units - bolusDelivered
+        }
+
+        /// Use handleCancelDosing() to update the dosing for a cancel all command (assuming the user removes the pod as directed).
+        /// This includes suspending the pod and handle cancelling any in-progress tempBasal and bolus doses based on the current time.
+        podState!.handleCancelDosing(deliveryType: .all, bolusNotDelivered: bolusNotDelivered, at: now)
+
+        /// Now create a fake cancel all response and use it to update the podState.
+        /// This has the side effects of updating lastSync as well as finalizing the
+        /// unfinalizedSuspend and any unfinalized bolus or tempBasal doses.
+        let fakeSuspendedResponse = StatusResponse(
+            deliveryStatus: .suspended, // faking a suspended pod response
+            podProgressStatus: .aboveFiftyUnits, // any nominal value should be fine
+            timeActive: podTime, // current adjusted pod time as of now
+            reservoirLevel: reservoirLevel ?? Pod.reservoirLevelAboveThresholdMagicNumber, // re-use last response
+            insulinDelivered: 0.0, // this value will be ignored when it's less than previous value
+            bolusNotDelivered: bolusNotDelivered, // might be non-zero for an in-progress bolus
+            lastProgrammingMessageSeqNum: 0, // not important
+            alerts: .none
+        )
+        podState!.updateFromStatusResponse(fakeSuspendedResponse, at: now)
+
+        podStateLock.unlock()
+    }
+
     public func forgetPod() {
         if let manager = manager {
             self.log.default("Removing %{public}@ from auto-connect ids", manager.peripheral)
