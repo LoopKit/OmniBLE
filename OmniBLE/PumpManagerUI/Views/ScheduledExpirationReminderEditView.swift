@@ -9,10 +9,6 @@
 import SwiftUI
 import LoopKitUI
 
-extension Date: Identifiable {
-    public var id: Self { self }
-}
-
 struct ScheduledExpirationReminderEditView: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -88,7 +84,7 @@ struct ScheduledExpirationReminderEditView: View {
     
     var picker: some View {
         Picker(selection: $selectedDate, label: Text("Numbers")) {
-            ForEach(self.allowedDates) { date in
+            ForEach(self.allowedDates, id: \.self) { date in
                 Text(scheduledReminderDateString(date)).tag(date as Date?)
             }
             Text(scheduledReminderDateString(nil)).tag(nil as Date?)

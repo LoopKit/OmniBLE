@@ -68,7 +68,6 @@ struct InsertCannulaView: View {
                 if (self.viewModel.error == nil || self.viewModel.error?.recoverable == true) {
                     actionButton
                     .disabled(self.viewModel.state.isProcessing)
-                    .animation(nil)
                     .zIndex(1)
                         
                 }
@@ -76,7 +75,7 @@ struct InsertCannulaView: View {
             .transition(AnyTransition.opacity.combined(with: .move(edge: .bottom)))
             .padding()
         }
-        .animation(.default)
+        .animation(.default, value: viewModel.state.showProgressDetail)
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
@@ -166,3 +165,4 @@ struct InsertCannulaView_Previews: PreviewProvider {
         InsertCannulaView(viewModel: model)
     }
 }
+
