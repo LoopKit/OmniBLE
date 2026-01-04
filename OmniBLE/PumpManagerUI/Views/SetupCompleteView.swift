@@ -83,7 +83,6 @@ struct SetupCompleteView: View {
             .background(Color(UIColor.systemBackground))
             .zIndex(1)
         }
-        .animation(.default, value: scheduleReminderDateEditViewIsShown)
         .navigationBarTitle(LocalizedString("Setup Complete", comment: "Title of SetupCompleteView"), displayMode: .automatic)
     }
     
