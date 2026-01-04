@@ -2450,11 +2450,7 @@ extension OmniBLEPumpManager: PumpManager {
             semaphore.signal()
         }
 
-        let waitResult = semaphore.wait(timeout: .now() + .seconds(2))
-        if waitResult == .timedOut {
-            self.log.error("Priority inversion mitigation: timed out waiting for dose storage acknowledgment; proceeding as failure")
-            success = false
-        }
+        semaphore.wait()
 
         if success {
             setState { (state) in
