@@ -77,6 +77,7 @@ struct PairPodView: View {
             .transition(AnyTransition.opacity.combined(with: .move(edge: .bottom)))
             .padding()
         }
+        .animation(.default, value: viewModel.state.showProgressDetail)
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
         .navigationBarTitle(LocalizedString("Pair Pod", comment: "Pair Pod navigationBarTitle"), displayMode: .automatic)
         .navigationBarBackButtonHidden(self.viewModel.backButtonHidden)

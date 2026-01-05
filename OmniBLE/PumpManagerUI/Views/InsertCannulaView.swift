@@ -75,6 +75,7 @@ struct InsertCannulaView: View {
             .transition(AnyTransition.opacity.combined(with: .move(edge: .bottom)))
             .padding()
         }
+        .animation(.default, value: viewModel.state.showProgressDetail)
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
         .navigationBarTitle(LocalizedString("Insert Cannula", comment: "navigation bar title for insert cannula"), displayMode: .automatic)
         .navigationBarBackButtonHidden(true)
