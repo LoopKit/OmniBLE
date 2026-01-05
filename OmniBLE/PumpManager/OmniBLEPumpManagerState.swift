@@ -17,7 +17,7 @@ public struct OmniBLEPumpManagerState: RawRepresentable, Equatable {
     
     public var isOnboarded: Bool = false
     
-    private(set) public var podState: PodState?
+    private (set) public var podState: PodState?
 
     // podState should only be modifiable by PodComms
     mutating func updatePodStateFromPodComms(_ podState: PodState?) {
