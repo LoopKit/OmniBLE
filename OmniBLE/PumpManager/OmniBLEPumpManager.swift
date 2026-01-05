@@ -2442,23 +2442,15 @@ extension OmniBLEPumpManager: PumpManager {
         session.assertOnSessionQueue()
 
         // We block the session until the data's confirmed stored by the delegate
-        // Use DispatchGroup to avoid priority inversion issues with semaphores
-        let group = DispatchGroup()
+        let semaphore = DispatchSemaphore(value: 0)
         var success = false
 
-        group.enter()
-        // Capture the current QoS to ensure completion runs at appropriate priority
-        let currentQoS = DispatchQoS.QoSClass(rawValue: qos_class_self()) ?? .userInitiated
         store(doses: doses) { (error) in
-            // Execute completion at the caller's QoS to avoid priority inversion
-            DispatchQueue.global(qos: currentQoS).async {
-                success = (error == nil)
-                group.leave()
-            }
+            success = (error == nil)
+            semaphore.signal()
         }
 
-        // Wait with the current QoS to avoid priority inversion
-        _ = group.wait(timeout: .now() + .seconds(30))
+        semaphore.wait()
 
         if success {
             setState { (state) in
