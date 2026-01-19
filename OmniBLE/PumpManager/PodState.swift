@@ -352,6 +352,42 @@ public struct PodState: RawRepresentable, Equatable, CustomDebugStringConvertibl
         }
     }
 
+    @discardableResult
+    mutating func handleCancelDosing(deliveryType: CancelDeliveryCommand.DeliveryType, bolusNotDelivered: Double, at now: Date = Date()) -> UnfinalizedDose?
+    {
+        var canceledDose: UnfinalizedDose? = nil
+
+        if deliveryType.contains(.basal) {
+            unfinalizedSuspend = UnfinalizedDose(suspendStartTime: now, scheduledCertainty: .certain)
+            suspendState = .suspended(now)
+        }
+
+        if let tempBasal = unfinalizedTempBasal,
+            let finishTime = tempBasal.finishTime,
+            deliveryType.contains(.tempBasal),
+            finishTime > now
+        {
+            unfinalizedTempBasal?.cancel(at: now)
+            if !deliveryType.contains(.basal) {
+                suspendState = .resumed(now)
+            }
+            canceledDose = unfinalizedTempBasal
+            print("Interrupted temp basal: \(String(describing: canceledDose))")
+        }
+
+        if let bolus = unfinalizedBolus,
+            let finishTime = bolus.finishTime,
+            deliveryType.contains(.bolus),
+            finishTime > now
+        {
+            unfinalizedBolus?.cancel(at: now, withRemaining: bolusNotDelivered)
+            canceledDose = unfinalizedBolus
+            print("Interrupted bolus: \(String(describing: canceledDose))")
+        }
+
+        return canceledDose
+    }
+
     // MARK: - RawRepresentable
     public init?(rawValue: RawValue) {
 

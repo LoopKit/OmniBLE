@@ -249,7 +249,7 @@ public class PodCommsSession {
                 // N.B., recoverUnacknowledgedCommand() skips using bolusNotDelivered for a stopProgram with a faulted pod.
                 recoverUnacknowledgedCommand(using: derivedStatusResponse)
             }
-            handleCancelDosing(deliveryType: .all, bolusNotDelivered: derivedStatusResponse.bolusNotDelivered)
+            podState.handleCancelDosing(deliveryType: .all, bolusNotDelivered: derivedStatusResponse.bolusNotDelivered, at: currentDate)
             podState.updateFromStatusResponse(derivedStatusResponse, at: currentDate)
         }
         log.error("Pod Fault: %@", String(describing: fault))
@@ -675,42 +675,6 @@ public class PodCommsSession {
         }
     }
 
-    @discardableResult
-    private func handleCancelDosing(deliveryType: CancelDeliveryCommand.DeliveryType, bolusNotDelivered: Double) -> UnfinalizedDose? {
-        var canceledDose: UnfinalizedDose? = nil
-        let now = currentDate
-
-        if deliveryType.contains(.basal) {
-            podState.unfinalizedSuspend = UnfinalizedDose(suspendStartTime: now, scheduledCertainty: .certain)
-            podState.suspendState = .suspended(now)
-        }
-
-        if let unfinalizedTempBasal = podState.unfinalizedTempBasal,
-            let finishTime = unfinalizedTempBasal.finishTime,
-            deliveryType.contains(.tempBasal),
-            finishTime > now
-        {
-            podState.unfinalizedTempBasal?.cancel(at: now)
-            if !deliveryType.contains(.basal) {
-                podState.suspendState = .resumed(now)
-            }
-            canceledDose = podState.unfinalizedTempBasal
-            log.info("Interrupted temp basal: %@", String(describing: canceledDose))
-        }
-
-        if let unfinalizedBolus = podState.unfinalizedBolus,
-            let finishTime = unfinalizedBolus.finishTime,
-            deliveryType.contains(.bolus),
-            finishTime > now
-        {
-            podState.unfinalizedBolus?.cancel(at: now, withRemaining: bolusNotDelivered)
-            canceledDose = podState.unfinalizedBolus
-            log.info("Interrupted bolus: %@", String(describing: canceledDose))
-        }
-
-        return canceledDose
-    }
-    
     // Suspends insulin delivery and sets appropriate podSuspendedReminder & suspendTimeExpired alerts.
     // A nil suspendReminder is an untimed suspend with no suspend reminders.
     // A suspendReminder of 0 is an untimed suspend which only uses podSuspendedReminder alert beeps.
@@ -767,7 +731,7 @@ public class PodCommsSession {
             podState.unacknowledgedCommand = PendingCommand.stopProgram(.all, transport.messageNumber, currentDate)
             let status: StatusResponse = try send(commandsToSend, beepBlock: beepBlock)
             podState.unacknowledgedCommand = nil
-            let canceledDose = handleCancelDosing(deliveryType: .all, bolusNotDelivered: status.bolusNotDelivered)
+            let canceledDose = podState.handleCancelDosing(deliveryType: .all, bolusNotDelivered: status.bolusNotDelivered, at: currentDate)
             podState.updateFromStatusResponse(status, at: currentDate)
 
             if let alert = podSuspendedReminderAlert {
@@ -826,7 +790,7 @@ public class PodCommsSession {
             let status: StatusResponse = try send([cancelDeliveryCommand], beepBlock: beepBlock)
             podState.unacknowledgedCommand = nil
 
-            let canceledDose = handleCancelDosing(deliveryType: deliveryType, bolusNotDelivered: status.bolusNotDelivered)
+            let canceledDose = podState.handleCancelDosing(deliveryType: deliveryType, bolusNotDelivered: status.bolusNotDelivered, at: currentDate)
             podState.updateFromStatusResponse(status, at: currentDate)
 
             return CancelDeliveryResult.success(statusResponse: status, canceledDose: canceledDose)

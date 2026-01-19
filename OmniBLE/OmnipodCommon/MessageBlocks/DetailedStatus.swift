@@ -45,8 +45,6 @@ public struct DetailedStatus : PodInfo, Equatable {
         }
         self.podProgressStatus = PodProgressStatus(rawValue: encodedData[1])!
         
-        self.deliveryStatus = DeliveryStatus(rawValue: encodedData[2] & 0xf)!
-        
         self.bolusNotDelivered = Double((Int(encodedData[3] & 0x3) << 8) | Int(encodedData[4])) / Pod.pulsesPerUnit
         
         self.lastProgrammingMessageSeqNum = encodedData[5]
@@ -55,6 +53,13 @@ public struct DetailedStatus : PodInfo, Equatable {
         
         self.faultEventCode = FaultEventCode(rawValue: encodedData[8])
         
+        /// Older pod simulators didn't know that all faulted pods are suspended, so handle this here
+        if self.faultEventCode.faultType != .noFaults {
+            self.deliveryStatus = .suspended
+        } else {
+            self.deliveryStatus = DeliveryStatus(rawValue: encodedData[2] & 0xf)!
+        }
+
         let minutesSinceActivation = encodedData[9...10].toBigEndian(UInt16.self)
         if minutesSinceActivation != 0xffff {
             self.faultEventTimeSinceActivation = TimeInterval(minutes: Double(minutesSinceActivation))

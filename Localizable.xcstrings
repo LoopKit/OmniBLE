@@ -974,6 +974,12 @@
             "state" : "translated",
             "value" : "Мало инсулина в резервуаре"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低药量"
+          }
         }
       }
     },
