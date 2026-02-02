@@ -49,7 +49,7 @@ class MessagePacketTests: XCTestCase {
                                 tfs: false,
                                 version: 0)
         
-        assert(msg.payload.bytes.toHexString() == payloadString)
+        assert(msg.payload.hexadecimalString == payloadString)
     }
-
 }
+
