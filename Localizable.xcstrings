@@ -417,6 +417,12 @@
     "Empty reservoir" : {
       "comment" : "Description for Empty reservoir pod fault",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leeres Reservoir"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -973,6 +979,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Мало инсулина в резервуаре"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "低药量"
           }
         }
       }
