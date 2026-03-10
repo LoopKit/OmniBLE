@@ -6,10 +6,10 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
 import LoopKit
 import LoopKitUI
-import HealthKit
+import SwiftUI
 
 
 enum DashSettingsViewAlert {
@@ -166,7 +166,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         switch basalDeliveryState {
         case .active(_), .initiatingTempBasal:
             return true
-        case .tempBasal(_), .cancelingTempBasal, .suspending, .suspended(_), .resuming, .none:
+        default:
             return false
         }
     }
@@ -212,7 +212,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         return nil
     }
     
-    let reservoirVolumeFormatter = QuantityFormatter(for: .internationalUnit())
+    let reservoirVolumeFormatter = QuantityFormatter(for: .internationalUnit)
     
     var didFinish: (() -> Void)?
     
@@ -292,8 +292,8 @@ class OmniBLESettingsViewModel: ObservableObject {
         }
     }
 
-    func runTemporaryBasalProgram(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
-        pumpManager.runTemporaryBasalProgram(unitsPerHour: unitsPerHour, for: duration, automatic: false, completion: completion)
+    func runTemporaryBasalProgram(decisionId: UUID?, unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+        pumpManager.runTemporaryBasalProgram(decisionId: decisionId, unitsPerHour: unitsPerHour, for: duration, automatic: false, completion: completion)
     }
     
     func saveScheduledExpirationReminder(_ selectedDate: Date?, _ completion: @escaping (Error?) -> Void) {
@@ -401,13 +401,13 @@ class OmniBLESettingsViewModel: ObservableObject {
     func reservoirText(for level: ReservoirLevel) -> String {
         switch level {
         case .aboveThreshold:
-            let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: Pod.maximumReservoirReading)
+            let quantity = LoopQuantity(unit: .internationalUnit, doubleValue: Pod.maximumReservoirReading)
             let thresholdString = reservoirVolumeFormatter.string(from: quantity, includeUnit: false) ?? ""
             let unitString = reservoirVolumeFormatter.localizedUnitStringWithPlurality(forValue: Pod.maximumReservoirReading, avoidLineBreaking: true)
             return String(format: LocalizedString("%1$@+ %2$@", comment: "Format string for reservoir level above max measurable threshold. (1: measurable reservoir threshold) (2: units)"),
                           thresholdString, unitString)
         case .valid(let value):
-            let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: value)
+            let quantity = LoopQuantity(unit: .internationalUnit, doubleValue: value)
             return reservoirVolumeFormatter.string(from: quantity) ?? ""
         }
     }

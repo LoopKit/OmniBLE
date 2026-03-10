@@ -6,10 +6,10 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
 import LoopKit
 import LoopKitUI
-import HealthKit
+import SwiftUI
 
 struct LowReservoirReminderEditView: View {
 
@@ -88,7 +88,7 @@ struct LowReservoirReminderEditView: View {
     }
     
     func formatValue(_ value: Int) -> String {
-        return insulinQuantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: Double(value))) ?? ""
+        return insulinQuantityFormatter.string(from: LoopQuantity(unit: .internationalUnit, doubleValue: Double(value))) ?? ""
     }
     
     var saveButtonText: String {
@@ -147,7 +147,7 @@ struct LowReservoirReminderEditView_Previews: PreviewProvider {
     static var previews: some View {
         LowReservoirReminderEditView(
             lowReservoirReminderValue: 20,
-            insulinQuantityFormatter: QuantityFormatter(for: .internationalUnit()),
+            insulinQuantityFormatter: QuantityFormatter(for: .internationalUnit),
             onSave: { (_, _) in },
             onFinish: { }
         )
