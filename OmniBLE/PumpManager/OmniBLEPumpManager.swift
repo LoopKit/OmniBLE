@@ -379,6 +379,9 @@ extension OmniBLEPumpManager {
         case .disengaging:
             return .cancelingTempBasal
         case .stable:
+            guard let podState = state.podState else {
+                return .active(Date())
+            }
             if let tempBasal = podState.unfinalizedTempBasal, !tempBasal.isFinished(at: date) {
                 return .tempBasal(DoseEntry(tempBasal))
             }
@@ -2149,9 +2152,11 @@ extension OmniBLEPumpManager: PumpManager {
                     }
                     completion(nil)
                 case .unacknowledged(let error):
-                    throw error
+                    completion(.communication(error))
+                    return
                 case .certainFailure(let error):
-                    throw error
+                    completion(.communication(error))
+                    return
                 }
             }
         }
@@ -2611,18 +2616,18 @@ extension OmniBLEPumpManager {
                                     let beepBlock = self.beepMessageBlock(beepType: .beep)
                                     let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
                                 } catch {
-                                    self.mutateState { state in
+                                    self.setState { state in
                                         state.alertsWithPendingAcknowledgment.insert(alert)
                                     }
                                     continuation.resume(throwing: error)
                                     return
                                 }
-                                self.mutateState { state in
+                                self.setState { state in
                                     state.activeAlerts.remove(alert)
                                 }
                                 continuation.resume()
                             case .failure(let error):
-                                self.mutateState { state in
+                                self.setState { state in
                                     state.alertsWithPendingAcknowledgment.insert(alert)
                                 }
                                 continuation.resume(throwing: error)
