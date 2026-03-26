@@ -45,6 +45,12 @@
             "value" : "Aktivierungszeit überschritten"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Délai d'activation dépassé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -90,6 +96,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Automatische Abschaltung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêt automatique"
           }
         },
         "it" : {
@@ -139,6 +151,12 @@
             "value" : "Basal initialisiert"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basal initialisé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -184,6 +202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bolusabgabe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus en cours"
           }
         },
         "it" : {
@@ -237,6 +261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bolusabgabe mit temporärer Basalrate"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus en cours avec basal temporaire"
           }
         },
         "it" : {
@@ -423,6 +453,12 @@
             "value" : "Leeres Reservoir"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réservoir vide"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -447,6 +483,12 @@
             "value" : "Pusty zbiorniczek"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rezervor gol"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -462,6 +504,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pod-Ablauferinnerung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel d'expiration"
           }
         },
         "it" : {
@@ -491,6 +539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verzögerter Bolus läuft"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus prolongé en cours"
           }
         },
         "it" : {
@@ -540,6 +594,12 @@
             "value" : "Verzögerter Bolus läuft während der Unterbrechung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus prolongé en cours pendant la suspension"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -567,6 +627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verzögerter Bolus mit temporärer Basalrate aktiv"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bolus prolongé en cours avec basal temporaire"
           }
         },
         "it" : {
@@ -616,6 +682,12 @@
             "value" : "Fehlerereignis aufgetreten"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un événement de défaut s'est produit"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -661,6 +733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erinnerung zum Abschluss der Einrichtung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel de fin de configuration"
           }
         },
         "it" : {
@@ -710,6 +788,12 @@
             "value" : "Initialisiert"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initialisé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -755,6 +839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kanüle wird eingeführt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insertion de la canule"
           }
         },
         "it" : {
@@ -804,6 +894,12 @@
             "value" : "Interner Podfehler %1$03d"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Défaut interne du pod %1$03d"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -849,6 +945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ungültige Adresse: (%1$@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresse invalide (%1$@)"
           }
         },
         "it" : {
@@ -898,6 +1000,12 @@
             "value" : "Ungültige CRC"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CRC invalide"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -943,6 +1051,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niedriges Reservoir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niveau de réservoir bas"
           }
         },
         "it" : {
@@ -998,6 +1112,12 @@
             "value" : "Speicher initialisiert"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mémoire initialisée"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1043,6 +1163,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Alarme"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune alerte"
           }
         },
         "it" : {
@@ -1092,6 +1218,12 @@
             "value" : "Keine Fehler"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun défaut"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1134,6 +1266,12 @@
       "comment" : "Pod state when running above fifty units",
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normal"
@@ -1184,6 +1322,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nicht genügend Daten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Données insuffisantes"
           }
         },
         "it" : {
@@ -1254,6 +1398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verstopfung erkannt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Occlusion détectée"
           }
         },
         "it" : {
@@ -1344,6 +1494,12 @@
             "value" : "Kopplung abgeschlossen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumelage réalisé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1430,6 +1586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pod abgelaufen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pod expiré"
           }
         },
         "it" : {
@@ -1660,6 +1822,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erinnerung initialisiert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappel initialisé"
           }
         },
         "it" : {
@@ -2152,6 +2320,12 @@
             "value" : "Unerwartete Nachrichtensequenznummer"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numéro de séquence de message inattendu"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2197,6 +2371,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unbekannter Podfehler: %1$03d"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faute de pod inconnue %1$03d"
           }
         },
         "it" : {
