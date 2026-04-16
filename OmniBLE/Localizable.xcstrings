@@ -3962,7 +3962,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ de insulină sau mai puțin rămase în Pod. Schimbați Pod-ul în curând."
+            "value" : "%1$@ de insulină sau mai puțin rămase în pompă. Schimbați pompa în curând."
           }
         },
         "ru" : {
@@ -15191,7 +15191,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Realizat"
+            "value" : "Gata"
           }
         },
         "ru" : {
@@ -19847,7 +19847,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Umpleți o pompă nou cu insulină U-100  (nu înlăturați capacul albastru al acului de pe pompă)."
+            "value" : "Umpleți o pompă nouă cu insulină U-100  (nu înlăturați capacul albastru al acului de pe pompă)."
           }
         },
         "ru" : {
@@ -21324,7 +21324,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dacă anulați configurarea Pod-ului, Pod-ul actual va fi dezactivat și va fi inutilizabil."
+            "value" : "Dacă anulați configurarea pompei, pompa actuală va fi dezactivată și va fi inutilizabilă."
           }
         },
         "ru" : {
@@ -28864,7 +28864,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu se folosesc mementouri de confimare."
+            "value" : "Nu se folosesc mementouri de confirmare."
           }
         },
         "ru" : {
@@ -29305,7 +29305,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Niciuo pompă"
+            "value" : "Nicio pompă"
           }
         },
         "ru" : {
@@ -30623,7 +30623,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modul normal de funcționare, în care semnalele acustice ale pompei sunt utilizate pentru toate alertele podului și atunci când sunt activate notificările de confirmare."
+            "value" : "Modul normal de funcționare, în care semnalele acustice ale pompei sunt utilizate pentru toate alertele pompei și atunci când sunt activate notificările de confirmare."
           }
         },
         "ru" : {
@@ -35998,7 +35998,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vă rugăm să utilizați un alt dispozitiv cu capabilități bluetooth"
+            "value" : "Vă rugăm să utilizați un alt dispozitiv cu capabilități Bluetooth"
           }
         },
         "ru" : {
@@ -44765,7 +44765,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scoateți capacul albastru de ac de pe Pod și verificați canula. Apoi înlăturați eticheta de hârtie de pe spate."
+            "value" : "Scoateți capacul albastru de ac de pe pompă și verificați canula. Apoi înlăturați eticheta de hârtie de pe spate."
           }
         },
         "ru" : {
@@ -47238,7 +47238,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selectați tipul de insulină pe care o veți utiliza în acest pod."
+            "value" : "Selectați tipul de insulină pe care o veți utiliza în această pompă."
           }
         },
         "ru" : {
@@ -52848,7 +52848,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avertismentele de mai sus nu vor suna pe dispozitivul dvs. atunci când acesta este în modul Silențios sau Nu deranjați. Există și alte alerte critice ale pompei care vor suna pe dispozitivul dvs. chiar și atunci când este setat în modul Silențios sau Nu deranjați. \n\nPompa va utiliza, de asemenea, semnale sonore pentru toate notificările și alertele pompei, cu excepția cazului în care pompa este în mod silențios."
+            "value" : "Avertismentele de mai sus nu vor suna pe dispozitivul dumneavoastră atunci când acesta este în modul Silențios sau Nu deranjați. Există și alte alerte critice ale pompei care vor suna pe dispozitivul dumneavoastră chiar și atunci când este setat în modul Silențios sau Nu deranjați. \n\nPompa va utiliza, de asemenea, semnale sonore pentru toate notificările și alertele de pompă, cu excepția cazului în care pompa este în mod silențios."
           }
         },
         "ru" : {
@@ -59504,7 +59504,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veți începe acum procesul de configurare a memento-urilor, umplerea Pod-ului cu insulină, asocierea cu dispozitivul dumneavoastră și amplasarea acestuia pe corp."
+            "value" : "Veți începe acum procesul de configurare a memento-urilor, umplerea pompei cu insulină, asocierea cu dispozitivul dumneavoastră și amplasarea acestuia pe corp."
           }
         },
         "ru" : {
