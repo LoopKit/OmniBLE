@@ -2690,7 +2690,7 @@ extension OmniBLEPumpManager {
                         return
                     }
 
-                                        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+                    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
                         self.podComms.runSession(withName: "Acknowledge Alert") { (result) in
                             switch result {
                             case .success(let session):
@@ -2698,18 +2698,18 @@ extension OmniBLEPumpManager {
                                     let beepBlock = self.beepMessageBlock(beepType: .beep)
                                     let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
                                 } catch {
-                                    self.setState { state in
+                                    self.mutateState { state in
                                         state.alertsWithPendingAcknowledgment.insert(alert)
                                     }
                                     continuation.resume(throwing: error)
                                     return
                                 }
-                                self.setState { state in
+                                self.mutateState { state in
                                     state.activeAlerts.remove(alert)
                                 }
                                 continuation.resume()
                             case .failure(let error):
-                                self.setState { state in
+                                self.mutateState { state in
                                     state.alertsWithPendingAcknowledgment.insert(alert)
                                 }
                                 continuation.resume(throwing: error)
