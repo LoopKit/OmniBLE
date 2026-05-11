@@ -2860,6 +2860,12 @@
             "state" : "new",
             "value" : "%1$@ %2$@..."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@..."
+          }
         }
       }
     },
@@ -12919,7 +12925,14 @@
       }
     },
     "Connected" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectat"
+          }
+        }
+      }
     },
     "Continue" : {
       "comment" : "Action button description when deactivated\nAction button title for attach pod view\nButton title to continue\nCannula insertion button text when inserted\nPod pairing action button text when paired\nText for continue button\nText for continue button on PodSetupView\nTitle of button to continue discard",
@@ -15109,10 +15122,24 @@
       }
     },
     "Disconnect" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectați"
+          }
+        }
+      }
     },
     "Disconnected for %@" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectat pentru %@"
+          }
+        }
+      }
     },
     "Done" : {
       "comment" : "Title of done button on OmniBLESettingsView",
@@ -16296,7 +16323,14 @@
       }
     },
     "Expected offset: %@" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decalaj așteptat: %@"
+          }
+        }
+      }
     },
     "Expiration alert" : {
       "comment" : "Description for expiration alert",
@@ -20812,7 +20846,15 @@
       }
     },
     "For use with iPhone 16 or iPhone 17e when used with InPlay BLE (Atlas) DASH pods; otherwise leave disabled." : {
-      "comment" : "Hardware which benefits from Pod Keep Alive"
+      "comment" : "Hardware which benefits from Pod Keep Alive",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru utilizare cu iPhone 16 sau iPhone 17e atunci când este utilizat cu pompele DASH InPlay BLE (Atlas); în caz contrar, lăsați dezactivat."
+          }
+        }
+      }
     },
     "Greater than %1$@ units remaining at %2$@" : {
       "comment" : "Accessibility format string for (1: localized volume)(2: time)",
@@ -25141,7 +25183,14 @@
       }
     },
     "Last connection: %@" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultima conexiune: %@"
+          }
+        }
+      }
     },
     "Last Status" : {
       "comment" : "description label for last status date pod details row",
@@ -28644,7 +28693,14 @@
       }
     },
     "No %@RileyLinks found. They will appear here when discovered." : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu s-au găsit dispozitive %@RileyLink. Acestea vor apărea aici atunci când vor fi descoperite."
+          }
+        }
+      }
     },
     "No alerts" : {
       "comment" : "Pod alert state when no alerts are active",
@@ -39307,19 +39363,59 @@
       }
     },
     "Pod Keep Alive" : {
-      "comment" : "Title for the pod keep alive row and page"
+      "comment" : "Title for the pod keep alive row and page",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținere în viață a pompei"
+          }
+        }
+      }
     },
     "Pod keep alive disabled. Pod disconnects 3 minutes after last message exchange (nominal behavior)." : {
-      "comment" : "Description for PodKeepAlive.disabled"
+      "comment" : "Description for PodKeepAlive.disabled",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este dezactivată. Pompa se deconectează la 3 minute după ultimul schimb de mesaje (comportament nominal)."
+          }
+        }
+      }
     },
     "Pod keep alive enabled when app is in the foreground with phone unlocked. Additional pod status request issued after 2 minutes, 40 seconds." : {
-      "comment" : "Description for PodKeepAlive.whenOpen"
+      "comment" : "Description for PodKeepAlive.whenOpen",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funcția menținere în viață a pompei este activată atunci când aplicația este în prim-plan și telefonul este deblocat. O solicitare suplimentară de stare a pompei este emisă după 2 minute și 40 de secunde."
+          }
+        }
+      }
     },
     "Pod keep alive enabled. Additional pod status request issued after 2 minutes, 40 seconds.\n\nAttempt to keep pod connected even when phone is locked by using a silent tune playing in the background. The silent tune may be interrupted by other apps. If silent tune is interrupted, pod keep alive stops working. The silent tune consumes extra iPhone battery." : {
-      "comment" : "Description for PodKeepAlive.silentTune"
+      "comment" : "Description for PodKeepAlive.silentTune",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este activată. Solicitare suplimentară de stare a pompei este emisă după 2 minute și 40 de secunde.\n\nÎncercați să mențineți pompa conectaăt chiar și atunci când telefonul este blocat printr-o melodie silențioasă care se redă în fundal. Melodia silențioasă poate fi întreruptă de alte aplicații. Dacă melodia silențioasă este întreruptă, funcția de menținere în viață a pompei nu mai funcționează. Melodia silențioasă consumă suplimentar din bateria telefonului."
+          }
+        }
+      }
     },
     "Pod keep alive enabled. Additional pod status request issued after 2 minutes.\n\nRequires a RileyLink-compatible device within Bluetooth range. Allows pod keep alive messages when app is in background. This method uses less iPhone battery and slightly more DASH battery than the Silent Tune method. The RileyLink-compatible device must be selected and be connected." : {
-      "comment" : "Description for PodKeepAlive.rileyLink"
+      "comment" : "Description for PodKeepAlive.rileyLink",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este activată. Solicitare suplimentară de stare a pompei emisă după 2 minute.\n\nNecesită un dispozitiv compatibil RileyLink aflat în raza de acoperire Bluetooth. Permite menținerea mesajelor de pe dispozitiv atunci când aplicația este în fundal. Această metodă utilizează mai puțină baterie pentru iPhone și puțin mai multă baterie DASH decât metoda melodie silențioasă. Dispozitivul compatibil RileyLink trebuie selectat și conectat."
+          }
+        }
+      }
     },
     "Pod not connected" : {
       "comment" : "Error message shown when the pod is not connected.",
@@ -44135,7 +44231,14 @@
       }
     },
     "Reconnecting..." : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconectare..."
+          }
+        }
+      }
     },
     "Ref: " : {
       "comment" : "PDM Ref string line",
@@ -46462,10 +46565,25 @@
       }
     },
     "RileyLink" : {
-      "comment" : "Title string for PodKeepAlive.rileyLink"
+      "comment" : "Title string for PodKeepAlive.rileyLink",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RileyLink"
+          }
+        }
+      }
     },
     "RSSI: %lld dBm" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RSSI: %lld dBm"
+          }
+        }
+      }
     },
     "Save" : {
       "comment" : "button title for saving confidence reminder\nbutton title for saving low reservoir reminder\nbutton title for saving scheduled reminder\nbutton title for saving silence pod preference",
@@ -47338,7 +47456,14 @@
       }
     },
     "Selected Device" : {
-
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispozitiv selectat"
+          }
+        }
+      }
     },
     "Sequence Number" : {
       "comment" : "description label for sequence number pod details row",
@@ -48951,7 +49076,15 @@
       }
     },
     "Silent Tune" : {
-      "comment" : "Title string for PodKeepAlive.silentTune"
+      "comment" : "Title string for PodKeepAlive.silentTune",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melodia tăcută"
+          }
+        }
+      }
     },
     "Skip Omnipod Onboarding?" : {
       "localizations" : {
@@ -58609,10 +58742,26 @@
       }
     },
     "When enabled and pod is within range, additional pod status requests are issued to minimize pod Bluetooth disconnects." : {
-      "comment" : "Summary of the Pod Keep Alive concept"
+      "comment" : "Summary of the Pod Keep Alive concept",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Când este activat și pompa se află în raza de acțiune, sunt emise solicitări suplimentare de stare pentru a minimiza deconectările Bluetooth ale acesteia."
+          }
+        }
+      }
     },
     "When Open" : {
-      "comment" : "Title string for PodKeepAlive.whenOpen"
+      "comment" : "Title string for PodKeepAlive.whenOpen",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Când este deschis"
+          }
+        }
+      }
     },
     "Yes" : {
       "comment" : "Button label for user to answer cannula was properly inserted",
