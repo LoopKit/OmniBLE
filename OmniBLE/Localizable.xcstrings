@@ -2853,6 +2853,16 @@
         }
       }
     },
+    "%@ %@..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@..."
+          }
+        }
+      }
+    },
     "%@ ago" : {
       "comment" : "Format string for last status date on pod details screen",
       "localizations" : {
@@ -12908,6 +12918,9 @@
         }
       }
     },
+    "Connected" : {
+
+    },
     "Continue" : {
       "comment" : "Action button description when deactivated\nAction button title for attach pod view\nButton title to continue\nCannula insertion button text when inserted\nPod pairing action button text when paired\nText for continue button\nText for continue button on PodSetupView\nTitle of button to continue discard",
       "localizations" : {
@@ -14804,7 +14817,7 @@
       }
     },
     "Disabled" : {
-      "comment" : "Title string for BeepPreference.silent\nTitle string for SilencePodPreference.disabled",
+      "comment" : "Title string for BeepPreference.silent\nTitle string for PodKeepAlive.disabled\nTitle string for SilencePodPreference.disabled",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -15094,6 +15107,12 @@
           }
         }
       }
+    },
+    "Disconnect" : {
+
+    },
+    "Disconnected for %@" : {
+
     },
     "Done" : {
       "comment" : "Title of done button on OmniBLESettingsView",
@@ -16275,6 +16294,9 @@
           }
         }
       }
+    },
+    "Expected offset: %@" : {
+
     },
     "Expiration alert" : {
       "comment" : "Description for expiration alert",
@@ -20789,6 +20811,9 @@
         }
       }
     },
+    "For use with iPhone 16 or iPhone 17e when used with InPlay BLE (Atlas) DASH pods; otherwise leave disabled." : {
+      "comment" : "Hardware which benefits from Pod Keep Alive"
+    },
     "Greater than %1$@ units remaining at %2$@" : {
       "comment" : "Accessibility format string for (1: localized volume)(2: time)",
       "localizations" : {
@@ -25115,6 +25140,9 @@
         }
       }
     },
+    "Last connection: %@" : {
+
+    },
     "Last Status" : {
       "comment" : "description label for last status date pod details row",
       "localizations" : {
@@ -28614,6 +28642,9 @@
           }
         }
       }
+    },
+    "No %@RileyLinks found. They will appear here when discovered." : {
+
     },
     "No alerts" : {
       "comment" : "Pod alert state when no alerts are active",
@@ -36042,7 +36073,7 @@
       }
     },
     "Pod Activated" : {
-      "comment" : "Label for pod insertion row\ndescription label for activated at time pod details row",
+      "comment" : "Label for pod activated row\ndescription label for activated at time pod details row",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -36776,7 +36807,7 @@
       }
     },
     "Pod Details" : {
-      "comment" : "Text for pod details disclosure row\ntitle for pod details page",
+      "comment" : "title for pod details row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -36919,7 +36950,7 @@
       }
     },
     "Pod Diagnostics" : {
-      "comment" : "Text for pod diagnostics row\nTitle for the pod diagnostic view",
+      "comment" : "Title for the pod diagnostic row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -39275,6 +39306,21 @@
         }
       }
     },
+    "Pod Keep Alive" : {
+      "comment" : "Title for the pod keep alive row and page"
+    },
+    "Pod keep alive disabled. Pod disconnects 3 minutes after last message exchange (nominal behavior)." : {
+      "comment" : "Description for PodKeepAlive.disabled"
+    },
+    "Pod keep alive enabled when app is in the foreground with phone unlocked. Additional pod status request issued after 2 minutes, 40 seconds." : {
+      "comment" : "Description for PodKeepAlive.whenOpen"
+    },
+    "Pod keep alive enabled. Additional pod status request issued after 2 minutes, 40 seconds.\n\nAttempt to keep pod connected even when phone is locked by using a silent tune playing in the background. The silent tune may be interrupted by other apps. If silent tune is interrupted, pod keep alive stops working. The silent tune consumes extra iPhone battery." : {
+      "comment" : "Description for PodKeepAlive.silentTune"
+    },
+    "Pod keep alive enabled. Additional pod status request issued after 2 minutes.\n\nRequires a RileyLink-compatible device within Bluetooth range. Allows pod keep alive messages when app is in background. This method uses less iPhone battery and slightly more DASH battery than the Silent Tune method. The RileyLink-compatible device must be selected and be connected." : {
+      "comment" : "Description for PodKeepAlive.rileyLink"
+    },
     "Pod not connected" : {
       "comment" : "Error message shown when the pod is not connected.",
       "localizations" : {
@@ -41018,6 +41064,7 @@
     },
     "Previous Pod" : {
       "comment" : "title for previous pod page",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -41160,7 +41207,7 @@
       }
     },
     "Previous Pod Details" : {
-      "comment" : "Text for previous pod details row",
+      "comment" : "title for previous pod details row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -44087,6 +44134,9 @@
         }
       }
     },
+    "Reconnecting..." : {
+
+    },
     "Ref: " : {
       "comment" : "PDM Ref string line",
       "localizations" : {
@@ -46411,6 +46461,12 @@
         }
       }
     },
+    "RileyLink" : {
+      "comment" : "Title string for PodKeepAlive.rileyLink"
+    },
+    "RSSI: %lld dBm" : {
+
+    },
     "Save" : {
       "comment" : "button title for saving confidence reminder\nbutton title for saving low reservoir reminder\nbutton title for saving scheduled reminder\nbutton title for saving silence pod preference",
       "localizations" : {
@@ -47280,6 +47336,9 @@
           }
         }
       }
+    },
+    "Selected Device" : {
+
     },
     "Sequence Number" : {
       "comment" : "description label for sequence number pod details row",
@@ -48890,6 +48949,9 @@
           }
         }
       }
+    },
+    "Silent Tune" : {
+      "comment" : "Title string for PodKeepAlive.silentTune"
     },
     "Skip Omnipod Onboarding?" : {
       "localizations" : {
@@ -58545,6 +58607,12 @@
           }
         }
       }
+    },
+    "When enabled and pod is within range, additional pod status requests are issued to minimize pod Bluetooth disconnects." : {
+      "comment" : "Summary of the Pod Keep Alive concept"
+    },
+    "When Open" : {
+      "comment" : "Title string for PodKeepAlive.whenOpen"
     },
     "Yes" : {
       "comment" : "Button label for user to answer cannula was properly inserted",
