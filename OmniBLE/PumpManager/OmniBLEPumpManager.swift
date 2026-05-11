@@ -2698,18 +2698,18 @@ extension OmniBLEPumpManager {
                                     let beepBlock = self.beepMessageBlock(beepType: .beep)
                                     let _ = try session.acknowledgeAlerts(alerts: AlertSet(slots: [slot]), beepBlock: beepBlock)
                                 } catch {
-                                    self.mutateState { state in
+                                    self.setState { state in
                                         state.alertsWithPendingAcknowledgment.insert(alert)
                                     }
                                     continuation.resume(throwing: error)
                                     return
                                 }
-                                self.mutateState { state in
+                                self.setState { state in
                                     state.activeAlerts.remove(alert)
                                 }
                                 continuation.resume()
                             case .failure(let error):
-                                self.mutateState { state in
+                                self.setState { state in
                                     state.alertsWithPendingAcknowledgment.insert(alert)
                                 }
                                 continuation.resume(throwing: error)
