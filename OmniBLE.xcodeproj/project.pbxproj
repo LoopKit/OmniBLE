@@ -177,6 +177,8 @@
 		D845A1432AF89F9200EA0853 /* SilencePodSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1422AF89F9200EA0853 /* SilencePodSelectionView.swift */; };
 		D85AEABC2B12D76F00081044 /* PodDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */; };
 		D85AEAC42B13083F00081044 /* ReadPodInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */; };
+		D87B145D2E73D71300B1F834 /* blank.wav in Resources */ = {isa = PBXBuildFile; fileRef = D87B145C2E73D71300B1F834 /* blank.wav */; };
+		D87B145F2E73D72D00B1F834 /* PodKeepAliveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87B145E2E73D72D00B1F834 /* PodKeepAliveView.swift */; };
 		D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */; };
 		D895BF5B275DE64000D51FC7 /* StringLengthPrefixEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */; };
 		D897B06B29347ED500FDB009 /* BolusDeliveryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897B06A29347ED500FDB009 /* BolusDeliveryTable.swift */; };
@@ -435,6 +437,8 @@
 		D845A1422AF89F9200EA0853 /* SilencePodSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilencePodSelectionView.swift; sourceTree = "<group>"; };
 		D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodDiagnosticsView.swift; sourceTree = "<group>"; };
 		D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPodInfoView.swift; sourceTree = "<group>"; };
+		D87B145C2E73D71300B1F834 /* blank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blank.wav; sourceTree = "<group>"; };
+		D87B145E2E73D72D00B1F834 /* PodKeepAliveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodKeepAliveView.swift; sourceTree = "<group>"; };
 		D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedStatus+OmniBLE.swift"; sourceTree = "<group>"; };
 		D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringLengthPrefixEncoding.swift; sourceTree = "<group>"; };
 		D897B06A29347ED500FDB009 /* BolusDeliveryTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusDeliveryTable.swift; sourceTree = "<group>"; };
@@ -596,6 +600,7 @@
 				84752EAD26ED11A4009FD801 /* PumpManager */,
 				8475311D26ED8246009FD801 /* PumpManagerUI */,
 				84752E8526ED0FFE009FD801 /* OmniBLE.h */,
+				D87B145C2E73D71300B1F834 /* blank.wav */,
 				84752E8626ED0FFE009FD801 /* Info.plist */,
 				B66D1F902E6A89E400471149 /* Localizable.xcstrings */,
 			);
@@ -763,6 +768,7 @@
 				D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */,
 				C1F67E8A27975B830017487F /* PodDetailsView.swift */,
 				D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */,
+				D87B145E2E73D72D00B1F834 /* PodKeepAliveView.swift */,
 				C1F67E8827975B830017487F /* PodSetupView.swift */,
 				D845A13E2AF89F8400EA0853 /* PumpManagerDetailsView.swift */,
 				D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */,
@@ -1032,11 +1038,10 @@
 				tr,
 				ar,
 				cs,
-				hi,
 				sk,
-				ce,
 				hu,
 				uk,
+				ko,
 			);
 			mainGroup = 84752E7826ED0FFE009FD801;
 			packageReferences = (
@@ -1065,6 +1070,7 @@
 				1029AE4F27094E1900B7F5B6 /* OmniBLEUI.xcassets in Resources */,
 				A91B2DEC276E1E5E001B0E95 /* README.md in Resources */,
 				C1C001C427A2351D00533D35 /* OmniBLEReservoirView.xib in Resources */,
+				D87B145D2E73D71300B1F834 /* blank.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1162,6 +1168,7 @@
 				8475315826EDA193009FD801 /* OSLog.swift in Sources */,
 				84752ED726ED13F5009FD801 /* X25519KeyGenerator.swift in Sources */,
 				C1F67EC527975F360017487F /* InsertCannulaViewModel.swift in Sources */,
+				D87B145F2E73D72D00B1F834 /* PodKeepAliveView.swift in Sources */,
 				C1F67E9027975B830017487F /* ExpirationReminderSetupView.swift in Sources */,
 				102111492709462300784F13 /* PodCommsSession.swift in Sources */,
 				10289E832739F917000339E6 /* SessionEstablisher.swift in Sources */,

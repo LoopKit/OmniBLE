@@ -1228,7 +1228,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\nStadiul livrării: %1$@"
+            "value" : "\nStadiul administrării: %1$@"
           }
         },
         "ru" : {
@@ -2853,6 +2853,22 @@
         }
       }
     },
+    "%@ %@..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@..."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@..."
+          }
+        }
+      }
+    },
     "%@ ago" : {
       "comment" : "Format string for last status date on pod details screen",
       "localizations" : {
@@ -3676,7 +3692,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ nu a putut comunica cu pompa de pe corpul dumneavoastră din %2$@. \n \nNu înlăturați pompa fără a derula pentru a citi întregul ecran. \n \nComunicarea a fost întreruptă într-un moment critic. Informațiile despre insulina activă / rata bazală temporară ale pompei sunt incerte. \n \nPuteți dezactiva și activa Bluetooth-ul telefonului sau puteți închide și reporni aplicația. (Așteptați până la 30 de secunde pentru recuperare.) \n \nDacă decideți să renunțați deoarece comunicarea nu poate fi restabilită, atingeți butonul Înlăturați pompa, urmați pașii și porniți o pompă nouă. \nMonitorizați-vă cu atenție glicemia pentru  următoarele 6 ore, deoarece este posibil să existe sau nu insulină care acționează activ în corpul dumneavoastră și pe care %3$@ nu o poate afișa."
+            "value" : "%1$@ nu a putut comunica cu pompa de pe corpul dumneavoastră din %2$@. \n \nNu înlăturați pompa fără a derula pentru a citi întregul ecran. \n \nComunicarea a fost întreruptă într-un moment critic. Informațiile despre insulina activă / rata bazală temporară ale pompei sunt incerte. \n \nPuteți dezactiva și activa Bluetooth-ul telefonului sau puteți închide și reporni aplicația. (Așteptați până la 30 de secunde pentru recuperare.) \n \nDacă decideți să renunțați deoarece comunicarea nu poate fi restabilită, atingeți butonul Înlăturați pompa, urmați pașii și porniți o pompă nouă. \nMonitorizați-vă cu atenție glicemia pentru următoarele 6 ore, deoarece este posibil să existe sau nu insulină care acționează activ în corpul dumneavoastră și pe care %3$@ nu o poate afișa."
           }
         },
         "ru" : {
@@ -5529,7 +5545,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timpul de activare a fost depășit"
+            "value" : "Timp de activare depășit"
           }
         },
         "ru" : {
@@ -5970,7 +5986,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reglarea timpului pompei..."
+            "value" : "Reglare oră pompă..."
           }
         },
         "ru" : {
@@ -7872,7 +7888,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bluetooth-ul este oprit"
+            "value" : "Bluetooth este oprit"
           }
         },
         "ru" : {
@@ -8015,7 +8031,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bluetooth-ul se resetează"
+            "value" : "Bluetooth se resetează"
           }
         },
         "ru" : {
@@ -8879,7 +8895,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bolus în derulare"
+            "value" : "Bolus în desfășurare"
           }
         },
         "ru" : {
@@ -9183,7 +9199,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bolus în derulare"
+            "value" : "Bolusare"
           }
         },
         "ru" : {
@@ -9338,7 +9354,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bolus în derulare cu rata bazală temporară"
+            "value" : "Bolusare cu rata bazală temporară"
           }
         },
         "ru" : {
@@ -9436,12 +9452,6 @@
             "value" : "Cancel"
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "निरस्त"
-          }
-        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9499,7 +9509,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Renunță"
+            "value" : "Anulați"
           }
         },
         "ru" : {
@@ -10108,7 +10118,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Doză confirmată"
+            "value" : "Sigur"
           }
         },
         "ru" : {
@@ -10257,7 +10267,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schimbați pompa acum. Livrarea insulinei se va opri la 8 ore după expirarea pompei sau când nu mai rămâne deloc insulină."
+            "value" : "Schimbați pompa acum. Administrarea insulinei se va opri la 8 ore după expirarea pompei sau când nu mai rămâne deloc insulină."
           }
         },
         "ru" : {
@@ -10406,7 +10416,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schimbați pompa acum. Livrarea insulinei se va opri în %1$@ sau când nu mai rămâne insulină."
+            "value" : "Schimbați pompa acum. Administrarea insulinei se va opri în %1$@ sau când nu mai rămâne insulină."
           }
         },
         "ru" : {
@@ -11574,7 +11584,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Problemă de comunicații"
+            "value" : "Problemă comunicații"
           }
         },
         "ru" : {
@@ -12295,7 +12305,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Notificările de confirmare vor suna pentru comenzile pe care le inițiați, cum ar fi bolus, anulare bolus, suspendare, reluare, salvare mementouri de notificare etc. Când %1$@ ajustează automat livrarea, nu se folosesc notificări de confirmare."
+            "value" : "Notificările de confirmare vor suna pentru comenzile pe care le inițiați, cum ar fi bolus, anulare bolus, suspendare, reluare, salvare mementouri de notificare etc. Când %1$@ ajustează automat administrarea, nu se folosesc notificări de confirmare."
           }
         },
         "ru" : {
@@ -12438,7 +12448,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Notificările de confirmare vor suna atunci când %1$@ ajustează automat livrarea, precum și pentru comenzile pe care le inițiați."
+            "value" : "Notificările de confirmare vor suna atunci când %1$@ ajustează automat administrarea, precum și pentru comenzile pe care le inițiați."
           }
         },
         "ru" : {
@@ -12908,6 +12918,22 @@
         }
       }
     },
+    "Connected" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接"
+          }
+        }
+      }
+    },
     "Continue" : {
       "comment" : "Action button description when deactivated\nAction button title for attach pod view\nButton title to continue\nCannula insertion button text when inserted\nPod pairing action button text when paired\nText for continue button\nText for continue button on PodSetupView\nTitle of button to continue discard",
       "localizations" : {
@@ -13141,7 +13167,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a putut analiza mesajul: %1$@"
+            "value" : "Eșec la analiza mesajul: %1$@"
           }
         },
         "ru" : {
@@ -14017,7 +14043,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dezactivează pompă"
+            "value" : "Dezactivați pompă"
           }
         },
         "ru" : {
@@ -14804,7 +14830,7 @@
       }
     },
     "Disabled" : {
-      "comment" : "Title string for BeepPreference.silent\nTitle string for SilencePodPreference.disabled",
+      "comment" : "Title string for BeepPreference.silent\nTitle string for PodKeepAlive.disabled\nTitle string for SilencePodPreference.disabled",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -15091,6 +15117,32 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "丢弃Pod"
+          }
+        }
+      }
+    },
+    "Disconnect" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectați"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "断开连接"
+          }
+        }
+      }
+    },
+    "Disconnected for %@" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectat pentru %@"
           }
         }
       }
@@ -16272,6 +16324,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pod错误已记录"
+          }
+        }
+      }
+    },
+    "Expected offset: %@" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decalaj așteptat: %@"
           }
         }
       }
@@ -17696,7 +17758,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit anularea bazalei manuale"
+            "value" : "Eșec la anularea bazalei manuale"
           }
         },
         "ru" : {
@@ -17839,7 +17901,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-au putut reda semnalele sonore de test."
+            "value" : "Eșec la a reda semnalele sonore de test."
           }
         },
         "ru" : {
@@ -17982,7 +18044,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a putut citi timpul de activare."
+            "value" : "Eșec la citi timpul de activare."
           }
         },
         "ru" : {
@@ -18125,7 +18187,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a putut citi starea pompei."
+            "value" : "Eșec la citi starea pompei."
           }
         },
         "ru" : {
@@ -18268,7 +18330,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit citirea registrului plus de impulsuri."
+            "value" : "Eșec la citirea registrului plus de impulsuri."
           }
         },
         "ru" : {
@@ -18411,7 +18473,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit citirea registrului de impulsuri."
+            "value" : "Eșec la citirea registrului de impulsuri."
           }
         },
         "ru" : {
@@ -18554,7 +18616,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-au putut citi alertele declanșate."
+            "value" : "Eșec la a citi alertele declanșate."
           }
         },
         "ru" : {
@@ -18697,7 +18759,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit reluarea administrării de insulină"
+            "value" : "Eșec la reluarea administrării de insulină"
           }
         },
         "ru" : {
@@ -18840,7 +18902,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit setarea timpului de pe pompă"
+            "value" : "Eșec la setarea timpului de pe pompă"
           }
         },
         "ru" : {
@@ -18983,7 +19045,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit suspendarea administrării de insulină"
+            "value" : "Eșec la suspendarea administrării de insulină"
           }
         },
         "ru" : {
@@ -19126,7 +19188,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit actualizarea preferinței în ceea ce privește memento-ul de confirmare."
+            "value" : "Eșec la actualizarea preferinței în ceea ce privește memento-ul de confirmare."
           }
         },
         "ru" : {
@@ -19269,7 +19331,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit actualizarea memento-ului de expirare"
+            "value" : "Eșec la actualizarea mementoului de expirare"
           }
         },
         "ru" : {
@@ -19412,7 +19474,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit actualizarea memento-ului privind rezervorul scăzut"
+            "value" : "Eșec la actualizarea mementoului privind rezervorul scăzut"
           }
         },
         "ru" : {
@@ -19555,7 +19617,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu s-a reușit actualizarea preferinței în ceea ce privește modul de pompă silențioasă."
+            "value" : "Eșec la actualizarea preferinței în ceea ce privește modul de pompă silențioasă."
           }
         },
         "ru" : {
@@ -19704,7 +19766,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A avut loc un eveniment de eroare"
+            "value" : "A apărut un eveniment de eroare"
           }
         },
         "ru" : {
@@ -19847,7 +19909,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Umpleți o pompă nouă cu insulină U-100  (nu înlăturați capacul albastru al acului de pe pompă)."
+            "value" : "Umpleți o pompă nouă cu insulină U-100 (nu înlăturați capacul albastru al acului de pe pompă)."
           }
         },
         "ru" : {
@@ -20587,7 +20649,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Memento pentru finalizarea configurării"
+            "value" : "Memento finalizare configurare"
           }
         },
         "ru" : {
@@ -20792,6 +20854,17 @@
     "Flashlight" : {
       "comment" : "The label for the flashlight toggle in the \"Check Cannula\" view.",
       "extractionState" : "manual"
+    },
+    "For use with iPhone 16 or iPhone 17e when used with InPlay BLE (Atlas) DASH pods; otherwise leave disabled." : {
+      "comment" : "Hardware which benefits from Pod Keep Alive",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru utilizare cu iPhone 16 sau iPhone 17e atunci când este utilizat cu pompele DASH InPlay BLE (Atlas); în caz contrar, lăsați dezactivat."
+          }
+        }
+      }
     },
     "Greater than %1$@ units remaining at %2$@" : {
       "comment" : "Accessibility format string for (1: localized volume)(2: time)",
@@ -25119,6 +25192,16 @@
         }
       }
     },
+    "Last connection: %@" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultima conexiune: %@"
+          }
+        }
+      }
+    },
     "Last Status" : {
       "comment" : "description label for last status date pod details row",
       "localizations" : {
@@ -25513,7 +25596,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Numărul lotului"
+            "value" : "Numărul lot"
           }
         },
         "ru" : {
@@ -26253,7 +26336,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asigurați-vă că iPhone-ul este în apropierea pompei active"
+            "value" : "Asigurați-vă că iPhone este în apropierea pompei active"
           }
         },
         "ru" : {
@@ -28619,6 +28702,16 @@
         }
       }
     },
+    "No %@RileyLinks found. They will appear here when discovered." : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu s-au găsit dispozitive %@RileyLink. Acestea vor apărea aici atunci când vor fi descoperite."
+          }
+        }
+      }
+    },
     "No alerts" : {
       "comment" : "Pod alert state when no alerts are active",
       "localizations" : {
@@ -30766,7 +30859,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nu sunt suficiente date"
+            "value" : "Date insuficiente"
           }
         },
         "ru" : {
@@ -31052,7 +31145,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setări de notificare"
+            "value" : "Setări notificări"
           }
         },
         "ru" : {
@@ -32530,7 +32623,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asociază o pompă"
+            "value" : "Asociați o pompă"
           }
         },
         "ru" : {
@@ -32679,7 +32772,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asociază o pompă"
+            "value" : "Asociați o pompă"
           }
         },
         "ru" : {
@@ -35277,7 +35370,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vă rugăm să activați permisiunile bluetooth pentru această aplicație în setările de sistem"
+            "value" : "Vă rugăm să activați permisiunile Bluetooth pentru această aplicație în setările de sistem"
           }
         },
         "ru" : {
@@ -35712,7 +35805,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vă rugăm să repoziționați iPhone-ul mai departe de pompă"
+            "value" : "Vă rugăm să repoziționați iPhone mai departe de pompă"
           }
         },
         "ru" : {
@@ -35855,7 +35948,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vă rugăm să repoziționați iPhone-ul mai aproape de pompă"
+            "value" : "Vă rugăm să repoziționați iPhone mai aproape de pompă"
           }
         },
         "ru" : {
@@ -36046,7 +36139,7 @@
       }
     },
     "Pod Activated" : {
-      "comment" : "Label for pod insertion row\ndescription label for activated at time pod details row",
+      "comment" : "Label for pod activated row\ndescription label for activated at time pod details row",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -36780,7 +36873,7 @@
       }
     },
     "Pod Details" : {
-      "comment" : "Text for pod details disclosure row\ntitle for pod details page",
+      "comment" : "title for pod details row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -36923,7 +37016,7 @@
       }
     },
     "Pod Diagnostics" : {
-      "comment" : "Text for pod diagnostics row\nTitle for the pod diagnostic view",
+      "comment" : "Title for the pod diagnostic row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -39279,6 +39372,61 @@
         }
       }
     },
+    "Pod Keep Alive" : {
+      "comment" : "Title for the pod keep alive row and page",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținere în viață a pompei"
+          }
+        }
+      }
+    },
+    "Pod keep alive disabled. Pod disconnects 3 minutes after last message exchange (nominal behavior)." : {
+      "comment" : "Description for PodKeepAlive.disabled",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este dezactivată. Pompa se deconectează la 3 minute după ultimul schimb de mesaje (comportament nominal)."
+          }
+        }
+      }
+    },
+    "Pod keep alive enabled when app is in the foreground with phone unlocked. Additional pod status request issued after 2 minutes, 40 seconds." : {
+      "comment" : "Description for PodKeepAlive.whenOpen",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funcția menținere în viață a pompei este activată atunci când aplicația este în prim-plan și telefonul este deblocat. O solicitare suplimentară de stare a pompei este emisă după 2 minute și 40 de secunde."
+          }
+        }
+      }
+    },
+    "Pod keep alive enabled. Additional pod status request issued after 2 minutes, 40 seconds.\n\nAttempt to keep pod connected even when phone is locked by using a silent tune playing in the background. The silent tune may be interrupted by other apps. If silent tune is interrupted, pod keep alive stops working. The silent tune consumes extra iPhone battery." : {
+      "comment" : "Description for PodKeepAlive.silentTune",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este activată. Solicitare suplimentară de stare a pompei este emisă după 2 minute și 40 de secunde.\n\nÎncercați să mențineți pompa conectată chiar și atunci când telefonul este blocat printr-o melodie silențioasă care se redă în fundal. Melodia silențioasă poate fi întreruptă de alte aplicații. Dacă melodia silențioasă este întreruptă, funcția de menținere în viață a pompei nu mai funcționează. Melodia silențioasă consumă suplimentar din bateria telefonului."
+          }
+        }
+      }
+    },
+    "Pod keep alive enabled. Additional pod status request issued after 2 minutes.\n\nRequires a RileyLink-compatible device within Bluetooth range. Allows pod keep alive messages when app is in background. This method uses less iPhone battery and slightly more DASH battery than the Silent Tune method. The RileyLink-compatible device must be selected and be connected." : {
+      "comment" : "Description for PodKeepAlive.rileyLink",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menținerea în viață a pompei este activată. Solicitare suplimentară de stare a pompei emisă după 2 minute.\n\nNecesită un dispozitiv compatibil RileyLink aflat în raza de acoperire Bluetooth. Permite menținerea mesajelor de pe dispozitiv atunci când aplicația este în fundal. Această metodă utilizează mai puțină baterie pentru iPhone și puțin mai multă baterie DASH decât metoda melodie silențioasă. Dispozitivul compatibil RileyLink trebuie selectat și conectat."
+          }
+        }
+      }
+    },
     "Pod not connected" : {
       "comment" : "Error message shown when the pod is not connected.",
       "localizations" : {
@@ -40544,7 +40692,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Memento pentru pompa suspendată"
+            "value" : "Memento pompă suspendată"
           }
         },
         "ru" : {
@@ -41022,6 +41170,7 @@
     },
     "Previous Pod" : {
       "comment" : "title for previous pod page",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -41164,7 +41313,7 @@
       }
     },
     "Previous Pod Details" : {
-      "comment" : "Text for previous pod details row",
+      "comment" : "title for previous pod details row and page",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -41706,7 +41855,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pregătire în curs. Vă rugăm să așteptați."
+            "value" : "Se amorsează. Vă rugăm să așteptați."
           }
         },
         "ru" : {
@@ -41855,7 +42004,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pregătire în curs..."
+            "value" : "Se amorsează..."
           }
         },
         "ru" : {
@@ -44091,6 +44240,22 @@
         }
       }
     },
+    "Reconnecting..." : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconectare..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在重连..."
+          }
+        }
+      }
+    },
     "Ref: " : {
       "comment" : "PDM Ref string line",
       "localizations" : {
@@ -45045,7 +45210,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elimină pompa"
+            "value" : "Eliminați pompa"
           }
         },
         "ru" : {
@@ -46368,7 +46533,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reîncearcă"
+            "value" : "Reîncercați"
           }
         },
         "ru" : {
@@ -46411,6 +46576,27 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重试"
+          }
+        }
+      }
+    },
+    "RileyLink" : {
+      "comment" : "Title string for PodKeepAlive.rileyLink",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RileyLink"
+          }
+        }
+      }
+    },
+    "RSSI: %lld dBm" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RSSI: %lld dBm"
           }
         }
       }
@@ -46505,7 +46691,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salvează"
+            "value" : "Salvați"
           }
         },
         "ru" : {
@@ -47281,6 +47467,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select the type of insulin that you will be using in this pod."
+          }
+        }
+      }
+    },
+    "Selected Device" : {
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispozitiv selectat"
           }
         }
       }
@@ -48895,6 +49091,17 @@
         }
       }
     },
+    "Silent Tune" : {
+      "comment" : "Title string for PodKeepAlive.silentTune",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melodie silențioasă"
+          }
+        }
+      }
+    },
     "Skip Omnipod Onboarding?" : {
       "localizations" : {
         "ar" : {
@@ -49860,7 +50067,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suspendă administrarea"
+            "value" : "Suspendați administrarea"
           }
         },
         "ru" : {
@@ -52109,7 +52316,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bazala temporară este în curs de rulare"
+            "value" : "Bazala temporară este în desfășurare"
           }
         },
         "ru" : {
@@ -53933,12 +54140,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "שעה"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "समय"
           }
         },
         "hu" : {
@@ -58550,6 +58751,28 @@
         }
       }
     },
+    "When enabled and pod is within range, additional pod status requests are issued to minimize pod Bluetooth disconnects." : {
+      "comment" : "Summary of the Pod Keep Alive concept",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Când este activat și pompa se află în raza de acțiune, sunt emise solicitări suplimentare de stare a pompei pentru a minimiza deconectările Bluetooth ale pompei."
+          }
+        }
+      }
+    },
+    "When Open" : {
+      "comment" : "Title string for PodKeepAlive.whenOpen",
+      "localizations" : {
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Când este deschis"
+          }
+        }
+      }
+    },
     "Yes" : {
       "comment" : "Button label for user to answer cannula was properly inserted",
       "localizations" : {
@@ -59218,7 +59441,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veți fi notificat(ă) când cantitatea de insulină din pompă atinge un nivel selectat. \n \nDerulați pentru a seta numărul de unități (1 până la 50) la care doriți să fiți notificat(ă)."
+            "value" : "Veți fi notificat când cantitatea de insulină din pompă atinge un nivel selectat. \n \nDerulați pentru a seta numărul de unități (1 până la 50) la care doriți să fiți notificat."
           }
         },
         "ru" : {
@@ -59504,7 +59727,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veți începe acum procesul de configurare a memento-urilor, umplerea pompei cu insulină, asocierea cu dispozitivul dumneavoastră și amplasarea acestuia pe corp."
+            "value" : "Veți începe acum procesul de configurare a mementourilor, umplerea pompei cu insulină, asocierea cu dispozitivul dumneavoastră și amplasarea acestuia pe corp."
           }
         },
         "ru" : {

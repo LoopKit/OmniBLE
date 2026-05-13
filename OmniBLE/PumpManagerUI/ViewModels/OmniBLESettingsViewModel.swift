@@ -42,6 +42,8 @@ class OmniBLESettingsViewModel: ObservableObject {
 
     @Published var silencePodPreference: SilencePodPreference
 
+    @Published var podKeepAlivePreference: PodKeepAlive
+
     @Published var podConnected: Bool
 
     var activatedAtString: String {
@@ -236,6 +238,7 @@ class OmniBLESettingsViewModel: ObservableObject {
         podCommState = self.pumpManager.podCommState
         beepPreference = self.pumpManager.beepPreference
         silencePodPreference = self.pumpManager.silencePod ? .enabled : .disabled
+        podKeepAlivePreference = Storage.shared.podKeepAlive.value
         podConnected = self.pumpManager.isConnected
         insulinType = self.pumpManager.insulinType
         podDetails = self.pumpManager.podDetails
@@ -348,6 +351,10 @@ class OmniBLESettingsViewModel: ObservableObject {
                 completion(error)
             }
         }
+    }
+
+    func setPodKeepAlive(_ podKeepAlivePreference: PodKeepAlive) {
+        self.podKeepAlivePreference = podKeepAlivePreference
     }
 
     func didChangeInsulinType(_ newType: InsulinType?) {
