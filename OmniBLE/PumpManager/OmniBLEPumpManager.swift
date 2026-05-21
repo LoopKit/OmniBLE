@@ -2494,6 +2494,19 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     private func notifyPodFault(fault: DetailedStatus) {
+        // Record the fault as a pump event so it is persisted to the pump event store and
+        // uploaded to remote services (e.g. Nightscout, as a note). This fires once per
+        // fault, on the no-fault→fault transition in podComms(_:didChange:).
+        pumpDelegate.notify { delegate in
+            let date = Date()
+            let event = NewPumpEvent(date: date,
+                                     dose: nil,
+                                     raw: "Pod Fault \(fault.faultEventCode.rawValue) \(date)".data(using: .utf8)!,
+                                     title: fault.faultEventCode.description,
+                                     type: .alarm)
+            delegate?.pumpManager(self, hasNewPumpEvents: [event], lastReconciliation: self.lastSync, replacePendingEvents: false) { _ in }
+        }
+
         Task {
             let content = Alert.Content(title: fault.faultEventCode.notificationTitle,
                                         body: fault.faultEventCode.notificationBody,
