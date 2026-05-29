@@ -2545,9 +2545,9 @@ extension OmniBLEPumpManager: PumpManager {
             return true // all iPhone16's currently have possible InPlay issues
         }
 
-        // Are we running on an iPhone 17e (Apple model # "iPhone18,3", sigh)?
+        // Are we running on an iPhone 17e (Apple model # "iPhone18,5", sigh)?
         // Other iPhone 17 models ("iPhone18,N for N != 3) have been OK so far.
-        if iPhoneType == "iPhone18,3" {
+        if iPhoneType == "iPhone18,5" {
             return true // the iPhone 17e currenlty has possible InPlay issues
         }
 
