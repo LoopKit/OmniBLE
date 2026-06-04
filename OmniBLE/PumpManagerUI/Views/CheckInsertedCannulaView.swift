@@ -8,11 +8,13 @@
 
 import SwiftUI
 import LoopKitUI
+import AVFoundation
 
 struct CheckInsertedCannulaView: View {
-    
+    @Environment(\.colorScheme) private var currentColorScheme
     
     @State private var cancelModalIsPresented: Bool = false
+    @State private var flashlightOn: Bool = false
     
     private var didRequestDeactivation: () -> Void
     private var wasInsertedProperly: () -> Void
@@ -35,17 +37,32 @@ struct CheckInsertedCannulaView: View {
                     FrameworkLocalText("The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.", comment: "Description of proper cannula insertion").fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }.padding(.vertical)
+                
+                // Show the button either if the device supports it, or
+                // we're in xcode preview mode
+                if hasFlashlight || ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+                    Toggle(isOn: $flashlightOn) {
+                        Label("Flashlight", systemImage: flashlightOn ? "flashlight.on.fill" : "flashlight.off.fill")
+                            .labelStyle(.iconOnly)
+                            .imageScale(.large)
+                    }
+                    .toggleStyle(FlashlightToggleStyle())
+                    .onChange(of: flashlightOn) { v in
+                        setFlashlightState(state: v)
+                    }
+                }
             }
-
         }) {
             VStack(spacing: 10) {
                 Button(action: {
+                    flashlightOn = false
                     self.wasInsertedProperly()
                 }) {
                     Text(LocalizedString("Yes", comment: "Button label for user to answer cannula was properly inserted"))
                         .actionButtonStyle(.primary)
                 }
                 Button(action: {
+                    flashlightOn = false
                     self.didRequestDeactivation()
                 }) {
                     Text(LocalizedString("No", comment: "Button label for user to answer cannula was not properly inserted"))
@@ -53,7 +70,7 @@ struct CheckInsertedCannulaView: View {
                 }
             }.padding()
         }
-        .animation(.default)
+        .animation(.default, value: flashlightOn)
         .alert(isPresented: $cancelModalIsPresented) { cancelPairingModal }
         .navigationBarTitle(LocalizedString("Check Cannula", comment: "navigation bar title for check cannula"), displayMode: .automatic)
         .navigationBarItems(trailing: cancelButton)
@@ -75,7 +92,60 @@ struct CheckInsertedCannulaView: View {
             secondaryButton: .default(FrameworkLocalText("No, Continue With Pod", comment: "Continue pairing button title of in pairing cancel modal"))
         )
     }
+    
+    var hasFlashlight: Bool {
+        guard let device = AVCaptureDevice.default(for: .video) else { return false }
+        return device.hasTorch
+    }
+    
+    func setFlashlightState(state: Bool) -> Void {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            flashlightOn = false
+            return
+        }
+        if device.hasTorch {
+            do {
+                try device.lockForConfiguration()
+                
+                if state == true {
+                    try device.setTorchModeOn(level: 1.0)
+                } else {
+                    device.torchMode = .off
+                }
+                device.unlockForConfiguration()
+            } catch {
+                print("Torch could not be used")
+                flashlightOn = false
+            }
+        }
+    }
+}
 
+struct FlashlightToggleStyle: ToggleStyle {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    func makeBody(configuration: Configuration) -> some View {
+        Button(action: {
+            configuration.isOn.toggle()
+        }) {
+            configuration.label
+                .padding(.all, 22)
+                .background(configuration.isOn ?
+                            .white
+                            :
+                            colorScheme == .light ?
+                                Color(UIColor.systemGray) :
+                                Color(UIColor.systemBackground)
+                )
+                .foregroundStyle(configuration.isOn ? .blue : .white)
+        }
+        .buttonStyle(.plain)
+        .containerShape(.circle)
+        .shadow(
+            color: configuration.isOn ? .yellow.opacity(0.5) : .white.opacity(0.0),
+            radius: configuration.isOn ? 10 : 0
+        )
+    }
 }
 
 struct CheckInsertedCannulaView_Previews: PreviewProvider {
